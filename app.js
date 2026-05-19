@@ -43,14 +43,16 @@ function refreshVoices() {
   }
 }
 function canSpeak(lang) {
-  if (state.voices.has(lang)) return true;
-  const fb = VOICE_FALLBACK[lang];
-  return fb ? state.voices.has(fb) : false;
+  // If speech synthesis exists at all, show the button. iOS Safari's voice
+  // list is often incomplete — it may have the voice even if getVoices() omits it.
+  return 'speechSynthesis' in window;
 }
 function resolvedSpeakLang(lang) {
   if (state.voices.has(lang)) return lang;
   const fb = VOICE_FALLBACK[lang];
-  return (fb && state.voices.has(fb)) ? fb : null;
+  if (fb && state.voices.has(fb)) return fb;
+  // Last resort: still try the original language — iOS may have a voice we can't see.
+  return lang;
 }
 
 function pickVoice(lang) {
