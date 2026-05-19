@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#3d6a8a">
+  <title>Pareto Words</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" type="image/svg+xml" href="icons/icon.svg">
+  <link rel="apple-touch-icon" href="icons/icon.svg">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main id="app">
+
+    <!-- Setup screen (first run) -->
+    <section id="screen-setup" class="screen">
+      <div class="container">
+        <h1 class="brand">Pareto<span class="brand-dot">.</span></h1>
+        <p class="tagline">Learn the most useful words first.</p>
+
+        <div class="setup-step">
+          <label class="setup-label">I speak</label>
+          <div class="choice-grid" data-group="source">
+            <button class="choice" data-value="en">English</button>
+            <button class="choice" data-value="es">Español</button>
+          </div>
+        </div>
+
+        <div class="setup-step">
+          <label class="setup-label">I want to learn</label>
+          <div class="choice-grid" data-group="target">
+            <button class="choice" data-value="ar">العربية <span class="muted">Arabic</span></button>
+            <button class="choice" data-value="sr">Srpski <span class="muted">Serbian</span></button>
+            <button class="choice" data-value="es">Español <span class="muted">Spanish</span></button>
+          </div>
+        </div>
+
+        <button id="setup-start" class="primary-btn" disabled>Start learning</button>
+      </div>
+    </section>
+
+    <!-- Onboarding screen -->
+    <section id="screen-onboarding" class="screen hidden">
+      <div class="container">
+        <h2 class="onboarding-title">How it works</h2>
+
+        <div class="onboarding-item">
+          <div class="onboarding-icon">🎯</div>
+          <div>
+            <h3>The most useful words first</h3>
+            <p>These are the words you'll really need to manage a basic conversation. Learn them and the rest builds on top.</p>
+          </div>
+        </div>
+
+        <div class="onboarding-item">
+          <div class="onboarding-icon">🃏</div>
+          <div>
+            <h3>The app picks what to show you</h3>
+            <p>Words you struggle with come back more often. Words you know well come back less. Just open the app and tap "Study now."</p>
+          </div>
+        </div>
+
+        <div class="onboarding-item">
+          <div class="onboarding-icon">✅</div>
+          <div>
+            <h3>Be honest after each card</h3>
+            <p>
+              <b>Not sure</b>: you didn't know it.<br>
+              <b>Recognize</b>: you knew it once you saw the answer.<br>
+              <b>Know it</b>: instant, no hesitation.
+            </p>
+            <p>Tap honestly. The app adjusts to what you actually remember.</p>
+          </div>
+        </div>
+
+        <div class="onboarding-item">
+          <div class="onboarding-icon">⏭️</div>
+          <div>
+            <h3>Already past the basics?</h3>
+            <p>On any new card you'll see an "I already know this" button. Tap it to skip the word and mark it mastered, so the app meets you at your level.</p>
+          </div>
+        </div>
+
+        <div class="onboarding-item">
+          <div class="onboarding-icon">🏆</div>
+          <div>
+            <h3>A little, often</h3>
+            <p>A word only counts as "mastered" once you've genuinely remembered it. You can't rush it, and you don't need to. A few minutes a day is all it takes.</p>
+          </div>
+        </div>
+
+        <button id="onboarding-done" class="primary-btn big">Got it, let's start</button>
+      </div>
+    </section>
+
+    <!-- Home screen -->
+    <section id="screen-home" class="screen hidden">
+      <div class="container">
+        <header class="home-header">
+          <div>
+            <p class="muted small">Learning</p>
+            <h2 id="home-pair-label">…</h2>
+          </div>
+          <button id="open-settings" class="icon-btn" aria-label="Settings">⚙</button>
+        </header>
+
+        <div class="card stat-card">
+          <div class="stat-main">
+            <div class="stat-number" id="stat-mastered">0</div>
+            <div class="stat-label">mastered / <span id="stat-total">0</span></div>
+          </div>
+          <div class="stat-bar">
+            <div class="stat-bar-fill" id="stat-bar-fill"></div>
+          </div>
+          <div class="stat-breakdown">
+            <span><b id="stat-new">0</b> new</span>
+            <span><b id="stat-learning">0</b> learning</span>
+            <span><b id="stat-young">0</b> young</span>
+            <span><b id="stat-mature">0</b> mature</span>
+          </div>
+        </div>
+
+        <div class="daily-goal">
+          <div class="daily-goal-row">
+            <span>Today</span>
+            <span><b id="daily-done">0</b> / <span id="daily-goal">20</span></span>
+          </div>
+          <div class="stat-bar small">
+            <div class="stat-bar-fill" id="daily-bar-fill"></div>
+          </div>
+        </div>
+
+        <button id="start-study" class="primary-btn big">Study now</button>
+
+        <div class="theme-filter">
+          <p class="muted small">Or pick a theme</p>
+          <div id="theme-chips" class="chip-row"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Study screen -->
+    <section id="screen-study" class="screen hidden">
+      <div class="container study-container">
+        <header class="study-header">
+          <button id="study-back" class="icon-btn" aria-label="Back">←</button>
+          <div class="progress-pill">
+            <span id="study-progress">0 / 0</span>
+          </div>
+          <div class="spacer"></div>
+        </header>
+
+        <div id="card-area" class="flashcard">
+          <div class="flashcard-inner">
+            <div class="card-emoji" id="card-emoji"></div>
+            <div class="card-prompt" id="card-prompt"></div>
+            <div class="card-meta" id="card-meta"></div>
+            <button id="audio-btn" class="audio-btn hidden" aria-label="Hear pronunciation">🔊</button>
+            <div class="card-answer hidden" id="card-answer">
+              <div class="card-answer-main" id="card-answer-main"></div>
+              <div class="card-answer-translit" id="card-answer-translit"></div>
+              <div class="card-example hidden" id="card-example">
+                <div class="card-example-src" id="card-example-src"></div>
+                <div class="card-example-tgt-row">
+                  <div class="card-example-tgt" id="card-example-tgt"></div>
+                  <button id="example-audio-btn" class="audio-btn-inline hidden" aria-label="Hear example">🔊</button>
+                </div>
+                <div class="card-example-translit" id="card-example-translit"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="reveal-row">
+          <button id="reveal-btn" class="primary-btn">Show answer</button>
+          <button id="skip-known-btn" class="secondary-btn hidden">✓ I already know this</button>
+          <p id="skip-hint" class="skip-hint hidden">Already familiar? Skip straight to mastered.</p>
+        </div>
+
+        <div id="grade-row" class="grade-row hidden">
+          <button class="grade-btn again" data-grade="again">
+            <span class="grade-label">Not sure</span>
+            <span class="grade-hint" id="hint-again">&lt;1m</span>
+          </button>
+          <button class="grade-btn good" data-grade="good">
+            <span class="grade-label">Recognize</span>
+            <span class="grade-hint" id="hint-good">1d</span>
+          </button>
+          <button class="grade-btn easy" data-grade="easy">
+            <span class="grade-label">Know it</span>
+            <span class="grade-hint" id="hint-easy">4d</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Done screen -->
+    <section id="screen-done" class="screen hidden">
+      <div class="container">
+        <h2 class="done-title">Session complete</h2>
+        <p class="muted" id="done-summary"></p>
+        <button id="done-back" class="primary-btn">Back to home</button>
+      </div>
+    </section>
+
+    <!-- Toast (transient message) -->
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+    <!-- Mastered words screen -->
+    <section id="screen-mastered" class="screen hidden">
+      <div class="container">
+        <header class="home-header">
+          <h2>Mastered words</h2>
+          <button id="close-mastered" class="icon-btn" aria-label="Close">✕</button>
+        </header>
+        <p id="mastered-summary" class="muted small"></p>
+        <div id="mastered-list" class="mastered-list"></div>
+      </div>
+    </section>
+
+    <!-- Settings screen -->
+    <section id="screen-settings" class="screen hidden">
+      <div class="container">
+        <header class="home-header">
+          <h2>Settings</h2>
+          <button id="close-settings" class="icon-btn" aria-label="Close">✕</button>
+        </header>
+
+        <div class="setting-block">
+          <label class="setup-label">I speak</label>
+          <div class="choice-grid" data-group="source-settings">
+            <button class="choice" data-value="en">English</button>
+            <button class="choice" data-value="es">Español</button>
+          </div>
+        </div>
+
+        <div class="setting-block">
+          <label class="setup-label">I want to learn</label>
+          <div class="choice-grid" data-group="target-settings">
+            <button class="choice" data-value="ar">العربية</button>
+            <button class="choice" data-value="sr">Srpski</button>
+            <button class="choice" data-value="es">Español</button>
+          </div>
+        </div>
+
+        <div class="setting-block" id="setting-script">
+          <label class="setup-label">Serbian script</label>
+          <div class="choice-grid" data-group="script">
+            <button class="choice" data-value="latin">Latin (zdravo)</button>
+            <button class="choice" data-value="cyrillic">Cyrillic (здраво)</button>
+          </div>
+        </div>
+
+        <div class="setting-block">
+          <label class="setup-label">Daily goal</label>
+          <div class="choice-grid" data-group="goal">
+            <button class="choice" data-value="10">10</button>
+            <button class="choice" data-value="20">20</button>
+            <button class="choice" data-value="30">30</button>
+            <button class="choice" data-value="50">50</button>
+          </div>
+        </div>
+
+        <button id="show-how" class="text-link-btn">How it works</button>
+        <button id="reset-progress" class="danger-btn">Reset progress for this pair</button>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

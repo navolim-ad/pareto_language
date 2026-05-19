@@ -1,0 +1,7042 @@
+{
+  "meta": {
+    "version": "0.3.0-batch2",
+    "updated": "2026-05-19",
+    "source_languages": [
+      "en",
+      "es"
+    ],
+    "target_languages": [
+      "ar",
+      "sr",
+      "es"
+    ],
+    "note": "Teaching order, not raw corpus frequency. Curated for beginner conversation. Arabic is MSA. Serbian provided in both Latin (sr) and Cyrillic (sr_cyr) with 1:1 mapping. Verbs in 1st-person singular present. Example sentences kept short and beginner-friendly.",
+    "transliteration_system": "Long vowels with macrons (ā ī ū). Apostrophe for hamza ('). ʿ for ayn. kh, gh, sh, th, dh, ḥ for those consonants."
+  },
+  "themes": [
+    "greetings",
+    "pronouns",
+    "possessives",
+    "questions",
+    "verbs_basic",
+    "food_drink",
+    "home",
+    "time",
+    "numbers",
+    "people",
+    "body",
+    "qualities",
+    "colors",
+    "nature",
+    "animals",
+    "clothing",
+    "transport",
+    "places",
+    "prepositions",
+    "emotions",
+    "phrases"
+  ],
+  "words": [
+    {
+      "id": "w001",
+      "order": 1,
+      "theme": "greetings",
+      "emoji": "👋",
+      "en": "hello",
+      "es": "hola",
+      "sr": "zdravo",
+      "sr_cyr": "здраво",
+      "ar": "مرحباً",
+      "ar_translit": "marḥaban",
+      "example": {
+        "en": "Hello, how are you?",
+        "es": "Hola, ¿cómo estás?",
+        "sr": "Zdravo, kako si?",
+        "sr_cyr": "Здраво, како си?",
+        "ar": "مرحباً، كيف حالك؟",
+        "ar_translit": "marḥaban, kayfa ḥāluk"
+      }
+    },
+    {
+      "id": "w002",
+      "order": 2,
+      "theme": "greetings",
+      "emoji": "",
+      "en": "yes",
+      "es": "sí",
+      "sr": "da",
+      "sr_cyr": "да",
+      "ar": "نعم",
+      "ar_translit": "naʿam",
+      "example": {
+        "en": "Yes, please.",
+        "es": "Sí, por favor.",
+        "sr": "Da, molim.",
+        "sr_cyr": "Да, молим.",
+        "ar": "نعم، من فضلك.",
+        "ar_translit": "naʿam, min faḍlik"
+      }
+    },
+    {
+      "id": "w003",
+      "order": 3,
+      "theme": "greetings",
+      "emoji": "",
+      "en": "no",
+      "es": "no",
+      "sr": "ne",
+      "sr_cyr": "не",
+      "ar": "لا",
+      "ar_translit": "lā",
+      "example": {
+        "en": "No, thank you.",
+        "es": "No, gracias.",
+        "sr": "Ne, hvala.",
+        "sr_cyr": "Не, хвала.",
+        "ar": "لا، شكراً.",
+        "ar_translit": "lā, shukran"
+      }
+    },
+    {
+      "id": "w004",
+      "order": 4,
+      "theme": "greetings",
+      "emoji": "🙏",
+      "en": "thank you",
+      "es": "gracias",
+      "sr": "hvala",
+      "sr_cyr": "хвала",
+      "ar": "شكراً",
+      "ar_translit": "shukran",
+      "example": {
+        "en": "Thank you very much.",
+        "es": "Muchas gracias.",
+        "sr": "Hvala puno.",
+        "sr_cyr": "Хвала пуно.",
+        "ar": "شكراً جزيلاً.",
+        "ar_translit": "shukran jazīlan"
+      }
+    },
+    {
+      "id": "w005",
+      "order": 5,
+      "theme": "greetings",
+      "emoji": "",
+      "en": "please",
+      "es": "por favor",
+      "sr": "molim",
+      "sr_cyr": "молим",
+      "ar": "من فضلك",
+      "ar_translit": "min faḍlik",
+      "example": {
+        "en": "Water, please.",
+        "es": "Agua, por favor.",
+        "sr": "Vodu, molim.",
+        "sr_cyr": "Воду, молим.",
+        "ar": "ماء، من فضلك.",
+        "ar_translit": "māʾ, min faḍlik"
+      }
+    },
+    {
+      "id": "w006",
+      "order": 6,
+      "theme": "pronouns",
+      "emoji": "",
+      "en": "I",
+      "es": "yo",
+      "sr": "ja",
+      "sr_cyr": "ја",
+      "ar": "أنا",
+      "ar_translit": "anā",
+      "example": {
+        "en": "I am here.",
+        "es": "Yo estoy aquí.",
+        "sr": "Ja sam ovde.",
+        "sr_cyr": "Ја сам овде.",
+        "ar": "أنا هنا.",
+        "ar_translit": "anā hunā"
+      }
+    },
+    {
+      "id": "w007",
+      "order": 7,
+      "theme": "pronouns",
+      "emoji": "",
+      "en": "you",
+      "es": "tú",
+      "sr": "ti",
+      "sr_cyr": "ти",
+      "ar": "أنتَ",
+      "ar_translit": "anta",
+      "example": {
+        "en": "You are kind.",
+        "es": "Tú eres amable.",
+        "sr": "Ti si ljubazan.",
+        "sr_cyr": "Ти си љубазан.",
+        "ar": "أنتَ لطيف.",
+        "ar_translit": "anta laṭīf"
+      }
+    },
+    {
+      "id": "w008",
+      "order": 8,
+      "theme": "pronouns",
+      "emoji": "",
+      "en": "he",
+      "es": "él",
+      "sr": "on",
+      "sr_cyr": "он",
+      "ar": "هو",
+      "ar_translit": "huwa",
+      "example": {
+        "en": "He is here.",
+        "es": "Él está aquí.",
+        "sr": "On je ovde.",
+        "sr_cyr": "Он је овде.",
+        "ar": "هو هنا.",
+        "ar_translit": "huwa hunā"
+      }
+    },
+    {
+      "id": "w009",
+      "order": 9,
+      "theme": "pronouns",
+      "emoji": "",
+      "en": "she",
+      "es": "ella",
+      "sr": "ona",
+      "sr_cyr": "она",
+      "ar": "هي",
+      "ar_translit": "hiya",
+      "example": {
+        "en": "She is happy.",
+        "es": "Ella está feliz.",
+        "sr": "Ona je srećna.",
+        "sr_cyr": "Она је срећна.",
+        "ar": "هي سعيدة.",
+        "ar_translit": "hiya saʿīda"
+      }
+    },
+    {
+      "id": "w010",
+      "order": 10,
+      "theme": "pronouns",
+      "emoji": "",
+      "en": "we",
+      "es": "nosotros",
+      "sr": "mi",
+      "sr_cyr": "ми",
+      "ar": "نحن",
+      "ar_translit": "naḥnu",
+      "example": {
+        "en": "We are friends.",
+        "es": "Nosotros somos amigos.",
+        "sr": "Mi smo prijatelji.",
+        "sr_cyr": "Ми смо пријатељи.",
+        "ar": "نحن أصدقاء.",
+        "ar_translit": "naḥnu aṣdiqāʾ"
+      }
+    },
+    {
+      "id": "w011",
+      "order": 11,
+      "theme": "questions",
+      "emoji": "",
+      "en": "what",
+      "es": "qué",
+      "sr": "šta",
+      "sr_cyr": "шта",
+      "ar": "ماذا",
+      "ar_translit": "mādhā",
+      "example": {
+        "en": "What is this?",
+        "es": "¿Qué es esto?",
+        "sr": "Šta je ovo?",
+        "sr_cyr": "Шта је ово?",
+        "ar": "ما هذا؟",
+        "ar_translit": "mā hādhā?"
+      }
+    },
+    {
+      "id": "w012",
+      "order": 12,
+      "theme": "questions",
+      "emoji": "",
+      "en": "where",
+      "es": "dónde",
+      "sr": "gde",
+      "sr_cyr": "где",
+      "ar": "أين",
+      "ar_translit": "ayna",
+      "example": {
+        "en": "Where is the house?",
+        "es": "¿Dónde está la casa?",
+        "sr": "Gde je kuća?",
+        "sr_cyr": "Где је кућа?",
+        "ar": "أين البيت؟",
+        "ar_translit": "ayna al-bayt?"
+      }
+    },
+    {
+      "id": "w013",
+      "order": 13,
+      "theme": "questions",
+      "emoji": "",
+      "en": "when",
+      "es": "cuándo",
+      "sr": "kada",
+      "sr_cyr": "када",
+      "ar": "متى",
+      "ar_translit": "matā",
+      "example": {
+        "en": "When do you come?",
+        "es": "¿Cuándo vienes?",
+        "sr": "Kada dolaziš?",
+        "sr_cyr": "Када долазиш?",
+        "ar": "متى تأتي؟",
+        "ar_translit": "matā taʾtī?"
+      }
+    },
+    {
+      "id": "w014",
+      "order": 14,
+      "theme": "questions",
+      "emoji": "",
+      "en": "who",
+      "es": "quién",
+      "sr": "ko",
+      "sr_cyr": "ко",
+      "ar": "مَن",
+      "ar_translit": "man",
+      "example": {
+        "en": "Who is this?",
+        "es": "¿Quién es?",
+        "sr": "Ko je ovo?",
+        "sr_cyr": "Ко је ово?",
+        "ar": "من هذا؟",
+        "ar_translit": "man hādhā?"
+      }
+    },
+    {
+      "id": "w015",
+      "order": 15,
+      "theme": "questions",
+      "emoji": "",
+      "en": "how",
+      "es": "cómo",
+      "sr": "kako",
+      "sr_cyr": "како",
+      "ar": "كيف",
+      "ar_translit": "kayfa",
+      "example": {
+        "en": "How are you?",
+        "es": "¿Cómo estás?",
+        "sr": "Kako si?",
+        "sr_cyr": "Како си?",
+        "ar": "كيف حالك؟",
+        "ar_translit": "kayfa ḥāluk?"
+      }
+    },
+    {
+      "id": "w016",
+      "order": 16,
+      "theme": "questions",
+      "emoji": "",
+      "en": "why",
+      "es": "por qué",
+      "sr": "zašto",
+      "sr_cyr": "зашто",
+      "ar": "لماذا",
+      "ar_translit": "limādhā",
+      "example": {
+        "en": "Why not?",
+        "es": "¿Por qué no?",
+        "sr": "Zašto ne?",
+        "sr_cyr": "Зашто не?",
+        "ar": "لماذا لا؟",
+        "ar_translit": "limādhā lā?"
+      }
+    },
+    {
+      "id": "w017",
+      "order": 17,
+      "theme": "verbs_basic",
+      "emoji": "",
+      "en": "I want",
+      "es": "quiero",
+      "sr": "želim",
+      "sr_cyr": "желим",
+      "ar": "أريد",
+      "ar_translit": "urīdu",
+      "example": {
+        "en": "I want coffee.",
+        "es": "Quiero café.",
+        "sr": "Želim kafu.",
+        "sr_cyr": "Желим кафу.",
+        "ar": "أريد قهوة.",
+        "ar_translit": "urīdu qahwa"
+      }
+    },
+    {
+      "id": "w018",
+      "order": 18,
+      "theme": "verbs_basic",
+      "emoji": "🚶",
+      "en": "I go",
+      "es": "voy",
+      "sr": "idem",
+      "sr_cyr": "идем",
+      "ar": "أذهب",
+      "ar_translit": "adhhabu",
+      "example": {
+        "en": "I go to school.",
+        "es": "Voy a la escuela.",
+        "sr": "Idem u školu.",
+        "sr_cyr": "Идем у школу.",
+        "ar": "أذهب إلى المدرسة.",
+        "ar_translit": "adhhabu ilā al-madrasa"
+      }
+    },
+    {
+      "id": "w019",
+      "order": 19,
+      "theme": "verbs_basic",
+      "emoji": "🍽️",
+      "en": "I eat",
+      "es": "como",
+      "sr": "jedem",
+      "sr_cyr": "једем",
+      "ar": "آكل",
+      "ar_translit": "ākulu",
+      "example": {
+        "en": "I eat bread.",
+        "es": "Como pan.",
+        "sr": "Jedem hleb.",
+        "sr_cyr": "Једем хлеб.",
+        "ar": "آكل الخبز.",
+        "ar_translit": "ākulu al-khubz"
+      }
+    },
+    {
+      "id": "w020",
+      "order": 20,
+      "theme": "food_drink",
+      "emoji": "💧",
+      "en": "water",
+      "es": "agua",
+      "sr": "voda",
+      "sr_cyr": "вода",
+      "ar": "ماء",
+      "ar_translit": "māʾ",
+      "example": {
+        "en": "A glass of water, please.",
+        "es": "Un vaso de agua, por favor.",
+        "sr": "Čašu vode, molim.",
+        "sr_cyr": "Чашу воде, молим.",
+        "ar": "كأس ماء، من فضلك.",
+        "ar_translit": "kaʾs māʾ, min faḍlik"
+      }
+    },
+    {
+      "id": "w021",
+      "order": 21,
+      "theme": "food_drink",
+      "emoji": "🥘",
+      "en": "food",
+      "es": "comida",
+      "sr": "hrana",
+      "sr_cyr": "храна",
+      "ar": "طعام",
+      "ar_translit": "ṭaʿām",
+      "example": {
+        "en": "Good food.",
+        "es": "Buena comida.",
+        "sr": "Dobra hrana.",
+        "sr_cyr": "Добра храна.",
+        "ar": "طعام جيد.",
+        "ar_translit": "ṭaʿām jayyid"
+      }
+    },
+    {
+      "id": "w022",
+      "order": 22,
+      "theme": "home",
+      "emoji": "🏠",
+      "en": "house",
+      "es": "casa",
+      "sr": "kuća",
+      "sr_cyr": "кућа",
+      "ar": "بيت",
+      "ar_translit": "bayt",
+      "example": {
+        "en": "My house is here.",
+        "es": "Mi casa está aquí.",
+        "sr": "Moja kuća je ovde.",
+        "sr_cyr": "Моја кућа је овде.",
+        "ar": "بيتي هنا.",
+        "ar_translit": "baytī hunā"
+      }
+    },
+    {
+      "id": "w023",
+      "order": 23,
+      "theme": "time",
+      "emoji": "☀️",
+      "en": "day",
+      "es": "día",
+      "sr": "dan",
+      "sr_cyr": "дан",
+      "ar": "يوم",
+      "ar_translit": "yawm",
+      "example": {
+        "en": "A nice day.",
+        "es": "Un día agradable.",
+        "sr": "Lep dan.",
+        "sr_cyr": "Леп дан.",
+        "ar": "يوم جميل.",
+        "ar_translit": "yawm jamīl"
+      }
+    },
+    {
+      "id": "w024",
+      "order": 24,
+      "theme": "time",
+      "emoji": "📅",
+      "en": "today",
+      "es": "hoy",
+      "sr": "danas",
+      "sr_cyr": "данас",
+      "ar": "اليوم",
+      "ar_translit": "al-yawm",
+      "example": {
+        "en": "Today is Monday.",
+        "es": "Hoy es lunes.",
+        "sr": "Danas je ponedeljak.",
+        "sr_cyr": "Данас је понедељак.",
+        "ar": "اليوم الإثنين.",
+        "ar_translit": "al-yawm al-ithnayn"
+      }
+    },
+    {
+      "id": "w025",
+      "order": 25,
+      "theme": "numbers",
+      "emoji": "1️⃣",
+      "en": "one",
+      "es": "uno",
+      "sr": "jedan",
+      "sr_cyr": "један",
+      "ar": "واحد",
+      "ar_translit": "wāḥid",
+      "example": {
+        "en": "One coffee, please.",
+        "es": "Un café, por favor.",
+        "sr": "Jednu kafu, molim.",
+        "sr_cyr": "Једну кафу, молим.",
+        "ar": "قهوة واحدة، من فضلك.",
+        "ar_translit": "qahwa wāḥida, min faḍlik"
+      }
+    },
+    {
+      "id": "w026",
+      "order": 26,
+      "theme": "numbers",
+      "emoji": "2️⃣",
+      "en": "two",
+      "es": "dos",
+      "sr": "dva",
+      "sr_cyr": "два",
+      "ar": "اثنان",
+      "ar_translit": "ithnān",
+      "example": {
+        "en": "Two days.",
+        "es": "Dos días.",
+        "sr": "Dva dana.",
+        "sr_cyr": "Два дана.",
+        "ar": "يومان.",
+        "ar_translit": "yawmān"
+      }
+    },
+    {
+      "id": "w027",
+      "order": 27,
+      "theme": "people",
+      "emoji": "🏷️",
+      "en": "name",
+      "es": "nombre",
+      "sr": "ime",
+      "sr_cyr": "име",
+      "ar": "اسم",
+      "ar_translit": "ism",
+      "example": {
+        "en": "My name is Sara.",
+        "es": "Mi nombre es Sara.",
+        "sr": "Moje ime je Sara.",
+        "sr_cyr": "Моје име је Сара.",
+        "ar": "اسمي سارة.",
+        "ar_translit": "ismī sāra"
+      }
+    },
+    {
+      "id": "w028",
+      "order": 28,
+      "theme": "people",
+      "emoji": "🧍",
+      "en": "person",
+      "es": "persona",
+      "sr": "osoba",
+      "sr_cyr": "особа",
+      "ar": "شخص",
+      "ar_translit": "shakhṣ",
+      "example": {
+        "en": "A good person.",
+        "es": "Una buena persona.",
+        "sr": "Dobra osoba.",
+        "sr_cyr": "Добра особа.",
+        "ar": "شخص جيد.",
+        "ar_translit": "shakhṣ jayyid"
+      }
+    },
+    {
+      "id": "w029",
+      "order": 29,
+      "theme": "qualities",
+      "emoji": "👍",
+      "en": "good",
+      "es": "bueno",
+      "sr": "dobar",
+      "sr_cyr": "добар",
+      "ar": "جيد",
+      "ar_translit": "jayyid",
+      "example": {
+        "en": "Good morning.",
+        "es": "Buenos días.",
+        "sr": "Dobro jutro.",
+        "sr_cyr": "Добро јутро.",
+        "ar": "صباح الخير.",
+        "ar_translit": "ṣabāḥ al-khayr"
+      }
+    },
+    {
+      "id": "w030",
+      "order": 30,
+      "theme": "home",
+      "emoji": "📚",
+      "en": "book",
+      "es": "libro",
+      "sr": "knjiga",
+      "sr_cyr": "књига",
+      "ar": "كتاب",
+      "ar_translit": "kitāb",
+      "example": {
+        "en": "A new book.",
+        "es": "Un libro nuevo.",
+        "sr": "Nova knjiga.",
+        "sr_cyr": "Нова књига.",
+        "ar": "كتاب جديد.",
+        "ar_translit": "kitāb jadīd"
+      }
+    },
+    {
+      "id": "w031",
+      "order": 31,
+      "theme": "greetings",
+      "emoji": "👋",
+      "en": "goodbye",
+      "es": "adiós",
+      "sr": "doviđenja",
+      "sr_cyr": "довиђења",
+      "ar": "مع السلامة",
+      "ar_translit": "maʿa al-salāma",
+      "example": {
+        "en": "Goodbye, see you tomorrow.",
+        "es": "Adiós, hasta mañana.",
+        "sr": "Doviđenja, vidimo se sutra.",
+        "sr_cyr": "Довиђења, видимо се сутра.",
+        "ar": "مع السلامة، إلى الغد.",
+        "ar_translit": "maʿa al-salāma, ilā al-ghad"
+      }
+    },
+    {
+      "id": "w032",
+      "order": 32,
+      "theme": "greetings",
+      "emoji": "🌅",
+      "en": "good morning",
+      "es": "buenos días",
+      "sr": "dobro jutro",
+      "sr_cyr": "добро јутро",
+      "ar": "صباح الخير",
+      "ar_translit": "ṣabāḥ al-khayr",
+      "example": {
+        "en": "Good morning, friend.",
+        "es": "Buenos días, amigo.",
+        "sr": "Dobro jutro, prijatelju.",
+        "sr_cyr": "Добро јутро, пријатељу.",
+        "ar": "صباح الخير، يا صديقي.",
+        "ar_translit": "ṣabāḥ al-khayr, yā ṣadīqī"
+      }
+    },
+    {
+      "id": "w033",
+      "order": 33,
+      "theme": "greetings",
+      "emoji": "🌆",
+      "en": "good evening",
+      "es": "buenas tardes",
+      "sr": "dobro veče",
+      "sr_cyr": "добро вече",
+      "ar": "مساء الخير",
+      "ar_translit": "masāʾ al-khayr",
+      "example": {
+        "en": "Good evening, everyone.",
+        "es": "Buenas tardes, a todos.",
+        "sr": "Dobro veče, svima.",
+        "sr_cyr": "Добро вече, свима.",
+        "ar": "مساء الخير، للجميع.",
+        "ar_translit": "masāʾ al-khayr, lil-jamīʿ"
+      }
+    },
+    {
+      "id": "w034",
+      "order": 34,
+      "theme": "greetings",
+      "emoji": "",
+      "en": "sorry",
+      "es": "lo siento",
+      "sr": "izvini",
+      "sr_cyr": "извини",
+      "ar": "آسف",
+      "ar_translit": "āsif",
+      "example": {
+        "en": "I'm sorry, I'm late.",
+        "es": "Lo siento, llego tarde.",
+        "sr": "Izvini, kasnim.",
+        "sr_cyr": "Извини, касним.",
+        "ar": "آسف، أنا متأخر.",
+        "ar_translit": "āsif, anā mutaʾakhkhir"
+      }
+    },
+    {
+      "id": "w035",
+      "order": 35,
+      "theme": "greetings",
+      "emoji": "",
+      "en": "you're welcome",
+      "es": "de nada",
+      "sr": "nema na čemu",
+      "sr_cyr": "нема на чему",
+      "ar": "عفواً",
+      "ar_translit": "ʿafwan",
+      "example": {
+        "en": "You're very welcome.",
+        "es": "De nada, en serio.",
+        "sr": "Nema na čemu, stvarno.",
+        "sr_cyr": "Нема на чему, стварно.",
+        "ar": "عفواً، حقاً.",
+        "ar_translit": "ʿafwan, ḥaqqan"
+      }
+    },
+    {
+      "id": "w036",
+      "order": 36,
+      "theme": "pronouns",
+      "emoji": "",
+      "en": "you (plural)",
+      "es": "vosotros",
+      "sr": "vi",
+      "sr_cyr": "ви",
+      "ar": "أنتم",
+      "ar_translit": "antum",
+      "example": {
+        "en": "You are all friends.",
+        "es": "Vosotros sois amigos.",
+        "sr": "Vi ste prijatelji.",
+        "sr_cyr": "Ви сте пријатељи.",
+        "ar": "أنتم أصدقاء.",
+        "ar_translit": "antum aṣdiqāʾ"
+      }
+    },
+    {
+      "id": "w037",
+      "order": 37,
+      "theme": "pronouns",
+      "emoji": "",
+      "en": "they (m)",
+      "es": "ellos",
+      "sr": "oni",
+      "sr_cyr": "они",
+      "ar": "هم",
+      "ar_translit": "hum",
+      "example": {
+        "en": "They are coming.",
+        "es": "Ellos vienen.",
+        "sr": "Oni dolaze.",
+        "sr_cyr": "Они долазе.",
+        "ar": "هم قادمون.",
+        "ar_translit": "hum qādimūn"
+      }
+    },
+    {
+      "id": "w038",
+      "order": 38,
+      "theme": "pronouns",
+      "emoji": "",
+      "en": "they (f)",
+      "es": "ellas",
+      "sr": "one",
+      "sr_cyr": "оне",
+      "ar": "هن",
+      "ar_translit": "hunna",
+      "example": {
+        "en": "They are coming.",
+        "es": "Ellas vienen.",
+        "sr": "One dolaze.",
+        "sr_cyr": "Оне долазе.",
+        "ar": "هن قادمات.",
+        "ar_translit": "hunna qādimāt"
+      }
+    },
+    {
+      "id": "w039",
+      "order": 39,
+      "theme": "pronouns",
+      "emoji": "",
+      "en": "this",
+      "es": "esto",
+      "sr": "ovo",
+      "sr_cyr": "ово",
+      "ar": "هذا",
+      "ar_translit": "hādhā",
+      "example": {
+        "en": "This is good.",
+        "es": "Esto es bueno.",
+        "sr": "Ovo je dobro.",
+        "sr_cyr": "Ово је добро.",
+        "ar": "هذا جيد.",
+        "ar_translit": "hādhā jayyid"
+      }
+    },
+    {
+      "id": "w040",
+      "order": 40,
+      "theme": "pronouns",
+      "emoji": "",
+      "en": "that",
+      "es": "eso",
+      "sr": "to",
+      "sr_cyr": "то",
+      "ar": "ذلك",
+      "ar_translit": "dhālika",
+      "example": {
+        "en": "That is mine.",
+        "es": "Eso es mío.",
+        "sr": "To je moje.",
+        "sr_cyr": "То је моје.",
+        "ar": "ذلك لي.",
+        "ar_translit": "dhālika lī"
+      }
+    },
+    {
+      "id": "w041",
+      "order": 41,
+      "theme": "questions",
+      "emoji": "",
+      "en": "which",
+      "es": "cuál",
+      "sr": "koji",
+      "sr_cyr": "који",
+      "ar": "أي",
+      "ar_translit": "ayy",
+      "example": {
+        "en": "Which one?",
+        "es": "¿Cuál?",
+        "sr": "Koji?",
+        "sr_cyr": "Који?",
+        "ar": "أي واحد؟",
+        "ar_translit": "ayy wāḥid?"
+      }
+    },
+    {
+      "id": "w042",
+      "order": 42,
+      "theme": "questions",
+      "emoji": "",
+      "en": "how much",
+      "es": "cuánto",
+      "sr": "koliko",
+      "sr_cyr": "колико",
+      "ar": "كم",
+      "ar_translit": "kam",
+      "example": {
+        "en": "How much is it?",
+        "es": "¿Cuánto cuesta?",
+        "sr": "Koliko košta?",
+        "sr_cyr": "Колико кошта?",
+        "ar": "كم الثمن؟",
+        "ar_translit": "kam al-thaman?"
+      }
+    },
+    {
+      "id": "w043",
+      "order": 43,
+      "theme": "questions",
+      "emoji": "",
+      "en": "whose",
+      "es": "de quién",
+      "sr": "čiji",
+      "sr_cyr": "чији",
+      "ar": "لمن",
+      "ar_translit": "liman",
+      "example": {
+        "en": "Whose book is this?",
+        "es": "¿De quién es este libro?",
+        "sr": "Čija je ova knjiga?",
+        "sr_cyr": "Чија је ова књига?",
+        "ar": "لمن هذا الكتاب؟",
+        "ar_translit": "liman hādhā al-kitāb?"
+      }
+    },
+    {
+      "id": "w044",
+      "order": 44,
+      "theme": "numbers",
+      "emoji": "3️⃣",
+      "en": "three",
+      "es": "tres",
+      "sr": "tri",
+      "sr_cyr": "три",
+      "ar": "ثلاثة",
+      "ar_translit": "thalātha",
+      "example": {
+        "en": "Three children.",
+        "es": "Tres niños.",
+        "sr": "Troje dece.",
+        "sr_cyr": "Троје деце.",
+        "ar": "ثلاثة أطفال.",
+        "ar_translit": "thalāthat aṭfāl"
+      }
+    },
+    {
+      "id": "w045",
+      "order": 45,
+      "theme": "numbers",
+      "emoji": "4️⃣",
+      "en": "four",
+      "es": "cuatro",
+      "sr": "četiri",
+      "sr_cyr": "четири",
+      "ar": "أربعة",
+      "ar_translit": "arbaʿa",
+      "example": {
+        "en": "Four rooms.",
+        "es": "Cuatro habitaciones.",
+        "sr": "Četiri sobe.",
+        "sr_cyr": "Четири собе.",
+        "ar": "أربع غرف.",
+        "ar_translit": "arbaʿ ghuraf"
+      }
+    },
+    {
+      "id": "w046",
+      "order": 46,
+      "theme": "numbers",
+      "emoji": "5️⃣",
+      "en": "five",
+      "es": "cinco",
+      "sr": "pet",
+      "sr_cyr": "пет",
+      "ar": "خمسة",
+      "ar_translit": "khamsa",
+      "example": {
+        "en": "Five fingers.",
+        "es": "Cinco dedos.",
+        "sr": "Pet prstiju.",
+        "sr_cyr": "Пет прстију.",
+        "ar": "خمسة أصابع.",
+        "ar_translit": "khamsat aṣābiʿ"
+      }
+    },
+    {
+      "id": "w047",
+      "order": 47,
+      "theme": "numbers",
+      "emoji": "6️⃣",
+      "en": "six",
+      "es": "seis",
+      "sr": "šest",
+      "sr_cyr": "шест",
+      "ar": "ستة",
+      "ar_translit": "sitta",
+      "example": {
+        "en": "Six hours.",
+        "es": "Seis horas.",
+        "sr": "Šest sati.",
+        "sr_cyr": "Шест сати.",
+        "ar": "ست ساعات.",
+        "ar_translit": "sitt sāʿāt"
+      }
+    },
+    {
+      "id": "w048",
+      "order": 48,
+      "theme": "numbers",
+      "emoji": "7️⃣",
+      "en": "seven",
+      "es": "siete",
+      "sr": "sedam",
+      "sr_cyr": "седам",
+      "ar": "سبعة",
+      "ar_translit": "sabʿa",
+      "example": {
+        "en": "Seven days.",
+        "es": "Siete días.",
+        "sr": "Sedam dana.",
+        "sr_cyr": "Седам дана.",
+        "ar": "سبعة أيام.",
+        "ar_translit": "sabʿat ayyām"
+      }
+    },
+    {
+      "id": "w049",
+      "order": 49,
+      "theme": "numbers",
+      "emoji": "8️⃣",
+      "en": "eight",
+      "es": "ocho",
+      "sr": "osam",
+      "sr_cyr": "осам",
+      "ar": "ثمانية",
+      "ar_translit": "thamāniya",
+      "example": {
+        "en": "Eight people.",
+        "es": "Ocho personas.",
+        "sr": "Osam osoba.",
+        "sr_cyr": "Осам особа.",
+        "ar": "ثمانية أشخاص.",
+        "ar_translit": "thamāniyat ashkhāṣ"
+      }
+    },
+    {
+      "id": "w050",
+      "order": 50,
+      "theme": "numbers",
+      "emoji": "9️⃣",
+      "en": "nine",
+      "es": "nueve",
+      "sr": "devet",
+      "sr_cyr": "девет",
+      "ar": "تسعة",
+      "ar_translit": "tisʿa",
+      "example": {
+        "en": "Nine books.",
+        "es": "Nueve libros.",
+        "sr": "Devet knjiga.",
+        "sr_cyr": "Девет књига.",
+        "ar": "تسعة كتب.",
+        "ar_translit": "tisʿat kutub"
+      }
+    },
+    {
+      "id": "w051",
+      "order": 51,
+      "theme": "numbers",
+      "emoji": "🔟",
+      "en": "ten",
+      "es": "diez",
+      "sr": "deset",
+      "sr_cyr": "десет",
+      "ar": "عشرة",
+      "ar_translit": "ʿashara",
+      "example": {
+        "en": "Ten minutes.",
+        "es": "Diez minutos.",
+        "sr": "Deset minuta.",
+        "sr_cyr": "Десет минута.",
+        "ar": "عشر دقائق.",
+        "ar_translit": "ʿashar daqāʾiq"
+      }
+    },
+    {
+      "id": "w052",
+      "order": 52,
+      "theme": "numbers",
+      "emoji": "",
+      "en": "eleven",
+      "es": "once",
+      "sr": "jedanaest",
+      "sr_cyr": "једанаест",
+      "ar": "أحد عشر",
+      "ar_translit": "aḥada ʿashar",
+      "example": {
+        "en": "Eleven cars.",
+        "es": "Once coches.",
+        "sr": "Jedanaest auta.",
+        "sr_cyr": "Једанаест аута.",
+        "ar": "أحد عشر سيارة.",
+        "ar_translit": "aḥada ʿashar sayyāra"
+      }
+    },
+    {
+      "id": "w053",
+      "order": 53,
+      "theme": "numbers",
+      "emoji": "",
+      "en": "twelve",
+      "es": "doce",
+      "sr": "dvanaest",
+      "sr_cyr": "дванаест",
+      "ar": "اثنا عشر",
+      "ar_translit": "ithnā ʿashar",
+      "example": {
+        "en": "Twelve months.",
+        "es": "Doce meses.",
+        "sr": "Dvanaest meseci.",
+        "sr_cyr": "Дванаест месеци.",
+        "ar": "اثنا عشر شهراً.",
+        "ar_translit": "ithnā ʿashar shahran"
+      }
+    },
+    {
+      "id": "w054",
+      "order": 54,
+      "theme": "numbers",
+      "emoji": "",
+      "en": "thirteen",
+      "es": "trece",
+      "sr": "trinaest",
+      "sr_cyr": "тринаест",
+      "ar": "ثلاثة عشر",
+      "ar_translit": "thalāthata ʿashar",
+      "example": {
+        "en": "Thirteen pages.",
+        "es": "Trece páginas.",
+        "sr": "Trinaest strana.",
+        "sr_cyr": "Тринаест страна.",
+        "ar": "ثلاثة عشر صفحة.",
+        "ar_translit": "thalāthata ʿashar ṣafḥa"
+      }
+    },
+    {
+      "id": "w055",
+      "order": 55,
+      "theme": "numbers",
+      "emoji": "",
+      "en": "fourteen",
+      "es": "catorce",
+      "sr": "četrnaest",
+      "sr_cyr": "четрнаест",
+      "ar": "أربعة عشر",
+      "ar_translit": "arbaʿata ʿashar",
+      "example": {
+        "en": "Fourteen years old.",
+        "es": "Catorce años.",
+        "sr": "Četrnaest godina.",
+        "sr_cyr": "Четрнаест година.",
+        "ar": "أربعة عشر سنة.",
+        "ar_translit": "arbaʿata ʿashar sana"
+      }
+    },
+    {
+      "id": "w056",
+      "order": 56,
+      "theme": "numbers",
+      "emoji": "",
+      "en": "fifteen",
+      "es": "quince",
+      "sr": "petnaest",
+      "sr_cyr": "петнаест",
+      "ar": "خمسة عشر",
+      "ar_translit": "khamsata ʿashar",
+      "example": {
+        "en": "Fifteen minutes.",
+        "es": "Quince minutos.",
+        "sr": "Petnaest minuta.",
+        "sr_cyr": "Петнаест минута.",
+        "ar": "خمسة عشر دقيقة.",
+        "ar_translit": "khamsata ʿashar daqīqa"
+      }
+    },
+    {
+      "id": "w057",
+      "order": 57,
+      "theme": "numbers",
+      "emoji": "",
+      "en": "sixteen",
+      "es": "dieciséis",
+      "sr": "šesnaest",
+      "sr_cyr": "шеснаест",
+      "ar": "ستة عشر",
+      "ar_translit": "sittata ʿashar",
+      "example": {
+        "en": "Sixteen days.",
+        "es": "Dieciséis días.",
+        "sr": "Šesnaest dana.",
+        "sr_cyr": "Шеснаест дана.",
+        "ar": "ستة عشر يوماً.",
+        "ar_translit": "sittata ʿashar yawman"
+      }
+    },
+    {
+      "id": "w058",
+      "order": 58,
+      "theme": "numbers",
+      "emoji": "",
+      "en": "seventeen",
+      "es": "diecisiete",
+      "sr": "sedamnaest",
+      "sr_cyr": "седамнаест",
+      "ar": "سبعة عشر",
+      "ar_translit": "sabʿata ʿashar",
+      "example": {
+        "en": "Seventeen books.",
+        "es": "Diecisiete libros.",
+        "sr": "Sedamnaest knjiga.",
+        "sr_cyr": "Седамнаест књига.",
+        "ar": "سبعة عشر كتاباً.",
+        "ar_translit": "sabʿata ʿashar kitāban"
+      }
+    },
+    {
+      "id": "w059",
+      "order": 59,
+      "theme": "numbers",
+      "emoji": "",
+      "en": "eighteen",
+      "es": "dieciocho",
+      "sr": "osamnaest",
+      "sr_cyr": "осамнаест",
+      "ar": "ثمانية عشر",
+      "ar_translit": "thamāniyata ʿashar",
+      "example": {
+        "en": "Eighteen years old.",
+        "es": "Dieciocho años.",
+        "sr": "Osamnaest godina.",
+        "sr_cyr": "Осамнаест година.",
+        "ar": "ثمانية عشر سنة.",
+        "ar_translit": "thamāniyata ʿashar sana"
+      }
+    },
+    {
+      "id": "w060",
+      "order": 60,
+      "theme": "numbers",
+      "emoji": "",
+      "en": "nineteen",
+      "es": "diecinueve",
+      "sr": "devetnaest",
+      "sr_cyr": "деветнаест",
+      "ar": "تسعة عشر",
+      "ar_translit": "tisʿata ʿashar",
+      "example": {
+        "en": "Nineteen students.",
+        "es": "Diecinueve estudiantes.",
+        "sr": "Devetnaest studenata.",
+        "sr_cyr": "Деветнаест студената.",
+        "ar": "تسعة عشر طالباً.",
+        "ar_translit": "tisʿata ʿashar ṭāliban"
+      }
+    },
+    {
+      "id": "w061",
+      "order": 61,
+      "theme": "numbers",
+      "emoji": "",
+      "en": "twenty",
+      "es": "veinte",
+      "sr": "dvadeset",
+      "sr_cyr": "двадесет",
+      "ar": "عشرون",
+      "ar_translit": "ʿishrūn",
+      "example": {
+        "en": "Twenty euros.",
+        "es": "Veinte euros.",
+        "sr": "Dvadeset evra.",
+        "sr_cyr": "Двадесет евра.",
+        "ar": "عشرون يورو.",
+        "ar_translit": "ʿishrūn yūrū"
+      }
+    },
+    {
+      "id": "w062",
+      "order": 62,
+      "theme": "numbers",
+      "emoji": "",
+      "en": "hundred",
+      "es": "cien",
+      "sr": "sto",
+      "sr_cyr": "сто",
+      "ar": "مئة",
+      "ar_translit": "miʾa",
+      "example": {
+        "en": "One hundred years.",
+        "es": "Cien años.",
+        "sr": "Sto godina.",
+        "sr_cyr": "Сто година.",
+        "ar": "مئة سنة.",
+        "ar_translit": "miʾat sana"
+      }
+    },
+    {
+      "id": "w063",
+      "order": 63,
+      "theme": "time",
+      "emoji": "",
+      "en": "yesterday",
+      "es": "ayer",
+      "sr": "juče",
+      "sr_cyr": "јуче",
+      "ar": "أمس",
+      "ar_translit": "ams",
+      "example": {
+        "en": "Yesterday was sunny.",
+        "es": "Ayer hizo sol.",
+        "sr": "Juče je bilo sunčano.",
+        "sr_cyr": "Јуче је било сунчано.",
+        "ar": "أمس كان مشمساً.",
+        "ar_translit": "ams kāna mushmisan"
+      }
+    },
+    {
+      "id": "w064",
+      "order": 64,
+      "theme": "time",
+      "emoji": "",
+      "en": "tomorrow",
+      "es": "mañana",
+      "sr": "sutra",
+      "sr_cyr": "сутра",
+      "ar": "غداً",
+      "ar_translit": "ghadan",
+      "example": {
+        "en": "See you tomorrow.",
+        "es": "Hasta mañana.",
+        "sr": "Vidimo se sutra.",
+        "sr_cyr": "Видимо се сутра.",
+        "ar": "أراك غداً.",
+        "ar_translit": "arāka ghadan"
+      }
+    },
+    {
+      "id": "w065",
+      "order": 65,
+      "theme": "time",
+      "emoji": "⏰",
+      "en": "now",
+      "es": "ahora",
+      "sr": "sada",
+      "sr_cyr": "сада",
+      "ar": "الآن",
+      "ar_translit": "al-ān",
+      "example": {
+        "en": "Come now, please.",
+        "es": "Ven ahora, por favor.",
+        "sr": "Dođi sada, molim.",
+        "sr_cyr": "Дођи сада, молим.",
+        "ar": "تعال الآن، من فضلك.",
+        "ar_translit": "taʿāl al-ān, min faḍlik"
+      }
+    },
+    {
+      "id": "w066",
+      "order": 66,
+      "theme": "time",
+      "emoji": "🌅",
+      "en": "morning",
+      "es": "la mañana",
+      "sr": "jutro",
+      "sr_cyr": "јутро",
+      "ar": "صباح",
+      "ar_translit": "ṣabāḥ",
+      "example": {
+        "en": "Beautiful morning.",
+        "es": "Mañana hermosa.",
+        "sr": "Lepo jutro.",
+        "sr_cyr": "Лепо јутро.",
+        "ar": "صباح جميل.",
+        "ar_translit": "ṣabāḥ jamīl"
+      }
+    },
+    {
+      "id": "w067",
+      "order": 67,
+      "theme": "time",
+      "emoji": "🌆",
+      "en": "evening",
+      "es": "la tarde",
+      "sr": "veče",
+      "sr_cyr": "вече",
+      "ar": "مساء",
+      "ar_translit": "masāʾ",
+      "example": {
+        "en": "In the evening.",
+        "es": "Por la tarde.",
+        "sr": "Uveče.",
+        "sr_cyr": "Увече.",
+        "ar": "في المساء.",
+        "ar_translit": "fī al-masāʾ"
+      }
+    },
+    {
+      "id": "w068",
+      "order": 68,
+      "theme": "time",
+      "emoji": "🌙",
+      "en": "night",
+      "es": "la noche",
+      "sr": "noć",
+      "sr_cyr": "ноћ",
+      "ar": "ليلة",
+      "ar_translit": "layla",
+      "example": {
+        "en": "Good night.",
+        "es": "Buenas noches.",
+        "sr": "Laku noć.",
+        "sr_cyr": "Лаку ноћ.",
+        "ar": "تصبح على خير.",
+        "ar_translit": "tuṣbiḥ ʿalā khayr"
+      }
+    },
+    {
+      "id": "w069",
+      "order": 69,
+      "theme": "time",
+      "emoji": "⏳",
+      "en": "hour",
+      "es": "hora",
+      "sr": "sat",
+      "sr_cyr": "сат",
+      "ar": "ساعة",
+      "ar_translit": "sāʿa",
+      "example": {
+        "en": "One hour.",
+        "es": "Una hora.",
+        "sr": "Jedan sat.",
+        "sr_cyr": "Један сат.",
+        "ar": "ساعة واحدة.",
+        "ar_translit": "sāʿa wāḥida"
+      }
+    },
+    {
+      "id": "w070",
+      "order": 70,
+      "theme": "time",
+      "emoji": "",
+      "en": "minute",
+      "es": "minuto",
+      "sr": "minut",
+      "sr_cyr": "минут",
+      "ar": "دقيقة",
+      "ar_translit": "daqīqa",
+      "example": {
+        "en": "Five minutes.",
+        "es": "Cinco minutos.",
+        "sr": "Pet minuta.",
+        "sr_cyr": "Пет минута.",
+        "ar": "خمس دقائق.",
+        "ar_translit": "khams daqāʾiq"
+      }
+    },
+    {
+      "id": "w071",
+      "order": 71,
+      "theme": "time",
+      "emoji": "",
+      "en": "week",
+      "es": "semana",
+      "sr": "nedelja",
+      "sr_cyr": "недеља",
+      "ar": "أسبوع",
+      "ar_translit": "usbūʿ",
+      "example": {
+        "en": "Next week.",
+        "es": "La próxima semana.",
+        "sr": "Sledeće nedelje.",
+        "sr_cyr": "Следеће недеље.",
+        "ar": "الأسبوع القادم.",
+        "ar_translit": "al-usbūʿ al-qādim"
+      }
+    },
+    {
+      "id": "w072",
+      "order": 72,
+      "theme": "time",
+      "emoji": "",
+      "en": "month",
+      "es": "mes",
+      "sr": "mesec",
+      "sr_cyr": "месец",
+      "ar": "شهر",
+      "ar_translit": "shahr",
+      "example": {
+        "en": "Last month.",
+        "es": "El mes pasado.",
+        "sr": "Prošli mesec.",
+        "sr_cyr": "Прошли месец.",
+        "ar": "الشهر الماضي.",
+        "ar_translit": "al-shahr al-māḍī"
+      }
+    },
+    {
+      "id": "w073",
+      "order": 73,
+      "theme": "time",
+      "emoji": "",
+      "en": "year",
+      "es": "año",
+      "sr": "godina",
+      "sr_cyr": "година",
+      "ar": "سنة",
+      "ar_translit": "sana",
+      "example": {
+        "en": "This year.",
+        "es": "Este año.",
+        "sr": "Ove godine.",
+        "sr_cyr": "Ове године.",
+        "ar": "هذه السنة.",
+        "ar_translit": "hādhihi al-sana"
+      }
+    },
+    {
+      "id": "w074",
+      "order": 74,
+      "theme": "time",
+      "emoji": "",
+      "en": "Monday",
+      "es": "lunes",
+      "sr": "ponedeljak",
+      "sr_cyr": "понедељак",
+      "ar": "الإثنين",
+      "ar_translit": "al-ithnayn",
+      "example": {
+        "en": "See you Monday.",
+        "es": "Hasta el lunes.",
+        "sr": "Vidimo se u ponedeljak.",
+        "sr_cyr": "Видимо се у понедељак.",
+        "ar": "أراك يوم الإثنين.",
+        "ar_translit": "arāka yawm al-ithnayn"
+      }
+    },
+    {
+      "id": "w075",
+      "order": 75,
+      "theme": "time",
+      "emoji": "",
+      "en": "Tuesday",
+      "es": "martes",
+      "sr": "utorak",
+      "sr_cyr": "уторак",
+      "ar": "الثلاثاء",
+      "ar_translit": "al-thulāthāʾ",
+      "example": {
+        "en": "On Tuesday.",
+        "es": "El martes.",
+        "sr": "U utorak.",
+        "sr_cyr": "У уторак.",
+        "ar": "يوم الثلاثاء.",
+        "ar_translit": "yawm al-thulāthāʾ"
+      }
+    },
+    {
+      "id": "w076",
+      "order": 76,
+      "theme": "time",
+      "emoji": "",
+      "en": "Wednesday",
+      "es": "miércoles",
+      "sr": "sreda",
+      "sr_cyr": "среда",
+      "ar": "الأربعاء",
+      "ar_translit": "al-arbiʿāʾ",
+      "example": {
+        "en": "Wednesday morning.",
+        "es": "El miércoles por la mañana.",
+        "sr": "Sreda ujutru.",
+        "sr_cyr": "Среда ујутру.",
+        "ar": "صباح الأربعاء.",
+        "ar_translit": "ṣabāḥ al-arbiʿāʾ"
+      }
+    },
+    {
+      "id": "w077",
+      "order": 77,
+      "theme": "time",
+      "emoji": "",
+      "en": "Thursday",
+      "es": "jueves",
+      "sr": "četvrtak",
+      "sr_cyr": "четвртак",
+      "ar": "الخميس",
+      "ar_translit": "al-khamīs",
+      "example": {
+        "en": "Thursday evening.",
+        "es": "El jueves por la tarde.",
+        "sr": "Četvrtak uveče.",
+        "sr_cyr": "Четвртак увече.",
+        "ar": "مساء الخميس.",
+        "ar_translit": "masāʾ al-khamīs"
+      }
+    },
+    {
+      "id": "w078",
+      "order": 78,
+      "theme": "time",
+      "emoji": "",
+      "en": "Friday",
+      "es": "viernes",
+      "sr": "petak",
+      "sr_cyr": "петак",
+      "ar": "الجمعة",
+      "ar_translit": "al-jumʿa",
+      "example": {
+        "en": "Happy Friday.",
+        "es": "Feliz viernes.",
+        "sr": "Srećan petak.",
+        "sr_cyr": "Срећан петак.",
+        "ar": "جمعة مباركة.",
+        "ar_translit": "jumʿa mubāraka"
+      }
+    },
+    {
+      "id": "w079",
+      "order": 79,
+      "theme": "time",
+      "emoji": "",
+      "en": "Saturday",
+      "es": "sábado",
+      "sr": "subota",
+      "sr_cyr": "субота",
+      "ar": "السبت",
+      "ar_translit": "al-sabt",
+      "example": {
+        "en": "On Saturday.",
+        "es": "El sábado.",
+        "sr": "U subotu.",
+        "sr_cyr": "У суботу.",
+        "ar": "يوم السبت.",
+        "ar_translit": "yawm al-sabt"
+      }
+    },
+    {
+      "id": "w080",
+      "order": 80,
+      "theme": "time",
+      "emoji": "",
+      "en": "Sunday",
+      "es": "domingo",
+      "sr": "nedelja",
+      "sr_cyr": "недеља",
+      "ar": "الأحد",
+      "ar_translit": "al-aḥad",
+      "example": {
+        "en": "Sunday is a rest day.",
+        "es": "El domingo es día de descanso.",
+        "sr": "Nedelja je dan odmora.",
+        "sr_cyr": "Недеља је дан одмора.",
+        "ar": "الأحد يوم راحة.",
+        "ar_translit": "al-aḥad yawm rāḥa"
+      }
+    },
+    {
+      "id": "w081",
+      "order": 81,
+      "theme": "time",
+      "emoji": "",
+      "en": "early",
+      "es": "temprano",
+      "sr": "rano",
+      "sr_cyr": "рано",
+      "ar": "مبكراً",
+      "ar_translit": "mubakkiran",
+      "example": {
+        "en": "I get up early.",
+        "es": "Me levanto temprano.",
+        "sr": "Ustajem rano.",
+        "sr_cyr": "Устајем рано.",
+        "ar": "أستيقظ مبكراً.",
+        "ar_translit": "astayqiẓ mubakkiran"
+      }
+    },
+    {
+      "id": "w082",
+      "order": 82,
+      "theme": "time",
+      "emoji": "",
+      "en": "late",
+      "es": "tarde",
+      "sr": "kasno",
+      "sr_cyr": "касно",
+      "ar": "متأخراً",
+      "ar_translit": "mutaʾakhkhiran",
+      "example": {
+        "en": "I am late.",
+        "es": "Llego tarde.",
+        "sr": "Kasnim.",
+        "sr_cyr": "Касним.",
+        "ar": "أنا متأخر.",
+        "ar_translit": "anā mutaʾakhkhir"
+      }
+    },
+    {
+      "id": "w083",
+      "order": 83,
+      "theme": "food_drink",
+      "emoji": "🍞",
+      "en": "bread",
+      "es": "pan",
+      "sr": "hleb",
+      "sr_cyr": "хлеб",
+      "ar": "خبز",
+      "ar_translit": "khubz",
+      "example": {
+        "en": "Fresh bread.",
+        "es": "Pan fresco.",
+        "sr": "Svež hleb.",
+        "sr_cyr": "Свеж хлеб.",
+        "ar": "خبز طازج.",
+        "ar_translit": "khubz ṭāzaj"
+      }
+    },
+    {
+      "id": "w084",
+      "order": 84,
+      "theme": "food_drink",
+      "emoji": "🥛",
+      "en": "milk",
+      "es": "leche",
+      "sr": "mleko",
+      "sr_cyr": "млеко",
+      "ar": "حليب",
+      "ar_translit": "ḥalīb",
+      "example": {
+        "en": "Cold milk.",
+        "es": "Leche fría.",
+        "sr": "Hladno mleko.",
+        "sr_cyr": "Хладно млеко.",
+        "ar": "حليب بارد.",
+        "ar_translit": "ḥalīb bārid"
+      }
+    },
+    {
+      "id": "w085",
+      "order": 85,
+      "theme": "food_drink",
+      "emoji": "☕",
+      "en": "coffee",
+      "es": "café",
+      "sr": "kafa",
+      "sr_cyr": "кафа",
+      "ar": "قهوة",
+      "ar_translit": "qahwa",
+      "example": {
+        "en": "Black coffee.",
+        "es": "Café negro.",
+        "sr": "Crna kafa.",
+        "sr_cyr": "Црна кафа.",
+        "ar": "قهوة سوداء.",
+        "ar_translit": "qahwa sawdāʾ"
+      }
+    },
+    {
+      "id": "w086",
+      "order": 86,
+      "theme": "food_drink",
+      "emoji": "🍵",
+      "en": "tea",
+      "es": "té",
+      "sr": "čaj",
+      "sr_cyr": "чај",
+      "ar": "شاي",
+      "ar_translit": "shāy",
+      "example": {
+        "en": "Tea with sugar.",
+        "es": "Té con azúcar.",
+        "sr": "Čaj sa šećerom.",
+        "sr_cyr": "Чај са шећером.",
+        "ar": "شاي مع السكر.",
+        "ar_translit": "shāy maʿa al-sukkar"
+      }
+    },
+    {
+      "id": "w087",
+      "order": 87,
+      "theme": "food_drink",
+      "emoji": "🥩",
+      "en": "meat",
+      "es": "carne",
+      "sr": "meso",
+      "sr_cyr": "месо",
+      "ar": "لحم",
+      "ar_translit": "laḥm",
+      "example": {
+        "en": "Red meat.",
+        "es": "Carne roja.",
+        "sr": "Crveno meso.",
+        "sr_cyr": "Црвено месо.",
+        "ar": "لحم أحمر.",
+        "ar_translit": "laḥm aḥmar"
+      }
+    },
+    {
+      "id": "w088",
+      "order": 88,
+      "theme": "food_drink",
+      "emoji": "🍗",
+      "en": "chicken",
+      "es": "pollo",
+      "sr": "piletina",
+      "sr_cyr": "пилетина",
+      "ar": "دجاج",
+      "ar_translit": "dajāj",
+      "example": {
+        "en": "Roasted chicken.",
+        "es": "Pollo asado.",
+        "sr": "Pečena piletina.",
+        "sr_cyr": "Печена пилетина.",
+        "ar": "دجاج مشوي.",
+        "ar_translit": "dajāj mashwī"
+      }
+    },
+    {
+      "id": "w089",
+      "order": 89,
+      "theme": "food_drink",
+      "emoji": "🐟",
+      "en": "fish",
+      "es": "pescado",
+      "sr": "riba",
+      "sr_cyr": "риба",
+      "ar": "سمك",
+      "ar_translit": "samak",
+      "example": {
+        "en": "Fresh fish.",
+        "es": "Pescado fresco.",
+        "sr": "Sveža riba.",
+        "sr_cyr": "Свежа риба.",
+        "ar": "سمك طازج.",
+        "ar_translit": "samak ṭāzaj"
+      }
+    },
+    {
+      "id": "w090",
+      "order": 90,
+      "theme": "food_drink",
+      "emoji": "🍚",
+      "en": "rice",
+      "es": "arroz",
+      "sr": "pirinač",
+      "sr_cyr": "пиринач",
+      "ar": "أرز",
+      "ar_translit": "aruz",
+      "example": {
+        "en": "White rice.",
+        "es": "Arroz blanco.",
+        "sr": "Beli pirinač.",
+        "sr_cyr": "Бели пиринач.",
+        "ar": "أرز أبيض.",
+        "ar_translit": "aruz abyaḍ"
+      }
+    },
+    {
+      "id": "w091",
+      "order": 91,
+      "theme": "food_drink",
+      "emoji": "🍎",
+      "en": "fruit",
+      "es": "fruta",
+      "sr": "voće",
+      "sr_cyr": "воће",
+      "ar": "فاكهة",
+      "ar_translit": "fākiha",
+      "example": {
+        "en": "Sweet fruit.",
+        "es": "Fruta dulce.",
+        "sr": "Slatko voće.",
+        "sr_cyr": "Слатко воће.",
+        "ar": "فاكهة حلوة.",
+        "ar_translit": "fākiha ḥilwa"
+      }
+    },
+    {
+      "id": "w092",
+      "order": 92,
+      "theme": "food_drink",
+      "emoji": "🥦",
+      "en": "vegetable",
+      "es": "verdura",
+      "sr": "povrće",
+      "sr_cyr": "поврће",
+      "ar": "خضار",
+      "ar_translit": "khuḍār",
+      "example": {
+        "en": "Fresh vegetables.",
+        "es": "Verdura fresca.",
+        "sr": "Sveže povrće.",
+        "sr_cyr": "Свеже поврће.",
+        "ar": "خضار طازج.",
+        "ar_translit": "khuḍār ṭāzaj"
+      }
+    },
+    {
+      "id": "w093",
+      "order": 93,
+      "theme": "food_drink",
+      "emoji": "🍎",
+      "en": "apple",
+      "es": "manzana",
+      "sr": "jabuka",
+      "sr_cyr": "јабука",
+      "ar": "تفاحة",
+      "ar_translit": "tuffāḥa",
+      "example": {
+        "en": "Red apple.",
+        "es": "Manzana roja.",
+        "sr": "Crvena jabuka.",
+        "sr_cyr": "Црвена јабука.",
+        "ar": "تفاحة حمراء.",
+        "ar_translit": "tuffāḥa ḥamrāʾ"
+      }
+    },
+    {
+      "id": "w094",
+      "order": 94,
+      "theme": "food_drink",
+      "emoji": "🍌",
+      "en": "banana",
+      "es": "plátano",
+      "sr": "banana",
+      "sr_cyr": "банана",
+      "ar": "موز",
+      "ar_translit": "mawz",
+      "example": {
+        "en": "Yellow banana.",
+        "es": "Plátano amarillo.",
+        "sr": "Žuta banana.",
+        "sr_cyr": "Жута банана.",
+        "ar": "موزة صفراء.",
+        "ar_translit": "mawza ṣafrāʾ"
+      }
+    },
+    {
+      "id": "w095",
+      "order": 95,
+      "theme": "food_drink",
+      "emoji": "🍊",
+      "en": "orange",
+      "es": "naranja",
+      "sr": "pomorandža",
+      "sr_cyr": "поморанџа",
+      "ar": "برتقالة",
+      "ar_translit": "burtuqāla",
+      "example": {
+        "en": "Sweet orange.",
+        "es": "Naranja dulce.",
+        "sr": "Slatka pomorandža.",
+        "sr_cyr": "Слатка поморанџа.",
+        "ar": "برتقالة حلوة.",
+        "ar_translit": "burtuqāla ḥilwa"
+      }
+    },
+    {
+      "id": "w096",
+      "order": 96,
+      "theme": "food_drink",
+      "emoji": "🥚",
+      "en": "egg",
+      "es": "huevo",
+      "sr": "jaje",
+      "sr_cyr": "јаје",
+      "ar": "بيضة",
+      "ar_translit": "bayḍa",
+      "example": {
+        "en": "Boiled egg.",
+        "es": "Huevo cocido.",
+        "sr": "Kuvano jaje.",
+        "sr_cyr": "Кувано јаје.",
+        "ar": "بيضة مسلوقة.",
+        "ar_translit": "bayḍa maslūqa"
+      }
+    },
+    {
+      "id": "w097",
+      "order": 97,
+      "theme": "food_drink",
+      "emoji": "🧀",
+      "en": "cheese",
+      "es": "queso",
+      "sr": "sir",
+      "sr_cyr": "сир",
+      "ar": "جبن",
+      "ar_translit": "jubn",
+      "example": {
+        "en": "Yellow cheese.",
+        "es": "Queso amarillo.",
+        "sr": "Žuti sir.",
+        "sr_cyr": "Жути сир.",
+        "ar": "جبن أصفر.",
+        "ar_translit": "jubn aṣfar"
+      }
+    },
+    {
+      "id": "w098",
+      "order": 98,
+      "theme": "food_drink",
+      "emoji": "",
+      "en": "sugar",
+      "es": "azúcar",
+      "sr": "šećer",
+      "sr_cyr": "шећер",
+      "ar": "سكر",
+      "ar_translit": "sukkar",
+      "example": {
+        "en": "Sugar in tea.",
+        "es": "Azúcar en el té.",
+        "sr": "Šećer u čaju.",
+        "sr_cyr": "Шећер у чају.",
+        "ar": "سكر في الشاي.",
+        "ar_translit": "sukkar fī al-shāy"
+      }
+    },
+    {
+      "id": "w099",
+      "order": 99,
+      "theme": "food_drink",
+      "emoji": "🧂",
+      "en": "salt",
+      "es": "sal",
+      "sr": "so",
+      "sr_cyr": "со",
+      "ar": "ملح",
+      "ar_translit": "milḥ",
+      "example": {
+        "en": "Pass the salt, please.",
+        "es": "Pasa la sal, por favor.",
+        "sr": "Dodaj so, molim.",
+        "sr_cyr": "Додај со, молим.",
+        "ar": "ناولني الملح، من فضلك.",
+        "ar_translit": "nāwilnī al-milḥ, min faḍlik"
+      }
+    },
+    {
+      "id": "w100",
+      "order": 100,
+      "theme": "food_drink",
+      "emoji": "",
+      "en": "breakfast",
+      "es": "desayuno",
+      "sr": "doručak",
+      "sr_cyr": "доручак",
+      "ar": "فطور",
+      "ar_translit": "fuṭūr",
+      "example": {
+        "en": "Good breakfast.",
+        "es": "Buen desayuno.",
+        "sr": "Dobar doručak.",
+        "sr_cyr": "Добар доручак.",
+        "ar": "فطور جيد.",
+        "ar_translit": "fuṭūr jayyid"
+      }
+    },
+    {
+      "id": "w101",
+      "order": 101,
+      "theme": "food_drink",
+      "emoji": "",
+      "en": "lunch",
+      "es": "almuerzo",
+      "sr": "ručak",
+      "sr_cyr": "ручак",
+      "ar": "غداء",
+      "ar_translit": "ghadāʾ",
+      "example": {
+        "en": "Let's have lunch.",
+        "es": "Almorcemos.",
+        "sr": "Hajdemo na ručak.",
+        "sr_cyr": "Хајдемо на ручак.",
+        "ar": "لنتناول الغداء.",
+        "ar_translit": "linatanāwal al-ghadāʾ"
+      }
+    },
+    {
+      "id": "w102",
+      "order": 102,
+      "theme": "food_drink",
+      "emoji": "",
+      "en": "dinner",
+      "es": "cena",
+      "sr": "večera",
+      "sr_cyr": "вечера",
+      "ar": "عشاء",
+      "ar_translit": "ʿashāʾ",
+      "example": {
+        "en": "Dinner at home.",
+        "es": "Cena en casa.",
+        "sr": "Večera kod kuće.",
+        "sr_cyr": "Вечера код куће.",
+        "ar": "العشاء في البيت.",
+        "ar_translit": "al-ʿashāʾ fī al-bayt"
+      }
+    },
+    {
+      "id": "w103",
+      "order": 103,
+      "theme": "verbs_basic",
+      "emoji": "🥤",
+      "en": "I drink",
+      "es": "bebo",
+      "sr": "pijem",
+      "sr_cyr": "пијем",
+      "ar": "أشرب",
+      "ar_translit": "ashrabu",
+      "example": {
+        "en": "I drink water.",
+        "es": "Bebo agua.",
+        "sr": "Pijem vodu.",
+        "sr_cyr": "Пијем воду.",
+        "ar": "أشرب الماء.",
+        "ar_translit": "ashrabu al-māʾ"
+      }
+    },
+    {
+      "id": "w104",
+      "order": 104,
+      "theme": "home",
+      "emoji": "",
+      "en": "cup",
+      "es": "taza",
+      "sr": "šolja",
+      "sr_cyr": "шоља",
+      "ar": "كوب",
+      "ar_translit": "kūb",
+      "example": {
+        "en": "A cup of tea.",
+        "es": "Una taza de té.",
+        "sr": "Šolja čaja.",
+        "sr_cyr": "Шоља чаја.",
+        "ar": "كوب شاي.",
+        "ar_translit": "kūb shāy"
+      }
+    },
+    {
+      "id": "w105",
+      "order": 105,
+      "theme": "home",
+      "emoji": "",
+      "en": "table",
+      "es": "mesa",
+      "sr": "sto",
+      "sr_cyr": "сто",
+      "ar": "طاولة",
+      "ar_translit": "ṭāwila",
+      "example": {
+        "en": "Around the table.",
+        "es": "Alrededor de la mesa.",
+        "sr": "Oko stola.",
+        "sr_cyr": "Око стола.",
+        "ar": "حول الطاولة.",
+        "ar_translit": "ḥawla al-ṭāwila"
+      }
+    },
+    {
+      "id": "w106",
+      "order": 106,
+      "theme": "home",
+      "emoji": "🚪",
+      "en": "door",
+      "es": "puerta",
+      "sr": "vrata",
+      "sr_cyr": "врата",
+      "ar": "باب",
+      "ar_translit": "bāb",
+      "example": {
+        "en": "Open the door.",
+        "es": "Abre la puerta.",
+        "sr": "Otvori vrata.",
+        "sr_cyr": "Отвори врата.",
+        "ar": "افتح الباب.",
+        "ar_translit": "iftaḥ al-bāb"
+      }
+    },
+    {
+      "id": "w107",
+      "order": 107,
+      "theme": "home",
+      "emoji": "🪟",
+      "en": "window",
+      "es": "ventana",
+      "sr": "prozor",
+      "sr_cyr": "прозор",
+      "ar": "نافذة",
+      "ar_translit": "nāfidha",
+      "example": {
+        "en": "Close the window.",
+        "es": "Cierra la ventana.",
+        "sr": "Zatvori prozor.",
+        "sr_cyr": "Затвори прозор.",
+        "ar": "أغلق النافذة.",
+        "ar_translit": "aghliq al-nāfidha"
+      }
+    },
+    {
+      "id": "w108",
+      "order": 108,
+      "theme": "home",
+      "emoji": "",
+      "en": "room",
+      "es": "habitación",
+      "sr": "soba",
+      "sr_cyr": "соба",
+      "ar": "غرفة",
+      "ar_translit": "ghurfa",
+      "example": {
+        "en": "A clean room.",
+        "es": "Una habitación limpia.",
+        "sr": "Čista soba.",
+        "sr_cyr": "Чиста соба.",
+        "ar": "غرفة نظيفة.",
+        "ar_translit": "ghurfa naẓīfa"
+      }
+    },
+    {
+      "id": "w109",
+      "order": 109,
+      "theme": "home",
+      "emoji": "🍳",
+      "en": "kitchen",
+      "es": "cocina",
+      "sr": "kuhinja",
+      "sr_cyr": "кухиња",
+      "ar": "مطبخ",
+      "ar_translit": "maṭbakh",
+      "example": {
+        "en": "In the kitchen.",
+        "es": "En la cocina.",
+        "sr": "U kuhinji.",
+        "sr_cyr": "У кухињи.",
+        "ar": "في المطبخ.",
+        "ar_translit": "fī al-maṭbakh"
+      }
+    },
+    {
+      "id": "w110",
+      "order": 110,
+      "theme": "home",
+      "emoji": "🚽",
+      "en": "bathroom",
+      "es": "baño",
+      "sr": "kupatilo",
+      "sr_cyr": "купатило",
+      "ar": "حمام",
+      "ar_translit": "ḥammām",
+      "example": {
+        "en": "Where is the bathroom?",
+        "es": "¿Dónde está el baño?",
+        "sr": "Gde je kupatilo?",
+        "sr_cyr": "Где је купатило?",
+        "ar": "أين الحمام؟",
+        "ar_translit": "ayna al-ḥammām?"
+      }
+    },
+    {
+      "id": "w111",
+      "order": 111,
+      "theme": "home",
+      "emoji": "🛏️",
+      "en": "bed",
+      "es": "cama",
+      "sr": "krevet",
+      "sr_cyr": "кревет",
+      "ar": "سرير",
+      "ar_translit": "sarīr",
+      "example": {
+        "en": "Soft bed.",
+        "es": "Cama suave.",
+        "sr": "Mekan krevet.",
+        "sr_cyr": "Мекан кревет.",
+        "ar": "سرير ناعم.",
+        "ar_translit": "sarīr nāʿim"
+      }
+    },
+    {
+      "id": "w112",
+      "order": 112,
+      "theme": "home",
+      "emoji": "🪑",
+      "en": "chair",
+      "es": "silla",
+      "sr": "stolica",
+      "sr_cyr": "столица",
+      "ar": "كرسي",
+      "ar_translit": "kursī",
+      "example": {
+        "en": "Two chairs.",
+        "es": "Dos sillas.",
+        "sr": "Dve stolice.",
+        "sr_cyr": "Две столице.",
+        "ar": "كرسيان.",
+        "ar_translit": "kursiyān"
+      }
+    },
+    {
+      "id": "w113",
+      "order": 113,
+      "theme": "home",
+      "emoji": "💡",
+      "en": "light",
+      "es": "luz",
+      "sr": "svetlo",
+      "sr_cyr": "светло",
+      "ar": "ضوء",
+      "ar_translit": "ḍawʾ",
+      "example": {
+        "en": "Turn on the light.",
+        "es": "Enciende la luz.",
+        "sr": "Upali svetlo.",
+        "sr_cyr": "Упали светло.",
+        "ar": "أشعل الضوء.",
+        "ar_translit": "ashʿil al-ḍawʾ"
+      }
+    },
+    {
+      "id": "w114",
+      "order": 114,
+      "theme": "home",
+      "emoji": "🔑",
+      "en": "key",
+      "es": "llave",
+      "sr": "ključ",
+      "sr_cyr": "кључ",
+      "ar": "مفتاح",
+      "ar_translit": "miftāḥ",
+      "example": {
+        "en": "Where are my keys?",
+        "es": "¿Dónde están mis llaves?",
+        "sr": "Gde su moji ključevi?",
+        "sr_cyr": "Где су моји кључеви?",
+        "ar": "أين مفاتيحي؟",
+        "ar_translit": "ayna mafātīḥī?"
+      }
+    },
+    {
+      "id": "w115",
+      "order": 115,
+      "theme": "home",
+      "emoji": "📱",
+      "en": "phone",
+      "es": "teléfono",
+      "sr": "telefon",
+      "sr_cyr": "телефон",
+      "ar": "هاتف",
+      "ar_translit": "hātif",
+      "example": {
+        "en": "My phone is new.",
+        "es": "Mi teléfono es nuevo.",
+        "sr": "Moj telefon je nov.",
+        "sr_cyr": "Мој телефон је нов.",
+        "ar": "هاتفي جديد.",
+        "ar_translit": "hātifī jadīd"
+      }
+    },
+    {
+      "id": "w116",
+      "order": 116,
+      "theme": "home",
+      "emoji": "💻",
+      "en": "computer",
+      "es": "computadora",
+      "sr": "kompjuter",
+      "sr_cyr": "компјутер",
+      "ar": "حاسوب",
+      "ar_translit": "ḥāsūb",
+      "example": {
+        "en": "On the computer.",
+        "es": "En la computadora.",
+        "sr": "Na kompjuteru.",
+        "sr_cyr": "На компјутеру.",
+        "ar": "على الحاسوب.",
+        "ar_translit": "ʿalā al-ḥāsūb"
+      }
+    },
+    {
+      "id": "w117",
+      "order": 117,
+      "theme": "home",
+      "emoji": "📺",
+      "en": "TV",
+      "es": "televisión",
+      "sr": "televizor",
+      "sr_cyr": "телевизор",
+      "ar": "تلفاز",
+      "ar_translit": "tilfāz",
+      "example": {
+        "en": "I watch TV.",
+        "es": "Veo la televisión.",
+        "sr": "Gledam televiziju.",
+        "sr_cyr": "Гледам телевизију.",
+        "ar": "أشاهد التلفاز.",
+        "ar_translit": "ushāhid al-tilfāz"
+      }
+    },
+    {
+      "id": "w118",
+      "order": 118,
+      "theme": "home",
+      "emoji": "🚗",
+      "en": "car",
+      "es": "coche",
+      "sr": "auto",
+      "sr_cyr": "ауто",
+      "ar": "سيارة",
+      "ar_translit": "sayyāra",
+      "example": {
+        "en": "Fast car.",
+        "es": "Coche rápido.",
+        "sr": "Brz auto.",
+        "sr_cyr": "Брз ауто.",
+        "ar": "سيارة سريعة.",
+        "ar_translit": "sayyāra sarīʿa"
+      }
+    },
+    {
+      "id": "w119",
+      "order": 119,
+      "theme": "home",
+      "emoji": "👕",
+      "en": "clothes",
+      "es": "ropa",
+      "sr": "odeća",
+      "sr_cyr": "одећа",
+      "ar": "ملابس",
+      "ar_translit": "malābis",
+      "example": {
+        "en": "New clothes.",
+        "es": "Ropa nueva.",
+        "sr": "Nova odeća.",
+        "sr_cyr": "Нова одећа.",
+        "ar": "ملابس جديدة.",
+        "ar_translit": "malābis jadīda"
+      }
+    },
+    {
+      "id": "w120",
+      "order": 120,
+      "theme": "home",
+      "emoji": "👞",
+      "en": "shoe",
+      "es": "zapato",
+      "sr": "cipela",
+      "sr_cyr": "ципела",
+      "ar": "حذاء",
+      "ar_translit": "ḥidhāʾ",
+      "example": {
+        "en": "New shoes.",
+        "es": "Zapatos nuevos.",
+        "sr": "Nove cipele.",
+        "sr_cyr": "Нове ципеле.",
+        "ar": "أحذية جديدة.",
+        "ar_translit": "aḥdhiya jadīda"
+      }
+    },
+    {
+      "id": "w121",
+      "order": 121,
+      "theme": "home",
+      "emoji": "👜",
+      "en": "bag",
+      "es": "bolsa",
+      "sr": "torba",
+      "sr_cyr": "торба",
+      "ar": "حقيبة",
+      "ar_translit": "ḥaqība",
+      "example": {
+        "en": "My bag is heavy.",
+        "es": "Mi bolsa es pesada.",
+        "sr": "Moja torba je teška.",
+        "sr_cyr": "Моја торба је тешка.",
+        "ar": "حقيبتي ثقيلة.",
+        "ar_translit": "ḥaqībatī thaqīla"
+      }
+    },
+    {
+      "id": "w122",
+      "order": 122,
+      "theme": "home",
+      "emoji": "💰",
+      "en": "money",
+      "es": "dinero",
+      "sr": "novac",
+      "sr_cyr": "новац",
+      "ar": "مال",
+      "ar_translit": "māl",
+      "example": {
+        "en": "I need money.",
+        "es": "Necesito dinero.",
+        "sr": "Treba mi novac.",
+        "sr_cyr": "Треба ми новац.",
+        "ar": "أحتاج مالاً.",
+        "ar_translit": "aḥtāj mālan"
+      }
+    },
+    {
+      "id": "w123",
+      "order": 123,
+      "theme": "home",
+      "emoji": "🖊️",
+      "en": "pen",
+      "es": "pluma",
+      "sr": "olovka",
+      "sr_cyr": "оловка",
+      "ar": "قلم",
+      "ar_translit": "qalam",
+      "example": {
+        "en": "A blue pen.",
+        "es": "Un bolígrafo azul.",
+        "sr": "Plava olovka.",
+        "sr_cyr": "Плава оловка.",
+        "ar": "قلم أزرق.",
+        "ar_translit": "qalam azraq"
+      }
+    },
+    {
+      "id": "w124",
+      "order": 124,
+      "theme": "home",
+      "emoji": "📄",
+      "en": "paper",
+      "es": "papel",
+      "sr": "papir",
+      "sr_cyr": "папир",
+      "ar": "ورق",
+      "ar_translit": "waraq",
+      "example": {
+        "en": "White paper.",
+        "es": "Papel blanco.",
+        "sr": "Beli papir.",
+        "sr_cyr": "Бели папир.",
+        "ar": "ورق أبيض.",
+        "ar_translit": "waraq abyaḍ"
+      }
+    },
+    {
+      "id": "w125",
+      "order": 125,
+      "theme": "people",
+      "emoji": "👨",
+      "en": "man",
+      "es": "hombre",
+      "sr": "čovek",
+      "sr_cyr": "човек",
+      "ar": "رجل",
+      "ar_translit": "rajul",
+      "example": {
+        "en": "A young man.",
+        "es": "Un hombre joven.",
+        "sr": "Mlad čovek.",
+        "sr_cyr": "Млад човек.",
+        "ar": "رجل شاب.",
+        "ar_translit": "rajul shābb"
+      }
+    },
+    {
+      "id": "w126",
+      "order": 126,
+      "theme": "people",
+      "emoji": "👩",
+      "en": "woman",
+      "es": "mujer",
+      "sr": "žena",
+      "sr_cyr": "жена",
+      "ar": "امرأة",
+      "ar_translit": "imraʾa",
+      "example": {
+        "en": "A kind woman.",
+        "es": "Una mujer amable.",
+        "sr": "Ljubazna žena.",
+        "sr_cyr": "Љубазна жена.",
+        "ar": "امرأة لطيفة.",
+        "ar_translit": "imraʾa laṭīfa"
+      }
+    },
+    {
+      "id": "w127",
+      "order": 127,
+      "theme": "people",
+      "emoji": "👶",
+      "en": "child",
+      "es": "niño",
+      "sr": "dete",
+      "sr_cyr": "дете",
+      "ar": "طفل",
+      "ar_translit": "ṭifl",
+      "example": {
+        "en": "A small child.",
+        "es": "Un niño pequeño.",
+        "sr": "Malo dete.",
+        "sr_cyr": "Мало дете.",
+        "ar": "طفل صغير.",
+        "ar_translit": "ṭifl ṣaghīr"
+      }
+    },
+    {
+      "id": "w128",
+      "order": 128,
+      "theme": "people",
+      "emoji": "👦",
+      "en": "boy",
+      "es": "niño",
+      "sr": "dečak",
+      "sr_cyr": "дечак",
+      "ar": "ولد",
+      "ar_translit": "walad",
+      "example": {
+        "en": "A good boy.",
+        "es": "Un buen chico.",
+        "sr": "Dobar dečak.",
+        "sr_cyr": "Добар дечак.",
+        "ar": "ولد جيد.",
+        "ar_translit": "walad jayyid"
+      }
+    },
+    {
+      "id": "w129",
+      "order": 129,
+      "theme": "people",
+      "emoji": "👧",
+      "en": "girl",
+      "es": "niña",
+      "sr": "devojčica",
+      "sr_cyr": "девојчица",
+      "ar": "بنت",
+      "ar_translit": "bint",
+      "example": {
+        "en": "A smart girl.",
+        "es": "Una chica inteligente.",
+        "sr": "Pametna devojčica.",
+        "sr_cyr": "Паметна девојчица.",
+        "ar": "بنت ذكية.",
+        "ar_translit": "bint dhakiyya"
+      }
+    },
+    {
+      "id": "w130",
+      "order": 130,
+      "theme": "people",
+      "emoji": "🤝",
+      "en": "friend",
+      "es": "amigo",
+      "sr": "prijatelj",
+      "sr_cyr": "пријатељ",
+      "ar": "صديق",
+      "ar_translit": "ṣadīq",
+      "example": {
+        "en": "My best friend.",
+        "es": "Mi mejor amigo.",
+        "sr": "Moj najbolji prijatelj.",
+        "sr_cyr": "Мој најбољи пријатељ.",
+        "ar": "أفضل أصدقائي.",
+        "ar_translit": "afḍal aṣdiqāʾī"
+      }
+    },
+    {
+      "id": "w131",
+      "order": 131,
+      "theme": "people",
+      "emoji": "👨‍👩‍👧",
+      "en": "family",
+      "es": "familia",
+      "sr": "porodica",
+      "sr_cyr": "породица",
+      "ar": "عائلة",
+      "ar_translit": "ʿāʾila",
+      "example": {
+        "en": "My family.",
+        "es": "Mi familia.",
+        "sr": "Moja porodica.",
+        "sr_cyr": "Моја породица.",
+        "ar": "عائلتي.",
+        "ar_translit": "ʿāʾilatī"
+      }
+    },
+    {
+      "id": "w132",
+      "order": 132,
+      "theme": "people",
+      "emoji": "",
+      "en": "mother",
+      "es": "madre",
+      "sr": "majka",
+      "sr_cyr": "мајка",
+      "ar": "أم",
+      "ar_translit": "umm",
+      "example": {
+        "en": "My mother is kind.",
+        "es": "Mi madre es amable.",
+        "sr": "Moja majka je ljubazna.",
+        "sr_cyr": "Моја мајка је љубазна.",
+        "ar": "أمي لطيفة.",
+        "ar_translit": "ummī laṭīfa"
+      }
+    },
+    {
+      "id": "w133",
+      "order": 133,
+      "theme": "people",
+      "emoji": "",
+      "en": "father",
+      "es": "padre",
+      "sr": "otac",
+      "sr_cyr": "отац",
+      "ar": "أب",
+      "ar_translit": "ab",
+      "example": {
+        "en": "My father works.",
+        "es": "Mi padre trabaja.",
+        "sr": "Moj otac radi.",
+        "sr_cyr": "Мој отац ради.",
+        "ar": "أبي يعمل.",
+        "ar_translit": "abī yaʿmal"
+      }
+    },
+    {
+      "id": "w134",
+      "order": 134,
+      "theme": "people",
+      "emoji": "",
+      "en": "brother",
+      "es": "hermano",
+      "sr": "brat",
+      "sr_cyr": "брат",
+      "ar": "أخ",
+      "ar_translit": "akh",
+      "example": {
+        "en": "My older brother.",
+        "es": "Mi hermano mayor.",
+        "sr": "Moj stariji brat.",
+        "sr_cyr": "Мој старији брат.",
+        "ar": "أخي الأكبر.",
+        "ar_translit": "akhī al-akbar"
+      }
+    },
+    {
+      "id": "w135",
+      "order": 135,
+      "theme": "people",
+      "emoji": "",
+      "en": "sister",
+      "es": "hermana",
+      "sr": "sestra",
+      "sr_cyr": "сестра",
+      "ar": "أخت",
+      "ar_translit": "ukht",
+      "example": {
+        "en": "My younger sister.",
+        "es": "Mi hermana menor.",
+        "sr": "Moja mlađa sestra.",
+        "sr_cyr": "Моја млађа сестра.",
+        "ar": "أختي الصغرى.",
+        "ar_translit": "ukhtī al-ṣughrā"
+      }
+    },
+    {
+      "id": "w136",
+      "order": 136,
+      "theme": "people",
+      "emoji": "",
+      "en": "son",
+      "es": "hijo",
+      "sr": "sin",
+      "sr_cyr": "син",
+      "ar": "ابن",
+      "ar_translit": "ibn",
+      "example": {
+        "en": "Their son.",
+        "es": "Su hijo.",
+        "sr": "Njihov sin.",
+        "sr_cyr": "Њихов син.",
+        "ar": "ابنهم.",
+        "ar_translit": "ibnuhum"
+      }
+    },
+    {
+      "id": "w137",
+      "order": 137,
+      "theme": "people",
+      "emoji": "",
+      "en": "daughter",
+      "es": "hija",
+      "sr": "ćerka",
+      "sr_cyr": "ћерка",
+      "ar": "ابنة",
+      "ar_translit": "ibna",
+      "example": {
+        "en": "Their daughter.",
+        "es": "Su hija.",
+        "sr": "Njihova ćerka.",
+        "sr_cyr": "Њихова ћерка.",
+        "ar": "ابنتهم.",
+        "ar_translit": "ibnatuhum"
+      }
+    },
+    {
+      "id": "w138",
+      "order": 138,
+      "theme": "people",
+      "emoji": "",
+      "en": "husband",
+      "es": "esposo",
+      "sr": "muž",
+      "sr_cyr": "муж",
+      "ar": "زوج",
+      "ar_translit": "zawj",
+      "example": {
+        "en": "Her husband.",
+        "es": "Su marido.",
+        "sr": "Njen muž.",
+        "sr_cyr": "Њен муж.",
+        "ar": "زوجها.",
+        "ar_translit": "zawjuhā"
+      }
+    },
+    {
+      "id": "w139",
+      "order": 139,
+      "theme": "people",
+      "emoji": "",
+      "en": "wife",
+      "es": "esposa",
+      "sr": "žena",
+      "sr_cyr": "жена",
+      "ar": "زوجة",
+      "ar_translit": "zawja",
+      "example": {
+        "en": "His wife.",
+        "es": "Su esposa.",
+        "sr": "Njegova žena.",
+        "sr_cyr": "Његова жена.",
+        "ar": "زوجته.",
+        "ar_translit": "zawjatuhu"
+      }
+    },
+    {
+      "id": "w140",
+      "order": 140,
+      "theme": "people",
+      "emoji": "👩‍🏫",
+      "en": "teacher",
+      "es": "profesor",
+      "sr": "učitelj",
+      "sr_cyr": "учитељ",
+      "ar": "معلم",
+      "ar_translit": "muʿallim",
+      "example": {
+        "en": "Our teacher is good.",
+        "es": "Nuestro maestro es bueno.",
+        "sr": "Naš učitelj je dobar.",
+        "sr_cyr": "Наш учитељ је добар.",
+        "ar": "معلمنا جيد.",
+        "ar_translit": "muʿallimunā jayyid"
+      }
+    },
+    {
+      "id": "w141",
+      "order": 141,
+      "theme": "people",
+      "emoji": "🎓",
+      "en": "student",
+      "es": "estudiante",
+      "sr": "student",
+      "sr_cyr": "студент",
+      "ar": "طالب",
+      "ar_translit": "ṭālib",
+      "example": {
+        "en": "A new student.",
+        "es": "Un nuevo estudiante.",
+        "sr": "Novi student.",
+        "sr_cyr": "Нови студент.",
+        "ar": "طالب جديد.",
+        "ar_translit": "ṭālib jadīd"
+      }
+    },
+    {
+      "id": "w142",
+      "order": 142,
+      "theme": "people",
+      "emoji": "👨‍⚕️",
+      "en": "doctor",
+      "es": "doctor",
+      "sr": "lekar",
+      "sr_cyr": "лекар",
+      "ar": "طبيب",
+      "ar_translit": "ṭabīb",
+      "example": {
+        "en": "A good doctor.",
+        "es": "Un buen doctor.",
+        "sr": "Dobar lekar.",
+        "sr_cyr": "Добар лекар.",
+        "ar": "طبيب جيد.",
+        "ar_translit": "ṭabīb jayyid"
+      }
+    },
+    {
+      "id": "w143",
+      "order": 143,
+      "theme": "verbs_basic",
+      "emoji": "",
+      "en": "I have",
+      "es": "tengo",
+      "sr": "imam",
+      "sr_cyr": "имам",
+      "ar": "عندي",
+      "ar_translit": "ʿindī",
+      "example": {
+        "en": "I have a friend.",
+        "es": "Tengo un amigo.",
+        "sr": "Imam prijatelja.",
+        "sr_cyr": "Имам пријатеља.",
+        "ar": "عندي صديق.",
+        "ar_translit": "ʿindī ṣadīq"
+      }
+    },
+    {
+      "id": "w144",
+      "order": 144,
+      "theme": "verbs_basic",
+      "emoji": "",
+      "en": "I work",
+      "es": "trabajo",
+      "sr": "radim",
+      "sr_cyr": "радим",
+      "ar": "أعمل",
+      "ar_translit": "aʿmal",
+      "example": {
+        "en": "I work at home.",
+        "es": "Trabajo en casa.",
+        "sr": "Radim kod kuće.",
+        "sr_cyr": "Радим код куће.",
+        "ar": "أعمل في البيت.",
+        "ar_translit": "aʿmal fī al-bayt"
+      }
+    },
+    {
+      "id": "w145",
+      "order": 145,
+      "theme": "verbs_basic",
+      "emoji": "😴",
+      "en": "I sleep",
+      "es": "duermo",
+      "sr": "spavam",
+      "sr_cyr": "спавам",
+      "ar": "أنام",
+      "ar_translit": "anām",
+      "example": {
+        "en": "I sleep eight hours.",
+        "es": "Duermo ocho horas.",
+        "sr": "Spavam osam sati.",
+        "sr_cyr": "Спавам осам сати.",
+        "ar": "أنام ثماني ساعات.",
+        "ar_translit": "anām thamānī sāʿāt"
+      }
+    },
+    {
+      "id": "w146",
+      "order": 146,
+      "theme": "verbs_basic",
+      "emoji": "👀",
+      "en": "I see",
+      "es": "veo",
+      "sr": "vidim",
+      "sr_cyr": "видим",
+      "ar": "أرى",
+      "ar_translit": "arā",
+      "example": {
+        "en": "I see you.",
+        "es": "Te veo.",
+        "sr": "Vidim te.",
+        "sr_cyr": "Видим те.",
+        "ar": "أراك.",
+        "ar_translit": "arāka"
+      }
+    },
+    {
+      "id": "w147",
+      "order": 147,
+      "theme": "verbs_basic",
+      "emoji": "👂",
+      "en": "I hear",
+      "es": "oigo",
+      "sr": "čujem",
+      "sr_cyr": "чујем",
+      "ar": "أسمع",
+      "ar_translit": "asmaʿ",
+      "example": {
+        "en": "I hear music.",
+        "es": "Oigo música.",
+        "sr": "Čujem muziku.",
+        "sr_cyr": "Чујем музику.",
+        "ar": "أسمع الموسيقى.",
+        "ar_translit": "asmaʿ al-mūsīqā"
+      }
+    },
+    {
+      "id": "w148",
+      "order": 148,
+      "theme": "verbs_basic",
+      "emoji": "🗣️",
+      "en": "I speak",
+      "es": "hablo",
+      "sr": "govorim",
+      "sr_cyr": "говорим",
+      "ar": "أتكلم",
+      "ar_translit": "atakallam",
+      "example": {
+        "en": "I speak Arabic.",
+        "es": "Hablo árabe.",
+        "sr": "Govorim arapski.",
+        "sr_cyr": "Говорим арапски.",
+        "ar": "أتكلم العربية.",
+        "ar_translit": "atakallam al-ʿarabiyya"
+      }
+    },
+    {
+      "id": "w149",
+      "order": 149,
+      "theme": "verbs_basic",
+      "emoji": "📖",
+      "en": "I read",
+      "es": "leo",
+      "sr": "čitam",
+      "sr_cyr": "читам",
+      "ar": "أقرأ",
+      "ar_translit": "aqraʾ",
+      "example": {
+        "en": "I read a book.",
+        "es": "Leo un libro.",
+        "sr": "Čitam knjigu.",
+        "sr_cyr": "Читам књигу.",
+        "ar": "أقرأ كتاباً.",
+        "ar_translit": "aqraʾ kitāban"
+      }
+    },
+    {
+      "id": "w150",
+      "order": 150,
+      "theme": "verbs_basic",
+      "emoji": "✍️",
+      "en": "I write",
+      "es": "escribo",
+      "sr": "pišem",
+      "sr_cyr": "пишем",
+      "ar": "أكتب",
+      "ar_translit": "aktub",
+      "example": {
+        "en": "I write a letter.",
+        "es": "Escribo una carta.",
+        "sr": "Pišem pismo.",
+        "sr_cyr": "Пишем писмо.",
+        "ar": "أكتب رسالة.",
+        "ar_translit": "aktub risāla"
+      }
+    },
+    {
+      "id": "w151",
+      "order": 151,
+      "theme": "verbs_basic",
+      "emoji": "",
+      "en": "I learn",
+      "es": "aprendo",
+      "sr": "učim",
+      "sr_cyr": "учим",
+      "ar": "أتعلم",
+      "ar_translit": "ataʿallam",
+      "example": {
+        "en": "I learn every day.",
+        "es": "Aprendo cada día.",
+        "sr": "Učim svaki dan.",
+        "sr_cyr": "Учим сваки дан.",
+        "ar": "أتعلم كل يوم.",
+        "ar_translit": "ataʿallam kull yawm"
+      }
+    },
+    {
+      "id": "w152",
+      "order": 152,
+      "theme": "verbs_basic",
+      "emoji": "",
+      "en": "I understand",
+      "es": "entiendo",
+      "sr": "razumem",
+      "sr_cyr": "разумем",
+      "ar": "أفهم",
+      "ar_translit": "afham",
+      "example": {
+        "en": "I understand you.",
+        "es": "Te entiendo.",
+        "sr": "Razumem te.",
+        "sr_cyr": "Разумем те.",
+        "ar": "أفهمك.",
+        "ar_translit": "afhamuka"
+      }
+    },
+    {
+      "id": "w153",
+      "order": 153,
+      "theme": "verbs_basic",
+      "emoji": "",
+      "en": "I know",
+      "es": "sé",
+      "sr": "znam",
+      "sr_cyr": "знам",
+      "ar": "أعرف",
+      "ar_translit": "aʿrif",
+      "example": {
+        "en": "I know the answer.",
+        "es": "Sé la respuesta.",
+        "sr": "Znam odgovor.",
+        "sr_cyr": "Знам одговор.",
+        "ar": "أعرف الإجابة.",
+        "ar_translit": "aʿrif al-ijāba"
+      }
+    },
+    {
+      "id": "w154",
+      "order": 154,
+      "theme": "verbs_basic",
+      "emoji": "💭",
+      "en": "I think",
+      "es": "pienso",
+      "sr": "mislim",
+      "sr_cyr": "мислим",
+      "ar": "أفكر",
+      "ar_translit": "ufakkir",
+      "example": {
+        "en": "I think so.",
+        "es": "Eso pienso.",
+        "sr": "Tako mislim.",
+        "sr_cyr": "Тако мислим.",
+        "ar": "أعتقد ذلك.",
+        "ar_translit": "aʿtaqid dhālika"
+      }
+    },
+    {
+      "id": "w155",
+      "order": 155,
+      "theme": "verbs_basic",
+      "emoji": "❤️",
+      "en": "I love",
+      "es": "amo",
+      "sr": "volim",
+      "sr_cyr": "волим",
+      "ar": "أحب",
+      "ar_translit": "uḥibb",
+      "example": {
+        "en": "I love you.",
+        "es": "Te amo.",
+        "sr": "Volim te.",
+        "sr_cyr": "Волим те.",
+        "ar": "أحبك.",
+        "ar_translit": "uḥibbuka"
+      }
+    },
+    {
+      "id": "w156",
+      "order": 156,
+      "theme": "verbs_basic",
+      "emoji": "",
+      "en": "I come",
+      "es": "vengo",
+      "sr": "dolazim",
+      "sr_cyr": "долазим",
+      "ar": "آتي",
+      "ar_translit": "ātī",
+      "example": {
+        "en": "I come tomorrow.",
+        "es": "Vengo mañana.",
+        "sr": "Dolazim sutra.",
+        "sr_cyr": "Долазим сутра.",
+        "ar": "آتي غداً.",
+        "ar_translit": "ātī ghadan"
+      }
+    },
+    {
+      "id": "w157",
+      "order": 157,
+      "theme": "verbs_basic",
+      "emoji": "",
+      "en": "I leave",
+      "es": "salgo",
+      "sr": "izlazim",
+      "sr_cyr": "излазим",
+      "ar": "أخرج",
+      "ar_translit": "akhruj",
+      "example": {
+        "en": "I leave at six.",
+        "es": "Salgo a las seis.",
+        "sr": "Izlazim u šest.",
+        "sr_cyr": "Излазим у шест.",
+        "ar": "أخرج في الساعة السادسة.",
+        "ar_translit": "akhruj fī al-sāʿa al-sādisa"
+      }
+    },
+    {
+      "id": "w158",
+      "order": 158,
+      "theme": "verbs_basic",
+      "emoji": "🛒",
+      "en": "I buy",
+      "es": "compro",
+      "sr": "kupujem",
+      "sr_cyr": "купујем",
+      "ar": "أشتري",
+      "ar_translit": "ashtarī",
+      "example": {
+        "en": "I buy bread.",
+        "es": "Compro pan.",
+        "sr": "Kupujem hleb.",
+        "sr_cyr": "Купујем хлеб.",
+        "ar": "أشتري الخبز.",
+        "ar_translit": "ashtarī al-khubz"
+      }
+    },
+    {
+      "id": "w159",
+      "order": 159,
+      "theme": "verbs_basic",
+      "emoji": "",
+      "en": "I sell",
+      "es": "vendo",
+      "sr": "prodajem",
+      "sr_cyr": "продајем",
+      "ar": "أبيع",
+      "ar_translit": "abīʿ",
+      "example": {
+        "en": "I sell my car.",
+        "es": "Vendo mi coche.",
+        "sr": "Prodajem auto.",
+        "sr_cyr": "Продајем ауто.",
+        "ar": "أبيع سيارتي.",
+        "ar_translit": "abīʿ sayyāratī"
+      }
+    },
+    {
+      "id": "w160",
+      "order": 160,
+      "theme": "verbs_basic",
+      "emoji": "",
+      "en": "I open",
+      "es": "abro",
+      "sr": "otvaram",
+      "sr_cyr": "отварам",
+      "ar": "أفتح",
+      "ar_translit": "aftaḥ",
+      "example": {
+        "en": "I open the door.",
+        "es": "Abro la puerta.",
+        "sr": "Otvaram vrata.",
+        "sr_cyr": "Отварам врата.",
+        "ar": "أفتح الباب.",
+        "ar_translit": "aftaḥ al-bāb"
+      }
+    },
+    {
+      "id": "w161",
+      "order": 161,
+      "theme": "verbs_basic",
+      "emoji": "",
+      "en": "I close",
+      "es": "cierro",
+      "sr": "zatvaram",
+      "sr_cyr": "затварам",
+      "ar": "أغلق",
+      "ar_translit": "ughliq",
+      "example": {
+        "en": "I close the window.",
+        "es": "Cierro la ventana.",
+        "sr": "Zatvaram prozor.",
+        "sr_cyr": "Затварам прозор.",
+        "ar": "أغلق النافذة.",
+        "ar_translit": "ughliq al-nāfidha"
+      }
+    },
+    {
+      "id": "w162",
+      "order": 162,
+      "theme": "verbs_basic",
+      "emoji": "",
+      "en": "I sit",
+      "es": "me siento",
+      "sr": "sedim",
+      "sr_cyr": "седим",
+      "ar": "أجلس",
+      "ar_translit": "ajlis",
+      "example": {
+        "en": "I sit here.",
+        "es": "Me siento aquí.",
+        "sr": "Sedim ovde.",
+        "sr_cyr": "Седим овде.",
+        "ar": "أجلس هنا.",
+        "ar_translit": "ajlis hunā"
+      }
+    },
+    {
+      "id": "w163",
+      "order": 163,
+      "theme": "verbs_basic",
+      "emoji": "",
+      "en": "I help",
+      "es": "ayudo",
+      "sr": "pomažem",
+      "sr_cyr": "помажем",
+      "ar": "أساعد",
+      "ar_translit": "usāʿid",
+      "example": {
+        "en": "I help my friend.",
+        "es": "Ayudo a mi amigo.",
+        "sr": "Pomažem prijatelju.",
+        "sr_cyr": "Помажем пријатељу.",
+        "ar": "أساعد صديقي.",
+        "ar_translit": "usāʿid ṣadīqī"
+      }
+    },
+    {
+      "id": "w164",
+      "order": 164,
+      "theme": "verbs_basic",
+      "emoji": "",
+      "en": "I need",
+      "es": "necesito",
+      "sr": "treba mi",
+      "sr_cyr": "треба ми",
+      "ar": "أحتاج",
+      "ar_translit": "aḥtāj",
+      "example": {
+        "en": "I need help.",
+        "es": "Necesito ayuda.",
+        "sr": "Treba mi pomoć.",
+        "sr_cyr": "Треба ми помоћ.",
+        "ar": "أحتاج المساعدة.",
+        "ar_translit": "aḥtāj al-musāʿada"
+      }
+    },
+    {
+      "id": "w165",
+      "order": 165,
+      "theme": "verbs_basic",
+      "emoji": "",
+      "en": "I can",
+      "es": "puedo",
+      "sr": "mogu",
+      "sr_cyr": "могу",
+      "ar": "أستطيع",
+      "ar_translit": "astaṭīʿ",
+      "example": {
+        "en": "I can do it.",
+        "es": "Puedo hacerlo.",
+        "sr": "Mogu to da uradim.",
+        "sr_cyr": "Могу то да урадим.",
+        "ar": "أستطيع فعل ذلك.",
+        "ar_translit": "astaṭīʿ fiʿl dhālika"
+      }
+    },
+    {
+      "id": "w166",
+      "order": 166,
+      "theme": "verbs_basic",
+      "emoji": "",
+      "en": "I give",
+      "es": "doy",
+      "sr": "dajem",
+      "sr_cyr": "дајем",
+      "ar": "أعطي",
+      "ar_translit": "uʿṭī",
+      "example": {
+        "en": "I give you a gift.",
+        "es": "Te doy un regalo.",
+        "sr": "Dajem ti poklon.",
+        "sr_cyr": "Дајем ти поклон.",
+        "ar": "أعطيك هدية.",
+        "ar_translit": "uʿṭīka hadiyya"
+      }
+    },
+    {
+      "id": "w167",
+      "order": 167,
+      "theme": "verbs_basic",
+      "emoji": "",
+      "en": "I take",
+      "es": "tomo",
+      "sr": "uzimam",
+      "sr_cyr": "узимам",
+      "ar": "آخذ",
+      "ar_translit": "ākhudh",
+      "example": {
+        "en": "I take the bus.",
+        "es": "Tomo el autobús.",
+        "sr": "Uzimam autobus.",
+        "sr_cyr": "Узимам аутобус.",
+        "ar": "آخذ الحافلة.",
+        "ar_translit": "ākhudh al-ḥāfila"
+      }
+    },
+    {
+      "id": "w168",
+      "order": 168,
+      "theme": "qualities",
+      "emoji": "👎",
+      "en": "bad",
+      "es": "malo",
+      "sr": "loš",
+      "sr_cyr": "лош",
+      "ar": "سيء",
+      "ar_translit": "sayyiʾ",
+      "example": {
+        "en": "Bad day.",
+        "es": "Mal día.",
+        "sr": "Loš dan.",
+        "sr_cyr": "Лош дан.",
+        "ar": "يوم سيء.",
+        "ar_translit": "yawm sayyiʾ"
+      }
+    },
+    {
+      "id": "w169",
+      "order": 169,
+      "theme": "qualities",
+      "emoji": "",
+      "en": "big",
+      "es": "grande",
+      "sr": "velik",
+      "sr_cyr": "велик",
+      "ar": "كبير",
+      "ar_translit": "kabīr",
+      "example": {
+        "en": "Big house.",
+        "es": "Casa grande.",
+        "sr": "Velika kuća.",
+        "sr_cyr": "Велика кућа.",
+        "ar": "بيت كبير.",
+        "ar_translit": "bayt kabīr"
+      }
+    },
+    {
+      "id": "w170",
+      "order": 170,
+      "theme": "qualities",
+      "emoji": "",
+      "en": "small",
+      "es": "pequeño",
+      "sr": "mali",
+      "sr_cyr": "мали",
+      "ar": "صغير",
+      "ar_translit": "ṣaghīr",
+      "example": {
+        "en": "Small dog.",
+        "es": "Perro pequeño.",
+        "sr": "Mali pas.",
+        "sr_cyr": "Мали пас.",
+        "ar": "كلب صغير.",
+        "ar_translit": "kalb ṣaghīr"
+      }
+    },
+    {
+      "id": "w171",
+      "order": 171,
+      "theme": "qualities",
+      "emoji": "✨",
+      "en": "new",
+      "es": "nuevo",
+      "sr": "nov",
+      "sr_cyr": "нов",
+      "ar": "جديد",
+      "ar_translit": "jadīd",
+      "example": {
+        "en": "New car.",
+        "es": "Coche nuevo.",
+        "sr": "Nov auto.",
+        "sr_cyr": "Нов ауто.",
+        "ar": "سيارة جديدة.",
+        "ar_translit": "sayyāra jadīda"
+      }
+    },
+    {
+      "id": "w172",
+      "order": 172,
+      "theme": "qualities",
+      "emoji": "",
+      "en": "old",
+      "es": "viejo",
+      "sr": "star",
+      "sr_cyr": "стар",
+      "ar": "قديم",
+      "ar_translit": "qadīm",
+      "example": {
+        "en": "Old book.",
+        "es": "Libro viejo.",
+        "sr": "Stara knjiga.",
+        "sr_cyr": "Стара књига.",
+        "ar": "كتاب قديم.",
+        "ar_translit": "kitāb qadīm"
+      }
+    },
+    {
+      "id": "w173",
+      "order": 173,
+      "theme": "qualities",
+      "emoji": "🔥",
+      "en": "hot",
+      "es": "caliente",
+      "sr": "vruć",
+      "sr_cyr": "врућ",
+      "ar": "حار",
+      "ar_translit": "ḥārr",
+      "example": {
+        "en": "Hot tea.",
+        "es": "Té caliente.",
+        "sr": "Vruć čaj.",
+        "sr_cyr": "Врућ чај.",
+        "ar": "شاي حار.",
+        "ar_translit": "shāy ḥārr"
+      }
+    },
+    {
+      "id": "w174",
+      "order": 174,
+      "theme": "qualities",
+      "emoji": "❄️",
+      "en": "cold",
+      "es": "frío",
+      "sr": "hladan",
+      "sr_cyr": "хладан",
+      "ar": "بارد",
+      "ar_translit": "bārid",
+      "example": {
+        "en": "Cold water.",
+        "es": "Agua fría.",
+        "sr": "Hladna voda.",
+        "sr_cyr": "Хладна вода.",
+        "ar": "ماء بارد.",
+        "ar_translit": "māʾ bārid"
+      }
+    },
+    {
+      "id": "w175",
+      "order": 175,
+      "theme": "qualities",
+      "emoji": "",
+      "en": "beautiful",
+      "es": "hermoso",
+      "sr": "lep",
+      "sr_cyr": "леп",
+      "ar": "جميل",
+      "ar_translit": "jamīl",
+      "example": {
+        "en": "A beautiful day.",
+        "es": "Un día hermoso.",
+        "sr": "Lep dan.",
+        "sr_cyr": "Леп дан.",
+        "ar": "يوم جميل.",
+        "ar_translit": "yawm jamīl"
+      }
+    },
+    {
+      "id": "w176",
+      "order": 176,
+      "theme": "qualities",
+      "emoji": "😊",
+      "en": "happy",
+      "es": "feliz",
+      "sr": "srećan",
+      "sr_cyr": "срећан",
+      "ar": "سعيد",
+      "ar_translit": "saʿīd",
+      "example": {
+        "en": "I am happy.",
+        "es": "Estoy feliz.",
+        "sr": "Srećan sam.",
+        "sr_cyr": "Срећан сам.",
+        "ar": "أنا سعيد.",
+        "ar_translit": "anā saʿīd"
+      }
+    },
+    {
+      "id": "w177",
+      "order": 177,
+      "theme": "qualities",
+      "emoji": "😢",
+      "en": "sad",
+      "es": "triste",
+      "sr": "tužan",
+      "sr_cyr": "тужан",
+      "ar": "حزين",
+      "ar_translit": "ḥazīn",
+      "example": {
+        "en": "Don't be sad.",
+        "es": "No estés triste.",
+        "sr": "Ne budi tužan.",
+        "sr_cyr": "Не буди тужан.",
+        "ar": "لا تكن حزيناً.",
+        "ar_translit": "lā takun ḥazīnan"
+      }
+    },
+    {
+      "id": "w178",
+      "order": 178,
+      "theme": "qualities",
+      "emoji": "",
+      "en": "easy",
+      "es": "fácil",
+      "sr": "lako",
+      "sr_cyr": "лако",
+      "ar": "سهل",
+      "ar_translit": "sahl",
+      "example": {
+        "en": "Very easy.",
+        "es": "Muy fácil.",
+        "sr": "Vrlo lako.",
+        "sr_cyr": "Врло лако.",
+        "ar": "سهل جداً.",
+        "ar_translit": "sahl jiddan"
+      }
+    },
+    {
+      "id": "w179",
+      "order": 179,
+      "theme": "qualities",
+      "emoji": "",
+      "en": "difficult",
+      "es": "difícil",
+      "sr": "teško",
+      "sr_cyr": "тешко",
+      "ar": "صعب",
+      "ar_translit": "ṣaʿb",
+      "example": {
+        "en": "Difficult question.",
+        "es": "Pregunta difícil.",
+        "sr": "Teško pitanje.",
+        "sr_cyr": "Тешко питање.",
+        "ar": "سؤال صعب.",
+        "ar_translit": "suʾāl ṣaʿb"
+      }
+    },
+    {
+      "id": "w180",
+      "order": 180,
+      "theme": "qualities",
+      "emoji": "",
+      "en": "fast",
+      "es": "rápido",
+      "sr": "brz",
+      "sr_cyr": "брз",
+      "ar": "سريع",
+      "ar_translit": "sarīʿ",
+      "example": {
+        "en": "Fast runner.",
+        "es": "Corredor rápido.",
+        "sr": "Brz trkač.",
+        "sr_cyr": "Брз тркач.",
+        "ar": "عداء سريع.",
+        "ar_translit": "ʿaddāʾ sarīʿ"
+      }
+    },
+    {
+      "id": "w181",
+      "order": 181,
+      "theme": "qualities",
+      "emoji": "",
+      "en": "slow",
+      "es": "lento",
+      "sr": "spor",
+      "sr_cyr": "спор",
+      "ar": "بطيء",
+      "ar_translit": "baṭīʾ",
+      "example": {
+        "en": "Slow car.",
+        "es": "Coche lento.",
+        "sr": "Spor auto.",
+        "sr_cyr": "Спор ауто.",
+        "ar": "سيارة بطيئة.",
+        "ar_translit": "sayyāra baṭīʾa"
+      }
+    },
+    {
+      "id": "w182",
+      "order": 182,
+      "theme": "qualities",
+      "emoji": "😋",
+      "en": "delicious",
+      "es": "delicioso",
+      "sr": "ukusno",
+      "sr_cyr": "укусно",
+      "ar": "لذيذ",
+      "ar_translit": "ladhīdh",
+      "example": {
+        "en": "Delicious food.",
+        "es": "Comida deliciosa.",
+        "sr": "Ukusna hrana.",
+        "sr_cyr": "Укусна храна.",
+        "ar": "طعام لذيذ.",
+        "ar_translit": "ṭaʿām ladhīdh"
+      }
+    },
+    {
+      "id": "w183",
+      "order": 183,
+      "theme": "places",
+      "emoji": "🏙️",
+      "en": "city",
+      "es": "ciudad",
+      "sr": "grad",
+      "sr_cyr": "град",
+      "ar": "مدينة",
+      "ar_translit": "madīna",
+      "example": {
+        "en": "A big city.",
+        "es": "Una ciudad grande.",
+        "sr": "Velik grad.",
+        "sr_cyr": "Велик град.",
+        "ar": "مدينة كبيرة.",
+        "ar_translit": "madīna kabīra"
+      }
+    },
+    {
+      "id": "w184",
+      "order": 184,
+      "theme": "places",
+      "emoji": "",
+      "en": "country",
+      "es": "país",
+      "sr": "zemlja",
+      "sr_cyr": "земља",
+      "ar": "بلد",
+      "ar_translit": "balad",
+      "example": {
+        "en": "Beautiful country.",
+        "es": "País hermoso.",
+        "sr": "Lepa zemlja.",
+        "sr_cyr": "Лепа земља.",
+        "ar": "بلد جميل.",
+        "ar_translit": "balad jamīl"
+      }
+    },
+    {
+      "id": "w185",
+      "order": 185,
+      "theme": "places",
+      "emoji": "🏫",
+      "en": "school",
+      "es": "escuela",
+      "sr": "škola",
+      "sr_cyr": "школа",
+      "ar": "مدرسة",
+      "ar_translit": "madrasa",
+      "example": {
+        "en": "I go to school.",
+        "es": "Voy a la escuela.",
+        "sr": "Idem u školu.",
+        "sr_cyr": "Идем у школу.",
+        "ar": "أذهب إلى المدرسة.",
+        "ar_translit": "adhhabu ilā al-madrasa"
+      }
+    },
+    {
+      "id": "w186",
+      "order": 186,
+      "theme": "places",
+      "emoji": "🏥",
+      "en": "hospital",
+      "es": "hospital",
+      "sr": "bolnica",
+      "sr_cyr": "болница",
+      "ar": "مستشفى",
+      "ar_translit": "mustashfā",
+      "example": {
+        "en": "Near the hospital.",
+        "es": "Cerca del hospital.",
+        "sr": "Blizu bolnice.",
+        "sr_cyr": "Близу болнице.",
+        "ar": "قريب من المستشفى.",
+        "ar_translit": "qarīb min al-mustashfā"
+      }
+    },
+    {
+      "id": "w187",
+      "order": 187,
+      "theme": "places",
+      "emoji": "🏪",
+      "en": "store",
+      "es": "tienda",
+      "sr": "prodavnica",
+      "sr_cyr": "продавница",
+      "ar": "متجر",
+      "ar_translit": "matjar",
+      "example": {
+        "en": "The store is open.",
+        "es": "La tienda está abierta.",
+        "sr": "Prodavnica je otvorena.",
+        "sr_cyr": "Продавница је отворена.",
+        "ar": "المتجر مفتوح.",
+        "ar_translit": "al-matjar maftūḥ"
+      }
+    },
+    {
+      "id": "w188",
+      "order": 188,
+      "theme": "places",
+      "emoji": "",
+      "en": "street",
+      "es": "calle",
+      "sr": "ulica",
+      "sr_cyr": "улица",
+      "ar": "شارع",
+      "ar_translit": "shāriʿ",
+      "example": {
+        "en": "Quiet street.",
+        "es": "Calle tranquila.",
+        "sr": "Tiha ulica.",
+        "sr_cyr": "Тиха улица.",
+        "ar": "شارع هادئ.",
+        "ar_translit": "shāriʿ hādiʾ"
+      }
+    },
+    {
+      "id": "w189",
+      "order": 189,
+      "theme": "places",
+      "emoji": "🌳",
+      "en": "park",
+      "es": "parque",
+      "sr": "park",
+      "sr_cyr": "парк",
+      "ar": "حديقة",
+      "ar_translit": "ḥadīqa",
+      "example": {
+        "en": "In the park.",
+        "es": "En el parque.",
+        "sr": "U parku.",
+        "sr_cyr": "У парку.",
+        "ar": "في الحديقة.",
+        "ar_translit": "fī al-ḥadīqa"
+      }
+    },
+    {
+      "id": "w190",
+      "order": 190,
+      "theme": "places",
+      "emoji": "✈️",
+      "en": "airport",
+      "es": "aeropuerto",
+      "sr": "aerodrom",
+      "sr_cyr": "аеродром",
+      "ar": "مطار",
+      "ar_translit": "maṭār",
+      "example": {
+        "en": "At the airport.",
+        "es": "En el aeropuerto.",
+        "sr": "Na aerodromu.",
+        "sr_cyr": "На аеродрому.",
+        "ar": "في المطار.",
+        "ar_translit": "fī al-maṭār"
+      }
+    },
+    {
+      "id": "w191",
+      "order": 191,
+      "theme": "places",
+      "emoji": "🏦",
+      "en": "bank",
+      "es": "banco",
+      "sr": "banka",
+      "sr_cyr": "банка",
+      "ar": "بنك",
+      "ar_translit": "bank",
+      "example": {
+        "en": "I go to the bank.",
+        "es": "Voy al banco.",
+        "sr": "Idem u banku.",
+        "sr_cyr": "Идем у банку.",
+        "ar": "أذهب إلى البنك.",
+        "ar_translit": "adhhabu ilā al-bank"
+      }
+    },
+    {
+      "id": "w192",
+      "order": 192,
+      "theme": "places",
+      "emoji": "",
+      "en": "market",
+      "es": "mercado",
+      "sr": "pijaca",
+      "sr_cyr": "пијаца",
+      "ar": "سوق",
+      "ar_translit": "sūq",
+      "example": {
+        "en": "At the market.",
+        "es": "En el mercado.",
+        "sr": "Na pijaci.",
+        "sr_cyr": "На пијаци.",
+        "ar": "في السوق.",
+        "ar_translit": "fī al-sūq"
+      }
+    },
+    {
+      "id": "w193",
+      "order": 193,
+      "theme": "places",
+      "emoji": "🕌",
+      "en": "mosque",
+      "es": "mezquita",
+      "sr": "džamija",
+      "sr_cyr": "џамија",
+      "ar": "مسجد",
+      "ar_translit": "masjid",
+      "example": {
+        "en": "Near the mosque.",
+        "es": "Cerca de la mezquita.",
+        "sr": "Blizu džamije.",
+        "sr_cyr": "Близу џамије.",
+        "ar": "قريب من المسجد.",
+        "ar_translit": "qarīb min al-masjid"
+      }
+    },
+    {
+      "id": "w194",
+      "order": 194,
+      "theme": "places",
+      "emoji": "⛪",
+      "en": "church",
+      "es": "iglesia",
+      "sr": "crkva",
+      "sr_cyr": "црква",
+      "ar": "كنيسة",
+      "ar_translit": "kanīsa",
+      "example": {
+        "en": "Old church.",
+        "es": "Iglesia antigua.",
+        "sr": "Stara crkva.",
+        "sr_cyr": "Стара црква.",
+        "ar": "كنيسة قديمة.",
+        "ar_translit": "kanīsa qadīma"
+      }
+    },
+    {
+      "id": "w195",
+      "order": 195,
+      "theme": "places",
+      "emoji": "",
+      "en": "office",
+      "es": "oficina",
+      "sr": "kancelarija",
+      "sr_cyr": "канцеларија",
+      "ar": "مكتب",
+      "ar_translit": "maktab",
+      "example": {
+        "en": "At the office.",
+        "es": "En la oficina.",
+        "sr": "U kancelariji.",
+        "sr_cyr": "У канцеларији.",
+        "ar": "في المكتب.",
+        "ar_translit": "fī al-maktab"
+      }
+    },
+    {
+      "id": "w196",
+      "order": 196,
+      "theme": "places",
+      "emoji": "🍴",
+      "en": "restaurant",
+      "es": "restaurante",
+      "sr": "restoran",
+      "sr_cyr": "ресторан",
+      "ar": "مطعم",
+      "ar_translit": "maṭʿam",
+      "example": {
+        "en": "A nice restaurant.",
+        "es": "Un buen restaurante.",
+        "sr": "Lep restoran.",
+        "sr_cyr": "Леп ресторан.",
+        "ar": "مطعم جميل.",
+        "ar_translit": "maṭʿam jamīl"
+      }
+    },
+    {
+      "id": "w197",
+      "order": 197,
+      "theme": "time",
+      "emoji": "",
+      "en": "second",
+      "es": "segundo",
+      "sr": "sekund",
+      "sr_cyr": "секунд",
+      "ar": "ثانية",
+      "ar_translit": "thāniya",
+      "example": {
+        "en": "Just a second.",
+        "es": "Solo un segundo.",
+        "sr": "Samo sekund.",
+        "sr_cyr": "Само секунд.",
+        "ar": "ثانية فقط.",
+        "ar_translit": "thāniya faqaṭ"
+      }
+    },
+    {
+      "id": "w198",
+      "order": 198,
+      "theme": "time",
+      "emoji": "",
+      "en": "ago",
+      "es": "hace",
+      "sr": "pre",
+      "sr_cyr": "пре",
+      "ar": "منذ",
+      "ar_translit": "mundhu",
+      "example": {
+        "en": "Two days ago.",
+        "es": "Hace dos días.",
+        "sr": "Pre dva dana.",
+        "sr_cyr": "Пре два дана.",
+        "ar": "منذ يومين.",
+        "ar_translit": "mundhu yawmayn"
+      }
+    },
+    {
+      "id": "w199",
+      "order": 199,
+      "theme": "time",
+      "emoji": "",
+      "en": "after",
+      "es": "después",
+      "sr": "posle",
+      "sr_cyr": "после",
+      "ar": "بعد",
+      "ar_translit": "baʿd",
+      "example": {
+        "en": "After lunch.",
+        "es": "Después del almuerzo.",
+        "sr": "Posle ručka.",
+        "sr_cyr": "После ручка.",
+        "ar": "بعد الغداء.",
+        "ar_translit": "baʿda al-ghadāʾ"
+      }
+    },
+    {
+      "id": "w200",
+      "order": 200,
+      "theme": "time",
+      "emoji": "",
+      "en": "before",
+      "es": "antes",
+      "sr": "pre",
+      "sr_cyr": "пре",
+      "ar": "قبل",
+      "ar_translit": "qabl",
+      "example": {
+        "en": "Before dinner.",
+        "es": "Antes de la cena.",
+        "sr": "Pre večere.",
+        "sr_cyr": "Пре вечере.",
+        "ar": "قبل العشاء.",
+        "ar_translit": "qabla al-ʿashāʾ"
+      }
+    },
+    {
+      "id": "w201",
+      "order": 201,
+      "theme": "time",
+      "emoji": "",
+      "en": "soon",
+      "es": "pronto",
+      "sr": "uskoro",
+      "sr_cyr": "ускоро",
+      "ar": "قريباً",
+      "ar_translit": "qarīban",
+      "example": {
+        "en": "See you soon.",
+        "es": "Hasta pronto.",
+        "sr": "Vidimo se uskoro.",
+        "sr_cyr": "Видимо се ускоро.",
+        "ar": "أراك قريباً.",
+        "ar_translit": "arāka qarīban"
+      }
+    },
+    {
+      "id": "w202",
+      "order": 202,
+      "theme": "time",
+      "emoji": "",
+      "en": "last",
+      "es": "último",
+      "sr": "poslednji",
+      "sr_cyr": "последњи",
+      "ar": "آخر",
+      "ar_translit": "ākhir",
+      "example": {
+        "en": "The last day.",
+        "es": "El último día.",
+        "sr": "Poslednji dan.",
+        "sr_cyr": "Последњи дан.",
+        "ar": "اليوم الأخير.",
+        "ar_translit": "al-yawm al-ākhir"
+      }
+    },
+    {
+      "id": "w203",
+      "order": 203,
+      "theme": "time",
+      "emoji": "",
+      "en": "next",
+      "es": "próximo",
+      "sr": "sledeći",
+      "sr_cyr": "следећи",
+      "ar": "التالي",
+      "ar_translit": "al-tālī",
+      "example": {
+        "en": "Next week.",
+        "es": "La próxima semana.",
+        "sr": "Sledeće nedelje.",
+        "sr_cyr": "Следеће недеље.",
+        "ar": "الأسبوع القادم.",
+        "ar_translit": "al-usbūʿ al-qādim"
+      }
+    },
+    {
+      "id": "w204",
+      "order": 204,
+      "theme": "time",
+      "emoji": "",
+      "en": "often",
+      "es": "a menudo",
+      "sr": "često",
+      "sr_cyr": "често",
+      "ar": "غالباً",
+      "ar_translit": "ghāliban",
+      "example": {
+        "en": "I often drink coffee.",
+        "es": "A menudo bebo café.",
+        "sr": "Često pijem kafu.",
+        "sr_cyr": "Често пијем кафу.",
+        "ar": "غالباً أشرب القهوة.",
+        "ar_translit": "ghāliban ashrabu al-qahwa"
+      }
+    },
+    {
+      "id": "w205",
+      "order": 205,
+      "theme": "time",
+      "emoji": "",
+      "en": "sometimes",
+      "es": "a veces",
+      "sr": "ponekad",
+      "sr_cyr": "понекад",
+      "ar": "أحياناً",
+      "ar_translit": "aḥyānan",
+      "example": {
+        "en": "Sometimes it rains.",
+        "es": "A veces llueve.",
+        "sr": "Ponekad pada kiša.",
+        "sr_cyr": "Понекад пада киша.",
+        "ar": "أحياناً تمطر.",
+        "ar_translit": "aḥyānan tumṭir"
+      }
+    },
+    {
+      "id": "w206",
+      "order": 206,
+      "theme": "time",
+      "emoji": "",
+      "en": "never",
+      "es": "nunca",
+      "sr": "nikada",
+      "sr_cyr": "никада",
+      "ar": "أبداً",
+      "ar_translit": "abadan",
+      "example": {
+        "en": "I never eat meat.",
+        "es": "Nunca como carne.",
+        "sr": "Nikada ne jedem meso.",
+        "sr_cyr": "Никада не једем месо.",
+        "ar": "لا آكل اللحم أبداً.",
+        "ar_translit": "lā ākulu al-laḥm abadan"
+      }
+    },
+    {
+      "id": "w207",
+      "order": 207,
+      "theme": "time",
+      "emoji": "",
+      "en": "always",
+      "es": "siempre",
+      "sr": "uvek",
+      "sr_cyr": "увек",
+      "ar": "دائماً",
+      "ar_translit": "dāʾiman",
+      "example": {
+        "en": "I always drink water.",
+        "es": "Siempre bebo agua.",
+        "sr": "Uvek pijem vodu.",
+        "sr_cyr": "Увек пијем воду.",
+        "ar": "دائماً أشرب الماء.",
+        "ar_translit": "dāʾiman ashrabu al-māʾ"
+      }
+    },
+    {
+      "id": "w208",
+      "order": 208,
+      "theme": "time",
+      "emoji": "",
+      "en": "again",
+      "es": "otra vez",
+      "sr": "opet",
+      "sr_cyr": "опет",
+      "ar": "مرة أخرى",
+      "ar_translit": "marra ukhrā",
+      "example": {
+        "en": "Say it again.",
+        "es": "Dilo otra vez.",
+        "sr": "Reci opet.",
+        "sr_cyr": "Реци опет.",
+        "ar": "قلها مرة أخرى.",
+        "ar_translit": "qulhā marra ukhrā"
+      }
+    },
+    {
+      "id": "w209",
+      "order": 209,
+      "theme": "numbers",
+      "emoji": "",
+      "en": "thirty",
+      "es": "treinta",
+      "sr": "trideset",
+      "sr_cyr": "тридесет",
+      "ar": "ثلاثون",
+      "ar_translit": "thalāthūn",
+      "example": {
+        "en": "Thirty days.",
+        "es": "Treinta días.",
+        "sr": "Trideset dana.",
+        "sr_cyr": "Тридесет дана.",
+        "ar": "ثلاثون يوماً.",
+        "ar_translit": "thalāthūna yawman"
+      }
+    },
+    {
+      "id": "w210",
+      "order": 210,
+      "theme": "numbers",
+      "emoji": "",
+      "en": "forty",
+      "es": "cuarenta",
+      "sr": "četrdeset",
+      "sr_cyr": "четрдесет",
+      "ar": "أربعون",
+      "ar_translit": "arbaʿūn",
+      "example": {
+        "en": "Forty people.",
+        "es": "Cuarenta personas.",
+        "sr": "Četrdeset osoba.",
+        "sr_cyr": "Четрдесет особа.",
+        "ar": "أربعون شخصاً.",
+        "ar_translit": "arbaʿūna shakhṣan"
+      }
+    },
+    {
+      "id": "w211",
+      "order": 211,
+      "theme": "numbers",
+      "emoji": "",
+      "en": "fifty",
+      "es": "cincuenta",
+      "sr": "pedeset",
+      "sr_cyr": "педесет",
+      "ar": "خمسون",
+      "ar_translit": "khamsūn",
+      "example": {
+        "en": "Fifty years.",
+        "es": "Cincuenta años.",
+        "sr": "Pedeset godina.",
+        "sr_cyr": "Педесет година.",
+        "ar": "خمسون سنة.",
+        "ar_translit": "khamsūna sana"
+      }
+    },
+    {
+      "id": "w212",
+      "order": 212,
+      "theme": "numbers",
+      "emoji": "",
+      "en": "sixty",
+      "es": "sesenta",
+      "sr": "šezdeset",
+      "sr_cyr": "шездесет",
+      "ar": "ستون",
+      "ar_translit": "sittūn",
+      "example": {
+        "en": "Sixty minutes.",
+        "es": "Sesenta minutos.",
+        "sr": "Šezdeset minuta.",
+        "sr_cyr": "Шездесет минута.",
+        "ar": "ستون دقيقة.",
+        "ar_translit": "sittūna daqīqa"
+      }
+    },
+    {
+      "id": "w213",
+      "order": 213,
+      "theme": "numbers",
+      "emoji": "",
+      "en": "seventy",
+      "es": "setenta",
+      "sr": "sedamdeset",
+      "sr_cyr": "седамдесет",
+      "ar": "سبعون",
+      "ar_translit": "sabʿūn",
+      "example": {
+        "en": "Seventy books.",
+        "es": "Setenta libros.",
+        "sr": "Sedamdeset knjiga.",
+        "sr_cyr": "Седамдесет књига.",
+        "ar": "سبعون كتاباً.",
+        "ar_translit": "sabʿūna kitāban"
+      }
+    },
+    {
+      "id": "w214",
+      "order": 214,
+      "theme": "numbers",
+      "emoji": "",
+      "en": "eighty",
+      "es": "ochenta",
+      "sr": "osamdeset",
+      "sr_cyr": "осамдесет",
+      "ar": "ثمانون",
+      "ar_translit": "thamānūn",
+      "example": {
+        "en": "Eighty years old.",
+        "es": "Ochenta años.",
+        "sr": "Osamdeset godina.",
+        "sr_cyr": "Осамдесет година.",
+        "ar": "ثمانون سنة.",
+        "ar_translit": "thamānūna sana"
+      }
+    },
+    {
+      "id": "w215",
+      "order": 215,
+      "theme": "numbers",
+      "emoji": "",
+      "en": "ninety",
+      "es": "noventa",
+      "sr": "devedeset",
+      "sr_cyr": "деведесет",
+      "ar": "تسعون",
+      "ar_translit": "tisʿūn",
+      "example": {
+        "en": "Ninety percent.",
+        "es": "Noventa por ciento.",
+        "sr": "Devedeset posto.",
+        "sr_cyr": "Деведесет посто.",
+        "ar": "تسعون بالمئة.",
+        "ar_translit": "tisʿūna bil-miʾa"
+      }
+    },
+    {
+      "id": "w216",
+      "order": 216,
+      "theme": "numbers",
+      "emoji": "",
+      "en": "thousand",
+      "es": "mil",
+      "sr": "hiljada",
+      "sr_cyr": "хиљада",
+      "ar": "ألف",
+      "ar_translit": "alf",
+      "example": {
+        "en": "One thousand.",
+        "es": "Mil.",
+        "sr": "Hiljadu.",
+        "sr_cyr": "Хиљаду.",
+        "ar": "ألف.",
+        "ar_translit": "alf"
+      }
+    },
+    {
+      "id": "w217",
+      "order": 217,
+      "theme": "possessives",
+      "emoji": "",
+      "en": "my",
+      "es": "mi",
+      "sr": "moj",
+      "sr_cyr": "мој",
+      "ar": "ـي",
+      "ar_translit": "-ī (suffix)",
+      "example": {
+        "en": "My name is Ali.",
+        "es": "Mi nombre es Ali.",
+        "sr": "Moje ime je Ali.",
+        "sr_cyr": "Моје име је Али.",
+        "ar": "اسمي علي.",
+        "ar_translit": "ismī ʿalī"
+      }
+    },
+    {
+      "id": "w218",
+      "order": 218,
+      "theme": "possessives",
+      "emoji": "",
+      "en": "your",
+      "es": "tu",
+      "sr": "tvoj",
+      "sr_cyr": "твој",
+      "ar": "ـكَ",
+      "ar_translit": "-ka (suffix)",
+      "example": {
+        "en": "Your book.",
+        "es": "Tu libro.",
+        "sr": "Tvoja knjiga.",
+        "sr_cyr": "Твоја књига.",
+        "ar": "كتابك.",
+        "ar_translit": "kitābuka"
+      }
+    },
+    {
+      "id": "w219",
+      "order": 219,
+      "theme": "possessives",
+      "emoji": "",
+      "en": "his",
+      "es": "su",
+      "sr": "njegov",
+      "sr_cyr": "његов",
+      "ar": "ـهُ",
+      "ar_translit": "-hu (suffix)",
+      "example": {
+        "en": "His house.",
+        "es": "Su casa.",
+        "sr": "Njegova kuća.",
+        "sr_cyr": "Његова кућа.",
+        "ar": "بيته.",
+        "ar_translit": "baytuhu"
+      }
+    },
+    {
+      "id": "w220",
+      "order": 220,
+      "theme": "possessives",
+      "emoji": "",
+      "en": "her",
+      "es": "su",
+      "sr": "njen",
+      "sr_cyr": "њен",
+      "ar": "ـهَا",
+      "ar_translit": "-hā (suffix)",
+      "example": {
+        "en": "Her name.",
+        "es": "Su nombre.",
+        "sr": "Njeno ime.",
+        "sr_cyr": "Њено име.",
+        "ar": "اسمها.",
+        "ar_translit": "ismuhā"
+      }
+    },
+    {
+      "id": "w221",
+      "order": 221,
+      "theme": "body",
+      "emoji": "",
+      "en": "head",
+      "es": "cabeza",
+      "sr": "glava",
+      "sr_cyr": "глава",
+      "ar": "رأس",
+      "ar_translit": "raʾs",
+      "example": {
+        "en": "My head hurts.",
+        "es": "Me duele la cabeza.",
+        "sr": "Boli me glava.",
+        "sr_cyr": "Боли ме глава.",
+        "ar": "رأسي يؤلمني.",
+        "ar_translit": "raʾsī yuʾlimnī"
+      }
+    },
+    {
+      "id": "w222",
+      "order": 222,
+      "theme": "body",
+      "emoji": "",
+      "en": "face",
+      "es": "cara",
+      "sr": "lice",
+      "sr_cyr": "лице",
+      "ar": "وجه",
+      "ar_translit": "wajh",
+      "example": {
+        "en": "Wash your face.",
+        "es": "Lávate la cara.",
+        "sr": "Operi lice.",
+        "sr_cyr": "Опери лице.",
+        "ar": "اغسل وجهك.",
+        "ar_translit": "ighsil wajhak"
+      }
+    },
+    {
+      "id": "w223",
+      "order": 223,
+      "theme": "body",
+      "emoji": "👁",
+      "en": "eye",
+      "es": "ojo",
+      "sr": "oko",
+      "sr_cyr": "око",
+      "ar": "عين",
+      "ar_translit": "ʿayn",
+      "example": {
+        "en": "Blue eyes.",
+        "es": "Ojos azules.",
+        "sr": "Plave oči.",
+        "sr_cyr": "Плаве очи.",
+        "ar": "عيون زرقاء.",
+        "ar_translit": "ʿuyūn zarqāʾ"
+      }
+    },
+    {
+      "id": "w224",
+      "order": 224,
+      "theme": "body",
+      "emoji": "👂",
+      "en": "ear",
+      "es": "oreja",
+      "sr": "uvo",
+      "sr_cyr": "уво",
+      "ar": "أذن",
+      "ar_translit": "udhun",
+      "example": {
+        "en": "My ear hurts.",
+        "es": "Me duele la oreja.",
+        "sr": "Boli me uvo.",
+        "sr_cyr": "Боли ме уво.",
+        "ar": "أذني تؤلمني.",
+        "ar_translit": "udhunī tuʾlimnī"
+      }
+    },
+    {
+      "id": "w225",
+      "order": 225,
+      "theme": "body",
+      "emoji": "👃",
+      "en": "nose",
+      "es": "nariz",
+      "sr": "nos",
+      "sr_cyr": "нос",
+      "ar": "أنف",
+      "ar_translit": "anf",
+      "example": {
+        "en": "Big nose.",
+        "es": "Nariz grande.",
+        "sr": "Veliki nos.",
+        "sr_cyr": "Велики нос.",
+        "ar": "أنف كبير.",
+        "ar_translit": "anf kabīr"
+      }
+    },
+    {
+      "id": "w226",
+      "order": 226,
+      "theme": "body",
+      "emoji": "👄",
+      "en": "mouth",
+      "es": "boca",
+      "sr": "usta",
+      "sr_cyr": "уста",
+      "ar": "فم",
+      "ar_translit": "fam",
+      "example": {
+        "en": "Open your mouth.",
+        "es": "Abre la boca.",
+        "sr": "Otvori usta.",
+        "sr_cyr": "Отвори уста.",
+        "ar": "افتح فمك.",
+        "ar_translit": "iftaḥ famak"
+      }
+    },
+    {
+      "id": "w227",
+      "order": 227,
+      "theme": "body",
+      "emoji": "✋",
+      "en": "hand",
+      "es": "mano",
+      "sr": "ruka",
+      "sr_cyr": "рука",
+      "ar": "يد",
+      "ar_translit": "yad",
+      "example": {
+        "en": "Wash your hands.",
+        "es": "Lávate las manos.",
+        "sr": "Operi ruke.",
+        "sr_cyr": "Опери руке.",
+        "ar": "اغسل يديك.",
+        "ar_translit": "ighsil yadayk"
+      }
+    },
+    {
+      "id": "w228",
+      "order": 228,
+      "theme": "body",
+      "emoji": "🦶",
+      "en": "foot",
+      "es": "pie",
+      "sr": "stopalo",
+      "sr_cyr": "стопало",
+      "ar": "قدم",
+      "ar_translit": "qadam",
+      "example": {
+        "en": "My foot hurts.",
+        "es": "Me duele el pie.",
+        "sr": "Boli me stopalo.",
+        "sr_cyr": "Боли ме стопало.",
+        "ar": "قدمي تؤلمني.",
+        "ar_translit": "qadamī tuʾlimnī"
+      }
+    },
+    {
+      "id": "w229",
+      "order": 229,
+      "theme": "body",
+      "emoji": "💪",
+      "en": "arm",
+      "es": "brazo",
+      "sr": "ruka",
+      "sr_cyr": "рука",
+      "ar": "ذراع",
+      "ar_translit": "dhirāʿ",
+      "example": {
+        "en": "Strong arms.",
+        "es": "Brazos fuertes.",
+        "sr": "Jake ruke.",
+        "sr_cyr": "Јаке руке.",
+        "ar": "أذرع قوية.",
+        "ar_translit": "adhruʿ qawiyya"
+      }
+    },
+    {
+      "id": "w230",
+      "order": 230,
+      "theme": "body",
+      "emoji": "🦵",
+      "en": "leg",
+      "es": "pierna",
+      "sr": "noga",
+      "sr_cyr": "нога",
+      "ar": "ساق",
+      "ar_translit": "sāq",
+      "example": {
+        "en": "Long legs.",
+        "es": "Piernas largas.",
+        "sr": "Duge noge.",
+        "sr_cyr": "Дуге ноге.",
+        "ar": "ساقان طويلتان.",
+        "ar_translit": "sāqān ṭawīlatān"
+      }
+    },
+    {
+      "id": "w231",
+      "order": 231,
+      "theme": "body",
+      "emoji": "💇",
+      "en": "hair",
+      "es": "pelo",
+      "sr": "kosa",
+      "sr_cyr": "коса",
+      "ar": "شعر",
+      "ar_translit": "shaʿr",
+      "example": {
+        "en": "Long hair.",
+        "es": "Pelo largo.",
+        "sr": "Duga kosa.",
+        "sr_cyr": "Дуга коса.",
+        "ar": "شعر طويل.",
+        "ar_translit": "shaʿr ṭawīl"
+      }
+    },
+    {
+      "id": "w232",
+      "order": 232,
+      "theme": "body",
+      "emoji": "🦷",
+      "en": "tooth",
+      "es": "diente",
+      "sr": "zub",
+      "sr_cyr": "зуб",
+      "ar": "سن",
+      "ar_translit": "sinn",
+      "example": {
+        "en": "White teeth.",
+        "es": "Dientes blancos.",
+        "sr": "Beli zubi.",
+        "sr_cyr": "Бели зуби.",
+        "ar": "أسنان بيضاء.",
+        "ar_translit": "asnān bayḍāʾ"
+      }
+    },
+    {
+      "id": "w233",
+      "order": 233,
+      "theme": "body",
+      "emoji": "",
+      "en": "body",
+      "es": "cuerpo",
+      "sr": "telo",
+      "sr_cyr": "тело",
+      "ar": "جسم",
+      "ar_translit": "jism",
+      "example": {
+        "en": "Strong body.",
+        "es": "Cuerpo fuerte.",
+        "sr": "Jako telo.",
+        "sr_cyr": "Јако тело.",
+        "ar": "جسم قوي.",
+        "ar_translit": "jism qawī"
+      }
+    },
+    {
+      "id": "w234",
+      "order": 234,
+      "theme": "body",
+      "emoji": "❤️",
+      "en": "heart",
+      "es": "corazón",
+      "sr": "srce",
+      "sr_cyr": "срце",
+      "ar": "قلب",
+      "ar_translit": "qalb",
+      "example": {
+        "en": "Good heart.",
+        "es": "Buen corazón.",
+        "sr": "Dobro srce.",
+        "sr_cyr": "Добро срце.",
+        "ar": "قلب طيب.",
+        "ar_translit": "qalb ṭayyib"
+      }
+    },
+    {
+      "id": "w235",
+      "order": 235,
+      "theme": "body",
+      "emoji": "",
+      "en": "finger",
+      "es": "dedo",
+      "sr": "prst",
+      "sr_cyr": "прст",
+      "ar": "إصبع",
+      "ar_translit": "iṣbaʿ",
+      "example": {
+        "en": "Five fingers.",
+        "es": "Cinco dedos.",
+        "sr": "Pet prstiju.",
+        "sr_cyr": "Пет прстију.",
+        "ar": "خمسة أصابع.",
+        "ar_translit": "khamsat aṣābiʿ"
+      }
+    },
+    {
+      "id": "w236",
+      "order": 236,
+      "theme": "body",
+      "emoji": "",
+      "en": "back",
+      "es": "espalda",
+      "sr": "leđa",
+      "sr_cyr": "леђа",
+      "ar": "ظهر",
+      "ar_translit": "ẓahr",
+      "example": {
+        "en": "My back hurts.",
+        "es": "Me duele la espalda.",
+        "sr": "Bole me leđa.",
+        "sr_cyr": "Боле ме леђа.",
+        "ar": "ظهري يؤلمني.",
+        "ar_translit": "ẓahrī yuʾlimnī"
+      }
+    },
+    {
+      "id": "w237",
+      "order": 237,
+      "theme": "body",
+      "emoji": "",
+      "en": "stomach",
+      "es": "estómago",
+      "sr": "stomak",
+      "sr_cyr": "стомак",
+      "ar": "معدة",
+      "ar_translit": "maʿida",
+      "example": {
+        "en": "My stomach hurts.",
+        "es": "Me duele el estómago.",
+        "sr": "Boli me stomak.",
+        "sr_cyr": "Боли ме стомак.",
+        "ar": "معدتي تؤلمني.",
+        "ar_translit": "maʿidatī tuʾlimnī"
+      }
+    },
+    {
+      "id": "w238",
+      "order": 238,
+      "theme": "body",
+      "emoji": "",
+      "en": "knee",
+      "es": "rodilla",
+      "sr": "koleno",
+      "sr_cyr": "колено",
+      "ar": "ركبة",
+      "ar_translit": "rukba",
+      "example": {
+        "en": "Sore knee.",
+        "es": "Rodilla adolorida.",
+        "sr": "Bolno koleno.",
+        "sr_cyr": "Болно колено.",
+        "ar": "ركبة مؤلمة.",
+        "ar_translit": "rukba muʾlima"
+      }
+    },
+    {
+      "id": "w239",
+      "order": 239,
+      "theme": "body",
+      "emoji": "",
+      "en": "neck",
+      "es": "cuello",
+      "sr": "vrat",
+      "sr_cyr": "врат",
+      "ar": "رقبة",
+      "ar_translit": "raqaba",
+      "example": {
+        "en": "Long neck.",
+        "es": "Cuello largo.",
+        "sr": "Dugačak vrat.",
+        "sr_cyr": "Дугачак врат.",
+        "ar": "رقبة طويلة.",
+        "ar_translit": "raqaba ṭawīla"
+      }
+    },
+    {
+      "id": "w240",
+      "order": 240,
+      "theme": "body",
+      "emoji": "",
+      "en": "shoulder",
+      "es": "hombro",
+      "sr": "rame",
+      "sr_cyr": "раме",
+      "ar": "كتف",
+      "ar_translit": "katif",
+      "example": {
+        "en": "Strong shoulders.",
+        "es": "Hombros fuertes.",
+        "sr": "Jaka ramena.",
+        "sr_cyr": "Јака рамена.",
+        "ar": "أكتاف قوية.",
+        "ar_translit": "aktāf qawiyya"
+      }
+    },
+    {
+      "id": "w241",
+      "order": 241,
+      "theme": "colors",
+      "emoji": "🔴",
+      "en": "red",
+      "es": "rojo",
+      "sr": "crven",
+      "sr_cyr": "црвен",
+      "ar": "أحمر",
+      "ar_translit": "aḥmar",
+      "example": {
+        "en": "Red car.",
+        "es": "Coche rojo.",
+        "sr": "Crveni auto.",
+        "sr_cyr": "Црвени ауто.",
+        "ar": "سيارة حمراء.",
+        "ar_translit": "sayyāra ḥamrāʾ"
+      }
+    },
+    {
+      "id": "w242",
+      "order": 242,
+      "theme": "colors",
+      "emoji": "🔵",
+      "en": "blue",
+      "es": "azul",
+      "sr": "plav",
+      "sr_cyr": "плав",
+      "ar": "أزرق",
+      "ar_translit": "azraq",
+      "example": {
+        "en": "Blue sky.",
+        "es": "Cielo azul.",
+        "sr": "Plavo nebo.",
+        "sr_cyr": "Плаво небо.",
+        "ar": "سماء زرقاء.",
+        "ar_translit": "samāʾ zarqāʾ"
+      }
+    },
+    {
+      "id": "w243",
+      "order": 243,
+      "theme": "colors",
+      "emoji": "🟢",
+      "en": "green",
+      "es": "verde",
+      "sr": "zelen",
+      "sr_cyr": "зелен",
+      "ar": "أخضر",
+      "ar_translit": "akhḍar",
+      "example": {
+        "en": "Green tree.",
+        "es": "Árbol verde.",
+        "sr": "Zeleno drvo.",
+        "sr_cyr": "Зелено дрво.",
+        "ar": "شجرة خضراء.",
+        "ar_translit": "shajara khaḍrāʾ"
+      }
+    },
+    {
+      "id": "w244",
+      "order": 244,
+      "theme": "colors",
+      "emoji": "🟡",
+      "en": "yellow",
+      "es": "amarillo",
+      "sr": "žut",
+      "sr_cyr": "жут",
+      "ar": "أصفر",
+      "ar_translit": "aṣfar",
+      "example": {
+        "en": "Yellow sun.",
+        "es": "Sol amarillo.",
+        "sr": "Žuto sunce.",
+        "sr_cyr": "Жуто сунце.",
+        "ar": "شمس صفراء.",
+        "ar_translit": "shams ṣafrāʾ"
+      }
+    },
+    {
+      "id": "w245",
+      "order": 245,
+      "theme": "colors",
+      "emoji": "⚫",
+      "en": "black",
+      "es": "negro",
+      "sr": "crn",
+      "sr_cyr": "црн",
+      "ar": "أسود",
+      "ar_translit": "aswad",
+      "example": {
+        "en": "Black cat.",
+        "es": "Gato negro.",
+        "sr": "Crna mačka.",
+        "sr_cyr": "Црна мачка.",
+        "ar": "قط أسود.",
+        "ar_translit": "qiṭṭ aswad"
+      }
+    },
+    {
+      "id": "w246",
+      "order": 246,
+      "theme": "colors",
+      "emoji": "⚪",
+      "en": "white",
+      "es": "blanco",
+      "sr": "beo",
+      "sr_cyr": "бео",
+      "ar": "أبيض",
+      "ar_translit": "abyaḍ",
+      "example": {
+        "en": "White snow.",
+        "es": "Nieve blanca.",
+        "sr": "Beli sneg.",
+        "sr_cyr": "Бели снег.",
+        "ar": "ثلج أبيض.",
+        "ar_translit": "thalj abyaḍ"
+      }
+    },
+    {
+      "id": "w247",
+      "order": 247,
+      "theme": "colors",
+      "emoji": "🟠",
+      "en": "orange",
+      "es": "naranja",
+      "sr": "narandžast",
+      "sr_cyr": "наранџаст",
+      "ar": "برتقالي",
+      "ar_translit": "burtuqālī",
+      "example": {
+        "en": "Orange shirt.",
+        "es": "Camisa naranja.",
+        "sr": "Narandžasta košulja.",
+        "sr_cyr": "Наранџаста кошуља.",
+        "ar": "قميص برتقالي.",
+        "ar_translit": "qamīṣ burtuqālī"
+      }
+    },
+    {
+      "id": "w248",
+      "order": 248,
+      "theme": "colors",
+      "emoji": "🟣",
+      "en": "purple",
+      "es": "morado",
+      "sr": "ljubičast",
+      "sr_cyr": "љубичаст",
+      "ar": "بنفسجي",
+      "ar_translit": "banafsajī",
+      "example": {
+        "en": "Purple flower.",
+        "es": "Flor morada.",
+        "sr": "Ljubičast cvet.",
+        "sr_cyr": "Љубичаст цвет.",
+        "ar": "زهرة بنفسجية.",
+        "ar_translit": "zahra banafsajiyya"
+      }
+    },
+    {
+      "id": "w249",
+      "order": 249,
+      "theme": "colors",
+      "emoji": "🟤",
+      "en": "brown",
+      "es": "marrón",
+      "sr": "smeđ",
+      "sr_cyr": "смеђ",
+      "ar": "بني",
+      "ar_translit": "bunnī",
+      "example": {
+        "en": "Brown bread.",
+        "es": "Pan marrón.",
+        "sr": "Smeđi hleb.",
+        "sr_cyr": "Смеђи хлеб.",
+        "ar": "خبز بني.",
+        "ar_translit": "khubz bunnī"
+      }
+    },
+    {
+      "id": "w250",
+      "order": 250,
+      "theme": "colors",
+      "emoji": "🩷",
+      "en": "pink",
+      "es": "rosa",
+      "sr": "roze",
+      "sr_cyr": "розе",
+      "ar": "وردي",
+      "ar_translit": "wardī",
+      "example": {
+        "en": "Pink dress.",
+        "es": "Vestido rosa.",
+        "sr": "Roze haljina.",
+        "sr_cyr": "Розе хаљина.",
+        "ar": "فستان وردي.",
+        "ar_translit": "fustān wardī"
+      }
+    },
+    {
+      "id": "w251",
+      "order": 251,
+      "theme": "nature",
+      "emoji": "☀️",
+      "en": "sun",
+      "es": "sol",
+      "sr": "sunce",
+      "sr_cyr": "сунце",
+      "ar": "شمس",
+      "ar_translit": "shams",
+      "example": {
+        "en": "The sun is hot.",
+        "es": "El sol está caliente.",
+        "sr": "Sunce je vruće.",
+        "sr_cyr": "Сунце је вруће.",
+        "ar": "الشمس حارة.",
+        "ar_translit": "al-shams ḥārra"
+      }
+    },
+    {
+      "id": "w252",
+      "order": 252,
+      "theme": "nature",
+      "emoji": "🌙",
+      "en": "moon",
+      "es": "luna",
+      "sr": "mesec",
+      "sr_cyr": "месец",
+      "ar": "قمر",
+      "ar_translit": "qamar",
+      "example": {
+        "en": "Full moon.",
+        "es": "Luna llena.",
+        "sr": "Pun mesec.",
+        "sr_cyr": "Пун месец.",
+        "ar": "قمر مكتمل.",
+        "ar_translit": "qamar muktamil"
+      }
+    },
+    {
+      "id": "w253",
+      "order": 253,
+      "theme": "nature",
+      "emoji": "🌧️",
+      "en": "rain",
+      "es": "lluvia",
+      "sr": "kiša",
+      "sr_cyr": "киша",
+      "ar": "مطر",
+      "ar_translit": "maṭar",
+      "example": {
+        "en": "Heavy rain.",
+        "es": "Lluvia fuerte.",
+        "sr": "Jaka kiša.",
+        "sr_cyr": "Јака киша.",
+        "ar": "مطر غزير.",
+        "ar_translit": "maṭar ghazīr"
+      }
+    },
+    {
+      "id": "w254",
+      "order": 254,
+      "theme": "nature",
+      "emoji": "❄️",
+      "en": "snow",
+      "es": "nieve",
+      "sr": "sneg",
+      "sr_cyr": "снег",
+      "ar": "ثلج",
+      "ar_translit": "thalj",
+      "example": {
+        "en": "It's snowing.",
+        "es": "Está nevando.",
+        "sr": "Pada sneg.",
+        "sr_cyr": "Пада снег.",
+        "ar": "إنها تثلج.",
+        "ar_translit": "innahā tuthlij"
+      }
+    },
+    {
+      "id": "w255",
+      "order": 255,
+      "theme": "nature",
+      "emoji": "💨",
+      "en": "wind",
+      "es": "viento",
+      "sr": "vetar",
+      "sr_cyr": "ветар",
+      "ar": "ريح",
+      "ar_translit": "rīḥ",
+      "example": {
+        "en": "Strong wind.",
+        "es": "Viento fuerte.",
+        "sr": "Jak vetar.",
+        "sr_cyr": "Јак ветар.",
+        "ar": "ريح قوية.",
+        "ar_translit": "rīḥ qawiyya"
+      }
+    },
+    {
+      "id": "w256",
+      "order": 256,
+      "theme": "nature",
+      "emoji": "",
+      "en": "sky",
+      "es": "cielo",
+      "sr": "nebo",
+      "sr_cyr": "небо",
+      "ar": "سماء",
+      "ar_translit": "samāʾ",
+      "example": {
+        "en": "Clear sky.",
+        "es": "Cielo despejado.",
+        "sr": "Vedro nebo.",
+        "sr_cyr": "Ведро небо.",
+        "ar": "سماء صافية.",
+        "ar_translit": "samāʾ ṣāfiya"
+      }
+    },
+    {
+      "id": "w257",
+      "order": 257,
+      "theme": "nature",
+      "emoji": "🌊",
+      "en": "sea",
+      "es": "mar",
+      "sr": "more",
+      "sr_cyr": "море",
+      "ar": "بحر",
+      "ar_translit": "baḥr",
+      "example": {
+        "en": "Blue sea.",
+        "es": "Mar azul.",
+        "sr": "Plavo more.",
+        "sr_cyr": "Плаво море.",
+        "ar": "بحر أزرق.",
+        "ar_translit": "baḥr azraq"
+      }
+    },
+    {
+      "id": "w258",
+      "order": 258,
+      "theme": "nature",
+      "emoji": "🏔️",
+      "en": "mountain",
+      "es": "montaña",
+      "sr": "planina",
+      "sr_cyr": "планина",
+      "ar": "جبل",
+      "ar_translit": "jabal",
+      "example": {
+        "en": "High mountain.",
+        "es": "Montaña alta.",
+        "sr": "Visoka planina.",
+        "sr_cyr": "Висока планина.",
+        "ar": "جبل عالٍ.",
+        "ar_translit": "jabal ʿālin"
+      }
+    },
+    {
+      "id": "w259",
+      "order": 259,
+      "theme": "nature",
+      "emoji": "🌳",
+      "en": "tree",
+      "es": "árbol",
+      "sr": "drvo",
+      "sr_cyr": "дрво",
+      "ar": "شجرة",
+      "ar_translit": "shajara",
+      "example": {
+        "en": "Tall tree.",
+        "es": "Árbol alto.",
+        "sr": "Visoko drvo.",
+        "sr_cyr": "Високо дрво.",
+        "ar": "شجرة طويلة.",
+        "ar_translit": "shajara ṭawīla"
+      }
+    },
+    {
+      "id": "w260",
+      "order": 260,
+      "theme": "nature",
+      "emoji": "🌸",
+      "en": "flower",
+      "es": "flor",
+      "sr": "cvet",
+      "sr_cyr": "цвет",
+      "ar": "زهرة",
+      "ar_translit": "zahra",
+      "example": {
+        "en": "Beautiful flower.",
+        "es": "Flor hermosa.",
+        "sr": "Lep cvet.",
+        "sr_cyr": "Леп цвет.",
+        "ar": "زهرة جميلة.",
+        "ar_translit": "zahra jamīla"
+      }
+    },
+    {
+      "id": "w261",
+      "order": 261,
+      "theme": "nature",
+      "emoji": "🔥",
+      "en": "fire",
+      "es": "fuego",
+      "sr": "vatra",
+      "sr_cyr": "ватра",
+      "ar": "نار",
+      "ar_translit": "nār",
+      "example": {
+        "en": "Hot fire.",
+        "es": "Fuego caliente.",
+        "sr": "Vruća vatra.",
+        "sr_cyr": "Врућа ватра.",
+        "ar": "نار حارة.",
+        "ar_translit": "nār ḥārra"
+      }
+    },
+    {
+      "id": "w262",
+      "order": 262,
+      "theme": "nature",
+      "emoji": "🌍",
+      "en": "earth",
+      "es": "tierra",
+      "sr": "zemlja",
+      "sr_cyr": "земља",
+      "ar": "أرض",
+      "ar_translit": "arḍ",
+      "example": {
+        "en": "The earth is round.",
+        "es": "La tierra es redonda.",
+        "sr": "Zemlja je okrugla.",
+        "sr_cyr": "Земља је округла.",
+        "ar": "الأرض كروية.",
+        "ar_translit": "al-arḍ kuriyya"
+      }
+    },
+    {
+      "id": "w263",
+      "order": 263,
+      "theme": "nature",
+      "emoji": "",
+      "en": "river",
+      "es": "río",
+      "sr": "reka",
+      "sr_cyr": "река",
+      "ar": "نهر",
+      "ar_translit": "nahr",
+      "example": {
+        "en": "Long river.",
+        "es": "Río largo.",
+        "sr": "Duga reka.",
+        "sr_cyr": "Дуга река.",
+        "ar": "نهر طويل.",
+        "ar_translit": "nahr ṭawīl"
+      }
+    },
+    {
+      "id": "w264",
+      "order": 264,
+      "theme": "nature",
+      "emoji": "🏖️",
+      "en": "beach",
+      "es": "playa",
+      "sr": "plaža",
+      "sr_cyr": "плажа",
+      "ar": "شاطئ",
+      "ar_translit": "shāṭiʾ",
+      "example": {
+        "en": "Sandy beach.",
+        "es": "Playa de arena.",
+        "sr": "Peščana plaža.",
+        "sr_cyr": "Пешчана плажа.",
+        "ar": "شاطئ رملي.",
+        "ar_translit": "shāṭiʾ ramlī"
+      }
+    },
+    {
+      "id": "w265",
+      "order": 265,
+      "theme": "nature",
+      "emoji": "",
+      "en": "weather",
+      "es": "clima",
+      "sr": "vreme",
+      "sr_cyr": "време",
+      "ar": "طقس",
+      "ar_translit": "ṭaqs",
+      "example": {
+        "en": "Good weather.",
+        "es": "Buen clima.",
+        "sr": "Lepo vreme.",
+        "sr_cyr": "Лепо време.",
+        "ar": "طقس جميل.",
+        "ar_translit": "ṭaqs jamīl"
+      }
+    },
+    {
+      "id": "w266",
+      "order": 266,
+      "theme": "nature",
+      "emoji": "☁️",
+      "en": "cloud",
+      "es": "nube",
+      "sr": "oblak",
+      "sr_cyr": "облак",
+      "ar": "غيمة",
+      "ar_translit": "ghayma",
+      "example": {
+        "en": "White cloud.",
+        "es": "Nube blanca.",
+        "sr": "Beli oblak.",
+        "sr_cyr": "Бели облак.",
+        "ar": "غيمة بيضاء.",
+        "ar_translit": "ghayma bayḍāʾ"
+      }
+    },
+    {
+      "id": "w267",
+      "order": 267,
+      "theme": "animals",
+      "emoji": "🐕",
+      "en": "dog",
+      "es": "perro",
+      "sr": "pas",
+      "sr_cyr": "пас",
+      "ar": "كلب",
+      "ar_translit": "kalb",
+      "example": {
+        "en": "My dog is friendly.",
+        "es": "Mi perro es amigable.",
+        "sr": "Moj pas je prijateljski.",
+        "sr_cyr": "Мој пас је пријатељски.",
+        "ar": "كلبي ودود.",
+        "ar_translit": "kalbī wadūd"
+      }
+    },
+    {
+      "id": "w268",
+      "order": 268,
+      "theme": "animals",
+      "emoji": "🐈",
+      "en": "cat",
+      "es": "gato",
+      "sr": "mačka",
+      "sr_cyr": "мачка",
+      "ar": "قط",
+      "ar_translit": "qiṭṭ",
+      "example": {
+        "en": "Small cat.",
+        "es": "Gato pequeño.",
+        "sr": "Mala mačka.",
+        "sr_cyr": "Мала мачка.",
+        "ar": "قط صغير.",
+        "ar_translit": "qiṭṭ ṣaghīr"
+      }
+    },
+    {
+      "id": "w269",
+      "order": 269,
+      "theme": "animals",
+      "emoji": "🐦",
+      "en": "bird",
+      "es": "pájaro",
+      "sr": "ptica",
+      "sr_cyr": "птица",
+      "ar": "طائر",
+      "ar_translit": "ṭāʾir",
+      "example": {
+        "en": "A bird flies.",
+        "es": "Un pájaro vuela.",
+        "sr": "Ptica leti.",
+        "sr_cyr": "Птица лети.",
+        "ar": "طائر يطير.",
+        "ar_translit": "ṭāʾir yaṭīr"
+      }
+    },
+    {
+      "id": "w270",
+      "order": 270,
+      "theme": "animals",
+      "emoji": "🐎",
+      "en": "horse",
+      "es": "caballo",
+      "sr": "konj",
+      "sr_cyr": "коњ",
+      "ar": "حصان",
+      "ar_translit": "ḥiṣān",
+      "example": {
+        "en": "Fast horse.",
+        "es": "Caballo rápido.",
+        "sr": "Brz konj.",
+        "sr_cyr": "Брз коњ.",
+        "ar": "حصان سريع.",
+        "ar_translit": "ḥiṣān sarīʿ"
+      }
+    },
+    {
+      "id": "w271",
+      "order": 271,
+      "theme": "animals",
+      "emoji": "🐄",
+      "en": "cow",
+      "es": "vaca",
+      "sr": "krava",
+      "sr_cyr": "крава",
+      "ar": "بقرة",
+      "ar_translit": "baqara",
+      "example": {
+        "en": "A cow gives milk.",
+        "es": "La vaca da leche.",
+        "sr": "Krava daje mleko.",
+        "sr_cyr": "Крава даје млеко.",
+        "ar": "البقرة تعطي الحليب.",
+        "ar_translit": "al-baqara tuʿṭī al-ḥalīb"
+      }
+    },
+    {
+      "id": "w272",
+      "order": 272,
+      "theme": "animals",
+      "emoji": "🐑",
+      "en": "sheep",
+      "es": "oveja",
+      "sr": "ovca",
+      "sr_cyr": "овца",
+      "ar": "خروف",
+      "ar_translit": "kharūf",
+      "example": {
+        "en": "White sheep.",
+        "es": "Oveja blanca.",
+        "sr": "Bela ovca.",
+        "sr_cyr": "Бела овца.",
+        "ar": "خروف أبيض.",
+        "ar_translit": "kharūf abyaḍ"
+      }
+    },
+    {
+      "id": "w273",
+      "order": 273,
+      "theme": "animals",
+      "emoji": "",
+      "en": "animal",
+      "es": "animal",
+      "sr": "životinja",
+      "sr_cyr": "животиња",
+      "ar": "حيوان",
+      "ar_translit": "ḥayawān",
+      "example": {
+        "en": "Wild animal.",
+        "es": "Animal salvaje.",
+        "sr": "Divlja životinja.",
+        "sr_cyr": "Дивља животиња.",
+        "ar": "حيوان بري.",
+        "ar_translit": "ḥayawān barrī"
+      }
+    },
+    {
+      "id": "w274",
+      "order": 274,
+      "theme": "animals",
+      "emoji": "🐪",
+      "en": "camel",
+      "es": "camello",
+      "sr": "kamila",
+      "sr_cyr": "камила",
+      "ar": "جمل",
+      "ar_translit": "jamal",
+      "example": {
+        "en": "A camel in the desert.",
+        "es": "Un camello en el desierto.",
+        "sr": "Kamila u pustinji.",
+        "sr_cyr": "Камила у пустињи.",
+        "ar": "جمل في الصحراء.",
+        "ar_translit": "jamal fī al-ṣaḥrāʾ"
+      }
+    },
+    {
+      "id": "w275",
+      "order": 275,
+      "theme": "clothing",
+      "emoji": "👕",
+      "en": "shirt",
+      "es": "camisa",
+      "sr": "košulja",
+      "sr_cyr": "кошуља",
+      "ar": "قميص",
+      "ar_translit": "qamīṣ",
+      "example": {
+        "en": "White shirt.",
+        "es": "Camisa blanca.",
+        "sr": "Bela košulja.",
+        "sr_cyr": "Бела кошуља.",
+        "ar": "قميص أبيض.",
+        "ar_translit": "qamīṣ abyaḍ"
+      }
+    },
+    {
+      "id": "w276",
+      "order": 276,
+      "theme": "clothing",
+      "emoji": "👖",
+      "en": "pants",
+      "es": "pantalones",
+      "sr": "pantalone",
+      "sr_cyr": "панталоне",
+      "ar": "بنطلون",
+      "ar_translit": "banṭalūn",
+      "example": {
+        "en": "Black pants.",
+        "es": "Pantalones negros.",
+        "sr": "Crne pantalone.",
+        "sr_cyr": "Црне панталоне.",
+        "ar": "بنطلون أسود.",
+        "ar_translit": "banṭalūn aswad"
+      }
+    },
+    {
+      "id": "w277",
+      "order": 277,
+      "theme": "clothing",
+      "emoji": "👗",
+      "en": "dress",
+      "es": "vestido",
+      "sr": "haljina",
+      "sr_cyr": "хаљина",
+      "ar": "فستان",
+      "ar_translit": "fustān",
+      "example": {
+        "en": "Beautiful dress.",
+        "es": "Vestido bonito.",
+        "sr": "Lepa haljina.",
+        "sr_cyr": "Лепа хаљина.",
+        "ar": "فستان جميل.",
+        "ar_translit": "fustān jamīl"
+      }
+    },
+    {
+      "id": "w278",
+      "order": 278,
+      "theme": "clothing",
+      "emoji": "🧢",
+      "en": "hat",
+      "es": "sombrero",
+      "sr": "šešir",
+      "sr_cyr": "шешир",
+      "ar": "قبعة",
+      "ar_translit": "qubbaʿa",
+      "example": {
+        "en": "New hat.",
+        "es": "Sombrero nuevo.",
+        "sr": "Novi šešir.",
+        "sr_cyr": "Нови шешир.",
+        "ar": "قبعة جديدة.",
+        "ar_translit": "qubbaʿa jadīda"
+      }
+    },
+    {
+      "id": "w279",
+      "order": 279,
+      "theme": "clothing",
+      "emoji": "🧥",
+      "en": "jacket",
+      "es": "chaqueta",
+      "sr": "jakna",
+      "sr_cyr": "јакна",
+      "ar": "سترة",
+      "ar_translit": "sutra",
+      "example": {
+        "en": "Warm jacket.",
+        "es": "Chaqueta cálida.",
+        "sr": "Topla jakna.",
+        "sr_cyr": "Топла јакна.",
+        "ar": "سترة دافئة.",
+        "ar_translit": "sutra dāfiʾa"
+      }
+    },
+    {
+      "id": "w280",
+      "order": 280,
+      "theme": "clothing",
+      "emoji": "⌚",
+      "en": "watch",
+      "es": "reloj",
+      "sr": "sat",
+      "sr_cyr": "сат",
+      "ar": "ساعة",
+      "ar_translit": "sāʿa",
+      "example": {
+        "en": "Gold watch.",
+        "es": "Reloj de oro.",
+        "sr": "Zlatni sat.",
+        "sr_cyr": "Златни сат.",
+        "ar": "ساعة ذهبية.",
+        "ar_translit": "sāʿa dhahabiyya"
+      }
+    },
+    {
+      "id": "w281",
+      "order": 281,
+      "theme": "clothing",
+      "emoji": "💍",
+      "en": "ring",
+      "es": "anillo",
+      "sr": "prsten",
+      "sr_cyr": "прстен",
+      "ar": "خاتم",
+      "ar_translit": "khātam",
+      "example": {
+        "en": "Silver ring.",
+        "es": "Anillo de plata.",
+        "sr": "Srebrni prsten.",
+        "sr_cyr": "Сребрни прстен.",
+        "ar": "خاتم فضي.",
+        "ar_translit": "khātam fiḍḍī"
+      }
+    },
+    {
+      "id": "w282",
+      "order": 282,
+      "theme": "clothing",
+      "emoji": "👓",
+      "en": "glasses",
+      "es": "gafas",
+      "sr": "naočare",
+      "sr_cyr": "наочаре",
+      "ar": "نظارات",
+      "ar_translit": "naẓẓārāt",
+      "example": {
+        "en": "Reading glasses.",
+        "es": "Gafas para leer.",
+        "sr": "Naočare za čitanje.",
+        "sr_cyr": "Наочаре за читање.",
+        "ar": "نظارات للقراءة.",
+        "ar_translit": "naẓẓārāt lil-qirāʾa"
+      }
+    },
+    {
+      "id": "w283",
+      "order": 283,
+      "theme": "transport",
+      "emoji": "🚌",
+      "en": "bus",
+      "es": "autobús",
+      "sr": "autobus",
+      "sr_cyr": "аутобус",
+      "ar": "حافلة",
+      "ar_translit": "ḥāfila",
+      "example": {
+        "en": "The bus is late.",
+        "es": "El autobús está tarde.",
+        "sr": "Autobus kasni.",
+        "sr_cyr": "Аутобус касни.",
+        "ar": "الحافلة متأخرة.",
+        "ar_translit": "al-ḥāfila mutaʾakhkhira"
+      }
+    },
+    {
+      "id": "w284",
+      "order": 284,
+      "theme": "transport",
+      "emoji": "🚆",
+      "en": "train",
+      "es": "tren",
+      "sr": "voz",
+      "sr_cyr": "воз",
+      "ar": "قطار",
+      "ar_translit": "qiṭār",
+      "example": {
+        "en": "Fast train.",
+        "es": "Tren rápido.",
+        "sr": "Brzi voz.",
+        "sr_cyr": "Брзи воз.",
+        "ar": "قطار سريع.",
+        "ar_translit": "qiṭār sarīʿ"
+      }
+    },
+    {
+      "id": "w285",
+      "order": 285,
+      "theme": "transport",
+      "emoji": "✈️",
+      "en": "plane",
+      "es": "avión",
+      "sr": "avion",
+      "sr_cyr": "авион",
+      "ar": "طائرة",
+      "ar_translit": "ṭāʾira",
+      "example": {
+        "en": "The plane is taking off.",
+        "es": "El avión está despegando.",
+        "sr": "Avion poleće.",
+        "sr_cyr": "Авион полеће.",
+        "ar": "الطائرة تقلع.",
+        "ar_translit": "al-ṭāʾira tuqliʿ"
+      }
+    },
+    {
+      "id": "w286",
+      "order": 286,
+      "theme": "transport",
+      "emoji": "🚕",
+      "en": "taxi",
+      "es": "taxi",
+      "sr": "taksi",
+      "sr_cyr": "такси",
+      "ar": "تاكسي",
+      "ar_translit": "tāksī",
+      "example": {
+        "en": "Call a taxi.",
+        "es": "Llama un taxi.",
+        "sr": "Pozovi taksi.",
+        "sr_cyr": "Позови такси.",
+        "ar": "اطلب تاكسي.",
+        "ar_translit": "uṭlub tāksī"
+      }
+    },
+    {
+      "id": "w287",
+      "order": 287,
+      "theme": "transport",
+      "emoji": "🚢",
+      "en": "ship",
+      "es": "barco",
+      "sr": "brod",
+      "sr_cyr": "брод",
+      "ar": "سفينة",
+      "ar_translit": "safīna",
+      "example": {
+        "en": "Big ship.",
+        "es": "Barco grande.",
+        "sr": "Veliki brod.",
+        "sr_cyr": "Велики брод.",
+        "ar": "سفينة كبيرة.",
+        "ar_translit": "safīna kabīra"
+      }
+    },
+    {
+      "id": "w288",
+      "order": 288,
+      "theme": "transport",
+      "emoji": "🚲",
+      "en": "bicycle",
+      "es": "bicicleta",
+      "sr": "bicikl",
+      "sr_cyr": "бицикл",
+      "ar": "دراجة",
+      "ar_translit": "darrāja",
+      "example": {
+        "en": "I ride a bicycle.",
+        "es": "Monto en bicicleta.",
+        "sr": "Vozim bicikl.",
+        "sr_cyr": "Возим бицикл.",
+        "ar": "أركب دراجة.",
+        "ar_translit": "arkabu darrāja"
+      }
+    },
+    {
+      "id": "w289",
+      "order": 289,
+      "theme": "transport",
+      "emoji": "🛣️",
+      "en": "road",
+      "es": "carretera",
+      "sr": "put",
+      "sr_cyr": "пут",
+      "ar": "طريق",
+      "ar_translit": "ṭarīq",
+      "example": {
+        "en": "Long road.",
+        "es": "Carretera larga.",
+        "sr": "Dug put.",
+        "sr_cyr": "Дуг пут.",
+        "ar": "طريق طويل.",
+        "ar_translit": "ṭarīq ṭawīl"
+      }
+    },
+    {
+      "id": "w290",
+      "order": 290,
+      "theme": "transport",
+      "emoji": "🎫",
+      "en": "ticket",
+      "es": "boleto",
+      "sr": "karta",
+      "sr_cyr": "карта",
+      "ar": "تذكرة",
+      "ar_translit": "tadhkira",
+      "example": {
+        "en": "One ticket, please.",
+        "es": "Un boleto, por favor.",
+        "sr": "Jednu kartu, molim.",
+        "sr_cyr": "Једну карту, молим.",
+        "ar": "تذكرة واحدة، من فضلك.",
+        "ar_translit": "tadhkira wāḥida, min faḍlik"
+      }
+    },
+    {
+      "id": "w291",
+      "order": 291,
+      "theme": "prepositions",
+      "emoji": "",
+      "en": "in",
+      "es": "en",
+      "sr": "u",
+      "sr_cyr": "у",
+      "ar": "في",
+      "ar_translit": "fī",
+      "example": {
+        "en": "In the house.",
+        "es": "En la casa.",
+        "sr": "U kući.",
+        "sr_cyr": "У кући.",
+        "ar": "في البيت.",
+        "ar_translit": "fī al-bayt"
+      }
+    },
+    {
+      "id": "w292",
+      "order": 292,
+      "theme": "prepositions",
+      "emoji": "",
+      "en": "on",
+      "es": "sobre",
+      "sr": "na",
+      "sr_cyr": "на",
+      "ar": "على",
+      "ar_translit": "ʿalā",
+      "example": {
+        "en": "On the table.",
+        "es": "Sobre la mesa.",
+        "sr": "Na stolu.",
+        "sr_cyr": "На столу.",
+        "ar": "على الطاولة.",
+        "ar_translit": "ʿalā al-ṭāwila"
+      }
+    },
+    {
+      "id": "w293",
+      "order": 293,
+      "theme": "prepositions",
+      "emoji": "",
+      "en": "with",
+      "es": "con",
+      "sr": "sa",
+      "sr_cyr": "са",
+      "ar": "مع",
+      "ar_translit": "maʿa",
+      "example": {
+        "en": "With a friend.",
+        "es": "Con un amigo.",
+        "sr": "Sa prijateljem.",
+        "sr_cyr": "Са пријатељем.",
+        "ar": "مع صديق.",
+        "ar_translit": "maʿa ṣadīq"
+      }
+    },
+    {
+      "id": "w294",
+      "order": 294,
+      "theme": "prepositions",
+      "emoji": "",
+      "en": "from",
+      "es": "de",
+      "sr": "iz",
+      "sr_cyr": "из",
+      "ar": "من",
+      "ar_translit": "min",
+      "example": {
+        "en": "From the city.",
+        "es": "De la ciudad.",
+        "sr": "Iz grada.",
+        "sr_cyr": "Из града.",
+        "ar": "من المدينة.",
+        "ar_translit": "min al-madīna"
+      }
+    },
+    {
+      "id": "w295",
+      "order": 295,
+      "theme": "prepositions",
+      "emoji": "",
+      "en": "to",
+      "es": "a",
+      "sr": "do",
+      "sr_cyr": "до",
+      "ar": "إلى",
+      "ar_translit": "ilā",
+      "example": {
+        "en": "To the airport.",
+        "es": "Al aeropuerto.",
+        "sr": "Do aerodroma.",
+        "sr_cyr": "До аеродрома.",
+        "ar": "إلى المطار.",
+        "ar_translit": "ilā al-maṭār"
+      }
+    },
+    {
+      "id": "w296",
+      "order": 296,
+      "theme": "prepositions",
+      "emoji": "",
+      "en": "at",
+      "es": "en",
+      "sr": "kod",
+      "sr_cyr": "код",
+      "ar": "عند",
+      "ar_translit": "ʿinda",
+      "example": {
+        "en": "At home.",
+        "es": "En casa.",
+        "sr": "Kod kuće.",
+        "sr_cyr": "Код куће.",
+        "ar": "عند البيت.",
+        "ar_translit": "ʿinda al-bayt"
+      }
+    },
+    {
+      "id": "w297",
+      "order": 297,
+      "theme": "prepositions",
+      "emoji": "",
+      "en": "for",
+      "es": "para",
+      "sr": "za",
+      "sr_cyr": "за",
+      "ar": "لـ",
+      "ar_translit": "li-",
+      "example": {
+        "en": "For you.",
+        "es": "Para ti.",
+        "sr": "Za tebe.",
+        "sr_cyr": "За тебе.",
+        "ar": "لك.",
+        "ar_translit": "laka"
+      }
+    },
+    {
+      "id": "w298",
+      "order": 298,
+      "theme": "prepositions",
+      "emoji": "",
+      "en": "between",
+      "es": "entre",
+      "sr": "između",
+      "sr_cyr": "између",
+      "ar": "بين",
+      "ar_translit": "bayna",
+      "example": {
+        "en": "Between the houses.",
+        "es": "Entre las casas.",
+        "sr": "Između kuća.",
+        "sr_cyr": "Између кућа.",
+        "ar": "بين البيوت.",
+        "ar_translit": "bayna al-buyūt"
+      }
+    },
+    {
+      "id": "w299",
+      "order": 299,
+      "theme": "prepositions",
+      "emoji": "",
+      "en": "near",
+      "es": "cerca",
+      "sr": "blizu",
+      "sr_cyr": "близу",
+      "ar": "قريب",
+      "ar_translit": "qarīb",
+      "example": {
+        "en": "Near the park.",
+        "es": "Cerca del parque.",
+        "sr": "Blizu parka.",
+        "sr_cyr": "Близу парка.",
+        "ar": "قريب من الحديقة.",
+        "ar_translit": "qarīb min al-ḥadīqa"
+      }
+    },
+    {
+      "id": "w300",
+      "order": 300,
+      "theme": "prepositions",
+      "emoji": "",
+      "en": "far",
+      "es": "lejos",
+      "sr": "daleko",
+      "sr_cyr": "далеко",
+      "ar": "بعيد",
+      "ar_translit": "baʿīd",
+      "example": {
+        "en": "Far from here.",
+        "es": "Lejos de aquí.",
+        "sr": "Daleko odavde.",
+        "sr_cyr": "Далеко одавде.",
+        "ar": "بعيد من هنا.",
+        "ar_translit": "baʿīd min hunā"
+      }
+    },
+    {
+      "id": "w301",
+      "order": 301,
+      "theme": "prepositions",
+      "emoji": "",
+      "en": "here",
+      "es": "aquí",
+      "sr": "ovde",
+      "sr_cyr": "овде",
+      "ar": "هنا",
+      "ar_translit": "hunā",
+      "example": {
+        "en": "Come here.",
+        "es": "Ven aquí.",
+        "sr": "Dođi ovde.",
+        "sr_cyr": "Дођи овде.",
+        "ar": "تعال هنا.",
+        "ar_translit": "taʿāl hunā"
+      }
+    },
+    {
+      "id": "w302",
+      "order": 302,
+      "theme": "prepositions",
+      "emoji": "",
+      "en": "there",
+      "es": "allí",
+      "sr": "tamo",
+      "sr_cyr": "тамо",
+      "ar": "هناك",
+      "ar_translit": "hunāka",
+      "example": {
+        "en": "Over there.",
+        "es": "Allí.",
+        "sr": "Tamo.",
+        "sr_cyr": "Тамо.",
+        "ar": "هناك.",
+        "ar_translit": "hunāka"
+      }
+    },
+    {
+      "id": "w303",
+      "order": 303,
+      "theme": "prepositions",
+      "emoji": "",
+      "en": "and",
+      "es": "y",
+      "sr": "i",
+      "sr_cyr": "и",
+      "ar": "و",
+      "ar_translit": "wa",
+      "example": {
+        "en": "Bread and water.",
+        "es": "Pan y agua.",
+        "sr": "Hleb i voda.",
+        "sr_cyr": "Хлеб и вода.",
+        "ar": "خبز وماء.",
+        "ar_translit": "khubz wa māʾ"
+      }
+    },
+    {
+      "id": "w304",
+      "order": 304,
+      "theme": "emotions",
+      "emoji": "",
+      "en": "fear",
+      "es": "miedo",
+      "sr": "strah",
+      "sr_cyr": "страх",
+      "ar": "خوف",
+      "ar_translit": "khawf",
+      "example": {
+        "en": "No fear.",
+        "es": "Sin miedo.",
+        "sr": "Bez straha.",
+        "sr_cyr": "Без страха.",
+        "ar": "لا خوف.",
+        "ar_translit": "lā khawf"
+      }
+    },
+    {
+      "id": "w305",
+      "order": 305,
+      "theme": "emotions",
+      "emoji": "😠",
+      "en": "anger",
+      "es": "enojo",
+      "sr": "ljutnja",
+      "sr_cyr": "љутња",
+      "ar": "غضب",
+      "ar_translit": "ghaḍab",
+      "example": {
+        "en": "Without anger.",
+        "es": "Sin enojo.",
+        "sr": "Bez ljutnje.",
+        "sr_cyr": "Без љутње.",
+        "ar": "بدون غضب.",
+        "ar_translit": "bidūn ghaḍab"
+      }
+    },
+    {
+      "id": "w306",
+      "order": 306,
+      "theme": "emotions",
+      "emoji": "",
+      "en": "hope",
+      "es": "esperanza",
+      "sr": "nada",
+      "sr_cyr": "нада",
+      "ar": "أمل",
+      "ar_translit": "amal",
+      "example": {
+        "en": "There is hope.",
+        "es": "Hay esperanza.",
+        "sr": "Ima nade.",
+        "sr_cyr": "Има наде.",
+        "ar": "هناك أمل.",
+        "ar_translit": "hunāka amal"
+      }
+    },
+    {
+      "id": "w307",
+      "order": 307,
+      "theme": "emotions",
+      "emoji": "😲",
+      "en": "surprise",
+      "es": "sorpresa",
+      "sr": "iznenađenje",
+      "sr_cyr": "изненађење",
+      "ar": "مفاجأة",
+      "ar_translit": "mufājaʾa",
+      "example": {
+        "en": "A nice surprise.",
+        "es": "Una linda sorpresa.",
+        "sr": "Lepo iznenađenje.",
+        "sr_cyr": "Лепо изненађење.",
+        "ar": "مفاجأة جميلة.",
+        "ar_translit": "mufājaʾa jamīla"
+      }
+    },
+    {
+      "id": "w308",
+      "order": 308,
+      "theme": "emotions",
+      "emoji": "😴",
+      "en": "tired",
+      "es": "cansado",
+      "sr": "umoran",
+      "sr_cyr": "уморан",
+      "ar": "متعب",
+      "ar_translit": "mutʿab",
+      "example": {
+        "en": "I am tired.",
+        "es": "Estoy cansado.",
+        "sr": "Umoran sam.",
+        "sr_cyr": "Уморан сам.",
+        "ar": "أنا متعب.",
+        "ar_translit": "anā mutʿab"
+      }
+    },
+    {
+      "id": "w309",
+      "order": 309,
+      "theme": "emotions",
+      "emoji": "🤒",
+      "en": "sick",
+      "es": "enfermo",
+      "sr": "bolestan",
+      "sr_cyr": "болестан",
+      "ar": "مريض",
+      "ar_translit": "marīḍ",
+      "example": {
+        "en": "I'm sick today.",
+        "es": "Estoy enfermo hoy.",
+        "sr": "Bolestan sam danas.",
+        "sr_cyr": "Болестан сам данас.",
+        "ar": "أنا مريض اليوم.",
+        "ar_translit": "anā marīḍ al-yawm"
+      }
+    },
+    {
+      "id": "w310",
+      "order": 310,
+      "theme": "emotions",
+      "emoji": "",
+      "en": "hungry",
+      "es": "hambriento",
+      "sr": "gladan",
+      "sr_cyr": "гладан",
+      "ar": "جائع",
+      "ar_translit": "jāʾiʿ",
+      "example": {
+        "en": "I'm hungry.",
+        "es": "Tengo hambre.",
+        "sr": "Gladan sam.",
+        "sr_cyr": "Гладан сам.",
+        "ar": "أنا جائع.",
+        "ar_translit": "anā jāʾiʿ"
+      }
+    },
+    {
+      "id": "w311",
+      "order": 311,
+      "theme": "emotions",
+      "emoji": "",
+      "en": "thirsty",
+      "es": "sediento",
+      "sr": "žedan",
+      "sr_cyr": "жедан",
+      "ar": "عطشان",
+      "ar_translit": "ʿaṭshān",
+      "example": {
+        "en": "I'm thirsty.",
+        "es": "Tengo sed.",
+        "sr": "Žedan sam.",
+        "sr_cyr": "Жедан сам.",
+        "ar": "أنا عطشان.",
+        "ar_translit": "anā ʿaṭshān"
+      }
+    },
+    {
+      "id": "w312",
+      "order": 312,
+      "theme": "emotions",
+      "emoji": "😨",
+      "en": "afraid",
+      "es": "asustado",
+      "sr": "uplašen",
+      "sr_cyr": "уплашен",
+      "ar": "خائف",
+      "ar_translit": "khāʾif",
+      "example": {
+        "en": "Don't be afraid.",
+        "es": "No tengas miedo.",
+        "sr": "Ne boj se.",
+        "sr_cyr": "Не бој се.",
+        "ar": "لا تخف.",
+        "ar_translit": "lā takhaf"
+      }
+    },
+    {
+      "id": "w313",
+      "order": 313,
+      "theme": "emotions",
+      "emoji": "😌",
+      "en": "calm",
+      "es": "tranquilo",
+      "sr": "miran",
+      "sr_cyr": "миран",
+      "ar": "هادئ",
+      "ar_translit": "hādiʾ",
+      "example": {
+        "en": "Stay calm.",
+        "es": "Mantente tranquilo.",
+        "sr": "Budi miran.",
+        "sr_cyr": "Буди миран.",
+        "ar": "كن هادئاً.",
+        "ar_translit": "kun hādiʾan"
+      }
+    },
+    {
+      "id": "w314",
+      "order": 314,
+      "theme": "verbs_basic",
+      "emoji": "",
+      "en": "I wait",
+      "es": "espero",
+      "sr": "čekam",
+      "sr_cyr": "чекам",
+      "ar": "أنتظر",
+      "ar_translit": "antaẓir",
+      "example": {
+        "en": "I wait for the bus.",
+        "es": "Espero el autobús.",
+        "sr": "Čekam autobus.",
+        "sr_cyr": "Чекам аутобус.",
+        "ar": "أنتظر الحافلة.",
+        "ar_translit": "antaẓir al-ḥāfila"
+      }
+    },
+    {
+      "id": "w315",
+      "order": 315,
+      "theme": "verbs_basic",
+      "emoji": "",
+      "en": "I finish",
+      "es": "termino",
+      "sr": "završavam",
+      "sr_cyr": "завршавам",
+      "ar": "أنتهي",
+      "ar_translit": "antahī",
+      "example": {
+        "en": "I finish work.",
+        "es": "Termino el trabajo.",
+        "sr": "Završavam posao.",
+        "sr_cyr": "Завршавам посао.",
+        "ar": "أنتهي من العمل.",
+        "ar_translit": "antahī min al-ʿamal"
+      }
+    },
+    {
+      "id": "w316",
+      "order": 316,
+      "theme": "verbs_basic",
+      "emoji": "",
+      "en": "I start",
+      "es": "empiezo",
+      "sr": "počinjem",
+      "sr_cyr": "почињем",
+      "ar": "أبدأ",
+      "ar_translit": "abdaʾ",
+      "example": {
+        "en": "I start now.",
+        "es": "Empiezo ahora.",
+        "sr": "Počinjem sada.",
+        "sr_cyr": "Почињем сада.",
+        "ar": "أبدأ الآن.",
+        "ar_translit": "abdaʾ al-ān"
+      }
+    },
+    {
+      "id": "w317",
+      "order": 317,
+      "theme": "verbs_basic",
+      "emoji": "",
+      "en": "I stop",
+      "es": "paro",
+      "sr": "stajem",
+      "sr_cyr": "стајем",
+      "ar": "أتوقف",
+      "ar_translit": "atawaqqaf",
+      "example": {
+        "en": "I stop here.",
+        "es": "Paro aquí.",
+        "sr": "Stajem ovde.",
+        "sr_cyr": "Стајем овде.",
+        "ar": "أتوقف هنا.",
+        "ar_translit": "atawaqqaf hunā"
+      }
+    },
+    {
+      "id": "w318",
+      "order": 318,
+      "theme": "verbs_basic",
+      "emoji": "",
+      "en": "I ask",
+      "es": "pregunto",
+      "sr": "pitam",
+      "sr_cyr": "питам",
+      "ar": "أسأل",
+      "ar_translit": "asʾal",
+      "example": {
+        "en": "I ask a question.",
+        "es": "Pregunto algo.",
+        "sr": "Pitam nešto.",
+        "sr_cyr": "Питам нешто.",
+        "ar": "أسأل سؤالاً.",
+        "ar_translit": "asʾalu suʾālan"
+      }
+    },
+    {
+      "id": "w319",
+      "order": 319,
+      "theme": "verbs_basic",
+      "emoji": "",
+      "en": "I answer",
+      "es": "respondo",
+      "sr": "odgovaram",
+      "sr_cyr": "одговарам",
+      "ar": "أجيب",
+      "ar_translit": "ujīb",
+      "example": {
+        "en": "I answer the phone.",
+        "es": "Respondo el teléfono.",
+        "sr": "Odgovaram na telefon.",
+        "sr_cyr": "Одговарам на телефон.",
+        "ar": "أجيب على الهاتف.",
+        "ar_translit": "ujīb ʿalā al-hātif"
+      }
+    },
+    {
+      "id": "w320",
+      "order": 320,
+      "theme": "verbs_basic",
+      "emoji": "",
+      "en": "I find",
+      "es": "encuentro",
+      "sr": "nalazim",
+      "sr_cyr": "налазим",
+      "ar": "أجد",
+      "ar_translit": "ajid",
+      "example": {
+        "en": "I find the key.",
+        "es": "Encuentro la llave.",
+        "sr": "Nalazim ključ.",
+        "sr_cyr": "Налазим кључ.",
+        "ar": "أجد المفتاح.",
+        "ar_translit": "ajid al-miftāḥ"
+      }
+    },
+    {
+      "id": "w321",
+      "order": 321,
+      "theme": "verbs_basic",
+      "emoji": "",
+      "en": "I lose",
+      "es": "pierdo",
+      "sr": "gubim",
+      "sr_cyr": "губим",
+      "ar": "أفقد",
+      "ar_translit": "afqid",
+      "example": {
+        "en": "I lose my keys.",
+        "es": "Pierdo mis llaves.",
+        "sr": "Gubim ključeve.",
+        "sr_cyr": "Губим кључеве.",
+        "ar": "أفقد مفاتيحي.",
+        "ar_translit": "afqid mafātīḥī"
+      }
+    },
+    {
+      "id": "w322",
+      "order": 322,
+      "theme": "verbs_basic",
+      "emoji": "🏆",
+      "en": "I win",
+      "es": "gano",
+      "sr": "pobeđujem",
+      "sr_cyr": "побеђујем",
+      "ar": "أفوز",
+      "ar_translit": "afūz",
+      "example": {
+        "en": "I win the game.",
+        "es": "Gano el juego.",
+        "sr": "Pobeđujem igru.",
+        "sr_cyr": "Побеђујем игру.",
+        "ar": "أفوز باللعبة.",
+        "ar_translit": "afūz bil-luʿba"
+      }
+    },
+    {
+      "id": "w323",
+      "order": 323,
+      "theme": "verbs_basic",
+      "emoji": "",
+      "en": "I pay",
+      "es": "pago",
+      "sr": "plaćam",
+      "sr_cyr": "плаћам",
+      "ar": "أدفع",
+      "ar_translit": "adfaʿ",
+      "example": {
+        "en": "I pay the bill.",
+        "es": "Pago la cuenta.",
+        "sr": "Plaćam račun.",
+        "sr_cyr": "Плаћам рачун.",
+        "ar": "أدفع الفاتورة.",
+        "ar_translit": "adfaʿ al-fātūra"
+      }
+    },
+    {
+      "id": "w324",
+      "order": 324,
+      "theme": "verbs_basic",
+      "emoji": "",
+      "en": "I try",
+      "es": "intento",
+      "sr": "pokušavam",
+      "sr_cyr": "покушавам",
+      "ar": "أحاول",
+      "ar_translit": "uḥāwil",
+      "example": {
+        "en": "I try again.",
+        "es": "Intento otra vez.",
+        "sr": "Pokušavam ponovo.",
+        "sr_cyr": "Покушавам поново.",
+        "ar": "أحاول مرة أخرى.",
+        "ar_translit": "uḥāwil marra ukhrā"
+      }
+    },
+    {
+      "id": "w325",
+      "order": 325,
+      "theme": "verbs_basic",
+      "emoji": "",
+      "en": "I use",
+      "es": "uso",
+      "sr": "koristim",
+      "sr_cyr": "користим",
+      "ar": "أستخدم",
+      "ar_translit": "astakhdim",
+      "example": {
+        "en": "I use a pen.",
+        "es": "Uso un bolígrafo.",
+        "sr": "Koristim olovku.",
+        "sr_cyr": "Користим оловку.",
+        "ar": "أستخدم قلماً.",
+        "ar_translit": "astakhdim qalaman"
+      }
+    },
+    {
+      "id": "w326",
+      "order": 326,
+      "theme": "verbs_basic",
+      "emoji": "📨",
+      "en": "I send",
+      "es": "envío",
+      "sr": "šaljem",
+      "sr_cyr": "шаљем",
+      "ar": "أرسل",
+      "ar_translit": "ursil",
+      "example": {
+        "en": "I send a message.",
+        "es": "Envío un mensaje.",
+        "sr": "Šaljem poruku.",
+        "sr_cyr": "Шаљем поруку.",
+        "ar": "أرسل رسالة.",
+        "ar_translit": "ursil risāla"
+      }
+    },
+    {
+      "id": "w327",
+      "order": 327,
+      "theme": "verbs_basic",
+      "emoji": "🎁",
+      "en": "I receive",
+      "es": "recibo",
+      "sr": "primam",
+      "sr_cyr": "примам",
+      "ar": "أتلقى",
+      "ar_translit": "atalaqqā",
+      "example": {
+        "en": "I receive a gift.",
+        "es": "Recibo un regalo.",
+        "sr": "Primam poklon.",
+        "sr_cyr": "Примам поклон.",
+        "ar": "أتلقى هدية.",
+        "ar_translit": "atalaqqā hadiyya"
+      }
+    },
+    {
+      "id": "w328",
+      "order": 328,
+      "theme": "verbs_basic",
+      "emoji": "🍳",
+      "en": "I cook",
+      "es": "cocino",
+      "sr": "kuvam",
+      "sr_cyr": "кувам",
+      "ar": "أطبخ",
+      "ar_translit": "aṭbukh",
+      "example": {
+        "en": "I cook dinner.",
+        "es": "Cocino la cena.",
+        "sr": "Kuvam večeru.",
+        "sr_cyr": "Кувам вечеру.",
+        "ar": "أطبخ العشاء.",
+        "ar_translit": "aṭbukh al-ʿashāʾ"
+      }
+    },
+    {
+      "id": "w329",
+      "order": 329,
+      "theme": "qualities",
+      "emoji": "✨",
+      "en": "clean",
+      "es": "limpio",
+      "sr": "čist",
+      "sr_cyr": "чист",
+      "ar": "نظيف",
+      "ar_translit": "naẓīf",
+      "example": {
+        "en": "Clean room.",
+        "es": "Habitación limpia.",
+        "sr": "Čista soba.",
+        "sr_cyr": "Чиста соба.",
+        "ar": "غرفة نظيفة.",
+        "ar_translit": "ghurfa naẓīfa"
+      }
+    },
+    {
+      "id": "w330",
+      "order": 330,
+      "theme": "qualities",
+      "emoji": "",
+      "en": "dirty",
+      "es": "sucio",
+      "sr": "prljav",
+      "sr_cyr": "прљав",
+      "ar": "قذر",
+      "ar_translit": "qadhir",
+      "example": {
+        "en": "Dirty shoes.",
+        "es": "Zapatos sucios.",
+        "sr": "Prljave cipele.",
+        "sr_cyr": "Прљаве ципеле.",
+        "ar": "أحذية قذرة.",
+        "ar_translit": "aḥdhiya qadhira"
+      }
+    },
+    {
+      "id": "w331",
+      "order": 331,
+      "theme": "qualities",
+      "emoji": "",
+      "en": "full",
+      "es": "lleno",
+      "sr": "pun",
+      "sr_cyr": "пун",
+      "ar": "ممتلئ",
+      "ar_translit": "mumtaliʾ",
+      "example": {
+        "en": "Full glass.",
+        "es": "Vaso lleno.",
+        "sr": "Puna čaša.",
+        "sr_cyr": "Пуна чаша.",
+        "ar": "كأس ممتلئ.",
+        "ar_translit": "kaʾs mumtaliʾ"
+      }
+    },
+    {
+      "id": "w332",
+      "order": 332,
+      "theme": "qualities",
+      "emoji": "",
+      "en": "empty",
+      "es": "vacío",
+      "sr": "prazan",
+      "sr_cyr": "празан",
+      "ar": "فارغ",
+      "ar_translit": "fārigh",
+      "example": {
+        "en": "Empty bottle.",
+        "es": "Botella vacía.",
+        "sr": "Prazna boca.",
+        "sr_cyr": "Празна боца.",
+        "ar": "زجاجة فارغة.",
+        "ar_translit": "zujāja fārigha"
+      }
+    },
+    {
+      "id": "w333",
+      "order": 333,
+      "theme": "qualities",
+      "emoji": "🌑",
+      "en": "dark",
+      "es": "oscuro",
+      "sr": "taman",
+      "sr_cyr": "таман",
+      "ar": "مظلم",
+      "ar_translit": "muẓlim",
+      "example": {
+        "en": "Dark room.",
+        "es": "Habitación oscura.",
+        "sr": "Tamna soba.",
+        "sr_cyr": "Тамна соба.",
+        "ar": "غرفة مظلمة.",
+        "ar_translit": "ghurfa muẓlima"
+      }
+    },
+    {
+      "id": "w334",
+      "order": 334,
+      "theme": "qualities",
+      "emoji": "❗",
+      "en": "important",
+      "es": "importante",
+      "sr": "važan",
+      "sr_cyr": "важан",
+      "ar": "مهم",
+      "ar_translit": "muhimm",
+      "example": {
+        "en": "Important meeting.",
+        "es": "Reunión importante.",
+        "sr": "Važan sastanak.",
+        "sr_cyr": "Важан састанак.",
+        "ar": "اجتماع مهم.",
+        "ar_translit": "ijtimāʿ muhimm"
+      }
+    },
+    {
+      "id": "w335",
+      "order": 335,
+      "theme": "qualities",
+      "emoji": "",
+      "en": "free",
+      "es": "libre",
+      "sr": "slobodan",
+      "sr_cyr": "слободан",
+      "ar": "حر",
+      "ar_translit": "ḥurr",
+      "example": {
+        "en": "Free time.",
+        "es": "Tiempo libre.",
+        "sr": "Slobodno vreme.",
+        "sr_cyr": "Слободно време.",
+        "ar": "وقت حر.",
+        "ar_translit": "waqt ḥurr"
+      }
+    },
+    {
+      "id": "w336",
+      "order": 336,
+      "theme": "qualities",
+      "emoji": "💸",
+      "en": "expensive",
+      "es": "caro",
+      "sr": "skup",
+      "sr_cyr": "скуп",
+      "ar": "غالٍ",
+      "ar_translit": "ghālin",
+      "example": {
+        "en": "Expensive car.",
+        "es": "Coche caro.",
+        "sr": "Skup auto.",
+        "sr_cyr": "Скуп ауто.",
+        "ar": "سيارة غالية.",
+        "ar_translit": "sayyāra ghāliya"
+      }
+    },
+    {
+      "id": "w337",
+      "order": 337,
+      "theme": "food_drink",
+      "emoji": "🥔",
+      "en": "potato",
+      "es": "patata",
+      "sr": "krompir",
+      "sr_cyr": "кромпир",
+      "ar": "بطاطا",
+      "ar_translit": "baṭāṭā",
+      "example": {
+        "en": "Hot potato.",
+        "es": "Patata caliente.",
+        "sr": "Vruć krompir.",
+        "sr_cyr": "Врућ кромпир.",
+        "ar": "بطاطا حارة.",
+        "ar_translit": "baṭāṭā ḥārra"
+      }
+    },
+    {
+      "id": "w338",
+      "order": 338,
+      "theme": "food_drink",
+      "emoji": "🍅",
+      "en": "tomato",
+      "es": "tomate",
+      "sr": "paradajz",
+      "sr_cyr": "парадајз",
+      "ar": "طماطم",
+      "ar_translit": "ṭamāṭim",
+      "example": {
+        "en": "Red tomato.",
+        "es": "Tomate rojo.",
+        "sr": "Crveni paradajz.",
+        "sr_cyr": "Црвени парадајз.",
+        "ar": "طماطم حمراء.",
+        "ar_translit": "ṭamāṭim ḥamrāʾ"
+      }
+    },
+    {
+      "id": "w339",
+      "order": 339,
+      "theme": "food_drink",
+      "emoji": "🧅",
+      "en": "onion",
+      "es": "cebolla",
+      "sr": "luk",
+      "sr_cyr": "лук",
+      "ar": "بصل",
+      "ar_translit": "baṣal",
+      "example": {
+        "en": "Cut the onion.",
+        "es": "Corta la cebolla.",
+        "sr": "Iseci luk.",
+        "sr_cyr": "Исеци лук.",
+        "ar": "قطّع البصل.",
+        "ar_translit": "qaṭṭiʿ al-baṣal"
+      }
+    },
+    {
+      "id": "w340",
+      "order": 340,
+      "theme": "food_drink",
+      "emoji": "🍲",
+      "en": "soup",
+      "es": "sopa",
+      "sr": "supa",
+      "sr_cyr": "супа",
+      "ar": "حساء",
+      "ar_translit": "ḥasāʾ",
+      "example": {
+        "en": "Hot soup.",
+        "es": "Sopa caliente.",
+        "sr": "Vruća supa.",
+        "sr_cyr": "Врућа супа.",
+        "ar": "حساء ساخن.",
+        "ar_translit": "ḥasāʾ sākhin"
+      }
+    },
+    {
+      "id": "w341",
+      "order": 341,
+      "theme": "food_drink",
+      "emoji": "🥗",
+      "en": "salad",
+      "es": "ensalada",
+      "sr": "salata",
+      "sr_cyr": "салата",
+      "ar": "سلطة",
+      "ar_translit": "salaṭa",
+      "example": {
+        "en": "Green salad.",
+        "es": "Ensalada verde.",
+        "sr": "Zelena salata.",
+        "sr_cyr": "Зелена салата.",
+        "ar": "سلطة خضراء.",
+        "ar_translit": "salaṭa khaḍrāʾ"
+      }
+    },
+    {
+      "id": "w342",
+      "order": 342,
+      "theme": "food_drink",
+      "emoji": "🧃",
+      "en": "juice",
+      "es": "jugo",
+      "sr": "sok",
+      "sr_cyr": "сок",
+      "ar": "عصير",
+      "ar_translit": "ʿaṣīr",
+      "example": {
+        "en": "Orange juice.",
+        "es": "Jugo de naranja.",
+        "sr": "Sok od pomorandže.",
+        "sr_cyr": "Сок од поморанџе.",
+        "ar": "عصير برتقال.",
+        "ar_translit": "ʿaṣīr burtuqāl"
+      }
+    },
+    {
+      "id": "w343",
+      "order": 343,
+      "theme": "food_drink",
+      "emoji": "🧊",
+      "en": "ice",
+      "es": "hielo",
+      "sr": "led",
+      "sr_cyr": "лед",
+      "ar": "ثلج",
+      "ar_translit": "thalj",
+      "example": {
+        "en": "With ice, please.",
+        "es": "Con hielo, por favor.",
+        "sr": "Sa ledom, molim.",
+        "sr_cyr": "Са ледом, молим.",
+        "ar": "مع الثلج، من فضلك.",
+        "ar_translit": "maʿa al-thalj, min faḍlik"
+      }
+    },
+    {
+      "id": "w344",
+      "order": 344,
+      "theme": "food_drink",
+      "emoji": "🍺",
+      "en": "beer",
+      "es": "cerveza",
+      "sr": "pivo",
+      "sr_cyr": "пиво",
+      "ar": "بيرة",
+      "ar_translit": "bīra",
+      "example": {
+        "en": "Cold beer.",
+        "es": "Cerveza fría.",
+        "sr": "Hladno pivo.",
+        "sr_cyr": "Хладно пиво.",
+        "ar": "بيرة باردة.",
+        "ar_translit": "bīra bārida"
+      }
+    },
+    {
+      "id": "w345",
+      "order": 345,
+      "theme": "phrases",
+      "emoji": "🤔",
+      "en": "maybe",
+      "es": "tal vez",
+      "sr": "možda",
+      "sr_cyr": "можда",
+      "ar": "ربما",
+      "ar_translit": "rubbamā",
+      "example": {
+        "en": "Maybe tomorrow.",
+        "es": "Tal vez mañana.",
+        "sr": "Možda sutra.",
+        "sr_cyr": "Можда сутра.",
+        "ar": "ربما غداً.",
+        "ar_translit": "rubbamā ghadan"
+      }
+    },
+    {
+      "id": "w346",
+      "order": 346,
+      "theme": "phrases",
+      "emoji": "👌",
+      "en": "OK",
+      "es": "bien",
+      "sr": "u redu",
+      "sr_cyr": "у реду",
+      "ar": "حسناً",
+      "ar_translit": "ḥasanan",
+      "example": {
+        "en": "OK, let's go.",
+        "es": "Bien, vamos.",
+        "sr": "U redu, idemo.",
+        "sr_cyr": "У реду, идемо.",
+        "ar": "حسناً، لنذهب.",
+        "ar_translit": "ḥasanan, linadhhab"
+      }
+    },
+    {
+      "id": "w347",
+      "order": 347,
+      "theme": "phrases",
+      "emoji": "",
+      "en": "of course",
+      "es": "por supuesto",
+      "sr": "naravno",
+      "sr_cyr": "наравно",
+      "ar": "بالتأكيد",
+      "ar_translit": "bil-taʾkīd",
+      "example": {
+        "en": "Of course I will.",
+        "es": "Por supuesto que sí.",
+        "sr": "Naravno da hoću.",
+        "sr_cyr": "Наравно да хоћу.",
+        "ar": "بالتأكيد سأفعل.",
+        "ar_translit": "bil-taʾkīd saʾafʿal"
+      }
+    },
+    {
+      "id": "w348",
+      "order": 348,
+      "theme": "phrases",
+      "emoji": "",
+      "en": "no problem",
+      "es": "no hay problema",
+      "sr": "nema problema",
+      "sr_cyr": "нема проблема",
+      "ar": "لا مشكلة",
+      "ar_translit": "lā mushkila",
+      "example": {
+        "en": "No problem at all.",
+        "es": "No hay ningún problema.",
+        "sr": "Nema nikakvog problema.",
+        "sr_cyr": "Нема никаквог проблема.",
+        "ar": "لا مشكلة على الإطلاق.",
+        "ar_translit": "lā mushkila ʿalā al-iṭlāq"
+      }
+    },
+    {
+      "id": "w349",
+      "order": 349,
+      "theme": "phrases",
+      "emoji": "👋",
+      "en": "see you later",
+      "es": "hasta luego",
+      "sr": "vidimo se kasnije",
+      "sr_cyr": "видимо се касније",
+      "ar": "أراك لاحقاً",
+      "ar_translit": "arāka lāḥiqan",
+      "example": {
+        "en": "See you later, friend.",
+        "es": "Hasta luego, amigo.",
+        "sr": "Vidimo se kasnije, prijatelju.",
+        "sr_cyr": "Видимо се касније, пријатељу.",
+        "ar": "أراك لاحقاً يا صديقي.",
+        "ar_translit": "arāka lāḥiqan yā ṣadīqī"
+      }
+    },
+    {
+      "id": "w350",
+      "order": 350,
+      "theme": "phrases",
+      "emoji": "🤗",
+      "en": "take care",
+      "es": "cuídate",
+      "sr": "čuvaj se",
+      "sr_cyr": "чувај се",
+      "ar": "اعتنِ بنفسك",
+      "ar_translit": "iʿtani bi-nafsika",
+      "example": {
+        "en": "Take care of yourself.",
+        "es": "Cuídate.",
+        "sr": "Čuvaj se.",
+        "sr_cyr": "Чувај се.",
+        "ar": "اعتنِ بنفسك.",
+        "ar_translit": "iʿtani bi-nafsika"
+      }
+    }
+  ]
+}

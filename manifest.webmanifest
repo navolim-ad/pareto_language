@@ -1,0 +1,19 @@
+{
+  "name": "Pareto Words",
+  "short_name": "Pareto",
+  "description": "Learn the most common words in Arabic, Serbian, and Spanish.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f7f5f2",
+  "theme_color": "#3d6a8a",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
