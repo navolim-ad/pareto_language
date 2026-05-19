@@ -19,13 +19,18 @@ const state = {
 };
 
 // ============== Audio (TTS) ==============
-const VOICE_LANG = { ar: 'ar-SA', es: 'es-ES', sr: 'sr-RS', en: 'en-US' };
+const VOICE_LANG = { ar: 'ar-SA', es: 'es-ES', sr: 'sr-RS', hr: 'hr-HR', en: 'en-US' };
+
+// Fallback voices when the primary language isn't installed.
+// Serbian falls back to Croatian — mutually intelligible, near-identical phonetics.
+const VOICE_FALLBACK = { sr: 'hr' };
 
 // Female voice name hints by language (preferred when available).
 const FEMALE_VOICE_HINTS = {
   ar: ['laila', 'maha', 'reema', 'rana', 'amina', 'female'],
   es: ['mónica', 'monica', 'paulina', 'marisol', 'soledad', 'angelica', 'female'],
   sr: ['female'],
+  hr: ['lana', 'female'],
   en: ['samantha', 'karen', 'tessa', 'fiona', 'moira', 'serena', 'allison', 'ava', 'female'],
 };
 
@@ -37,7 +42,16 @@ function refreshVoices() {
     state.voices.add(v.lang.toLowerCase().split('-')[0]);
   }
 }
-function canSpeak(lang) { return state.voices.has(lang); }
+function canSpeak(lang) {
+  if (state.voices.has(lang)) return true;
+  const fb = VOICE_FALLBACK[lang];
+  return fb ? state.voices.has(fb) : false;
+}
+function resolvedSpeakLang(lang) {
+  if (state.voices.has(lang)) return lang;
+  const fb = VOICE_FALLBACK[lang];
+  return (fb && state.voices.has(fb)) ? fb : null;
+}
 
 function pickVoice(lang) {
   if (!('speechSynthesis' in window)) return null;
@@ -55,11 +69,12 @@ function pickVoice(lang) {
 }
 
 function speak(text, lang) {
-  if (!canSpeak(lang) || !text) return;
+  const effective = resolvedSpeakLang(lang);
+  if (!effective || !text) return;
   speechSynthesis.cancel();
   const u = new SpeechSynthesisUtterance(text);
-  u.lang = VOICE_LANG[lang] || lang;
-  const v = pickVoice(lang);
+  u.lang = VOICE_LANG[effective] || effective;
+  const v = pickVoice(effective);
   if (v) u.voice = v;
   u.rate = 0.85;
   speechSynthesis.speak(u);
