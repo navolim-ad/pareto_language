@@ -271,7 +271,11 @@ html, body {
   border-radius: var(--radius);
   padding: 14px 18px;
   border: 1px solid var(--line);
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
 }
+.daily-goal:hover { background: #fbf3e3; border-color: var(--muted); }
+.daily-goal:active { transform: scale(0.995); }
 .daily-goal-row {
   display: flex;
   justify-content: space-between;

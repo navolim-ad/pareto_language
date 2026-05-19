@@ -110,7 +110,7 @@ function loadDaily() {
     const d = JSON.parse(raw);
     if (d.date === today) { state.daily = d; return; }
   }
-  state.daily = { date: today, done: 0 };
+  state.daily = { date: today, done: 0, goalCelebrated: false };
   saveDaily();
 }
 function todayStr() {
@@ -183,8 +183,11 @@ function buildQueue(themeFilter) {
   }
   fresh.sort((a, b) => a.order - b.order);
   shuffle(due);
-  const remaining = Math.max(0, state.settings.dailyGoal - state.daily.done);
-  const newCap = themeFilter ? fresh.length : Math.min(fresh.length, remaining);
+  // No hard cap on new cards — daily goal is a target, not a limit.
+  // Cap only to a sane session size (e.g. 30 new at a time) so a fresh user
+  // doesn't get hit with all 350 in one queue.
+  const SESSION_NEW_CAP = 30;
+  const newCap = themeFilter ? fresh.length : Math.min(fresh.length, SESSION_NEW_CAP);
   return [...due, ...fresh.slice(0, newCap)];
 }
 
@@ -446,6 +449,10 @@ function gradeAndAdvance(grade) {
   if (grade !== 'again' && !state.session.countedIds.has(w.id)) {
     state.daily.done += 1;
     state.session.countedIds.add(w.id);
+    if (state.daily.done >= state.settings.dailyGoal && !state.daily.goalCelebrated) {
+      state.daily.goalCelebrated = true;
+      showToast(`🎯 Daily goal reached. Keep going if you want.`, 3500);
+    }
     saveDaily();
   }
   saveProgress();
@@ -773,6 +780,10 @@ async function init() {
   document.getElementById('close-mastered').addEventListener('click', () => {
     renderHome();
     show('screen-home');
+  });
+  document.getElementById('daily-goal-card').addEventListener('click', () => {
+    renderSettings();
+    show('screen-settings');
   });
 
   // Initialize TTS voices
