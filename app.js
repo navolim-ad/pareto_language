@@ -184,11 +184,14 @@ function buildQueue(themeFilter) {
   fresh.sort((a, b) => a.order - b.order);
   shuffle(due);
   // No hard cap on new cards — daily goal is a target, not a limit.
-  // Cap only to a sane session size (e.g. 30 new at a time) so a fresh user
-  // doesn't get hit with all 350 in one queue.
+  // Cap to a sane session size so a fresh user isn't hit with everything at once.
   const SESSION_NEW_CAP = 30;
   const newCap = themeFilter ? fresh.length : Math.min(fresh.length, SESSION_NEW_CAP);
-  return [...due, ...fresh.slice(0, newCap)];
+  const newSlice = fresh.slice(0, newCap);
+  // Shuffle within the batch — keeps Pareto ordering across batches,
+  // but no single session feels like the same fixed list.
+  shuffle(newSlice);
+  return [...due, ...newSlice];
 }
 
 function shuffle(arr) {
