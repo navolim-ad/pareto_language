@@ -82,6 +82,72 @@ function speak(text, lang) {
   speechSynthesis.speak(u);
 }
 
+// ============== Card modes ==============
+const CARD_MODES = ['reveal', 'type', 'choice'];
+
+function pickCardMode() {
+  // Default mixedMode to true for users without the setting yet (pre-existing localStorage).
+  if (!state.settings || state.settings.mixedMode === false) return 'reveal';
+  return CARD_MODES[Math.floor(Math.random() * CARD_MODES.length)];
+}
+
+function normalizeAnswer(str) {
+  return str.toLowerCase().trim()
+    .replace(/[.,!?;:'"()¿¡]/g, '')
+    .replace(/^(a |an |the |to )/i, '')
+    .replace(/\s+/g, ' ');
+}
+
+function levenshtein(a, b) {
+  const m = a.length, n = b.length;
+  if (m === 0) return n;
+  if (n === 0) return m;
+  const prev = new Array(n + 1);
+  for (let j = 0; j <= n; j++) prev[j] = j;
+  for (let i = 1; i <= m; i++) {
+    let prevDiag = prev[0];
+    prev[0] = i;
+    for (let j = 1; j <= n; j++) {
+      const tmp = prev[j];
+      if (a[i - 1] === b[j - 1]) prev[j] = prevDiag;
+      else prev[j] = 1 + Math.min(prev[j], prev[j - 1], prevDiag);
+      prevDiag = tmp;
+    }
+  }
+  return prev[n];
+}
+
+function checkTypedAnswer(userAnswer, expected) {
+  const u = normalizeAnswer(userAnswer);
+  const e = normalizeAnswer(expected);
+  if (!u) return 'wrong';
+  if (u === e) return 'exact';
+  const tolerance = Math.max(1, Math.floor(e.length / 5));
+  if (levenshtein(u, e) <= tolerance) return 'close';
+  return 'wrong';
+}
+
+function pickChoiceOptions(word, srcLang) {
+  const correct = word[srcLang];
+  const sameTheme = state.words.filter(w => w.theme === word.theme && w.id !== word.id && w[srcLang] !== correct);
+  shuffle(sameTheme);
+  const distractors = [];
+  for (const w of sameTheme) {
+    if (distractors.length >= 3) break;
+    if (!distractors.includes(w[srcLang])) distractors.push(w[srcLang]);
+  }
+  if (distractors.length < 3) {
+    const others = state.words.filter(w => w.id !== word.id && w[srcLang] !== correct && !distractors.includes(w[srcLang]));
+    shuffle(others);
+    while (distractors.length < 3 && others.length > 0) {
+      distractors.push(others.pop()[srcLang]);
+    }
+  }
+  const options = [correct, ...distractors];
+  shuffle(options);
+  return { options, correct };
+}
+
 // ============== Storage ==============
 function storageKey(suffix) { return `pareto:${suffix}`; }
 function pairKey() { return `${state.settings.source}-${state.settings.target}`; }
@@ -272,12 +338,15 @@ function renderHome() {
 function renderCard(word, showAnswer) {
   const src = state.settings.source;
   const tgt = state.settings.target;
+  const mode = (state.session && state.session.cardMode) || 'reveal';
 
+  // Prompt
   const promptEl = document.getElementById('card-prompt');
   promptEl.textContent = getDisplayWord(word, tgt);
   if (tgt === 'ar') promptEl.setAttribute('dir', 'rtl');
   else promptEl.removeAttribute('dir');
 
+  // Meta (Arabic transliteration or Serbian alternate script)
   const metaEl = document.getElementById('card-meta');
   if (tgt === 'ar' && word.ar_translit) {
     metaEl.textContent = word.ar_translit;
@@ -287,45 +356,49 @@ function renderCard(word, showAnswer) {
     metaEl.textContent = '';
   }
 
-  // Audio button
+  // Audio button (front)
   const audioBtn = document.getElementById('audio-btn');
   if (canSpeak(tgt)) {
     audioBtn.classList.remove('hidden');
-    audioBtn.onclick = (e) => {
-      e.stopPropagation();
-      speak(word[tgt], tgt);
-    };
+    audioBtn.onclick = (e) => { e.stopPropagation(); speak(word[tgt], tgt); };
   } else {
     audioBtn.classList.add('hidden');
   }
 
   const emojiEl = document.getElementById('card-emoji');
-  emojiEl.textContent = '';
-
   const answerEl = document.getElementById('card-answer');
   const answerMain = document.getElementById('card-answer-main');
-  const answerTranslit = document.getElementById('card-answer-translit');
   const exampleEl = document.getElementById('card-example');
   const exampleSrcEl = document.getElementById('card-example-src');
   const exampleTgtEl = document.getElementById('card-example-tgt');
   const exampleTransEl = document.getElementById('card-example-translit');
   const skipBtn = document.getElementById('skip-known-btn');
+  const skipHint = document.getElementById('skip-hint');
+
+  const revealRow = document.getElementById('reveal-row');
+  const typeRow = document.getElementById('type-input-row');
+  const choiceRow = document.getElementById('choice-row');
+  const gradeRow = document.getElementById('grade-row');
+  const feedback = document.getElementById('check-feedback');
 
   const cardState = state.progress[word.id];
   const isNew = !cardState || cardState.reps === 0;
 
   if (showAnswer) {
+    // Hide all input UIs.
+    revealRow.classList.add('hidden');
+    typeRow.classList.add('hidden');
+    choiceRow.classList.add('hidden');
+    skipBtn.classList.add('hidden');
+    skipHint.classList.add('hidden');
+    gradeRow.classList.remove('hidden');
+
     answerEl.classList.remove('hidden');
     answerMain.textContent = getDisplayWord(word, src);
     answerMain.removeAttribute('dir');
-    answerTranslit.textContent = '';
     emojiEl.textContent = word.emoji || '';
-    document.getElementById('reveal-row').classList.add('hidden');
-    document.getElementById('grade-row').classList.remove('hidden');
-    skipBtn.classList.add('hidden');
-    document.getElementById('skip-hint').classList.add('hidden');
 
-    // Example (if present)
+    // Example
     if (word.example && word.example[src] && word.example[tgt]) {
       exampleEl.classList.remove('hidden');
       exampleSrcEl.textContent = word.example[src];
@@ -337,36 +410,136 @@ function renderCard(word, showAnswer) {
       else exampleTgtEl.removeAttribute('dir');
       exampleTransEl.textContent = (tgt === 'ar' && word.example.ar_translit) ? word.example.ar_translit : '';
 
-      // Example audio button
       const exAudioBtn = document.getElementById('example-audio-btn');
       if (canSpeak(tgt) && word.example[tgt]) {
         exAudioBtn.classList.remove('hidden');
-        exAudioBtn.onclick = (e) => {
-          e.stopPropagation();
-          speak(word.example[tgt], tgt);
-        };
+        exAudioBtn.onclick = (e) => { e.stopPropagation(); speak(word.example[tgt], tgt); };
       } else {
         exAudioBtn.classList.add('hidden');
       }
     } else {
       exampleEl.classList.add('hidden');
     }
-  } else {
-    answerEl.classList.add('hidden');
-    exampleEl.classList.add('hidden');
-    // Show emoji as a hint on brand-new cards, otherwise hide it.
-    emojiEl.textContent = (isNew && word.emoji) ? word.emoji : '';
-    document.getElementById('reveal-row').classList.remove('hidden');
-    document.getElementById('grade-row').classList.add('hidden');
-    const skipHint = document.getElementById('skip-hint');
-    if (isNew) {
-      skipBtn.classList.remove('hidden');
-      skipHint.classList.remove('hidden');
-    } else {
-      skipBtn.classList.add('hidden');
-      skipHint.classList.add('hidden');
-    }
+    return;
   }
+
+  // ----- Prompt phase -----
+  answerEl.classList.add('hidden');
+  exampleEl.classList.add('hidden');
+  gradeRow.classList.add('hidden');
+  feedback.classList.add('hidden');
+
+  emojiEl.textContent = (isNew && word.emoji) ? word.emoji : '';
+
+  // Hide all input UIs, then show the one for the current mode.
+  revealRow.classList.add('hidden');
+  typeRow.classList.add('hidden');
+  choiceRow.classList.add('hidden');
+
+  if (mode === 'reveal') {
+    revealRow.classList.remove('hidden');
+  } else if (mode === 'type') {
+    typeRow.classList.remove('hidden');
+    const input = document.getElementById('type-input');
+    input.value = '';
+    input.disabled = false;
+    document.getElementById('type-submit').disabled = false;
+    setTimeout(() => input.focus(), 60);
+  } else if (mode === 'choice') {
+    choiceRow.classList.remove('hidden');
+    const ch = state.session.currentChoices;
+    document.querySelectorAll('.choice-option').forEach((btn, i) => {
+      btn.textContent = ch.options[i] || '';
+      btn.classList.remove('correct', 'wrong');
+      btn.disabled = false;
+    });
+  }
+
+  // Skip-known is always available for new cards.
+  if (isNew) {
+    skipBtn.classList.remove('hidden');
+    skipHint.classList.remove('hidden');
+  } else {
+    skipBtn.classList.add('hidden');
+    skipHint.classList.add('hidden');
+  }
+}
+
+// ============== Interactive mode submission ==============
+function submitTypeAnswer() {
+  if (!state.session) return;
+  const input = document.getElementById('type-input');
+  const value = input.value;
+  if (!value.trim()) return;
+
+  const w = state.session.queue[state.session.index];
+  const expected = w[state.settings.source];
+  const result = checkTypedAnswer(value, expected);
+  const feedback = document.getElementById('check-feedback');
+  feedback.classList.remove('hidden', 'correct', 'wrong');
+  if (result === 'exact') {
+    feedback.classList.add('correct');
+    feedback.textContent = `✓ Correct!`;
+  } else if (result === 'close') {
+    feedback.classList.add('correct');
+    feedback.textContent = `✓ Close — "${expected}"`;
+  } else {
+    feedback.classList.add('wrong');
+    feedback.textContent = `✗ Answer: ${expected}`;
+  }
+  input.disabled = true;
+  document.getElementById('type-submit').disabled = true;
+  renderCard(w, true);
+  // Auto-grade: correct → Recognize, wrong → Again. User can still tap a grade
+  // button within the delay to override.
+  const autoGrade = (result === 'wrong') ? 'again' : 'good';
+  scheduleAutoGrade(autoGrade);
+}
+
+function submitChoice(idx) {
+  if (!state.session) return;
+  const w = state.session.queue[state.session.index];
+  const ch = state.session.currentChoices;
+  const picked = ch.options[idx];
+  const correct = ch.correct;
+
+  document.querySelectorAll('.choice-option').forEach((btn) => {
+    const t = btn.textContent;
+    if (t === correct) btn.classList.add('correct');
+    else if (t === picked && picked !== correct) btn.classList.add('wrong');
+    btn.disabled = true;
+  });
+
+  const feedback = document.getElementById('check-feedback');
+  feedback.classList.remove('hidden', 'correct', 'wrong');
+  const isCorrect = (picked === correct);
+  if (isCorrect) {
+    feedback.classList.add('correct');
+    feedback.textContent = `✓ Correct!`;
+  } else {
+    feedback.classList.add('wrong');
+    feedback.textContent = `✗ Answer: ${correct}`;
+  }
+
+  // Show full answer screen and auto-grade.
+  setTimeout(() => {
+    if (state.session && state.session.queue[state.session.index] === w) {
+      renderCard(w, true);
+      scheduleAutoGrade(isCorrect ? 'good' : 'again');
+    }
+  }, 600);
+}
+
+function scheduleAutoGrade(grade) {
+  if (!state.session) return;
+  // Wrong answers get a longer pause so the user can read the correct answer.
+  const delay = grade === 'again' ? 2200 : 1500;
+  clearTimeout(state.session._autoTimer);
+  state.session._autoTimer = setTimeout(() => {
+    if (state.session && !state.session._busy) {
+      gradeAndAdvance(grade);
+    }
+  }, delay);
 }
 
 function updateGradeHints(word) {
@@ -413,6 +586,9 @@ function startSession(themeFilter) {
     freshIds,
     dueIds,
     againCounts: {},
+    recentlySeen: [],
+    nextMatchAt: 5 + Math.floor(Math.random() * 3), // first match at 5, 6, or 7
+    matchRound: null,
   };
   show('screen-study');
   renderCurrent();
@@ -423,15 +599,164 @@ function renderCurrent() {
     finishSession();
     return;
   }
+
+  // If it's time to trigger a matching round, run that first.
+  if (shouldTriggerMatch()) {
+    startMatchRound();
+    return;
+  }
+
   const w = state.session.queue[state.session.index];
   document.getElementById('study-progress').textContent =
     `${state.session.index + 1} / ${state.session.queue.length}`;
+
+  // Pick a mode for this card (random, or always 'reveal' if mixed mode off).
+  state.session.cardMode = pickCardMode();
+  if (state.session.cardMode === 'choice') {
+    state.session.currentChoices = pickChoiceOptions(w, state.settings.source);
+  }
+
   renderCard(w, false);
 
   const cardEl = document.getElementById('card-area');
   cardEl.classList.remove('enter', 'exit-again', 'exit-good', 'exit-easy');
   void cardEl.offsetWidth;
   cardEl.classList.add('enter');
+}
+
+// ============== Matching round ==============
+function shouldTriggerMatch() {
+  if (!state.session) return false;
+  if (state.session.matchRound) return false;
+  if (state.session.answered < state.session.nextMatchAt) return false;
+  // Need at least 4 unique recently-seen cards for a meaningful round.
+  const uniq = [...new Set(state.session.recentlySeen)];
+  return uniq.length >= 4;
+}
+
+function startMatchRound() {
+  // Bump next trigger forward (randomized: 5, 6, or 7 cards from now).
+  state.session.nextMatchAt = state.session.answered + 5 + Math.floor(Math.random() * 3);
+
+  // Pick the last 4 unique words from recently-seen.
+  const seen = state.session.recentlySeen;
+  const uniqIds = [];
+  for (let i = seen.length - 1; i >= 0 && uniqIds.length < 4; i--) {
+    if (!uniqIds.includes(seen[i])) uniqIds.push(seen[i]);
+  }
+  const words = uniqIds.map(id => state.words.find(w => w.id === id)).filter(Boolean);
+  if (words.length < 4) {
+    // Not enough — skip and go to next regular card.
+    renderCurrent();
+    return;
+  }
+  state.session.matchRound = {
+    words,
+    matched: new Set(),
+    selectedT: null,
+    selectedS: null,
+  };
+  show('screen-matching');
+  renderMatchRound();
+}
+
+function renderMatchRound() {
+  const mr = state.session.matchRound;
+  const src = state.settings.source;
+  const tgt = state.settings.target;
+
+  const targets = [...mr.words];
+  const sources = [...mr.words];
+  shuffle(targets);
+  shuffle(sources);
+
+  const targetsEl = document.getElementById('match-targets');
+  const sourcesEl = document.getElementById('match-sources');
+  targetsEl.innerHTML = '';
+  sourcesEl.innerHTML = '';
+
+  targets.forEach(w => {
+    const tile = document.createElement('button');
+    tile.className = 'match-tile';
+    tile.dataset.wordId = w.id;
+    tile.textContent = getDisplayWord(w, tgt);
+    if (tgt === 'ar') tile.setAttribute('dir', 'rtl');
+    tile.addEventListener('click', () => handleMatchTap('target', tile));
+    targetsEl.appendChild(tile);
+  });
+
+  sources.forEach(w => {
+    const tile = document.createElement('button');
+    tile.className = 'match-tile';
+    tile.dataset.wordId = w.id;
+    tile.textContent = getDisplayWord(w, src);
+    tile.addEventListener('click', () => handleMatchTap('source', tile));
+    sourcesEl.appendChild(tile);
+  });
+}
+
+function handleMatchTap(col, tile) {
+  if (!state.session || !state.session.matchRound) return;
+  const mr = state.session.matchRound;
+  if (tile.classList.contains('matched') || tile.classList.contains('wrong')) return;
+
+  // Speak the tapped word in its column's language.
+  const wordId = tile.dataset.wordId;
+  const word = state.words.find(w => w.id === wordId);
+  if (word) {
+    const lang = col === 'target' ? state.settings.target : state.settings.source;
+    if (canSpeak(lang)) speak(word[lang], lang);
+  }
+
+  if (col === 'target') {
+    if (mr.selectedT) mr.selectedT.classList.remove('selected');
+    if (mr.selectedT === tile) { mr.selectedT = null; return; }
+    mr.selectedT = tile;
+    tile.classList.add('selected');
+  } else {
+    if (mr.selectedS) mr.selectedS.classList.remove('selected');
+    if (mr.selectedS === tile) { mr.selectedS = null; return; }
+    mr.selectedS = tile;
+    tile.classList.add('selected');
+  }
+
+  if (mr.selectedT && mr.selectedS) {
+    const t = mr.selectedT, s = mr.selectedS;
+    mr.selectedT = null;
+    mr.selectedS = null;
+    if (t.dataset.wordId === s.dataset.wordId) {
+      mr.matched.add(t.dataset.wordId);
+      t.classList.remove('selected');
+      s.classList.remove('selected');
+      t.classList.add('matched');
+      s.classList.add('matched');
+      if (mr.matched.size === mr.words.length) {
+        setTimeout(finishMatchRound, 600);
+      }
+    } else {
+      t.classList.add('wrong');
+      s.classList.add('wrong');
+      setTimeout(() => {
+        t.classList.remove('selected', 'wrong');
+        s.classList.remove('selected', 'wrong');
+      }, 500);
+    }
+  }
+}
+
+function finishMatchRound() {
+  if (!state.session) return;
+  showToast('Nice round!', 1800);
+  state.session.matchRound = null;
+  show('screen-study');
+  renderCurrent();
+}
+
+function skipMatchRound() {
+  if (!state.session) return;
+  state.session.matchRound = null;
+  show('screen-study');
+  renderCurrent();
 }
 
 function reveal() {
@@ -442,6 +767,9 @@ function reveal() {
 
 function gradeAndAdvance(grade) {
   if (!state.session || state.session._busy) return;
+  // If an auto-grade was scheduled (from type/choice modes), cancel it —
+  // either we're firing the auto-grade now, or the user beat it with a manual tap.
+  clearTimeout(state.session._autoTimer);
   state.session._busy = true;
 
   const w = state.session.queue[state.session.index];
@@ -465,6 +793,10 @@ function gradeAndAdvance(grade) {
     const offset = Math.min(3, state.session.queue.length - state.session.index - 1);
     const requeueAt = state.session.index + 1 + offset;
     state.session.queue.splice(requeueAt, 0, w);
+  } else {
+    // Track for matching rounds (only non-again so user has actually "got" the card).
+    state.session.recentlySeen.push(w.id);
+    if (state.session.recentlySeen.length > 12) state.session.recentlySeen.shift();
   }
 
   const cardEl = document.getElementById('card-area');
@@ -632,6 +964,7 @@ function initSetup() {
       target: pickedTarget,
       sr_script: 'latin',
       dailyGoal: 20,
+      mixedMode: true,
       onboarded: false,
     };
     saveSettings();
@@ -697,6 +1030,13 @@ function initSettingsScreen() {
       renderSettings();
     });
   });
+  document.querySelectorAll('[data-group="mixed"] .choice').forEach(btn => {
+    btn.addEventListener('click', () => {
+      state.settings.mixedMode = btn.dataset.value === 'on';
+      saveSettings();
+      renderSettings();
+    });
+  });
   document.getElementById('reset-progress').addEventListener('click', () => {
     if (confirm('Reset all progress for this language pair? This cannot be undone.')) {
       state.progress = {};
@@ -723,6 +1063,10 @@ function renderSettings() {
   });
   document.querySelectorAll('[data-group="goal"] .choice').forEach(btn => {
     btn.classList.toggle('selected', parseInt(btn.dataset.value, 10) === state.settings.dailyGoal);
+  });
+  document.querySelectorAll('[data-group="mixed"] .choice').forEach(btn => {
+    const isOn = state.settings.mixedMode !== false; // default true
+    btn.classList.toggle('selected', (btn.dataset.value === 'on') === isOn);
   });
   document.getElementById('setting-script').style.display =
     state.settings.target === 'sr' ? 'flex' : 'none';
@@ -767,6 +1111,13 @@ async function init() {
   document.getElementById('start-study').addEventListener('click', () => startSession(null));
   document.getElementById('reveal-btn').addEventListener('click', reveal);
   document.getElementById('skip-known-btn').addEventListener('click', skipKnown);
+  document.getElementById('type-submit').addEventListener('click', submitTypeAnswer);
+  document.getElementById('type-input').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') submitTypeAnswer();
+  });
+  document.querySelectorAll('.choice-option').forEach(btn => {
+    btn.addEventListener('click', () => submitChoice(parseInt(btn.dataset.idx, 10)));
+  });
   document.querySelectorAll('.grade-btn').forEach(btn => {
     btn.addEventListener('click', () => gradeAndAdvance(btn.dataset.grade));
   });
@@ -788,6 +1139,12 @@ async function init() {
     renderSettings();
     show('screen-settings');
   });
+  document.getElementById('match-back').addEventListener('click', () => {
+    state.session = null;
+    renderHome();
+    show('screen-home');
+  });
+  document.getElementById('match-skip').addEventListener('click', skipMatchRound);
 
   // Initialize TTS voices
   if ('speechSynthesis' in window) {
