@@ -462,7 +462,87 @@ html, body {
 }
 .card-example-translit:empty { display: none; }
 
-#reveal-row { padding-top: 4px; }
+#reveal-row, #skip-row { padding-top: 4px; }
+
+/* ---------- Type input mode ---------- */
+
+.type-input-row {
+  display: flex;
+  gap: 8px;
+  align-items: stretch;
+}
+.type-input-row input {
+  flex: 1;
+  min-width: 0;
+  padding: 14px 16px;
+  font-size: 16px;
+  font-family: inherit;
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--bg-card);
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+.type-input-row input:focus { border-color: var(--primary); }
+.type-input-row button {
+  width: auto;
+  padding: 14px 22px;
+}
+
+/* ---------- Multiple choice mode ---------- */
+
+.choice-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.choice-option {
+  padding: 16px 12px;
+  background: var(--bg-card);
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius);
+  color: var(--text);
+  font-size: 16px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  min-height: 56px;
+}
+.choice-option:hover:not(:disabled) { border-color: var(--primary); }
+.choice-option:active:not(:disabled) { transform: scale(0.97); }
+.choice-option.correct {
+  background: #ecf3e0;
+  border-color: var(--easy);
+  color: #4a6b3c;
+}
+.choice-option.wrong {
+  background: #f5dada;
+  border-color: var(--again);
+  color: #802b2b;
+}
+.choice-option:disabled { cursor: default; }
+
+/* ---------- Check feedback ---------- */
+
+.check-feedback {
+  padding: 10px 14px;
+  border-radius: var(--radius);
+  font-size: 14px;
+  text-align: center;
+  border: 1px solid transparent;
+}
+.check-feedback.correct {
+  background: #ecf3e0;
+  color: #4a6b3c;
+  border-color: #a8c994;
+}
+.check-feedback.wrong {
+  background: #f5dada;
+  color: #802b2b;
+  border-color: #d99a9a;
+}
+.setting-hint { margin: 0 0 6px; }
 
 .grade-row {
   display: flex;
@@ -589,6 +669,65 @@ html, body {
   color: var(--text-soft);
   font-size: 14px;
   line-height: 1.5;
+}
+
+/* ---------- Matching round ---------- */
+
+.match-title {
+  font-size: 22px;
+  font-weight: 600;
+  text-align: center;
+  margin: 4px 0 4px;
+  color: var(--primary);
+}
+.match-sub {
+  text-align: center;
+  margin: 0 0 8px;
+}
+.match-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  flex: 1;
+  align-content: start;
+}
+.match-col {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.match-tile {
+  background: var(--bg-card);
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius);
+  padding: 14px 12px;
+  font-size: 16px;
+  font-family: inherit;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, opacity 0.35s ease, transform 0.35s ease;
+  min-height: 58px;
+  color: var(--text);
+}
+.match-tile[dir="rtl"] {
+  font-family: "Noto Naskh Arabic", "Geeza Pro", -apple-system, serif;
+  font-size: 18px;
+}
+.match-tile:hover:not(:disabled) { border-color: var(--muted); }
+.match-tile.selected {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+.match-tile.matched {
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.88);
+}
+.match-tile.wrong {
+  animation: cardShake 0.42s ease-in-out;
+  border-color: var(--again);
+  color: var(--again);
 }
 
 /* ---------- Animations ---------- */

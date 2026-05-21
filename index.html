@@ -174,6 +174,24 @@
 
         <div id="reveal-row">
           <button id="reveal-btn" class="primary-btn">Show answer</button>
+        </div>
+
+        <div id="type-input-row" class="type-input-row hidden">
+          <input id="type-input" type="text" autocomplete="off" autocorrect="off"
+                 autocapitalize="off" spellcheck="false" placeholder="Type the answer…">
+          <button id="type-submit" class="primary-btn">Check</button>
+        </div>
+
+        <div id="choice-row" class="choice-row hidden">
+          <button class="choice-option" data-idx="0"></button>
+          <button class="choice-option" data-idx="1"></button>
+          <button class="choice-option" data-idx="2"></button>
+          <button class="choice-option" data-idx="3"></button>
+        </div>
+
+        <div id="check-feedback" class="check-feedback hidden"></div>
+
+        <div id="skip-row">
           <button id="skip-known-btn" class="secondary-btn hidden">✓ I already know this</button>
           <p id="skip-hint" class="skip-hint hidden">Already familiar? Skip straight to mastered.</p>
         </div>
@@ -192,6 +210,27 @@
             <span class="grade-hint" id="hint-easy">4d</span>
           </button>
         </div>
+      </div>
+    </section>
+
+    <!-- Matching round screen -->
+    <section id="screen-matching" class="screen hidden">
+      <div class="container study-container">
+        <header class="study-header">
+          <button id="match-back" class="icon-btn" aria-label="Back">←</button>
+          <div class="progress-pill"><span id="match-progress">Match the pairs</span></div>
+          <div class="spacer"></div>
+        </header>
+
+        <h2 class="match-title">Quick match round</h2>
+        <p class="match-sub muted small">Tap a word on the left, then its match on the right.</p>
+
+        <div class="match-grid">
+          <div class="match-col" id="match-targets"></div>
+          <div class="match-col" id="match-sources"></div>
+        </div>
+
+        <button id="match-skip" class="text-link-btn">Skip this round</button>
       </div>
     </section>
 
@@ -259,6 +298,15 @@
             <button class="choice" data-value="20">20</button>
             <button class="choice" data-value="30">30</button>
             <button class="choice" data-value="50">50</button>
+          </div>
+        </div>
+
+        <div class="setting-block">
+          <label class="setup-label">Mixed mode</label>
+          <p class="muted small setting-hint">Rotate between tap-to-reveal, typing, and multiple choice each card. Off keeps only tap-to-reveal.</p>
+          <div class="choice-grid" data-group="mixed">
+            <button class="choice" data-value="on">On</button>
+            <button class="choice" data-value="off">Off</button>
           </div>
         </div>
 
