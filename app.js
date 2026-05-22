@@ -5,6 +5,7 @@ const LANG_LABELS = {
   es: 'Español',
   ar: 'العربية',
   sr: 'Srpski',
+  th: 'ภาษาไทย',
 };
 
 // ============== State ==============
@@ -19,7 +20,7 @@ const state = {
 };
 
 // ============== Audio (TTS) ==============
-const VOICE_LANG = { ar: 'ar-SA', es: 'es-ES', sr: 'sr-RS', hr: 'hr-HR', en: 'en-US' };
+const VOICE_LANG = { ar: 'ar-SA', es: 'es-ES', sr: 'sr-RS', hr: 'hr-HR', th: 'th-TH', en: 'en-US' };
 
 // Fallback voices when the primary language isn't installed.
 // Serbian falls back to Croatian — mutually intelligible, near-identical phonetics.
@@ -31,6 +32,7 @@ const FEMALE_VOICE_HINTS = {
   es: ['mónica', 'monica', 'paulina', 'marisol', 'soledad', 'angelica', 'female'],
   sr: ['female'],
   hr: ['lana', 'female'],
+  th: ['kanya', 'narisa', 'siri', 'female'],
   en: ['samantha', 'karen', 'tessa', 'fiona', 'moira', 'serena', 'allison', 'ava', 'female'],
 };
 
@@ -93,9 +95,11 @@ function pickCardMode() {
 
 function normalizeAnswer(str) {
   return str.toLowerCase().trim()
-    .replace(/[.,!?;:'"()¿¡]/g, '')
+    .replace(/\([^)]*\)/g, ' ')          // remove parenthetical disambiguations like (m) / (plural)
+    .replace(/[.,!?;:'"¿¡]/g, '')
     .replace(/^(a |an |the |to )/i, '')
-    .replace(/\s+/g, ' ');
+    .replace(/\s+/g, ' ')
+    .trim();
 }
 
 function levenshtein(a, b) {
@@ -225,9 +229,16 @@ function cardLabel(card) {
 }
 
 // ============== Stats ==============
+function wordsForTarget() {
+  const tgt = state.settings && state.settings.target;
+  if (!tgt) return state.words;
+  return state.words.filter(w => w[tgt]);
+}
+
 function calcStats() {
-  const stats = { new: 0, learning: 0, young: 0, mature: 0, total: state.words.length };
-  for (const w of state.words) {
+  const list = wordsForTarget();
+  const stats = { new: 0, learning: 0, young: 0, mature: 0, total: list.length };
+  for (const w of list) {
     stats[cardLabel(state.progress[w.id])] += 1;
   }
   return stats;
@@ -236,9 +247,11 @@ function calcStats() {
 // ============== Queue ==============
 function buildQueue(themeFilter) {
   const now = Date.now();
+  const tgt = state.settings.target;
   const due = [];
   const fresh = [];
   for (const w of state.words) {
+    if (!w[tgt]) continue; // skip words without target-language translation
     if (themeFilter && w.theme !== themeFilter) continue;
     const s = state.progress[w.id];
     if (!s || s.reps === 0) {
@@ -314,11 +327,11 @@ function renderHome() {
   const dailyPct = Math.min(100, (state.daily.done / state.settings.dailyGoal) * 100);
   document.getElementById('daily-bar-fill').style.width = dailyPct + '%';
 
-  // Theme chips
+  // Theme chips (only count words available in current target language)
   const chipRow = document.getElementById('theme-chips');
   chipRow.innerHTML = '';
   const themeCounts = {};
-  for (const w of state.words) {
+  for (const w of wordsForTarget()) {
     themeCounts[w.theme] = (themeCounts[w.theme] || 0) + 1;
   }
   for (const theme of state.themes) {
@@ -346,10 +359,12 @@ function renderCard(word, showAnswer) {
   if (tgt === 'ar') promptEl.setAttribute('dir', 'rtl');
   else promptEl.removeAttribute('dir');
 
-  // Meta (Arabic transliteration or Serbian alternate script)
+  // Meta (Arabic / Thai transliteration or Serbian alternate script)
   const metaEl = document.getElementById('card-meta');
   if (tgt === 'ar' && word.ar_translit) {
     metaEl.textContent = word.ar_translit;
+  } else if (tgt === 'th' && word.th_translit) {
+    metaEl.textContent = word.th_translit;
   } else if (tgt === 'sr') {
     metaEl.textContent = state.settings.sr_script === 'cyrillic' ? word.sr : word.sr_cyr;
   } else {
@@ -408,7 +423,10 @@ function renderCard(word, showAnswer) {
       exampleTgtEl.textContent = tgtExample || '';
       if (tgt === 'ar') exampleTgtEl.setAttribute('dir', 'rtl');
       else exampleTgtEl.removeAttribute('dir');
-      exampleTransEl.textContent = (tgt === 'ar' && word.example.ar_translit) ? word.example.ar_translit : '';
+      let translitText = '';
+      if (tgt === 'ar' && word.example.ar_translit) translitText = word.example.ar_translit;
+      else if (tgt === 'th' && word.example.th_translit) translitText = word.example.th_translit;
+      exampleTransEl.textContent = translitText;
 
       const exAudioBtn = document.getElementById('example-audio-btn');
       if (canSpeak(tgt) && word.example[tgt]) {
@@ -790,9 +808,17 @@ function gradeAndAdvance(grade) {
 
   if (grade === 'again') {
     state.session.againCounts[w.id] = (state.session.againCounts[w.id] || 0) + 1;
-    const offset = Math.min(3, state.session.queue.length - state.session.index - 1);
-    const requeueAt = state.session.index + 1 + offset;
-    state.session.queue.splice(requeueAt, 0, w);
+    // Cap re-appearances per session. After this many fails, bench the card —
+    // it'll show again in the user's next session (still due in SRS), but not
+    // again in the current loop.
+    const MAX_FAILS_PER_SESSION = 2;
+    if (state.session.againCounts[w.id] < MAX_FAILS_PER_SESSION) {
+      const offset = Math.min(3, state.session.queue.length - state.session.index - 1);
+      const requeueAt = state.session.index + 1 + offset;
+      state.session.queue.splice(requeueAt, 0, w);
+    } else {
+      showToast(`Coming back next session.`, 2000);
+    }
   } else {
     // Track for matching rounds (only non-again so user has actually "got" the card).
     state.session.recentlySeen.push(w.id);
@@ -876,7 +902,7 @@ function openMasteredList() {
 
   const src = state.settings.source;
   const tgt = state.settings.target;
-  const mature = state.words.filter(w => cardLabel(state.progress[w.id]) === 'mature');
+  const mature = wordsForTarget().filter(w => cardLabel(state.progress[w.id]) === 'mature');
 
   for (const w of mature) {
     const item = document.createElement('div');
