@@ -820,6 +820,52 @@ html, body {
   line-height: 1.5;
 }
 
+/* ---------- Sentence cameo ---------- */
+
+.sentence-card {
+  flex: 1;
+  min-height: 280px;
+  background: linear-gradient(135deg, #fff 0%, #fff8ec 100%);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--line);
+  padding: 30px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  box-shadow: 0 12px 32px rgba(80, 60, 30, 0.10), 0 2px 6px rgba(80, 60, 30, 0.04);
+}
+.sentence-target {
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.4;
+  word-wrap: break-word;
+  max-width: 100%;
+}
+.sentence-target[dir="rtl"] {
+  font-family: "Noto Naskh Arabic", "Geeza Pro", -apple-system, serif;
+  font-size: 32px;
+}
+.sentence-translit {
+  font-style: italic;
+  margin-top: 10px;
+}
+.sentence-translit:empty { display: none; }
+.sentence-reveal {
+  margin-top: 24px;
+  padding-top: 22px;
+  border-top: 1px dashed var(--line);
+  width: 100%;
+  animation: answerFade 0.30s ease-out;
+}
+.sentence-source {
+  font-size: 20px;
+  color: var(--text);
+  font-weight: 500;
+}
+
 /* ---------- Matching round ---------- */
 
 .match-title {

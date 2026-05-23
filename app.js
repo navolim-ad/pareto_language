@@ -12,6 +12,7 @@ const LANG_LABELS = {
 const state = {
   words: [],
   themes: [],
+  sentences: [],
   settings: null,
   progress: {},
   daily: { date: '', done: 0 },
@@ -808,7 +809,10 @@ function startSession(themeFilter) {
     againCounts: {},
     recentlySeen: [],
     nextMatchAt: 5 + Math.floor(Math.random() * 3), // first match at 5, 6, or 7
+    nextSentenceAt: 7 + Math.floor(Math.random() * 4), // first sentence at 7..10
     matchRound: null,
+    sentenceCameo: null,
+    shownSentenceIds: new Set(),
   };
   show('screen-study');
   renderCurrent();
@@ -820,7 +824,12 @@ function renderCurrent() {
     return;
   }
 
-  // If it's time to trigger a matching round, run that first.
+  // Sentence cameos take priority — they're the rarer interlude.
+  if (shouldTriggerSentence()) {
+    startSentenceCameo();
+    return;
+  }
+  // Otherwise, check if a matching round is due.
   if (shouldTriggerMatch()) {
     startMatchRound();
     return;
@@ -975,6 +984,87 @@ function finishMatchRound() {
 function skipMatchRound() {
   if (!state.session) return;
   state.session.matchRound = null;
+  show('screen-study');
+  renderCurrent();
+}
+
+// ============== Sentence cameos ==============
+function getEligibleSentences() {
+  if (!state.sentences || state.sentences.length === 0) return [];
+  const tgt = state.settings.target;
+  const src = state.settings.source;
+  return state.sentences.filter(s => {
+    if (!s[tgt] || !s[src]) return false; // need translations for current pair
+    if (state.session && state.session.shownSentenceIds.has(s.id)) return false;
+    return s.uses.every(wid => cardLabel(state.progress[wid]) === 'mature');
+  });
+}
+
+function shouldTriggerSentence() {
+  if (!state.session) return false;
+  if (state.session.sentenceCameo) return false;
+  if (state.session.answered < state.session.nextSentenceAt) return false;
+  return getEligibleSentences().length > 0;
+}
+
+function startSentenceCameo() {
+  // Reschedule next sentence cameo: 6..10 cards from now.
+  state.session.nextSentenceAt = state.session.answered + 6 + Math.floor(Math.random() * 5);
+  const candidates = getEligibleSentences();
+  if (candidates.length === 0) {
+    renderCurrent();
+    return;
+  }
+  const sentence = candidates[Math.floor(Math.random() * candidates.length)];
+  state.session.sentenceCameo = sentence;
+  state.session.shownSentenceIds.add(sentence.id);
+  show('screen-sentence');
+  renderSentenceCameo();
+}
+
+function renderSentenceCameo() {
+  const s = state.session.sentenceCameo;
+  if (!s) return;
+  const tgt = state.settings.target;
+  const src = state.settings.source;
+
+  const targetEl = document.getElementById('sentence-target');
+  targetEl.textContent = s[tgt] || '';
+  if (tgt === 'ar') targetEl.setAttribute('dir', 'rtl');
+  else targetEl.removeAttribute('dir');
+
+  let translit = '';
+  if (tgt === 'ar' && s.ar_translit) translit = s.ar_translit;
+  else if (tgt === 'th' && s.th_translit) translit = s.th_translit;
+  document.getElementById('sentence-translit').textContent = translit;
+
+  document.getElementById('sentence-source').textContent = s[src] || '';
+
+  // Hide translation initially.
+  document.getElementById('sentence-source-wrap').classList.add('hidden');
+  document.getElementById('sentence-reveal-row').classList.remove('hidden');
+  document.getElementById('sentence-done-row').classList.add('hidden');
+
+  // Audio button.
+  const audioBtn = document.getElementById('sentence-audio-btn');
+  if (canSpeak(tgt)) {
+    audioBtn.classList.remove('hidden');
+    audioBtn.onclick = (e) => { e.stopPropagation(); speak(s[tgt], tgt); };
+  } else {
+    audioBtn.classList.add('hidden');
+  }
+}
+
+function revealSentenceTranslation() {
+  if (!state.session || !state.session.sentenceCameo) return;
+  document.getElementById('sentence-source-wrap').classList.remove('hidden');
+  document.getElementById('sentence-reveal-row').classList.add('hidden');
+  document.getElementById('sentence-done-row').classList.remove('hidden');
+}
+
+function finishSentenceCameo() {
+  if (!state.session) return;
+  state.session.sentenceCameo = null;
   show('screen-study');
   renderCurrent();
 }
@@ -1318,6 +1408,18 @@ async function init() {
     state.words = data.words;
     state.themes = data.themes;
   } catch (err) {
+    err; // fall through to error UI below
+  }
+  // Sentences are optional — if it fails, the app still works without cameos.
+  try {
+    const sResp = await fetch('data/sentences.json');
+    if (sResp.ok) {
+      const sData = await sResp.json();
+      state.sentences = sData.sentences || [];
+    }
+  } catch (e) { /* sentences are non-essential */ }
+
+  if (!state.words || state.words.length === 0) {
     document.body.innerHTML =
       '<div style="padding:24px;max-width:480px;margin:0 auto;font-family:sans-serif">' +
       '<h2>Could not load word data</h2>' +
@@ -1383,6 +1485,13 @@ async function init() {
     show('screen-home');
   });
   document.getElementById('match-skip').addEventListener('click', skipMatchRound);
+  document.getElementById('sentence-show-btn').addEventListener('click', revealSentenceTranslation);
+  document.getElementById('sentence-got-it').addEventListener('click', finishSentenceCameo);
+  document.getElementById('sentence-back').addEventListener('click', () => {
+    state.session = null;
+    renderHome();
+    show('screen-home');
+  });
 
   // Initialize TTS voices
   if ('speechSynthesis' in window) {

@@ -247,6 +247,33 @@
       </div>
     </section>
 
+    <!-- Sentence cameo screen -->
+    <section id="screen-sentence" class="screen hidden">
+      <div class="container study-container">
+        <header class="study-header">
+          <button id="sentence-back" class="icon-btn" aria-label="Back">←</button>
+          <div class="progress-pill"><span>✨ Using what you know</span></div>
+          <div class="spacer"></div>
+        </header>
+
+        <div class="sentence-card">
+          <div class="sentence-target" id="sentence-target"></div>
+          <div class="sentence-translit muted small" id="sentence-translit"></div>
+          <button id="sentence-audio-btn" class="audio-btn hidden" aria-label="Hear sentence">🔊</button>
+          <div class="sentence-reveal hidden" id="sentence-source-wrap">
+            <div class="sentence-source" id="sentence-source"></div>
+          </div>
+        </div>
+
+        <div id="sentence-reveal-row">
+          <button id="sentence-show-btn" class="primary-btn">Show translation</button>
+        </div>
+        <div id="sentence-done-row" class="hidden">
+          <button id="sentence-got-it" class="primary-btn big">Got it</button>
+        </div>
+      </div>
+    </section>
+
     <!-- Matching round screen -->
     <section id="screen-matching" class="screen hidden">
       <div class="container study-container">
