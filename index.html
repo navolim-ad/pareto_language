@@ -115,10 +115,10 @@
             <div class="stat-bar-fill" id="stat-bar-fill"></div>
           </div>
           <div class="stat-breakdown">
-            <span><b id="stat-new">0</b> new</span>
-            <span><b id="stat-learning">0</b> learning</span>
-            <span><b id="stat-young">0</b> young</span>
-            <span><b id="stat-mature">0</b> mature</span>
+            <span><b id="stat-new">0</b> New</span>
+            <span><b id="stat-learning">0</b> Learning</span>
+            <span><b id="stat-young">0</b> Sticking</span>
+            <span><b id="stat-mature">0</b> Mastered</span>
           </div>
         </div>
 
@@ -134,9 +134,29 @@
 
         <button id="start-study" class="primary-btn big">Study now</button>
 
-        <div class="theme-filter">
+        <div id="word-of-day" class="word-of-day hidden">
+          <div class="wod-label">Word of the day</div>
+          <div class="wod-card">
+            <div class="wod-emoji" id="wod-emoji"></div>
+            <div class="wod-text">
+              <div class="wod-target" id="wod-target"></div>
+              <div class="wod-translit muted small" id="wod-translit"></div>
+              <div class="wod-source" id="wod-source"></div>
+            </div>
+          </div>
+        </div>
+
+        <div id="activity-calendar" class="activity-calendar">
+          <div class="activity-row">
+            <span class="muted small">Last 30 days</span>
+            <span class="muted small" id="activity-summary"></span>
+          </div>
+          <div class="activity-dots" id="activity-dots"></div>
+        </div>
+
+        <div class="theme-progress-section">
           <p class="muted small">Or pick a theme</p>
-          <div id="theme-chips" class="chip-row"></div>
+          <div id="theme-progress" class="theme-progress-list"></div>
         </div>
       </div>
     </section>
@@ -181,6 +201,10 @@
           <input id="type-input" type="text" autocomplete="off" autocorrect="off"
                  autocapitalize="off" spellcheck="false" placeholder="Type the answer…">
           <button id="type-submit" class="primary-btn">Check</button>
+        </div>
+
+        <div id="type-dontknow-row" class="type-dontknow-row hidden">
+          <button id="type-dontknow" class="text-link-btn">I don't know — show me</button>
         </div>
 
         <div id="choice-row" class="choice-row hidden">

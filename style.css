@@ -24,6 +24,8 @@ html, body {
   padding: 0;
   height: 100%;
   background: var(--bg);
+  background-image: linear-gradient(180deg, #fdf6ea 0%, #fae2c1 100%);
+  background-attachment: fixed;
   color: var(--text);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans Arabic",
     "Noto Sans", "Helvetica Neue", Arial, sans-serif;
@@ -221,20 +223,32 @@ html, body {
   margin-bottom: 12px;
 }
 .stat-number {
-  font-size: 44px;
-  font-weight: 700;
+  font-size: 56px;
+  font-weight: 800;
   color: var(--primary);
+  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
   line-height: 1;
   cursor: pointer;
   display: inline-block;
-  transition: color 0.15s ease;
+  transition: opacity 0.15s ease;
+  letter-spacing: -0.02em;
 }
-.stat-number:hover { color: var(--primary-dark); }
+.stat-number:hover { opacity: 0.85; }
+.stat-number.has-mastered::before {
+  content: '★ ';
+  -webkit-text-fill-color: var(--accent);
+  font-size: 32px;
+  vertical-align: 12%;
+  font-weight: 400;
+}
 .stat-number.has-mastered::after {
   content: ' ›';
-  font-size: 24px;
-  color: var(--muted);
-  vertical-align: 8%;
+  -webkit-text-fill-color: var(--muted);
+  font-size: 26px;
+  vertical-align: 12%;
   font-weight: 400;
 }
 .stat-label {
@@ -285,29 +299,154 @@ html, body {
 }
 .daily-goal-row b { color: var(--text); font-weight: 600; }
 
-.theme-filter { margin-top: 6px; }
-.chip-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 8px;
+/* ---------- Word of the day ---------- */
+.word-of-day {
+  margin-top: 4px;
 }
-.chip {
-  padding: 8px 14px;
+.wod-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 6px;
+}
+.wod-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: linear-gradient(135deg, #fff 0%, #fff8ec 100%);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  box-shadow: 0 2px 8px rgba(80, 60, 30, 0.04);
+}
+.wod-emoji {
+  font-size: 36px;
+  line-height: 1;
+}
+.wod-emoji:empty { display: none; }
+.wod-text { flex: 1; min-width: 0; }
+.wod-target {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.15;
+}
+.wod-target[dir="rtl"] {
+  font-family: "Noto Naskh Arabic", "Geeza Pro", -apple-system, serif;
+  font-size: 26px;
+}
+.wod-translit {
+  font-style: italic;
+  margin-top: 2px;
+}
+.wod-translit:empty { display: none; }
+.wod-source {
+  margin-top: 4px;
+  color: var(--text-soft);
+  font-size: 14px;
+}
+
+/* ---------- Activity calendar ---------- */
+.activity-calendar {
   background: var(--bg-card);
   border: 1px solid var(--line);
-  border-radius: 999px;
-  font-size: 13px;
+  border-radius: var(--radius);
+  padding: 12px 16px 14px;
+}
+.activity-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+.activity-dots {
+  display: grid;
+  grid-template-columns: repeat(30, 1fr);
+  gap: 4px;
+}
+.activity-dot {
+  aspect-ratio: 1;
+  border-radius: 3px;
+  background: var(--line);
+  transition: background 0.2s ease;
+}
+.activity-dot.active {
+  background: var(--easy);
+}
+.activity-dot.today {
+  box-shadow: 0 0 0 2px var(--accent);
+}
+
+/* ---------- Theme progress rows ---------- */
+.theme-progress-section { margin-top: 6px; }
+.theme-progress-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 8px;
+}
+.theme-row {
+  padding: 10px 14px;
+  border-radius: var(--radius);
+  border: 1px solid rgba(0, 0, 0, 0.04);
   cursor: pointer;
-  color: var(--text-soft);
-  font-family: inherit;
+  transition: transform 0.12s ease, box-shadow 0.15s ease;
+  background: var(--bg-card);
 }
-.chip:hover { color: var(--text); }
-.chip .chip-count {
-  color: var(--muted);
-  margin-left: 4px;
+.theme-row:hover { box-shadow: 0 2px 8px rgba(80, 60, 30, 0.08); transform: translateY(-1px); }
+.theme-row:active { transform: scale(0.99); }
+.theme-row-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 6px;
+}
+.theme-row-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+}
+.theme-row-count {
   font-size: 12px;
+  color: var(--text-soft);
+  font-variant-numeric: tabular-nums;
 }
+.theme-row-bar {
+  height: 6px;
+  background: rgba(0, 0, 0, 0.06);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.theme-row-bar-fill {
+  height: 100%;
+  background: rgba(0, 0, 0, 0.35);
+  border-radius: 3px;
+  transition: width 0.5s ease;
+}
+
+/* Per-theme accent colors */
+.theme-greetings    { background: #fde7d3; }
+.theme-pronouns     { background: #e6dff2; }
+.theme-questions    { background: #d8e8f2; }
+.theme-verbs_basic  { background: #f7dcdc; }
+.theme-food_drink   { background: #fce0cc; }
+.theme-home         { background: #ede0c8; }
+.theme-time         { background: #f6ecd2; }
+.theme-numbers      { background: #d6e3f0; }
+.theme-people       { background: #f2d8e2; }
+.theme-body         { background: #f5dadf; }
+.theme-qualities    { background: #e0eecf; }
+.theme-colors       { background: #ebe2f2; }
+.theme-nature       { background: #d8edd8; }
+.theme-animals      { background: #ece0c8; }
+.theme-clothing     { background: #ecdcf0; }
+.theme-transport    { background: #d8e3f0; }
+.theme-places       { background: #d8ecdd; }
+.theme-prepositions { background: #e8e8e8; }
+.theme-emotions     { background: #f5d8d8; }
+.theme-phrases      { background: #fce0cc; }
+.theme-possessives  { background: #e8e8e8; }
 
 /* ---------- Study ---------- */
 
@@ -332,7 +471,7 @@ html, body {
   min-height: 280px;
   background: var(--bg-card);
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow);
+  box-shadow: 0 12px 32px rgba(80, 60, 30, 0.12), 0 2px 6px rgba(80, 60, 30, 0.06);
   border: 1px solid var(--line);
   display: flex;
   align-items: center;
@@ -488,6 +627,16 @@ html, body {
 .type-input-row button {
   width: auto;
   padding: 14px 22px;
+}
+
+.type-dontknow-row {
+  text-align: center;
+  margin-top: -4px;
+}
+.type-dontknow-row .text-link-btn {
+  padding: 6px 0;
+  font-size: 14px;
+  color: var(--text-soft);
 }
 
 /* ---------- Multiple choice mode ---------- */
@@ -775,6 +924,12 @@ html, body {
   from { opacity: 0; transform: translateY(6px); }
   to   { opacity: 1; transform: translateY(0); }
 }
+@keyframes emojiPop {
+  0%   { transform: scale(0.4); opacity: 0; }
+  60%  { transform: scale(1.18); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+.card-emoji.pop { animation: emojiPop 0.5s ease-out; }
 
 .flashcard.enter         { animation: cardEnter 0.42s ease-out; }
 .flashcard.exit-again    { animation: cardShake 0.55s ease-in-out; }

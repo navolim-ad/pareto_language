@@ -327,24 +327,192 @@ function renderHome() {
   const dailyPct = Math.min(100, (state.daily.done / state.settings.dailyGoal) * 100);
   document.getElementById('daily-bar-fill').style.width = dailyPct + '%';
 
-  // Theme chips (only count words available in current target language)
-  const chipRow = document.getElementById('theme-chips');
-  chipRow.innerHTML = '';
-  const themeCounts = {};
-  for (const w of wordsForTarget()) {
-    themeCounts[w.theme] = (themeCounts[w.theme] || 0) + 1;
+  renderThemeProgress();
+  renderWordOfDay();
+  renderActivityCalendar();
+}
+
+// ============== Theme progress rows ==============
+function renderThemeProgress() {
+  const container = document.getElementById('theme-progress');
+  if (!container) return;
+  container.innerHTML = '';
+  const tgt = state.settings.target;
+  const themeTotals = {};
+  const themeMature = {};
+  for (const w of state.words) {
+    if (!w[tgt]) continue;
+    themeTotals[w.theme] = (themeTotals[w.theme] || 0) + 1;
+    if (cardLabel(state.progress[w.id]) === 'mature') {
+      themeMature[w.theme] = (themeMature[w.theme] || 0) + 1;
+    }
   }
   for (const theme of state.themes) {
-    if (!themeCounts[theme]) continue;
-    const btn = document.createElement('button');
-    btn.className = 'chip';
-    btn.textContent = humanTheme(theme);
+    const total = themeTotals[theme] || 0;
+    if (total === 0) continue;
+    const mature = themeMature[theme] || 0;
+    const row = document.createElement('button');
+    row.type = 'button';
+    row.className = `theme-row theme-${theme}`;
+    row.addEventListener('click', () => startSession(theme));
+
+    const top = document.createElement('div');
+    top.className = 'theme-row-top';
+    const name = document.createElement('span');
+    name.className = 'theme-row-name';
+    name.textContent = humanTheme(theme);
     const count = document.createElement('span');
-    count.className = 'chip-count';
-    count.textContent = themeCounts[theme];
-    btn.appendChild(count);
-    btn.addEventListener('click', () => startSession(theme));
-    chipRow.appendChild(btn);
+    count.className = 'theme-row-count';
+    count.textContent = `${mature} / ${total}`;
+    top.appendChild(name);
+    top.appendChild(count);
+
+    const bar = document.createElement('div');
+    bar.className = 'theme-row-bar';
+    const fill = document.createElement('div');
+    fill.className = 'theme-row-bar-fill';
+    fill.style.width = `${total ? (mature / total) * 100 : 0}%`;
+    bar.appendChild(fill);
+
+    row.appendChild(top);
+    row.appendChild(bar);
+    container.appendChild(row);
+  }
+}
+
+// ============== Word of the day ==============
+function renderWordOfDay() {
+  const wodEl = document.getElementById('word-of-day');
+  if (!wodEl) return;
+  const today = todayStr();
+  const key = storageKey(`wod:${pairKey()}`);
+  let stored = null;
+  try { stored = JSON.parse(localStorage.getItem(key) || 'null'); } catch (e) {}
+  const tgt = state.settings.target;
+  let pick = null;
+  if (stored && stored.date === today) {
+    pick = state.words.find(w => w.id === stored.wordId && w[tgt]);
+  }
+  if (!pick) {
+    const candidates = state.words.filter(w => w[tgt] && cardLabel(state.progress[w.id]) !== 'mature');
+    if (candidates.length === 0) {
+      wodEl.classList.add('hidden');
+      return;
+    }
+    pick = candidates[Math.floor(Math.random() * candidates.length)];
+    localStorage.setItem(key, JSON.stringify({ date: today, wordId: pick.id }));
+  }
+  wodEl.classList.remove('hidden');
+  const src = state.settings.source;
+  document.getElementById('wod-emoji').textContent = pick.emoji || '';
+  const targetEl = document.getElementById('wod-target');
+  targetEl.textContent = getDisplayWord(pick, tgt);
+  if (tgt === 'ar') targetEl.setAttribute('dir', 'rtl');
+  else targetEl.removeAttribute('dir');
+  let translit = '';
+  if (tgt === 'ar' && pick.ar_translit) translit = pick.ar_translit;
+  else if (tgt === 'th' && pick.th_translit) translit = pick.th_translit;
+  document.getElementById('wod-translit').textContent = translit;
+  document.getElementById('wod-source').textContent = pick[src];
+}
+
+// ============== Activity calendar ==============
+function recordActivityToday() {
+  const today = todayStr();
+  const key = storageKey(`activity:${pairKey()}`);
+  let arr = [];
+  try { arr = JSON.parse(localStorage.getItem(key) || '[]'); } catch (e) {}
+  if (!arr.includes(today)) {
+    arr.push(today);
+    arr.sort();
+    if (arr.length > 60) arr = arr.slice(-60);
+    localStorage.setItem(key, JSON.stringify(arr));
+  }
+}
+
+function dateStr(d) {
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+
+function renderActivityCalendar() {
+  const dots = document.getElementById('activity-dots');
+  if (!dots) return;
+  const key = storageKey(`activity:${pairKey()}`);
+  let arr = [];
+  try { arr = JSON.parse(localStorage.getItem(key) || '[]'); } catch (e) {}
+  const activeSet = new Set(arr);
+  const today = new Date();
+  const todayKey = todayStr();
+  dots.innerHTML = '';
+  let activeCount = 0;
+  for (let i = 29; i >= 0; i--) {
+    const d = new Date(today);
+    d.setDate(today.getDate() - i);
+    const k = dateStr(d);
+    const dot = document.createElement('div');
+    dot.className = 'activity-dot';
+    if (activeSet.has(k)) { dot.classList.add('active'); activeCount++; }
+    if (k === todayKey) dot.classList.add('today');
+    dot.title = k;
+    dots.appendChild(dot);
+  }
+  document.getElementById('activity-summary').textContent =
+    activeCount === 0 ? 'No activity yet' :
+    `${activeCount} day${activeCount !== 1 ? 's' : ''} active`;
+}
+
+// ============== Milestones ==============
+const MILESTONES = [
+  { id: 'first', count: 1, message: '🌱 First word mastered!' },
+  { id: 'ten', count: 10, message: '🎯 10 words mastered!' },
+  { id: 'twentyfive', count: 25, message: '🎉 25 words!' },
+  { id: 'fifty', count: 50, message: '💪 50 words — halfway to 100!' },
+  { id: 'hundred', count: 100, message: '🏆 100 words mastered!' },
+  { id: 'twohundred', count: 200, message: '🌟 200 words!' },
+  { id: 'three_fifty', count: 350, message: '👑 All words mastered!' },
+];
+
+function checkMilestones(prevMature, newMature) {
+  if (newMature <= prevMature) {
+    checkThemeCompletion();
+    return;
+  }
+  const key = storageKey(`milestones:${pairKey()}`);
+  let celebrated = {};
+  try { celebrated = JSON.parse(localStorage.getItem(key) || '{}'); } catch (e) {}
+  for (const m of MILESTONES) {
+    if (newMature >= m.count && prevMature < m.count && !celebrated[m.id]) {
+      celebrated[m.id] = true;
+      localStorage.setItem(key, JSON.stringify(celebrated));
+      setTimeout(() => showToast(m.message, 3500), 400);
+      return;
+    }
+  }
+  checkThemeCompletion();
+}
+
+function checkThemeCompletion() {
+  const key = storageKey(`milestones:${pairKey()}`);
+  let celebrated = {};
+  try { celebrated = JSON.parse(localStorage.getItem(key) || '{}'); } catch (e) {}
+  const tgt = state.settings.target;
+  const themeTotals = {};
+  const themeMature = {};
+  for (const w of state.words) {
+    if (!w[tgt]) continue;
+    themeTotals[w.theme] = (themeTotals[w.theme] || 0) + 1;
+    if (cardLabel(state.progress[w.id]) === 'mature') {
+      themeMature[w.theme] = (themeMature[w.theme] || 0) + 1;
+    }
+  }
+  for (const theme of Object.keys(themeTotals)) {
+    const themeKey = `theme:${theme}`;
+    if (themeTotals[theme] >= 4 && themeMature[theme] === themeTotals[theme] && !celebrated[themeKey]) {
+      celebrated[themeKey] = true;
+      localStorage.setItem(key, JSON.stringify(celebrated));
+      setTimeout(() => showToast(`✨ ${humanTheme(theme)} complete!`, 3500), 400);
+      return;
+    }
   }
 }
 
@@ -392,6 +560,7 @@ function renderCard(word, showAnswer) {
 
   const revealRow = document.getElementById('reveal-row');
   const typeRow = document.getElementById('type-input-row');
+  const dontknowRow = document.getElementById('type-dontknow-row');
   const choiceRow = document.getElementById('choice-row');
   const gradeRow = document.getElementById('grade-row');
   const feedback = document.getElementById('check-feedback');
@@ -403,6 +572,7 @@ function renderCard(word, showAnswer) {
     // Hide all input UIs.
     revealRow.classList.add('hidden');
     typeRow.classList.add('hidden');
+    dontknowRow.classList.add('hidden');
     choiceRow.classList.add('hidden');
     skipBtn.classList.add('hidden');
     skipHint.classList.add('hidden');
@@ -412,6 +582,11 @@ function renderCard(word, showAnswer) {
     answerMain.textContent = getDisplayWord(word, src);
     answerMain.removeAttribute('dir');
     emojiEl.textContent = word.emoji || '';
+    if (word.emoji) {
+      emojiEl.classList.remove('pop');
+      void emojiEl.offsetWidth;
+      emojiEl.classList.add('pop');
+    }
 
     // Example
     if (word.example && word.example[src] && word.example[tgt]) {
@@ -454,10 +629,14 @@ function renderCard(word, showAnswer) {
   typeRow.classList.add('hidden');
   choiceRow.classList.add('hidden');
 
+  dontknowRow.classList.add('hidden');
+
   if (mode === 'reveal') {
     revealRow.classList.remove('hidden');
   } else if (mode === 'type') {
     typeRow.classList.remove('hidden');
+    dontknowRow.classList.remove('hidden');
+    document.getElementById('type-dontknow').disabled = false;
     const input = document.getElementById('type-input');
     input.value = '';
     input.disabled = false;
@@ -546,6 +725,21 @@ function submitChoice(idx) {
       scheduleAutoGrade(isCorrect ? 'good' : 'again');
     }
   }, 600);
+}
+
+function typeDontKnow() {
+  if (!state.session) return;
+  const w = state.session.queue[state.session.index];
+  const expected = w[state.settings.source];
+  const feedback = document.getElementById('check-feedback');
+  feedback.classList.remove('hidden', 'correct', 'wrong');
+  feedback.classList.add('wrong');
+  feedback.textContent = `Answer: ${expected}`;
+  document.getElementById('type-input').disabled = true;
+  document.getElementById('type-submit').disabled = true;
+  document.getElementById('type-dontknow').disabled = true;
+  renderCard(w, true);
+  scheduleAutoGrade('again');
 }
 
 function scheduleAutoGrade(grade) {
@@ -793,7 +987,9 @@ function gradeAndAdvance(grade) {
   const w = state.session.queue[state.session.index];
   let card = state.progress[w.id];
   if (!card) { card = defaultCardState(); state.progress[w.id] = card; }
+  const prevMature = calcStats().mature;
   gradeCard(card, grade);
+  const newMature = calcStats().mature;
 
   if (grade !== 'again' && !state.session.countedIds.has(w.id)) {
     state.daily.done += 1;
@@ -803,8 +999,11 @@ function gradeAndAdvance(grade) {
       showToast(`🎯 Daily goal reached. Keep going if you want.`, 3500);
     }
     saveDaily();
+    recordActivityToday();
   }
   saveProgress();
+  if (newMature > prevMature) checkMilestones(prevMature, newMature);
+  else checkThemeCompletion();
 
   if (grade === 'again') {
     state.session.againCounts[w.id] = (state.session.againCounts[w.id] || 0) + 1;
@@ -858,16 +1057,20 @@ function skipKnown() {
   const w = state.session.queue[state.session.index];
   let card = state.progress[w.id];
   if (!card) { card = defaultCardState(); state.progress[w.id] = card; }
+  const prevMature = calcStats().mature;
   card.reps = 5;
   card.ease = 2.5;
   card.interval = 30 * MS_PER_DAY;
   card.due = Date.now() + card.interval;
   saveProgress();
+  const newMature = calcStats().mature;
   if (!state.session.countedIds.has(w.id)) {
     state.daily.done += 1;
     state.session.countedIds.add(w.id);
     saveDaily();
+    recordActivityToday();
   }
+  if (newMature > prevMature) checkMilestones(prevMature, newMature);
   state.session._busy = true;
   const cardEl = document.getElementById('card-area');
   cardEl.classList.remove('enter', 'exit-again', 'exit-good', 'exit-easy');
@@ -1141,6 +1344,7 @@ async function init() {
   document.getElementById('type-input').addEventListener('keydown', (e) => {
     if (e.key === 'Enter') submitTypeAnswer();
   });
+  document.getElementById('type-dontknow').addEventListener('click', typeDontKnow);
   document.querySelectorAll('.choice-option').forEach(btn => {
     btn.addEventListener('click', () => submitChoice(parseInt(btn.dataset.idx, 10)));
   });
