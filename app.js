@@ -414,6 +414,14 @@ function renderWordOfDay() {
   else if (tgt === 'th' && pick.th_translit) translit = pick.th_translit;
   document.getElementById('wod-translit').textContent = translit;
   document.getElementById('wod-source').textContent = pick[src];
+
+  const wodAudio = document.getElementById('wod-audio-btn');
+  if (canSpeak(tgt)) {
+    wodAudio.classList.remove('hidden');
+    wodAudio.onclick = (e) => { e.stopPropagation(); speak(pick[tgt], tgt); };
+  } else {
+    wodAudio.classList.add('hidden');
+  }
 }
 
 // ============== Activity calendar ==============
