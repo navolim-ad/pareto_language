@@ -1,6 +1,6 @@
 {
   "meta": {
-    "version": "0.4.0-thai",
+    "version": "0.5.0-thai200",
     "updated": "2026-05-19",
     "source_languages": [
       "en",
@@ -2257,7 +2257,9 @@
         "sr_cyr": "Хајдемо на ручак.",
         "ar": "لنتناول الغداء.",
         "ar_translit": "linatanāwal al-ghadāʾ"
-      }
+      },
+      "th": "อาหารกลางวัน",
+      "th_translit": "a-han glang-wan"
     },
     {
       "id": "w102",
@@ -2277,7 +2279,9 @@
         "sr_cyr": "Вечера код куће.",
         "ar": "العشاء في البيت.",
         "ar_translit": "al-ʿashāʾ fī al-bayt"
-      }
+      },
+      "th": "อาหารเย็น",
+      "th_translit": "a-han yen"
     },
     {
       "id": "w103",
@@ -2317,7 +2321,9 @@
         "sr_cyr": "Шоља чаја.",
         "ar": "كوب شاي.",
         "ar_translit": "kūb shāy"
-      }
+      },
+      "th": "ถ้วย",
+      "th_translit": "thuay"
     },
     {
       "id": "w105",
@@ -2337,7 +2343,9 @@
         "sr_cyr": "Око стола.",
         "ar": "حول الطاولة.",
         "ar_translit": "ḥawla al-ṭāwila"
-      }
+      },
+      "th": "โต๊ะ",
+      "th_translit": "tho"
     },
     {
       "id": "w106",
@@ -2357,7 +2365,9 @@
         "sr_cyr": "Отвори врата.",
         "ar": "افتح الباب.",
         "ar_translit": "iftaḥ al-bāb"
-      }
+      },
+      "th": "ประตู",
+      "th_translit": "pra-tu"
     },
     {
       "id": "w107",
@@ -2377,7 +2387,9 @@
         "sr_cyr": "Затвори прозор.",
         "ar": "أغلق النافذة.",
         "ar_translit": "aghliq al-nāfidha"
-      }
+      },
+      "th": "หน้าต่าง",
+      "th_translit": "na-tang"
     },
     {
       "id": "w108",
@@ -2397,7 +2409,9 @@
         "sr_cyr": "Чиста соба.",
         "ar": "غرفة نظيفة.",
         "ar_translit": "ghurfa naẓīfa"
-      }
+      },
+      "th": "ห้อง",
+      "th_translit": "hong"
     },
     {
       "id": "w109",
@@ -2417,7 +2431,9 @@
         "sr_cyr": "У кухињи.",
         "ar": "في المطبخ.",
         "ar_translit": "fī al-maṭbakh"
-      }
+      },
+      "th": "ครัว",
+      "th_translit": "krua"
     },
     {
       "id": "w110",
@@ -2437,7 +2453,9 @@
         "sr_cyr": "Где је купатило?",
         "ar": "أين الحمام؟",
         "ar_translit": "ayna al-ḥammām?"
-      }
+      },
+      "th": "ห้องน้ำ",
+      "th_translit": "hong-nam"
     },
     {
       "id": "w111",
@@ -2457,7 +2475,9 @@
         "sr_cyr": "Мекан кревет.",
         "ar": "سرير ناعم.",
         "ar_translit": "sarīr nāʿim"
-      }
+      },
+      "th": "เตียง",
+      "th_translit": "tiang"
     },
     {
       "id": "w112",
@@ -2477,7 +2497,9 @@
         "sr_cyr": "Две столице.",
         "ar": "كرسيان.",
         "ar_translit": "kursiyān"
-      }
+      },
+      "th": "เก้าอี้",
+      "th_translit": "kao-ee"
     },
     {
       "id": "w113",
@@ -2497,7 +2519,9 @@
         "sr_cyr": "Упали светло.",
         "ar": "أشعل الضوء.",
         "ar_translit": "ashʿil al-ḍawʾ"
-      }
+      },
+      "th": "ไฟ",
+      "th_translit": "fai"
     },
     {
       "id": "w114",
@@ -2517,7 +2541,9 @@
         "sr_cyr": "Где су моји кључеви?",
         "ar": "أين مفاتيحي؟",
         "ar_translit": "ayna mafātīḥī?"
-      }
+      },
+      "th": "กุญแจ",
+      "th_translit": "gun-jae"
     },
     {
       "id": "w115",
@@ -2537,7 +2563,9 @@
         "sr_cyr": "Мој телефон је нов.",
         "ar": "هاتفي جديد.",
         "ar_translit": "hātifī jadīd"
-      }
+      },
+      "th": "โทรศัพท์",
+      "th_translit": "tho-ra-sap"
     },
     {
       "id": "w116",
@@ -2557,7 +2585,9 @@
         "sr_cyr": "На компјутеру.",
         "ar": "على الحاسوب.",
         "ar_translit": "ʿalā al-ḥāsūb"
-      }
+      },
+      "th": "คอมพิวเตอร์",
+      "th_translit": "com-piw-ter"
     },
     {
       "id": "w117",
@@ -2577,7 +2607,9 @@
         "sr_cyr": "Гледам телевизију.",
         "ar": "أشاهد التلفاز.",
         "ar_translit": "ushāhid al-tilfāz"
-      }
+      },
+      "th": "ทีวี",
+      "th_translit": "thi-wee"
     },
     {
       "id": "w118",
@@ -2597,7 +2629,9 @@
         "sr_cyr": "Брз ауто.",
         "ar": "سيارة سريعة.",
         "ar_translit": "sayyāra sarīʿa"
-      }
+      },
+      "th": "รถ",
+      "th_translit": "rot"
     },
     {
       "id": "w119",
@@ -2617,7 +2651,9 @@
         "sr_cyr": "Нова одећа.",
         "ar": "ملابس جديدة.",
         "ar_translit": "malābis jadīda"
-      }
+      },
+      "th": "เสื้อผ้า",
+      "th_translit": "suea-pha"
     },
     {
       "id": "w120",
@@ -2637,7 +2673,9 @@
         "sr_cyr": "Нове ципеле.",
         "ar": "أحذية جديدة.",
         "ar_translit": "aḥdhiya jadīda"
-      }
+      },
+      "th": "รองเท้า",
+      "th_translit": "rong-thao"
     },
     {
       "id": "w121",
@@ -2657,7 +2695,9 @@
         "sr_cyr": "Моја торба је тешка.",
         "ar": "حقيبتي ثقيلة.",
         "ar_translit": "ḥaqībatī thaqīla"
-      }
+      },
+      "th": "กระเป๋า",
+      "th_translit": "gra-pao"
     },
     {
       "id": "w122",
@@ -2677,7 +2717,9 @@
         "sr_cyr": "Треба ми новац.",
         "ar": "أحتاج مالاً.",
         "ar_translit": "aḥtāj mālan"
-      }
+      },
+      "th": "เงิน",
+      "th_translit": "ngen"
     },
     {
       "id": "w123",
@@ -2697,7 +2739,9 @@
         "sr_cyr": "Плава оловка.",
         "ar": "قلم أزرق.",
         "ar_translit": "qalam azraq"
-      }
+      },
+      "th": "ปากกา",
+      "th_translit": "paag-gaa"
     },
     {
       "id": "w124",
@@ -2717,7 +2761,9 @@
         "sr_cyr": "Бели папир.",
         "ar": "ورق أبيض.",
         "ar_translit": "waraq abyaḍ"
-      }
+      },
+      "th": "กระดาษ",
+      "th_translit": "gra-dat"
     },
     {
       "id": "w125",
@@ -2737,7 +2783,9 @@
         "sr_cyr": "Млад човек.",
         "ar": "رجل شاب.",
         "ar_translit": "rajul shābb"
-      }
+      },
+      "th": "ผู้ชาย",
+      "th_translit": "phu-chai"
     },
     {
       "id": "w126",
@@ -2757,7 +2805,9 @@
         "sr_cyr": "Љубазна жена.",
         "ar": "امرأة لطيفة.",
         "ar_translit": "imraʾa laṭīfa"
-      }
+      },
+      "th": "ผู้หญิง",
+      "th_translit": "phu-ying"
     },
     {
       "id": "w127",
@@ -2777,7 +2827,9 @@
         "sr_cyr": "Мало дете.",
         "ar": "طفل صغير.",
         "ar_translit": "ṭifl ṣaghīr"
-      }
+      },
+      "th": "เด็ก",
+      "th_translit": "dek"
     },
     {
       "id": "w128",
@@ -2797,7 +2849,9 @@
         "sr_cyr": "Добар дечак.",
         "ar": "ولد جيد.",
         "ar_translit": "walad jayyid"
-      }
+      },
+      "th": "เด็กผู้ชาย",
+      "th_translit": "dek phu-chai"
     },
     {
       "id": "w129",
@@ -2817,7 +2871,9 @@
         "sr_cyr": "Паметна девојчица.",
         "ar": "بنت ذكية.",
         "ar_translit": "bint dhakiyya"
-      }
+      },
+      "th": "เด็กผู้หญิง",
+      "th_translit": "dek phu-ying"
     },
     {
       "id": "w130",
@@ -2857,7 +2913,9 @@
         "sr_cyr": "Моја породица.",
         "ar": "عائلتي.",
         "ar_translit": "ʿāʾilatī"
-      }
+      },
+      "th": "ครอบครัว",
+      "th_translit": "krob-krua"
     },
     {
       "id": "w132",
@@ -2917,7 +2975,9 @@
         "sr_cyr": "Мој старији брат.",
         "ar": "أخي الأكبر.",
         "ar_translit": "akhī al-akbar"
-      }
+      },
+      "th": "พี่ชาย",
+      "th_translit": "phi-chai"
     },
     {
       "id": "w135",
@@ -2937,7 +2997,9 @@
         "sr_cyr": "Моја млађа сестра.",
         "ar": "أختي الصغرى.",
         "ar_translit": "ukhtī al-ṣughrā"
-      }
+      },
+      "th": "พี่สาว",
+      "th_translit": "phi-sao"
     },
     {
       "id": "w136",
@@ -2957,7 +3019,9 @@
         "sr_cyr": "Њихов син.",
         "ar": "ابنهم.",
         "ar_translit": "ibnuhum"
-      }
+      },
+      "th": "ลูกชาย",
+      "th_translit": "luk-chai"
     },
     {
       "id": "w137",
@@ -2977,7 +3041,9 @@
         "sr_cyr": "Њихова ћерка.",
         "ar": "ابنتهم.",
         "ar_translit": "ibnatuhum"
-      }
+      },
+      "th": "ลูกสาว",
+      "th_translit": "luk-sao"
     },
     {
       "id": "w138",
@@ -2997,7 +3063,9 @@
         "sr_cyr": "Њен муж.",
         "ar": "زوجها.",
         "ar_translit": "zawjuhā"
-      }
+      },
+      "th": "สามี",
+      "th_translit": "saa-mee"
     },
     {
       "id": "w139",
@@ -3017,7 +3085,9 @@
         "sr_cyr": "Његова жена.",
         "ar": "زوجته.",
         "ar_translit": "zawjatuhu"
-      }
+      },
+      "th": "ภรรยา",
+      "th_translit": "pan-ra-yaa"
     },
     {
       "id": "w140",
@@ -3037,7 +3107,9 @@
         "sr_cyr": "Наш учитељ је добар.",
         "ar": "معلمنا جيد.",
         "ar_translit": "muʿallimunā jayyid"
-      }
+      },
+      "th": "ครู",
+      "th_translit": "kru"
     },
     {
       "id": "w141",
@@ -3057,7 +3129,9 @@
         "sr_cyr": "Нови студент.",
         "ar": "طالب جديد.",
         "ar_translit": "ṭālib jadīd"
-      }
+      },
+      "th": "นักเรียน",
+      "th_translit": "nak-rian"
     },
     {
       "id": "w142",
@@ -3077,7 +3151,9 @@
         "sr_cyr": "Добар лекар.",
         "ar": "طبيب جيد.",
         "ar_translit": "ṭabīb jayyid"
-      }
+      },
+      "th": "หมอ",
+      "th_translit": "mor"
     },
     {
       "id": "w143",
@@ -3097,7 +3173,9 @@
         "sr_cyr": "Имам пријатеља.",
         "ar": "عندي صديق.",
         "ar_translit": "ʿindī ṣadīq"
-      }
+      },
+      "th": "ฉันมี",
+      "th_translit": "chan mee"
     },
     {
       "id": "w144",
@@ -3117,7 +3195,9 @@
         "sr_cyr": "Радим код куће.",
         "ar": "أعمل في البيت.",
         "ar_translit": "aʿmal fī al-bayt"
-      }
+      },
+      "th": "ฉันทำงาน",
+      "th_translit": "chan tham-ngan"
     },
     {
       "id": "w145",
@@ -3137,7 +3217,9 @@
         "sr_cyr": "Спавам осам сати.",
         "ar": "أنام ثماني ساعات.",
         "ar_translit": "anām thamānī sāʿāt"
-      }
+      },
+      "th": "ฉันนอน",
+      "th_translit": "chan non"
     },
     {
       "id": "w146",
@@ -3157,7 +3239,9 @@
         "sr_cyr": "Видим те.",
         "ar": "أراك.",
         "ar_translit": "arāka"
-      }
+      },
+      "th": "ฉันเห็น",
+      "th_translit": "chan hen"
     },
     {
       "id": "w147",
@@ -3177,7 +3261,9 @@
         "sr_cyr": "Чујем музику.",
         "ar": "أسمع الموسيقى.",
         "ar_translit": "asmaʿ al-mūsīqā"
-      }
+      },
+      "th": "ฉันได้ยิน",
+      "th_translit": "chan dai-yin"
     },
     {
       "id": "w148",
@@ -3197,7 +3283,9 @@
         "sr_cyr": "Говорим арапски.",
         "ar": "أتكلم العربية.",
         "ar_translit": "atakallam al-ʿarabiyya"
-      }
+      },
+      "th": "ฉันพูด",
+      "th_translit": "chan pud"
     },
     {
       "id": "w149",
@@ -3217,7 +3305,9 @@
         "sr_cyr": "Читам књигу.",
         "ar": "أقرأ كتاباً.",
         "ar_translit": "aqraʾ kitāban"
-      }
+      },
+      "th": "ฉันอ่าน",
+      "th_translit": "chan an"
     },
     {
       "id": "w150",
@@ -3237,7 +3327,9 @@
         "sr_cyr": "Пишем писмо.",
         "ar": "أكتب رسالة.",
         "ar_translit": "aktub risāla"
-      }
+      },
+      "th": "ฉันเขียน",
+      "th_translit": "chan khian"
     },
     {
       "id": "w151",
@@ -3257,7 +3349,9 @@
         "sr_cyr": "Учим сваки дан.",
         "ar": "أتعلم كل يوم.",
         "ar_translit": "ataʿallam kull yawm"
-      }
+      },
+      "th": "ฉันเรียน",
+      "th_translit": "chan rian"
     },
     {
       "id": "w152",
@@ -3277,7 +3371,9 @@
         "sr_cyr": "Разумем те.",
         "ar": "أفهمك.",
         "ar_translit": "afhamuka"
-      }
+      },
+      "th": "ฉันเข้าใจ",
+      "th_translit": "chan kao-jai"
     },
     {
       "id": "w153",
@@ -3297,7 +3393,9 @@
         "sr_cyr": "Знам одговор.",
         "ar": "أعرف الإجابة.",
         "ar_translit": "aʿrif al-ijāba"
-      }
+      },
+      "th": "ฉันรู้",
+      "th_translit": "chan ru"
     },
     {
       "id": "w154",
@@ -3317,7 +3415,9 @@
         "sr_cyr": "Тако мислим.",
         "ar": "أعتقد ذلك.",
         "ar_translit": "aʿtaqid dhālika"
-      }
+      },
+      "th": "ฉันคิด",
+      "th_translit": "chan khit"
     },
     {
       "id": "w155",
@@ -3337,7 +3437,9 @@
         "sr_cyr": "Волим те.",
         "ar": "أحبك.",
         "ar_translit": "uḥibbuka"
-      }
+      },
+      "th": "ฉันรัก",
+      "th_translit": "chan rak"
     },
     {
       "id": "w156",
@@ -3357,7 +3459,9 @@
         "sr_cyr": "Долазим сутра.",
         "ar": "آتي غداً.",
         "ar_translit": "ātī ghadan"
-      }
+      },
+      "th": "ฉันมา",
+      "th_translit": "chan maa"
     },
     {
       "id": "w157",
@@ -3377,7 +3481,9 @@
         "sr_cyr": "Излазим у шест.",
         "ar": "أخرج في الساعة السادسة.",
         "ar_translit": "akhruj fī al-sāʿa al-sādisa"
-      }
+      },
+      "th": "ฉันออก",
+      "th_translit": "chan ok"
     },
     {
       "id": "w158",
@@ -3397,7 +3503,9 @@
         "sr_cyr": "Купујем хлеб.",
         "ar": "أشتري الخبز.",
         "ar_translit": "ashtarī al-khubz"
-      }
+      },
+      "th": "ฉันซื้อ",
+      "th_translit": "chan suea"
     },
     {
       "id": "w159",
@@ -3417,7 +3525,9 @@
         "sr_cyr": "Продајем ауто.",
         "ar": "أبيع سيارتي.",
         "ar_translit": "abīʿ sayyāratī"
-      }
+      },
+      "th": "ฉันขาย",
+      "th_translit": "chan khai"
     },
     {
       "id": "w160",
@@ -3437,7 +3547,9 @@
         "sr_cyr": "Отварам врата.",
         "ar": "أفتح الباب.",
         "ar_translit": "aftaḥ al-bāb"
-      }
+      },
+      "th": "ฉันเปิด",
+      "th_translit": "chan poed"
     },
     {
       "id": "w161",
@@ -3457,7 +3569,9 @@
         "sr_cyr": "Затварам прозор.",
         "ar": "أغلق النافذة.",
         "ar_translit": "ughliq al-nāfidha"
-      }
+      },
+      "th": "ฉันปิด",
+      "th_translit": "chan pid"
     },
     {
       "id": "w162",
@@ -3477,7 +3591,9 @@
         "sr_cyr": "Седим овде.",
         "ar": "أجلس هنا.",
         "ar_translit": "ajlis hunā"
-      }
+      },
+      "th": "ฉันนั่ง",
+      "th_translit": "chan nang"
     },
     {
       "id": "w163",
@@ -3497,7 +3613,9 @@
         "sr_cyr": "Помажем пријатељу.",
         "ar": "أساعد صديقي.",
         "ar_translit": "usāʿid ṣadīqī"
-      }
+      },
+      "th": "ฉันช่วย",
+      "th_translit": "chan chuay"
     },
     {
       "id": "w164",
@@ -3517,7 +3635,9 @@
         "sr_cyr": "Треба ми помоћ.",
         "ar": "أحتاج المساعدة.",
         "ar_translit": "aḥtāj al-musāʿada"
-      }
+      },
+      "th": "ฉันต้องการ",
+      "th_translit": "chan tong-gan"
     },
     {
       "id": "w165",
@@ -3537,7 +3657,9 @@
         "sr_cyr": "Могу то да урадим.",
         "ar": "أستطيع فعل ذلك.",
         "ar_translit": "astaṭīʿ fiʿl dhālika"
-      }
+      },
+      "th": "ฉันสามารถ",
+      "th_translit": "chan saa-mart"
     },
     {
       "id": "w166",
@@ -3557,7 +3679,9 @@
         "sr_cyr": "Дајем ти поклон.",
         "ar": "أعطيك هدية.",
         "ar_translit": "uʿṭīka hadiyya"
-      }
+      },
+      "th": "ฉันให้",
+      "th_translit": "chan hai"
     },
     {
       "id": "w167",
@@ -3577,7 +3701,9 @@
         "sr_cyr": "Узимам аутобус.",
         "ar": "آخذ الحافلة.",
         "ar_translit": "ākhudh al-ḥāfila"
-      }
+      },
+      "th": "ฉันเอา",
+      "th_translit": "chan ao"
     },
     {
       "id": "w168",
@@ -3597,7 +3723,9 @@
         "sr_cyr": "Лош дан.",
         "ar": "يوم سيء.",
         "ar_translit": "yawm sayyiʾ"
-      }
+      },
+      "th": "แย่",
+      "th_translit": "yae"
     },
     {
       "id": "w169",
@@ -3617,7 +3745,9 @@
         "sr_cyr": "Велика кућа.",
         "ar": "بيت كبير.",
         "ar_translit": "bayt kabīr"
-      }
+      },
+      "th": "ใหญ่",
+      "th_translit": "yai"
     },
     {
       "id": "w170",
@@ -3637,7 +3767,9 @@
         "sr_cyr": "Мали пас.",
         "ar": "كلب صغير.",
         "ar_translit": "kalb ṣaghīr"
-      }
+      },
+      "th": "เล็ก",
+      "th_translit": "lek"
     },
     {
       "id": "w171",
@@ -3657,7 +3789,9 @@
         "sr_cyr": "Нов ауто.",
         "ar": "سيارة جديدة.",
         "ar_translit": "sayyāra jadīda"
-      }
+      },
+      "th": "ใหม่",
+      "th_translit": "mai"
     },
     {
       "id": "w172",
@@ -3677,7 +3811,9 @@
         "sr_cyr": "Стара књига.",
         "ar": "كتاب قديم.",
         "ar_translit": "kitāb qadīm"
-      }
+      },
+      "th": "เก่า",
+      "th_translit": "kao"
     },
     {
       "id": "w173",
@@ -3697,7 +3833,9 @@
         "sr_cyr": "Врућ чај.",
         "ar": "شاي حار.",
         "ar_translit": "shāy ḥārr"
-      }
+      },
+      "th": "ร้อน",
+      "th_translit": "ron"
     },
     {
       "id": "w174",
@@ -3717,7 +3855,9 @@
         "sr_cyr": "Хладна вода.",
         "ar": "ماء بارد.",
         "ar_translit": "māʾ bārid"
-      }
+      },
+      "th": "เย็น",
+      "th_translit": "yen"
     },
     {
       "id": "w175",
@@ -3737,7 +3877,9 @@
         "sr_cyr": "Леп дан.",
         "ar": "يوم جميل.",
         "ar_translit": "yawm jamīl"
-      }
+      },
+      "th": "สวย",
+      "th_translit": "suay"
     },
     {
       "id": "w176",
@@ -3757,7 +3899,9 @@
         "sr_cyr": "Срећан сам.",
         "ar": "أنا سعيد.",
         "ar_translit": "anā saʿīd"
-      }
+      },
+      "th": "ดีใจ",
+      "th_translit": "dee-jai"
     },
     {
       "id": "w177",
@@ -3777,7 +3921,9 @@
         "sr_cyr": "Не буди тужан.",
         "ar": "لا تكن حزيناً.",
         "ar_translit": "lā takun ḥazīnan"
-      }
+      },
+      "th": "เศร้า",
+      "th_translit": "sao"
     },
     {
       "id": "w178",
@@ -3797,7 +3943,9 @@
         "sr_cyr": "Врло лако.",
         "ar": "سهل جداً.",
         "ar_translit": "sahl jiddan"
-      }
+      },
+      "th": "ง่าย",
+      "th_translit": "ngai"
     },
     {
       "id": "w179",
@@ -3817,7 +3965,9 @@
         "sr_cyr": "Тешко питање.",
         "ar": "سؤال صعب.",
         "ar_translit": "suʾāl ṣaʿb"
-      }
+      },
+      "th": "ยาก",
+      "th_translit": "yaak"
     },
     {
       "id": "w180",
@@ -3837,7 +3987,9 @@
         "sr_cyr": "Брз тркач.",
         "ar": "عداء سريع.",
         "ar_translit": "ʿaddāʾ sarīʿ"
-      }
+      },
+      "th": "เร็ว",
+      "th_translit": "reo"
     },
     {
       "id": "w181",
@@ -3857,7 +4009,9 @@
         "sr_cyr": "Спор ауто.",
         "ar": "سيارة بطيئة.",
         "ar_translit": "sayyāra baṭīʾa"
-      }
+      },
+      "th": "ช้า",
+      "th_translit": "chaa"
     },
     {
       "id": "w182",
@@ -3877,7 +4031,9 @@
         "sr_cyr": "Укусна храна.",
         "ar": "طعام لذيذ.",
         "ar_translit": "ṭaʿām ladhīdh"
-      }
+      },
+      "th": "อร่อย",
+      "th_translit": "a-roi"
     },
     {
       "id": "w183",
@@ -3897,7 +4053,9 @@
         "sr_cyr": "Велик град.",
         "ar": "مدينة كبيرة.",
         "ar_translit": "madīna kabīra"
-      }
+      },
+      "th": "เมือง",
+      "th_translit": "mueang"
     },
     {
       "id": "w184",
@@ -3917,7 +4075,9 @@
         "sr_cyr": "Лепа земља.",
         "ar": "بلد جميل.",
         "ar_translit": "balad jamīl"
-      }
+      },
+      "th": "ประเทศ",
+      "th_translit": "pra-tet"
     },
     {
       "id": "w185",
@@ -3937,7 +4097,9 @@
         "sr_cyr": "Идем у школу.",
         "ar": "أذهب إلى المدرسة.",
         "ar_translit": "adhhabu ilā al-madrasa"
-      }
+      },
+      "th": "โรงเรียน",
+      "th_translit": "rong-rian"
     },
     {
       "id": "w186",
@@ -3957,7 +4119,9 @@
         "sr_cyr": "Близу болнице.",
         "ar": "قريب من المستشفى.",
         "ar_translit": "qarīb min al-mustashfā"
-      }
+      },
+      "th": "โรงพยาบาล",
+      "th_translit": "rong-pa-yaa-ban"
     },
     {
       "id": "w187",
@@ -3977,7 +4141,9 @@
         "sr_cyr": "Продавница је отворена.",
         "ar": "المتجر مفتوح.",
         "ar_translit": "al-matjar maftūḥ"
-      }
+      },
+      "th": "ร้าน",
+      "th_translit": "raan"
     },
     {
       "id": "w188",
@@ -3997,7 +4163,9 @@
         "sr_cyr": "Тиха улица.",
         "ar": "شارع هادئ.",
         "ar_translit": "shāriʿ hādiʾ"
-      }
+      },
+      "th": "ถนน",
+      "th_translit": "tha-non"
     },
     {
       "id": "w189",
@@ -4017,7 +4185,9 @@
         "sr_cyr": "У парку.",
         "ar": "في الحديقة.",
         "ar_translit": "fī al-ḥadīqa"
-      }
+      },
+      "th": "สวน",
+      "th_translit": "suan"
     },
     {
       "id": "w190",
@@ -4037,7 +4207,9 @@
         "sr_cyr": "На аеродрому.",
         "ar": "في المطار.",
         "ar_translit": "fī al-maṭār"
-      }
+      },
+      "th": "สนามบิน",
+      "th_translit": "sa-naam-bin"
     },
     {
       "id": "w191",
@@ -4057,7 +4229,9 @@
         "sr_cyr": "Идем у банку.",
         "ar": "أذهب إلى البنك.",
         "ar_translit": "adhhabu ilā al-bank"
-      }
+      },
+      "th": "ธนาคาร",
+      "th_translit": "tha-naa-kaan"
     },
     {
       "id": "w192",
@@ -4077,7 +4251,9 @@
         "sr_cyr": "На пијаци.",
         "ar": "في السوق.",
         "ar_translit": "fī al-sūq"
-      }
+      },
+      "th": "ตลาด",
+      "th_translit": "ta-laat"
     },
     {
       "id": "w193",
@@ -4097,7 +4273,9 @@
         "sr_cyr": "Близу џамије.",
         "ar": "قريب من المسجد.",
         "ar_translit": "qarīb min al-masjid"
-      }
+      },
+      "th": "มัสยิด",
+      "th_translit": "mat-sa-yid"
     },
     {
       "id": "w194",
@@ -4117,7 +4295,9 @@
         "sr_cyr": "Стара црква.",
         "ar": "كنيسة قديمة.",
         "ar_translit": "kanīsa qadīma"
-      }
+      },
+      "th": "โบสถ์",
+      "th_translit": "bot"
     },
     {
       "id": "w195",
@@ -4137,7 +4317,9 @@
         "sr_cyr": "У канцеларији.",
         "ar": "في المكتب.",
         "ar_translit": "fī al-maktab"
-      }
+      },
+      "th": "ออฟฟิศ",
+      "th_translit": "op-fis"
     },
     {
       "id": "w196",
@@ -4157,7 +4339,9 @@
         "sr_cyr": "Леп ресторан.",
         "ar": "مطعم جميل.",
         "ar_translit": "maṭʿam jamīl"
-      }
+      },
+      "th": "ร้านอาหาร",
+      "th_translit": "raan a-han"
     },
     {
       "id": "w197",
@@ -4177,7 +4361,9 @@
         "sr_cyr": "Само секунд.",
         "ar": "ثانية فقط.",
         "ar_translit": "thāniya faqaṭ"
-      }
+      },
+      "th": "วินาที",
+      "th_translit": "wi-naa-thee"
     },
     {
       "id": "w198",
@@ -4197,7 +4383,9 @@
         "sr_cyr": "Пре два дана.",
         "ar": "منذ يومين.",
         "ar_translit": "mundhu yawmayn"
-      }
+      },
+      "th": "ที่แล้ว",
+      "th_translit": "thee-laeo"
     },
     {
       "id": "w199",
@@ -4217,7 +4405,9 @@
         "sr_cyr": "После ручка.",
         "ar": "بعد الغداء.",
         "ar_translit": "baʿda al-ghadāʾ"
-      }
+      },
+      "th": "หลัง",
+      "th_translit": "lang"
     },
     {
       "id": "w200",
@@ -4237,7 +4427,9 @@
         "sr_cyr": "Пре вечере.",
         "ar": "قبل العشاء.",
         "ar_translit": "qabla al-ʿashāʾ"
-      }
+      },
+      "th": "ก่อน",
+      "th_translit": "gon"
     },
     {
       "id": "w201",
@@ -4257,7 +4449,9 @@
         "sr_cyr": "Видимо се ускоро.",
         "ar": "أراك قريباً.",
         "ar_translit": "arāka qarīban"
-      }
+      },
+      "th": "เร็ว ๆ นี้",
+      "th_translit": "reo-reo nee"
     },
     {
       "id": "w202",
@@ -4277,7 +4471,9 @@
         "sr_cyr": "Последњи дан.",
         "ar": "اليوم الأخير.",
         "ar_translit": "al-yawm al-ākhir"
-      }
+      },
+      "th": "สุดท้าย",
+      "th_translit": "sut-thai"
     },
     {
       "id": "w203",
@@ -4297,7 +4493,9 @@
         "sr_cyr": "Следеће недеље.",
         "ar": "الأسبوع القادم.",
         "ar_translit": "al-usbūʿ al-qādim"
-      }
+      },
+      "th": "ต่อไป",
+      "th_translit": "tor-pai"
     },
     {
       "id": "w204",
@@ -4317,7 +4515,9 @@
         "sr_cyr": "Често пијем кафу.",
         "ar": "غالباً أشرب القهوة.",
         "ar_translit": "ghāliban ashrabu al-qahwa"
-      }
+      },
+      "th": "บ่อย",
+      "th_translit": "boi"
     },
     {
       "id": "w205",
@@ -4337,7 +4537,9 @@
         "sr_cyr": "Понекад пада киша.",
         "ar": "أحياناً تمطر.",
         "ar_translit": "aḥyānan tumṭir"
-      }
+      },
+      "th": "บางครั้ง",
+      "th_translit": "bang-krang"
     },
     {
       "id": "w206",
@@ -4357,7 +4559,9 @@
         "sr_cyr": "Никада не једем месо.",
         "ar": "لا آكل اللحم أبداً.",
         "ar_translit": "lā ākulu al-laḥm abadan"
-      }
+      },
+      "th": "ไม่เคย",
+      "th_translit": "mai-koei"
     },
     {
       "id": "w207",
@@ -4377,7 +4581,9 @@
         "sr_cyr": "Увек пијем воду.",
         "ar": "دائماً أشرب الماء.",
         "ar_translit": "dāʾiman ashrabu al-māʾ"
-      }
+      },
+      "th": "เสมอ",
+      "th_translit": "sa-meu"
     },
     {
       "id": "w208",
@@ -4397,7 +4603,9 @@
         "sr_cyr": "Реци опет.",
         "ar": "قلها مرة أخرى.",
         "ar_translit": "qulhā marra ukhrā"
-      }
+      },
+      "th": "อีกครั้ง",
+      "th_translit": "eek-krang"
     },
     {
       "id": "w209",

@@ -114,19 +114,16 @@
           <button id="open-settings" class="icon-btn" aria-label="Settings">⚙</button>
         </header>
 
+        <p class="home-welcome" id="home-welcome"></p>
+
         <div class="card stat-card">
           <div class="stat-main">
             <div class="stat-number" id="stat-mastered">0</div>
             <div class="stat-label">mastered / <span id="stat-total">0</span></div>
           </div>
+          <div class="next-milestone" id="next-milestone"></div>
           <div class="stat-bar">
             <div class="stat-bar-fill" id="stat-bar-fill"></div>
-          </div>
-          <div class="stat-breakdown">
-            <span><b id="stat-new">0</b> New</span>
-            <span><b id="stat-learning">0</b> Learning</span>
-            <span><b id="stat-young">0</b> Sticking</span>
-            <span><b id="stat-mature">0</b> Mastered</span>
           </div>
         </div>
 
@@ -143,7 +140,9 @@
         <button id="start-study" class="primary-btn big">Study now</button>
 
         <div id="word-of-day" class="word-of-day hidden">
-          <div class="wod-label">Word of the day</div>
+          <div class="wod-header">
+            <span class="wod-label">Word of the day</span>
+          </div>
           <div class="wod-card">
             <div class="wod-emoji" id="wod-emoji"></div>
             <div class="wod-text">
@@ -188,7 +187,10 @@
             <div class="card-meta" id="card-meta"></div>
             <button id="audio-btn" class="audio-btn hidden" aria-label="Hear pronunciation">🔊</button>
             <div class="card-answer hidden" id="card-answer">
-              <div class="card-answer-main" id="card-answer-main"></div>
+              <div class="card-answer-main-row">
+                <div class="card-answer-main" id="card-answer-main"></div>
+                <button id="answer-audio-btn" class="audio-btn-inline hidden" aria-label="Hear pronunciation">🔊</button>
+              </div>
               <div class="card-answer-translit" id="card-answer-translit"></div>
               <div class="card-example hidden" id="card-example">
                 <div class="card-example-src" id="card-example-src"></div>
@@ -197,6 +199,17 @@
                   <button id="example-audio-btn" class="audio-btn-inline hidden" aria-label="Hear example">🔊</button>
                 </div>
                 <div class="card-example-translit" id="card-example-translit"></div>
+              </div>
+              <div class="mnemonic-section">
+                <button id="mnemonic-toggle" class="mnemonic-toggle">📝 Add note</button>
+                <div id="mnemonic-display" class="mnemonic-display hidden"></div>
+                <div id="mnemonic-edit" class="mnemonic-edit hidden">
+                  <textarea id="mnemonic-input" placeholder="A memory hook — anything that helps you remember" rows="2"></textarea>
+                  <div class="mnemonic-buttons">
+                    <button id="mnemonic-save" class="primary-btn">Save</button>
+                    <button id="mnemonic-cancel" class="text-link-btn">Cancel</button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -252,7 +265,7 @@
       <div class="container study-container">
         <header class="study-header">
           <button id="sentence-back" class="icon-btn" aria-label="Back">←</button>
-          <div class="progress-pill"><span>✨ Using what you know</span></div>
+          <div class="progress-pill"><span id="sentence-pill">✨ Using what you know</span></div>
           <div class="spacer"></div>
         </header>
 
@@ -283,8 +296,8 @@
           <div class="spacer"></div>
         </header>
 
-        <h2 class="match-title">Quick match round</h2>
-        <p class="match-sub muted small">Tap a word on the left, then its match on the right.</p>
+        <h2 class="match-title" id="match-title">Quick match round</h2>
+        <p class="match-sub muted small" id="match-sub">Tap a word on the left, then its match on the right.</p>
 
         <div class="match-grid">
           <div class="match-col" id="match-targets"></div>
@@ -298,14 +311,30 @@
     <!-- Done screen -->
     <section id="screen-done" class="screen hidden">
       <div class="container">
-        <h2 class="done-title">Session complete</h2>
-        <p class="muted" id="done-summary"></p>
-        <button id="done-back" class="primary-btn">Back to home</button>
+        <div class="done-hero">
+          <div class="done-emoji">🎉</div>
+          <h2 class="done-title" id="done-title">Lesson complete</h2>
+          <p class="done-quip" id="done-quip"></p>
+        </div>
+        <div class="done-stats" id="done-stats"></div>
+        <div class="done-tricky hidden" id="done-tricky">
+          <span class="done-tricky-icon">⚡</span>
+          <div class="done-tricky-text">
+            <span class="done-tricky-label">Trickiest one</span>
+            <span class="done-tricky-word" id="done-tricky-word"></span>
+            <span class="done-tricky-tail">— it'll be back</span>
+          </div>
+        </div>
+        <button id="done-again" class="primary-btn big">One more lesson</button>
+        <button id="done-back" class="secondary-btn">Done for now</button>
       </div>
     </section>
 
     <!-- Toast (transient message) -->
     <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+    <!-- Welcome banner (slides down from top on app launch) -->
+    <div id="welcome-banner" class="welcome-banner" role="status" aria-live="polite"></div>
 
     <!-- Mastered words screen -->
     <section id="screen-mastered" class="screen hidden">
@@ -369,6 +398,16 @@
           <div class="choice-grid" data-group="mixed">
             <button class="choice" data-value="on">On</button>
             <button class="choice" data-value="off">Off</button>
+          </div>
+        </div>
+
+        <div class="setting-block">
+          <label class="setup-label">Practice direction</label>
+          <p class="muted small setting-hint">Recognize = read it. Recall = produce it. Both is recommended.</p>
+          <div class="choice-grid" data-group="direction">
+            <button class="choice" data-value="both">Both</button>
+            <button class="choice" data-value="forward">Recognize</button>
+            <button class="choice" data-value="reverse">Recall</button>
           </div>
         </div>
 

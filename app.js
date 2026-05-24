@@ -85,13 +85,241 @@ function speak(text, lang) {
   speechSynthesis.speak(u);
 }
 
-// ============== Card modes ==============
+// ============== Phrase bank (dry / sarcastic encouragement) ==============
+const PHRASES = {
+  welcome: [
+    "Welcome back. The words missed you. Allegedly.",
+    "Oh, you again. Let's pretend we remember things.",
+    "Returning customer. The forgetting curve says hi.",
+    "Five minutes won't kill you. Probably.",
+    "Look who's back. Try not to forget this time.",
+    "Welcome. The vocab is impressed.",
+    "Back for more punishment. Respect.",
+    "Statistically remarkable that you came back.",
+    "The words are waiting. Politely.",
+    "Welcome. Past you would be proud. A bit.",
+  ],
+  sessionEnd: [
+    "Done. Brain marginally upgraded.",
+    "Session complete. The dictionary is shaking.",
+    "That'll do for today. Or not. You decide.",
+    "Modest progress. Glaciers move faster.",
+    "You survived. Words on the wall, you on the bed.",
+    "Done. The forgetting curve approves.",
+    "Tomorrow exists. Use it.",
+    "Lesson over. Your future self thanks you. Probably.",
+    "A small victory. Add it to the pile.",
+    "Class dismissed. The vocabulary takes a bow.",
+  ],
+  dailyGoal: [
+    "🎯 Goal reached. Overachieving is also a sport.",
+    "🎯 Daily goal hit. Now go touch grass.",
+    "🎯 Done with today's quota. The minimum is also a minimum.",
+    "🎯 Goal reached. The bar was where you set it.",
+    "🎯 Hit your target. Marginally less ignorant.",
+  ],
+  matchIntro: [
+    "Quick match round",
+    "Round of four",
+    "Match the pairs",
+    "Quick pairing",
+    "Same word, two sides",
+  ],
+  sentenceIntro: [
+    "✨ Using what you know",
+    "✨ Words, assembled",
+    "✨ Look what you can read",
+    "✨ A small sentence",
+    "✨ Your vocabulary, in public",
+  ],
+  masteredTiers: {
+    zero: [
+      "This is where mastered words live. Currently uninhabited.",
+      "Empty. The vocab graveyard has a vacancy.",
+      "Nothing here yet. Suspicious, but recoverable.",
+    ],
+    one: [
+      "{n} mastered word. A start. Barely.",
+      "{n} word in. The dictionary noticed. Briefly.",
+    ],
+    few: [
+      "{n} mastered. Small but real. More would be nice.",
+      "{n} words in the bag. Modest haul.",
+      "{n} mastered. A polite handful.",
+    ],
+    ten: [
+      "{n} mastered. The dictionary is mildly curious.",
+      "{n} words. Past the toy zone. Keep going.",
+      "{n} mastered. Respectable beginnings.",
+    ],
+    twentyfive: [
+      "{n} mastered. Solid. More awaits.",
+      "{n} words. Coffee-shop survivable.",
+      "{n} mastered. Not bad. Don't get smug.",
+    ],
+    fifty: [
+      "{n} mastered. Halfway to actually useful.",
+      "{n} words. A real conversation is getting closer.",
+      "{n} mastered. The fluency illusion approaches.",
+    ],
+    hundred: [
+      "{n} mastered. Suddenly real.",
+      "{n} words. The accent does the rest.",
+      "{n} mastered. People might respond unprompted.",
+    ],
+    twohundred: [
+      "{n} mastered. Don't stop now.",
+      "{n} words. The dictionary is sweating.",
+      "{n} mastered. Annoyingly competent.",
+    ],
+    all: [
+      "All {n} mastered. The vocabulary has been conquered. Add more.",
+      "{n} of {n}. Now what.",
+      "{n} mastered. Statistically you no longer need this app.",
+    ],
+  },
+};
+
+const MILESTONE_BLURBS = {
+  first: '🌱 First word mastered! Glaciers move faster, but it begins.',
+  ten: '🎯 10 words. The dictionary is politely unimpressed.',
+  twentyfive: '🎉 25 words. Almost enough to order coffee.',
+  fifty: '💪 50 words. Halfway to mildly conversational.',
+  hundred: '🏆 100 words mastered. Suddenly real.',
+  twohundred: '🌟 200 words. The accent is yours to ruin.',
+  three_fifty: '👑 350 words. The dictionary surrenders.',
+};
+
+function pickPhrase(bank, key) {
+  if (!bank || bank.length === 0) return '';
+  const k = `phrase:${key}`;
+  const lastIdx = parseInt(localStorage.getItem(k) || '-1', 10);
+  let idx;
+  if (bank.length === 1) idx = 0;
+  else {
+    do { idx = Math.floor(Math.random() * bank.length); } while (idx === lastIdx);
+  }
+  localStorage.setItem(k, String(idx));
+  return bank[idx];
+}
+
+function masteredTierPhrase(count, total) {
+  let tier;
+  if (count === 0) tier = 'zero';
+  else if (count === 1) tier = 'one';
+  else if (count < 10) tier = 'few';
+  else if (count < 25) tier = 'ten';
+  else if (count < 50) tier = 'twentyfive';
+  else if (count < 100) tier = 'fifty';
+  else if (count < 200) tier = 'hundred';
+  else if (count < total) tier = 'twohundred';
+  else tier = 'all';
+  const bank = PHRASES.masteredTiers[tier];
+  const phrase = pickPhrase(bank, `mastered:${tier}`);
+  return phrase.replace(/\{n\}/g, count);
+}
+
+// ============== Personal mnemonics (P3) ==============
+function getMnemonic(wordId) {
+  const key = storageKey(`notes:${pairKey()}`);
+  let notes = {};
+  try { notes = JSON.parse(localStorage.getItem(key) || '{}'); } catch (e) {}
+  return notes[wordId] || '';
+}
+
+function saveMnemonic(wordId, text) {
+  const key = storageKey(`notes:${pairKey()}`);
+  let notes = {};
+  try { notes = JSON.parse(localStorage.getItem(key) || '{}'); } catch (e) {}
+  const trimmed = (text || '').trim();
+  if (trimmed) notes[wordId] = trimmed;
+  else delete notes[wordId];
+  localStorage.setItem(key, JSON.stringify(notes));
+}
+
+function renderMnemonic(wordId) {
+  const display = document.getElementById('mnemonic-display');
+  const toggle = document.getElementById('mnemonic-toggle');
+  const edit = document.getElementById('mnemonic-edit');
+  if (!display || !toggle || !edit) return;
+  edit.classList.add('hidden');
+  const note = getMnemonic(wordId);
+  if (note) {
+    display.classList.remove('hidden');
+    display.textContent = note;
+    toggle.textContent = '📝 Edit note';
+  } else {
+    display.classList.add('hidden');
+    toggle.textContent = '📝 Add note';
+  }
+  toggle.onclick = () => openMnemonicEdit(wordId);
+  display.onclick = () => openMnemonicEdit(wordId);
+}
+
+function openMnemonicEdit(wordId) {
+  const display = document.getElementById('mnemonic-display');
+  const edit = document.getElementById('mnemonic-edit');
+  const input = document.getElementById('mnemonic-input');
+  const toggle = document.getElementById('mnemonic-toggle');
+  input.value = getMnemonic(wordId);
+  edit.classList.remove('hidden');
+  display.classList.add('hidden');
+  toggle.textContent = '📝 Note';
+  document.getElementById('mnemonic-save').onclick = () => {
+    saveMnemonic(wordId, input.value);
+    renderMnemonic(wordId);
+  };
+  document.getElementById('mnemonic-cancel').onclick = () => {
+    renderMnemonic(wordId);
+  };
+  setTimeout(() => input.focus(), 60);
+}
+
+function nextMilestoneText(mature, total) {
+  const targets = [1, 10, 25, 50, 100, 200, 350];
+  for (const t of targets) {
+    if (mature < t && t <= total) {
+      return `${t - mature} more to ${t}`;
+    }
+  }
+  return '';
+}
+
+// ============== Card modes & direction ==============
 const CARD_MODES = ['reveal', 'type', 'choice'];
 
-function pickCardMode() {
-  // Default mixedMode to true for users without the setting yet (pre-existing localStorage).
+function canTypeInTarget() {
+  if (!state.settings) return false;
+  const tgt = state.settings.target;
+  if (tgt === 'es') return true;
+  if (tgt === 'sr' && state.settings.sr_script === 'latin') return true;
+  return false;
+}
+
+function pickDirection(cardState) {
+  if (!state.settings) return 'forward';
+  const dir = state.settings.direction || 'both';
+  if (dir === 'forward') return 'forward';
+  if (dir === 'reverse') return 'reverse';
+  // 'both' — weight reverse probability by how well the card is known.
+  // New / Learning words shouldn't be tested in recall yet.
+  const label = cardLabel(cardState);
+  let reverseProb;
+  if (label === 'new') reverseProb = 0;
+  else if (label === 'learning') reverseProb = 0.10;
+  else if (label === 'young') reverseProb = 0.30;
+  else reverseProb = 0.50;
+  return Math.random() < reverseProb ? 'reverse' : 'forward';
+}
+
+function pickCardMode(direction) {
   if (!state.settings || state.settings.mixedMode === false) return 'reveal';
-  return CARD_MODES[Math.floor(Math.random() * CARD_MODES.length)];
+  let modes = ['reveal', 'type', 'choice'];
+  // In recall direction with a non-Latin target, typing is unrealistic — drop it.
+  if (direction === 'reverse' && !canTypeInTarget()) {
+    modes = ['reveal', 'choice'];
+  }
+  return modes[Math.floor(Math.random() * modes.length)];
 }
 
 function normalizeAnswer(str) {
@@ -122,30 +350,65 @@ function levenshtein(a, b) {
   return prev[n];
 }
 
+// Map number words (en + es) to digits so users can type "6" or "six".
+const NUMBER_EQUIVS = {
+  '1': ['one', 'uno'], '2': ['two', 'dos'], '3': ['three', 'tres'],
+  '4': ['four', 'cuatro'], '5': ['five', 'cinco'], '6': ['six', 'seis'],
+  '7': ['seven', 'siete'], '8': ['eight', 'ocho'], '9': ['nine', 'nueve'],
+  '10': ['ten', 'diez'], '11': ['eleven', 'once'], '12': ['twelve', 'doce'],
+  '13': ['thirteen', 'trece'], '14': ['fourteen', 'catorce'],
+  '15': ['fifteen', 'quince'], '16': ['sixteen', 'dieciséis', 'dieciseis'],
+  '17': ['seventeen', 'diecisiete'], '18': ['eighteen', 'dieciocho'],
+  '19': ['nineteen', 'diecinueve'], '20': ['twenty', 'veinte'],
+  '30': ['thirty', 'treinta'], '40': ['forty', 'cuarenta'],
+  '50': ['fifty', 'cincuenta'], '60': ['sixty', 'sesenta'],
+  '70': ['seventy', 'setenta'], '80': ['eighty', 'ochenta'],
+  '90': ['ninety', 'noventa'], '100': ['hundred', 'cien'],
+  '1000': ['thousand', 'mil'],
+};
+const NUMBER_WORD_TO_DIGIT = {};
+for (const [digit, words] of Object.entries(NUMBER_EQUIVS)) {
+  for (const w of words) NUMBER_WORD_TO_DIGIT[w] = digit;
+}
+function toNumberDigit(str) {
+  const s = str.toLowerCase().trim();
+  if (NUMBER_WORD_TO_DIGIT[s]) return NUMBER_WORD_TO_DIGIT[s];
+  if (/^\d+$/.test(s)) return s;
+  return null;
+}
+
 function checkTypedAnswer(userAnswer, expected) {
   const u = normalizeAnswer(userAnswer);
   const e = normalizeAnswer(expected);
   if (!u) return 'wrong';
   if (u === e) return 'exact';
+  // Number-digit equivalence: "6" and "six" both accepted.
+  const uDigit = toNumberDigit(u);
+  const eDigit = toNumberDigit(e);
+  if (uDigit && eDigit && uDigit === eDigit) return 'exact';
   const tolerance = Math.max(1, Math.floor(e.length / 5));
   if (levenshtein(u, e) <= tolerance) return 'close';
   return 'wrong';
 }
 
-function pickChoiceOptions(word, srcLang) {
-  const correct = word[srcLang];
-  const sameTheme = state.words.filter(w => w.theme === word.theme && w.id !== word.id && w[srcLang] !== correct);
+function pickChoiceOptions(word, direction) {
+  // Answer language is opposite of prompt: forward = source on answer, reverse = target on answer.
+  const ansLang = direction === 'reverse' ? state.settings.target : state.settings.source;
+  const correct = word[ansLang];
+  // Candidates must have a translation in the answer language.
+  const candidates = state.words.filter(w => w[ansLang] && w.id !== word.id && w[ansLang] !== correct);
+  const sameTheme = candidates.filter(w => w.theme === word.theme);
   shuffle(sameTheme);
   const distractors = [];
   for (const w of sameTheme) {
     if (distractors.length >= 3) break;
-    if (!distractors.includes(w[srcLang])) distractors.push(w[srcLang]);
+    if (!distractors.includes(w[ansLang])) distractors.push(w[ansLang]);
   }
   if (distractors.length < 3) {
-    const others = state.words.filter(w => w.id !== word.id && w[srcLang] !== correct && !distractors.includes(w[srcLang]));
-    shuffle(others);
-    while (distractors.length < 3 && others.length > 0) {
-      distractors.push(others.pop()[srcLang]);
+    shuffle(candidates);
+    for (const w of candidates) {
+      if (distractors.length >= 3) break;
+      if (!distractors.includes(w[ansLang])) distractors.push(w[ansLang]);
     }
   }
   const options = [correct, ...distractors];
@@ -310,15 +573,14 @@ function renderHome() {
   document.getElementById('home-pair-label').textContent =
     `${LANG_LABELS[state.settings.source]} → ${LANG_LABELS[state.settings.target]}`;
 
+  // Welcome banner pops in once per app launch.
+  maybeShowWelcomeBanner();
+
   const stats = calcStats();
   const statMastered = document.getElementById('stat-mastered');
   statMastered.textContent = stats.mature;
   statMastered.classList.toggle('has-mastered', stats.mature > 0);
   document.getElementById('stat-total').textContent = stats.total;
-  document.getElementById('stat-new').textContent = stats.new;
-  document.getElementById('stat-learning').textContent = stats.learning;
-  document.getElementById('stat-young').textContent = stats.young;
-  document.getElementById('stat-mature').textContent = stats.mature;
 
   const pct = stats.total ? (stats.mature / stats.total) * 100 : 0;
   document.getElementById('stat-bar-fill').style.width = pct + '%';
@@ -327,6 +589,20 @@ function renderHome() {
   document.getElementById('daily-goal').textContent = state.settings.dailyGoal;
   const dailyPct = Math.min(100, (state.daily.done / state.settings.dailyGoal) * 100);
   document.getElementById('daily-bar-fill').style.width = dailyPct + '%';
+
+  // Next-milestone hint.
+  document.getElementById('next-milestone').textContent = nextMilestoneText(stats.mature, stats.total);
+
+  // Study-now button shows the actual lesson length you're committing to.
+  const studyBtn = document.getElementById('start-study');
+  const queueSize = buildQueue(null).length;
+  const LESSON_CARD_TARGET = 15;
+  const lessonSize = Math.min(queueSize, LESSON_CARD_TARGET);
+  if (lessonSize === 0) {
+    studyBtn.textContent = 'Nothing due — but you can try anyway';
+  } else {
+    studyBtn.textContent = `Study now · ${lessonSize} cards`;
+  }
 
   renderThemeProgress();
   renderWordOfDay();
@@ -472,13 +748,13 @@ function renderActivityCalendar() {
 
 // ============== Milestones ==============
 const MILESTONES = [
-  { id: 'first', count: 1, message: '🌱 First word mastered!' },
-  { id: 'ten', count: 10, message: '🎯 10 words mastered!' },
-  { id: 'twentyfive', count: 25, message: '🎉 25 words!' },
-  { id: 'fifty', count: 50, message: '💪 50 words — halfway to 100!' },
-  { id: 'hundred', count: 100, message: '🏆 100 words mastered!' },
-  { id: 'twohundred', count: 200, message: '🌟 200 words!' },
-  { id: 'three_fifty', count: 350, message: '👑 All words mastered!' },
+  { id: 'first', count: 1, message: MILESTONE_BLURBS.first },
+  { id: 'ten', count: 10, message: MILESTONE_BLURBS.ten },
+  { id: 'twentyfive', count: 25, message: MILESTONE_BLURBS.twentyfive },
+  { id: 'fifty', count: 50, message: MILESTONE_BLURBS.fifty },
+  { id: 'hundred', count: 100, message: MILESTONE_BLURBS.hundred },
+  { id: 'twohundred', count: 200, message: MILESTONE_BLURBS.twohundred },
+  { id: 'three_fifty', count: 350, message: MILESTONE_BLURBS.three_fifty },
 ];
 
 function checkMilestones(prevMature, newMature) {
@@ -528,31 +804,34 @@ function checkThemeCompletion() {
 function renderCard(word, showAnswer) {
   const src = state.settings.source;
   const tgt = state.settings.target;
+  const direction = (state.session && state.session.cardDirection) || 'forward';
+  const promptLang = direction === 'reverse' ? src : tgt;
+  const answerLang = direction === 'reverse' ? tgt : src;
   const mode = (state.session && state.session.cardMode) || 'reveal';
 
   // Prompt
   const promptEl = document.getElementById('card-prompt');
-  promptEl.textContent = getDisplayWord(word, tgt);
-  if (tgt === 'ar') promptEl.setAttribute('dir', 'rtl');
+  promptEl.textContent = getDisplayWord(word, promptLang);
+  if (promptLang === 'ar') promptEl.setAttribute('dir', 'rtl');
   else promptEl.removeAttribute('dir');
 
-  // Meta (Arabic / Thai transliteration or Serbian alternate script)
+  // Meta (translit / alt script — shown only if prompt is target language with extras)
   const metaEl = document.getElementById('card-meta');
-  if (tgt === 'ar' && word.ar_translit) {
+  if (promptLang === 'ar' && word.ar_translit) {
     metaEl.textContent = word.ar_translit;
-  } else if (tgt === 'th' && word.th_translit) {
+  } else if (promptLang === 'th' && word.th_translit) {
     metaEl.textContent = word.th_translit;
-  } else if (tgt === 'sr') {
+  } else if (promptLang === 'sr') {
     metaEl.textContent = state.settings.sr_script === 'cyrillic' ? word.sr : word.sr_cyr;
   } else {
     metaEl.textContent = '';
   }
 
-  // Audio button (front)
+  // Audio button on prompt — show if the prompt language has TTS.
   const audioBtn = document.getElementById('audio-btn');
-  if (canSpeak(tgt)) {
+  if (canSpeak(promptLang)) {
     audioBtn.classList.remove('hidden');
-    audioBtn.onclick = (e) => { e.stopPropagation(); speak(word[tgt], tgt); };
+    audioBtn.onclick = (e) => { e.stopPropagation(); speak(word[promptLang], promptLang); };
   } else {
     audioBtn.classList.add('hidden');
   }
@@ -560,6 +839,8 @@ function renderCard(word, showAnswer) {
   const emojiEl = document.getElementById('card-emoji');
   const answerEl = document.getElementById('card-answer');
   const answerMain = document.getElementById('card-answer-main');
+  const answerTranslit = document.getElementById('card-answer-translit');
+  const answerAudioBtn = document.getElementById('answer-audio-btn');
   const exampleEl = document.getElementById('card-example');
   const exampleSrcEl = document.getElementById('card-example-src');
   const exampleTgtEl = document.getElementById('card-example-tgt');
@@ -588,8 +869,25 @@ function renderCard(word, showAnswer) {
     gradeRow.classList.remove('hidden');
 
     answerEl.classList.remove('hidden');
-    answerMain.textContent = getDisplayWord(word, src);
-    answerMain.removeAttribute('dir');
+    answerMain.textContent = getDisplayWord(word, answerLang);
+    if (answerLang === 'ar') answerMain.setAttribute('dir', 'rtl');
+    else answerMain.removeAttribute('dir');
+
+    // Translit / alt script on answer (when target is the answer in recall direction)
+    let ansTranslitText = '';
+    if (answerLang === 'ar' && word.ar_translit) ansTranslitText = word.ar_translit;
+    else if (answerLang === 'th' && word.th_translit) ansTranslitText = word.th_translit;
+    else if (answerLang === 'sr') ansTranslitText = state.settings.sr_script === 'cyrillic' ? word.sr : word.sr_cyr;
+    answerTranslit.textContent = ansTranslitText;
+
+    // Audio on the answer — show if answer language has TTS and isn't already on prompt side.
+    if (canSpeak(answerLang) && answerLang !== promptLang) {
+      answerAudioBtn.classList.remove('hidden');
+      answerAudioBtn.onclick = (e) => { e.stopPropagation(); speak(word[answerLang], answerLang); };
+    } else {
+      answerAudioBtn.classList.add('hidden');
+    }
+
     emojiEl.textContent = word.emoji || '';
     if (word.emoji) {
       emojiEl.classList.remove('pop');
@@ -597,7 +895,7 @@ function renderCard(word, showAnswer) {
       emojiEl.classList.add('pop');
     }
 
-    // Example
+    // Example — always shows source + target.
     if (word.example && word.example[src] && word.example[tgt]) {
       exampleEl.classList.remove('hidden');
       exampleSrcEl.textContent = word.example[src];
@@ -622,6 +920,9 @@ function renderCard(word, showAnswer) {
     } else {
       exampleEl.classList.add('hidden');
     }
+
+    // Mnemonic note (P3)
+    renderMnemonic(word.id);
     return;
   }
 
@@ -631,7 +932,11 @@ function renderCard(word, showAnswer) {
   gradeRow.classList.add('hidden');
   feedback.classList.add('hidden');
 
-  emojiEl.textContent = (isNew && word.emoji) ? word.emoji : '';
+  // Emoji is a hint for new cards in reveal mode only. In type/choice modes the
+  // emoji often gives away the answer (especially for numbers and concrete nouns),
+  // and in recall direction it's always a giveaway.
+  const showPromptEmoji = isNew && word.emoji && direction === 'forward' && mode === 'reveal';
+  emojiEl.textContent = showPromptEmoji ? word.emoji : '';
 
   // Hide all input UIs, then show the one for the current mode.
   revealRow.classList.add('hidden');
@@ -658,6 +963,8 @@ function renderCard(word, showAnswer) {
       btn.textContent = ch.options[i] || '';
       btn.classList.remove('correct', 'wrong');
       btn.disabled = false;
+      if (answerLang === 'ar') btn.setAttribute('dir', 'rtl');
+      else btn.removeAttribute('dir');
     });
   }
 
@@ -679,7 +986,9 @@ function submitTypeAnswer() {
   if (!value.trim()) return;
 
   const w = state.session.queue[state.session.index];
-  const expected = w[state.settings.source];
+  const direction = state.session.cardDirection || 'forward';
+  const ansLang = direction === 'reverse' ? state.settings.target : state.settings.source;
+  const expected = w[ansLang];
   const result = checkTypedAnswer(value, expected);
   const feedback = document.getElementById('check-feedback');
   feedback.classList.remove('hidden', 'correct', 'wrong');
@@ -739,7 +1048,9 @@ function submitChoice(idx) {
 function typeDontKnow() {
   if (!state.session) return;
   const w = state.session.queue[state.session.index];
-  const expected = w[state.settings.source];
+  const direction = state.session.cardDirection || 'forward';
+  const ansLang = direction === 'reverse' ? state.settings.target : state.settings.source;
+  const expected = w[ansLang];
   const feedback = document.getElementById('check-feedback');
   feedback.classList.remove('hidden', 'correct', 'wrong');
   feedback.classList.add('wrong');
@@ -785,6 +1096,24 @@ function showToast(message, ms = 3200) {
   el._timer = setTimeout(() => el.classList.remove('visible'), ms);
 }
 
+function maybeShowWelcomeBanner() {
+  if (state._welcomeShown) return;
+  state._welcomeShown = true;
+  const el = document.getElementById('welcome-banner');
+  if (!el) return;
+  el.textContent = pickPhrase(PHRASES.welcome, 'welcome');
+  // Tap to dismiss.
+  el.onclick = () => {
+    el.classList.remove('visible');
+    clearTimeout(el._timer);
+  };
+  // Slight delay so it feels like it greets you when home settles.
+  setTimeout(() => {
+    el.classList.add('visible');
+    el._timer = setTimeout(() => el.classList.remove('visible'), 4500);
+  }, 250);
+}
+
 function startSession(themeFilter) {
   const queue = buildQueue(themeFilter);
   if (queue.length === 0) {
@@ -819,7 +1148,16 @@ function startSession(themeFilter) {
 }
 
 function renderCurrent() {
-  if (!state.session || state.session.index >= state.session.queue.length) {
+  if (!state.session) { finishSession(); return; }
+
+  // End the lesson at a controlled length so each session has a clean wrap-up.
+  const LESSON_CARD_TARGET = 15;
+  if (state.session.answered >= LESSON_CARD_TARGET) {
+    finishSession();
+    return;
+  }
+
+  if (state.session.index >= state.session.queue.length) {
     finishSession();
     return;
   }
@@ -839,10 +1177,13 @@ function renderCurrent() {
   document.getElementById('study-progress').textContent =
     `${state.session.index + 1} / ${state.session.queue.length}`;
 
-  // Pick a mode for this card (random, or always 'reveal' if mixed mode off).
-  state.session.cardMode = pickCardMode();
+  // Pick direction (forward = target→source; reverse = source→target) and mode.
+  // Reverse probability scales with how well the user knows this specific card.
+  const cardStateForDir = state.progress[w.id];
+  state.session.cardDirection = pickDirection(cardStateForDir);
+  state.session.cardMode = pickCardMode(state.session.cardDirection);
   if (state.session.cardMode === 'choice') {
-    state.session.currentChoices = pickChoiceOptions(w, state.settings.source);
+    state.session.currentChoices = pickChoiceOptions(w, state.session.cardDirection);
   }
 
   renderCard(w, false);
@@ -885,6 +1226,15 @@ function startMatchRound() {
     selectedT: null,
     selectedS: null,
   };
+  // Rotate the title for variety.
+  const titleEl = document.getElementById('match-title');
+  if (titleEl) titleEl.textContent = pickPhrase(PHRASES.matchIntro, 'matchIntro');
+  // Show subtitle only on the first match round of the session.
+  const subEl = document.getElementById('match-sub');
+  if (subEl) {
+    if (state.session.matchSubShown) subEl.classList.add('hidden');
+    else { subEl.classList.remove('hidden'); state.session.matchSubShown = true; }
+  }
   show('screen-matching');
   renderMatchRound();
 }
@@ -1018,8 +1368,33 @@ function startSentenceCameo() {
   const sentence = candidates[Math.floor(Math.random() * candidates.length)];
   state.session.sentenceCameo = sentence;
   state.session.shownSentenceIds.add(sentence.id);
+  // Rotate the pill text.
+  const pillEl = document.getElementById('sentence-pill');
+  if (pillEl) pillEl.textContent = pickPhrase(PHRASES.sentenceIntro, 'sentenceIntro');
   show('screen-sentence');
   renderSentenceCameo();
+}
+
+function tryClozeForWord(sentence, wid, srcLang) {
+  const word = state.words.find(w => w.id === wid);
+  if (!word || !word[srcLang]) return null;
+  const sourceWord = word[srcLang];
+  const sourceText = sentence[srcLang];
+  if (!sourceText) return null;
+  const escaped = sourceWord.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const regex = new RegExp(`\\b${escaped}\\b`, 'i');
+  if (!regex.test(sourceText)) return null;
+  return sourceText.replace(regex, '_____');
+}
+
+function makeClozeSource(sentence, srcLang) {
+  const uses = [...sentence.uses];
+  shuffle(uses);
+  for (const wid of uses) {
+    const cloze = tryClozeForWord(sentence, wid, srcLang);
+    if (cloze) return cloze;
+  }
+  return null;
 }
 
 function renderSentenceCameo() {
@@ -1038,10 +1413,22 @@ function renderSentenceCameo() {
   else if (tgt === 'th' && s.th_translit) translit = s.th_translit;
   document.getElementById('sentence-translit').textContent = translit;
 
-  document.getElementById('sentence-source').textContent = s[src] || '';
-
-  // Hide translation initially.
-  document.getElementById('sentence-source-wrap').classList.add('hidden');
+  const sourceWrap = document.getElementById('sentence-source-wrap');
+  const sourceEl = document.getElementById('sentence-source');
+  const fullSource = s[src] || '';
+  const cloze = makeClozeSource(s, src);
+  sourceEl.dataset.full = fullSource;
+  if (cloze) {
+    // Active version: show source with a blank, user tries to fill, then reveals.
+    sourceEl.textContent = cloze;
+    sourceEl.classList.add('cloze');
+    sourceWrap.classList.remove('hidden');
+  } else {
+    // Fallback: traditional reveal (no clozable word found).
+    sourceEl.textContent = '';
+    sourceEl.classList.remove('cloze');
+    sourceWrap.classList.add('hidden');
+  }
   document.getElementById('sentence-reveal-row').classList.remove('hidden');
   document.getElementById('sentence-done-row').classList.add('hidden');
 
@@ -1057,7 +1444,11 @@ function renderSentenceCameo() {
 
 function revealSentenceTranslation() {
   if (!state.session || !state.session.sentenceCameo) return;
-  document.getElementById('sentence-source-wrap').classList.remove('hidden');
+  const sourceWrap = document.getElementById('sentence-source-wrap');
+  const sourceEl = document.getElementById('sentence-source');
+  sourceEl.textContent = sourceEl.dataset.full || '';
+  sourceEl.classList.remove('cloze');
+  sourceWrap.classList.remove('hidden');
   document.getElementById('sentence-reveal-row').classList.add('hidden');
   document.getElementById('sentence-done-row').classList.remove('hidden');
 }
@@ -1094,7 +1485,7 @@ function gradeAndAdvance(grade) {
     state.session.countedIds.add(w.id);
     if (state.daily.done >= state.settings.dailyGoal && !state.daily.goalCelebrated) {
       state.daily.goalCelebrated = true;
-      showToast(`🎯 Daily goal reached. Keep going if you want.`, 3500);
+      showToast(pickPhrase(PHRASES.dailyGoal, 'dailyGoal'), 3500);
     }
     saveDaily();
     recordActivityToday();
@@ -1145,7 +1536,53 @@ function gradeAndAdvance(grade) {
 }
 
 function finishSession() {
-  document.getElementById('done-summary').textContent = buildSessionSummary();
+  let newLearned = 0, revisited = 0, lastTheme = null;
+  let trickyId = null, trickyCount = 0;
+  if (state.session) {
+    lastTheme = state.session.filterTheme;
+    for (const id of state.session.countedIds) {
+      if (state.session.freshIds.has(id)) newLearned++;
+      else revisited++;
+    }
+    for (const id of Object.keys(state.session.againCounts || {})) {
+      const c = state.session.againCounts[id];
+      if (c > trickyCount) { trickyCount = c; trickyId = id; }
+    }
+  }
+  // Cycle the quip — random dry one-liner each time.
+  document.getElementById('done-quip').textContent = pickPhrase(PHRASES.sessionEnd, 'sessionEnd');
+
+  // Stats grid.
+  const statsEl = document.getElementById('done-stats');
+  statsEl.innerHTML = '';
+  const cells = [
+    { num: newLearned, label: newLearned === 1 ? 'new word' : 'new words' },
+    { num: revisited, label: 'reviewed' },
+  ];
+  for (const c of cells) {
+    const cell = document.createElement('div');
+    cell.className = 'done-stat';
+    cell.innerHTML = `<div class="done-stat-num">${c.num}</div><div class="done-stat-label">${c.label}</div>`;
+    statsEl.appendChild(cell);
+  }
+
+  // Trickiest card highlight (its own little card).
+  const trickyEl = document.getElementById('done-tricky');
+  const trickyWordEl = document.getElementById('done-tricky-word');
+  const src = state.settings && state.settings.source;
+  if (trickyId && src) {
+    const w = state.words.find(x => x.id === trickyId);
+    if (w) {
+      trickyWordEl.textContent = w[src];
+      trickyEl.classList.remove('hidden');
+    } else {
+      trickyEl.classList.add('hidden');
+    }
+  } else {
+    trickyEl.classList.add('hidden');
+  }
+
+  state._lastSessionTheme = lastTheme;
   state.session = null;
   show('screen-done');
 }
@@ -1189,17 +1626,13 @@ function openMasteredList() {
   const list = document.getElementById('mastered-list');
   list.innerHTML = '';
 
+  // Tiered snarky intro — adjusts to your count, always slightly under-impressed.
+  summary.textContent = masteredTierPhrase(stats.mature, stats.total);
+
   if (stats.mature === 0) {
-    summary.textContent = '';
-    const empty = document.createElement('div');
-    empty.className = 'mastered-empty';
-    empty.textContent = "Words you've learned consistently over weeks will appear here. Keep going!";
-    list.appendChild(empty);
     show('screen-mastered');
     return;
   }
-
-  summary.textContent = `${stats.mature} word${stats.mature!==1?'s':''} mastered out of ${stats.total}.`;
 
   const src = state.settings.source;
   const tgt = state.settings.target;
@@ -1292,6 +1725,7 @@ function initSetup() {
       sr_script: 'latin',
       dailyGoal: 20,
       mixedMode: true,
+      direction: 'both',
       onboarded: false,
     };
     saveSettings();
@@ -1364,6 +1798,13 @@ function initSettingsScreen() {
       renderSettings();
     });
   });
+  document.querySelectorAll('[data-group="direction"] .choice').forEach(btn => {
+    btn.addEventListener('click', () => {
+      state.settings.direction = btn.dataset.value;
+      saveSettings();
+      renderSettings();
+    });
+  });
   document.getElementById('reset-progress').addEventListener('click', () => {
     if (confirm('Reset all progress for this language pair? This cannot be undone.')) {
       state.progress = {};
@@ -1394,6 +1835,10 @@ function renderSettings() {
   document.querySelectorAll('[data-group="mixed"] .choice').forEach(btn => {
     const isOn = state.settings.mixedMode !== false; // default true
     btn.classList.toggle('selected', (btn.dataset.value === 'on') === isOn);
+  });
+  const currentDir = state.settings.direction || 'both';
+  document.querySelectorAll('[data-group="direction"] .choice').forEach(btn => {
+    btn.classList.toggle('selected', btn.dataset.value === currentDir);
   });
   document.getElementById('setting-script').style.display =
     state.settings.target === 'sr' ? 'flex' : 'none';
@@ -1469,6 +1914,9 @@ async function init() {
   document.getElementById('done-back').addEventListener('click', () => {
     renderHome();
     show('screen-home');
+  });
+  document.getElementById('done-again').addEventListener('click', () => {
+    startSession(state._lastSessionTheme || null);
   });
   document.getElementById('stat-mastered').addEventListener('click', openMasteredList);
   document.getElementById('close-mastered').addEventListener('click', () => {
