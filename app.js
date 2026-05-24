@@ -1196,8 +1196,9 @@ function typeDontKnow() {
 
 function scheduleAutoGrade(grade) {
   if (!state.session) return;
-  // Wrong answers get a longer pause so the user can read the correct answer.
-  const delay = grade === 'again' ? 2200 : 1500;
+  // Generous windows so users have time to override the auto-grade by tapping
+  // a different button before it fires.
+  const delay = grade === 'again' ? 3500 : 2500;
   clearTimeout(state.session._autoTimer);
   state.session._autoTimer = setTimeout(() => {
     if (state.session && !state.session._busy) {
