@@ -596,8 +596,8 @@ function renderHome() {
   // Study-now button shows the actual lesson length you're committing to.
   const studyBtn = document.getElementById('start-study');
   const queueSize = buildQueue(null).length;
-  const LESSON_CARD_TARGET = 15;
-  const lessonSize = Math.min(queueSize, LESSON_CARD_TARGET);
+  const lessonTarget = (state.settings && state.settings.lessonLength) || 15;
+  const lessonSize = Math.min(queueSize, lessonTarget);
   if (lessonSize === 0) {
     studyBtn.textContent = 'Nothing due — but you can try anyway';
   } else {
@@ -674,11 +674,13 @@ function renderWordOfDay() {
     const candidates = state.words.filter(w => w[tgt] && cardLabel(state.progress[w.id]) !== 'mature');
     if (candidates.length === 0) {
       wodEl.classList.add('hidden');
+      state._wordOfDay = null;
       return;
     }
     pick = candidates[Math.floor(Math.random() * candidates.length)];
     localStorage.setItem(key, JSON.stringify({ date: today, wordId: pick.id }));
   }
+  state._wordOfDay = pick;
   wodEl.classList.remove('hidden');
   const src = state.settings.source;
   document.getElementById('wod-emoji').textContent = pick.emoji || '';
@@ -1114,8 +1116,13 @@ function maybeShowWelcomeBanner() {
   }, 250);
 }
 
-function startSession(themeFilter) {
-  const queue = buildQueue(themeFilter);
+function startSession(themeFilter, wordsOverride) {
+  let queue;
+  if (wordsOverride && wordsOverride.length > 0) {
+    queue = [...wordsOverride];
+  } else {
+    queue = buildQueue(themeFilter);
+  }
   if (queue.length === 0) {
     showToast("You're caught up. New cards unlock as you finish today's goal.");
     return;
@@ -1127,6 +1134,7 @@ function startSession(themeFilter) {
     if (!s || s.reps === 0) freshIds.add(w.id);
     else dueIds.add(w.id);
   }
+  const lessonTarget = (state.settings && state.settings.lessonLength) || 15;
   state.session = {
     queue,
     index: 0,
@@ -1142,7 +1150,17 @@ function startSession(themeFilter) {
     matchRound: null,
     sentenceCameo: null,
     shownSentenceIds: new Set(),
+    lessonTarget,
+    lessonSize: Math.min(queue.length, lessonTarget),
   };
+  // Single-word "study this" sessions (e.g. from word-of-day) skip matching and
+  // sentence rounds — they're meant to be quick focused practice.
+  if (wordsOverride) {
+    state.session.nextMatchAt = 1e9;
+    state.session.nextSentenceAt = 1e9;
+    state.session.lessonTarget = wordsOverride.length;
+    state.session.lessonSize = wordsOverride.length;
+  }
   show('screen-study');
   renderCurrent();
 }
@@ -1150,9 +1168,8 @@ function startSession(themeFilter) {
 function renderCurrent() {
   if (!state.session) { finishSession(); return; }
 
-  // End the lesson at a controlled length so each session has a clean wrap-up.
-  const LESSON_CARD_TARGET = 15;
-  if (state.session.answered >= LESSON_CARD_TARGET) {
+  // End the lesson at the user's chosen length so each session has a clean wrap-up.
+  if (state.session.answered >= state.session.lessonTarget) {
     finishSession();
     return;
   }
@@ -1174,8 +1191,11 @@ function renderCurrent() {
   }
 
   const w = state.session.queue[state.session.index];
+  // Show progress as position in lesson, capped at the lesson size. Matches the
+  // "Study now · 15 cards" promise on the home button.
+  const cardIndex = Math.min(state.session.answered + 1, state.session.lessonSize);
   document.getElementById('study-progress').textContent =
-    `${state.session.index + 1} / ${state.session.queue.length}`;
+    `${cardIndex} / ${state.session.lessonSize}`;
 
   // Pick direction (forward = target→source; reverse = source→target) and mode.
   // Reverse probability scales with how well the user knows this specific card.
@@ -1441,6 +1461,10 @@ function renderSentenceCameo() {
     input.autocapitalize = 'off';
     input.spellcheck = false;
     input.setAttribute('aria-label', 'Fill in the missing word');
+    // Size the field to roughly match the expected word length (plus padding).
+    input.style.width = `${Math.max(4, cloze.expected.length + 2)}ch`;
+    input.style.minWidth = '4ch';
+    input.style.maxWidth = '14ch';
     input.addEventListener('keydown', (e) => {
       if (e.key === 'Enter') revealSentenceTranslation();
     });
@@ -1605,7 +1629,14 @@ function finishSession() {
       if (c > trickyCount) { trickyCount = c; trickyId = id; }
     }
   }
-  // Cycle the quip — random dry one-liner each time.
+  // Cycle the done emoji and quip — random each lesson.
+  const DONE_EMOJIS = ['🎉', '🌱', '🏁', '✨', '🍵', '🎯', '🏆', '☕', '🌅', '💪', '🪴', '📚'];
+  const emojiEl = document.getElementById('done-emoji');
+  emojiEl.textContent = DONE_EMOJIS[Math.floor(Math.random() * DONE_EMOJIS.length)];
+  // Re-trigger pop animation.
+  emojiEl.style.animation = 'none';
+  void emojiEl.offsetWidth;
+  emojiEl.style.animation = '';
   document.getElementById('done-quip').textContent = pickPhrase(PHRASES.sessionEnd, 'sessionEnd');
 
   // Stats grid.
@@ -1780,6 +1811,7 @@ function initSetup() {
       target: pickedTarget,
       sr_script: 'latin',
       dailyGoal: 20,
+      lessonLength: 15,
       mixedMode: true,
       direction: 'both',
       onboarded: false,
@@ -1847,6 +1879,13 @@ function initSettingsScreen() {
       renderSettings();
     });
   });
+  document.querySelectorAll('[data-group="lesson"] .choice').forEach(btn => {
+    btn.addEventListener('click', () => {
+      state.settings.lessonLength = parseInt(btn.dataset.value, 10);
+      saveSettings();
+      renderSettings();
+    });
+  });
   document.querySelectorAll('[data-group="mixed"] .choice').forEach(btn => {
     btn.addEventListener('click', () => {
       state.settings.mixedMode = btn.dataset.value === 'on';
@@ -1887,6 +1926,10 @@ function renderSettings() {
   });
   document.querySelectorAll('[data-group="goal"] .choice').forEach(btn => {
     btn.classList.toggle('selected', parseInt(btn.dataset.value, 10) === state.settings.dailyGoal);
+  });
+  const currentLesson = state.settings.lessonLength || 15;
+  document.querySelectorAll('[data-group="lesson"] .choice').forEach(btn => {
+    btn.classList.toggle('selected', parseInt(btn.dataset.value, 10) === currentLesson);
   });
   document.querySelectorAll('[data-group="mixed"] .choice').forEach(btn => {
     const isOn = state.settings.mixedMode !== false; // default true
@@ -1982,6 +2025,9 @@ async function init() {
   document.getElementById('daily-goal-card').addEventListener('click', () => {
     renderSettings();
     show('screen-settings');
+  });
+  document.getElementById('word-of-day').addEventListener('click', () => {
+    if (state._wordOfDay) startSession(null, [state._wordOfDay]);
   });
   document.getElementById('match-back').addEventListener('click', () => {
     state.session = null;

@@ -352,7 +352,11 @@ html, body {
   border-radius: var(--radius);
   padding: 14px 16px;
   box-shadow: 0 2px 8px rgba(80, 60, 30, 0.04);
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.15s ease;
 }
+.wod-card:hover { box-shadow: 0 4px 14px rgba(80, 60, 30, 0.10); transform: translateY(-1px); }
+.wod-card:active { transform: scale(0.99); }
 .wod-emoji {
   font-size: 36px;
   line-height: 1;
