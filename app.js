@@ -285,6 +285,37 @@ function nextMilestoneText(mature, total) {
   return '';
 }
 
+// ============== Yesterday-vs-today mastered diff (Q2) ==============
+function recordMasteredSnapshot(currentMastered) {
+  const today = todayStr();
+  const key = storageKey(`mastered-snap:${pairKey()}`);
+  let snaps = {};
+  try { snaps = JSON.parse(localStorage.getItem(key) || '{}'); } catch (e) {}
+  snaps[today] = currentMastered;
+  // Keep last 14 days only.
+  const dates = Object.keys(snaps).sort();
+  if (dates.length > 14) {
+    const trimmed = {};
+    for (const d of dates.slice(-14)) trimmed[d] = snaps[d];
+    snaps = trimmed;
+  }
+  localStorage.setItem(key, JSON.stringify(snaps));
+  return snaps;
+}
+
+function getYesterdayDiffText(currentMastered) {
+  const snaps = recordMasteredSnapshot(currentMastered);
+  const yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+  const yKey = dateStr(yesterday);
+  if (!(yKey in snaps)) return { text: '', positive: false };
+  const yCount = snaps[yKey];
+  const diff = currentMastered - yCount;
+  if (diff > 0) return { text: `+${diff} mastered since yesterday`, positive: true };
+  if (diff === 0) return { text: 'Same as yesterday — keep at it', positive: false };
+  return { text: '', positive: false }; // negative shouldn't happen
+}
+
 // ============== Card modes & direction ==============
 const CARD_MODES = ['reveal', 'type', 'choice'];
 
@@ -677,6 +708,12 @@ function renderHome() {
   // Next-milestone hint.
   document.getElementById('next-milestone').textContent = nextMilestoneText(stats.mature, stats.total);
 
+  // Yesterday-vs-today diff.
+  const yEl = document.getElementById('yesterday-diff');
+  const diffInfo = getYesterdayDiffText(stats.mature);
+  yEl.textContent = diffInfo.text;
+  yEl.classList.toggle('positive', !!diffInfo.positive);
+
   // Study-now button shows the actual lesson length you're committing to.
   const studyBtn = document.getElementById('start-study');
   const queueSize = buildQueue(null).length;
@@ -894,6 +931,13 @@ function renderCard(word, showAnswer) {
   const promptLang = direction === 'reverse' ? src : tgt;
   const answerLang = direction === 'reverse' ? tgt : src;
   const mode = (state.session && state.session.cardMode) || 'reveal';
+
+  // Note indicator — shows a small 📝 if user has written a mnemonic for this word.
+  const noteIndicator = document.getElementById('card-note-indicator');
+  if (noteIndicator) {
+    if (getMnemonic(word.id)) noteIndicator.classList.remove('hidden');
+    else noteIndicator.classList.add('hidden');
+  }
 
   // Prompt
   const promptEl = document.getElementById('card-prompt');
@@ -1200,7 +1244,8 @@ function maybeShowWelcomeBanner() {
   }, 250);
 }
 
-function startSession(themeFilter, wordsOverride) {
+function startSession(themeFilter, wordsOverride, options) {
+  const opts = options || {};
   let queue;
   if (wordsOverride && wordsOverride.length > 0) {
     queue = [...wordsOverride];
@@ -1218,7 +1263,8 @@ function startSession(themeFilter, wordsOverride) {
     if (!s || s.reps === 0) freshIds.add(w.id);
     else dueIds.add(w.id);
   }
-  const lessonTarget = (state.settings && state.settings.lessonLength) || 15;
+  const baseTarget = (state.settings && state.settings.lessonLength) || 15;
+  const lessonTarget = opts.lessonSize || baseTarget;
   state.session = {
     queue,
     index: 0,
@@ -1657,6 +1703,22 @@ function gradeAndAdvance(grade) {
   saveProgress();
   if (newMature > prevMature) checkMilestones(prevMature, newMature);
   else checkThemeCompletion();
+
+  // Track within-session streaks and struggle runs for ambient encouragement.
+  if (grade === 'again') {
+    state.session._streak = 0;
+    state.session._consecutiveAgain = (state.session._consecutiveAgain || 0) + 1;
+    if (state.session._consecutiveAgain === 3) {
+      showToast('Tough sequence. Take a breath.', 2500);
+    }
+  } else {
+    state.session._consecutiveAgain = 0;
+    state.session._streak = (state.session._streak || 0) + 1;
+    if (state.session._streak === 5 && !state.session._streakCelebrated) {
+      state.session._streakCelebrated = true;
+      showToast('On a roll. 🔥', 2200);
+    }
+  }
 
   if (grade === 'again') {
     state.session.againCounts[w.id] = (state.session.againCounts[w.id] || 0) + 1;
@@ -2107,6 +2169,7 @@ async function init() {
   initSettingsScreen();
 
   document.getElementById('start-study').addEventListener('click', () => startSession(null));
+  document.getElementById('start-stretch').addEventListener('click', () => startSession(null, null, { lessonSize: 5 }));
   document.getElementById('reveal-btn').addEventListener('click', reveal);
   document.getElementById('skip-known-btn').addEventListener('click', skipKnown);
   document.getElementById('type-submit').addEventListener('click', submitTypeAnswer);

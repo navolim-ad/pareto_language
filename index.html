@@ -122,6 +122,7 @@
             <div class="stat-label">mastered / <span id="stat-total">0</span></div>
           </div>
           <div class="next-milestone" id="next-milestone"></div>
+          <div class="yesterday-diff" id="yesterday-diff"></div>
           <div class="stat-bar">
             <div class="stat-bar-fill" id="stat-bar-fill"></div>
           </div>
@@ -138,6 +139,7 @@
         </div>
 
         <button id="start-study" class="primary-btn big">Study now</button>
+        <button id="start-stretch" class="secondary-btn">Stretch · 5 cards</button>
 
         <div id="word-of-day" class="word-of-day hidden">
           <div class="wod-header">
@@ -181,6 +183,7 @@
         </header>
 
         <div id="card-area" class="flashcard">
+          <div id="card-note-indicator" class="card-note-indicator hidden" title="You have a note for this word">📝</div>
           <div class="flashcard-inner">
             <div class="card-emoji" id="card-emoji"></div>
             <div class="card-prompt" id="card-prompt"></div>

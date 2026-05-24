@@ -269,9 +269,27 @@ html, body {
   font-size: 13px;
   color: var(--text-soft);
   font-style: italic;
-  margin: -4px 0 10px;
+  margin: -4px 0 4px;
 }
 .next-milestone:empty { display: none; }
+
+.yesterday-diff {
+  font-size: 12px;
+  color: var(--muted);
+  margin: 0 0 10px;
+}
+.yesterday-diff:empty { display: none; }
+.yesterday-diff.positive { color: var(--easy); font-weight: 500; }
+
+.card-note-indicator {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  font-size: 16px;
+  opacity: 0.55;
+  pointer-events: none;
+  z-index: 4;
+}
 
 .stat-bar {
   height: 8px;
