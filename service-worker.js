@@ -1,4 +1,4 @@
-const CACHE = 'pareto-v33';
+const CACHE = 'pareto-v35';
 const SHELL = [
   './',
   './index.html',

@@ -574,7 +574,9 @@ function gradeCard(card, grade) {
   if (grade === 'again') {
     card.ease = Math.max(1.3, card.ease - 0.2);
     card.interval = 0;
-    card.due = now;
+    // Defer by 10 minutes so the failed card doesn't reappear in the very
+    // next lesson — gives a real beat between attempts.
+    card.due = now + 10 * 60 * 1000;
     card.reps = Math.max(1, card.reps);
   } else if (grade === 'good') {
     if (card.reps === 0 || card.interval === 0) {
@@ -1298,8 +1300,10 @@ function startSession(themeFilter, wordsOverride, options) {
 function renderCurrent() {
   if (!state.session) { finishSession(); return; }
 
-  // End the lesson at the user's chosen length so each session has a clean wrap-up.
-  if (state.session.answered >= state.session.lessonTarget) {
+  // End the lesson at the size we promised on the Study now button.
+  // (Uses lessonSize, not lessonTarget — they differ when the queue was smaller
+  // than the user's setting, and we never want to exceed what's displayed.)
+  if (state.session.answered >= state.session.lessonSize) {
     finishSession();
     return;
   }
@@ -2184,9 +2188,11 @@ async function init() {
     btn.addEventListener('click', () => gradeAndAdvance(btn.dataset.grade));
   });
   document.getElementById('study-back').addEventListener('click', () => {
+    const hadProgress = state.session && state.session.answered > 0;
     state.session = null;
     renderHome();
     show('screen-home');
+    if (hadProgress) showToast('Lesson paused — progress saved.', 2500);
   });
   document.getElementById('done-back').addEventListener('click', () => {
     clearTimeout(state._doneAutoTimer);
