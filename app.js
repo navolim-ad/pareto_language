@@ -301,8 +301,9 @@ function pickDirection(cardState) {
   const dir = state.settings.direction || 'both';
   if (dir === 'forward') return 'forward';
   if (dir === 'reverse') return 'reverse';
-  // 'both' — weight reverse probability by how well the card is known.
-  // New / Learning words shouldn't be tested in recall yet.
+  // 'both' direction only makes sense with mixed mode on.
+  if (state.settings.mixedMode === false) return 'forward';
+  // Weight reverse probability by how well the card is known.
   const label = cardLabel(cardState);
   let reverseProb;
   if (label === 'new') reverseProb = 0;
@@ -313,12 +314,18 @@ function pickDirection(cardState) {
 }
 
 function pickCardMode(direction) {
-  if (!state.settings || state.settings.mixedMode === false) return 'reveal';
-  let modes = ['reveal', 'type', 'choice'];
-  // In recall direction with a non-Latin target, typing is unrealistic — drop it.
-  if (direction === 'reverse' && !canTypeInTarget()) {
-    modes = ['reveal', 'choice'];
+  if (direction === 'reverse') {
+    // Recall direction needs active production — reveal mode is just peeking.
+    // Use type if the target uses a Latin script, otherwise force multiple choice.
+    if (canTypeInTarget()) {
+      const modes = ['type', 'choice'];
+      return modes[Math.floor(Math.random() * modes.length)];
+    }
+    return 'choice';
   }
+  // Forward direction (target → source).
+  if (!state.settings || state.settings.mixedMode === false) return 'reveal';
+  const modes = ['reveal', 'type', 'choice'];
   return modes[Math.floor(Math.random() * modes.length)];
 }
 
@@ -526,15 +533,18 @@ function buildQueue(themeFilter) {
   }
   fresh.sort((a, b) => a.order - b.order);
   shuffle(due);
-  // No hard cap on new cards — daily goal is a target, not a limit.
-  // Cap to a sane session size so a fresh user isn't hit with everything at once.
+  // Pull from a wider frequency pool so the order isn't strictly deterministic
+  // — keeps Pareto roughly intact but breaks the predictable sequence.
+  const FRESH_POOL = 50;
   const SESSION_NEW_CAP = 30;
-  const newCap = themeFilter ? fresh.length : Math.min(fresh.length, SESSION_NEW_CAP);
-  const newSlice = fresh.slice(0, newCap);
-  // Shuffle within the batch — keeps Pareto ordering across batches,
-  // but no single session feels like the same fixed list.
-  shuffle(newSlice);
-  return [...due, ...newSlice];
+  const newPool = fresh.slice(0, FRESH_POOL);
+  shuffle(newPool);
+  const newCap = themeFilter ? fresh.length : Math.min(newPool.length, SESSION_NEW_CAP);
+  const newSlice = themeFilter ? (shuffle([...fresh]).slice(0, newCap)) : newPool.slice(0, newCap);
+  // Shuffle the combined queue so due and new aren't separated into blocks.
+  const combined = [...due, ...newSlice];
+  shuffle(combined);
+  return combined;
 }
 
 function shuffle(arr) {
@@ -1577,15 +1587,17 @@ function gradeAndAdvance(grade) {
   if (grade === 'again') {
     state.session.againCounts[w.id] = (state.session.againCounts[w.id] || 0) + 1;
     // Cap re-appearances per session. After this many fails, bench the card —
-    // it'll show again in the user's next session (still due in SRS), but not
-    // again in the current loop.
+    // and defer its due time so it doesn't come right back in the next lesson.
     const MAX_FAILS_PER_SESSION = 2;
     if (state.session.againCounts[w.id] < MAX_FAILS_PER_SESSION) {
       const offset = Math.min(3, state.session.queue.length - state.session.index - 1);
       const requeueAt = state.session.index + 1 + offset;
       state.session.queue.splice(requeueAt, 0, w);
     } else {
-      showToast(`Coming back next session.`, 2000);
+      // Defer this card by an hour so it really takes a break.
+      card.due = Date.now() + 60 * 60 * 1000;
+      saveProgress();
+      showToast(`Benched for a bit. Take a breather.`, 2200);
     }
   } else {
     // Track for matching rounds (only non-again so user has actually "got" the card).
@@ -1671,6 +1683,35 @@ function finishSession() {
 
   state._lastSessionTheme = lastTheme;
   state.session = null;
+
+  // Decide whether another lesson is possible — controls the done screen layout.
+  const futureQueue = buildQueue(lastTheme || null);
+  const futureGeneral = buildQueue(null);
+  const hasMore = futureQueue.length > 0 || futureGeneral.length > 0;
+
+  const titleEl = document.getElementById('done-title');
+  const againBtn = document.getElementById('done-again');
+  const backBtn = document.getElementById('done-back');
+  const quipEl = document.getElementById('done-quip');
+
+  clearTimeout(state._doneAutoTimer);
+
+  if (hasMore) {
+    titleEl.textContent = 'Lesson complete';
+    againBtn.classList.remove('hidden');
+    backBtn.textContent = 'Done for now';
+  } else {
+    titleEl.textContent = 'Done for today';
+    quipEl.textContent = 'No more cards due. The vocabulary needs a break too.';
+    againBtn.classList.add('hidden');
+    backBtn.textContent = 'Back to home';
+    // Auto-redirect home after a beat so the user isn't stranded.
+    state._doneAutoTimer = setTimeout(() => {
+      renderHome();
+      show('screen-home');
+    }, 4000);
+  }
+
   show('screen-done');
 }
 
@@ -2011,11 +2052,25 @@ async function init() {
     show('screen-home');
   });
   document.getElementById('done-back').addEventListener('click', () => {
+    clearTimeout(state._doneAutoTimer);
     renderHome();
     show('screen-home');
   });
   document.getElementById('done-again').addEventListener('click', () => {
-    startSession(state._lastSessionTheme || null);
+    clearTimeout(state._doneAutoTimer);
+    const theme = state._lastSessionTheme || null;
+    if (buildQueue(theme).length === 0) {
+      // Theme exhausted — try general, otherwise send user home.
+      if (theme && buildQueue(null).length > 0) {
+        startSession(null);
+      } else {
+        showToast("You're caught up. See you later.", 2500);
+        renderHome();
+        show('screen-home');
+      }
+      return;
+    }
+    startSession(theme);
   });
   document.getElementById('stat-mastered').addEventListener('click', openMasteredList);
   document.getElementById('close-mastered').addEventListener('click', () => {
