@@ -329,8 +329,82 @@ function pickCardMode(direction) {
   return modes[Math.floor(Math.random() * modes.length)];
 }
 
+// Words/phrases that should be accepted as equivalent. First entry in each group
+// is the "canonical" form; other variants get rewritten to it before comparison.
+const EQUIVALENT_GROUPS = [
+  // Synonyms
+  ['thank you', 'thanks'],
+  ['ok', 'okay'],
+  ['yes', 'yeah', 'yep'],
+  ['mom', 'mother', 'mum', 'mama'],
+  ['dad', 'father', 'papa'],
+  // Common spelling variants (US / UK)
+  ['gray', 'grey'],
+  ['color', 'colour'],
+  ['favor', 'favour'],
+  ['neighbor', 'neighbour'],
+  // Contractions
+  ['cannot', "can't", 'can not'],
+  ['do not', "don't"],
+  ['does not', "doesn't"],
+  ['did not', "didn't"],
+  ['is not', "isn't"],
+  ['are not', "aren't"],
+  ['was not', "wasn't"],
+  ['were not', "weren't"],
+  ['will not', "won't"],
+  ['would not', "wouldn't"],
+  ['should not', "shouldn't"],
+  ['have not', "haven't"],
+  ['has not', "hasn't"],
+  ['had not', "hadn't"],
+  ['you are', "you're"],
+  ['i am', "i'm"],
+  ['it is', "it's"],
+  ['that is', "that's"],
+  ['there is', "there's"],
+  ['he is', "he's"],
+  ['she is', "she's"],
+  ['we are', "we're"],
+  ['they are', "they're"],
+  ['who is', "who's"],
+  ['what is', "what's"],
+  ['where is', "where's"],
+  ['how is', "how's"],
+  ['let us', "let's"],
+  ['i will', "i'll"],
+  ['you will', "you'll"],
+  ['he will', "he'll"],
+  ['she will', "she'll"],
+  ['we will', "we'll"],
+  ['they will', "they'll"],
+  ['i have', "i've"],
+  ['you have', "you've"],
+  ['we have', "we've"],
+  ['they have', "they've"],
+  ['i would', "i'd"],
+  ['you would', "you'd"],
+];
+
+function canonicalizeText(text) {
+  let result = text;
+  for (const group of EQUIVALENT_GROUPS) {
+    const canonical = group[0];
+    for (let i = 1; i < group.length; i++) {
+      const variant = group[i];
+      const escaped = variant.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const regex = new RegExp(`\\b${escaped}\\b`, 'gi');
+      result = result.replace(regex, canonical);
+    }
+  }
+  return result;
+}
+
 function normalizeAnswer(str) {
-  return str.toLowerCase().trim()
+  // Canonicalize equivalents BEFORE stripping punctuation so contractions
+  // like "you're" can be rewritten to "you are" while the apostrophe is intact.
+  let result = canonicalizeText(str.toLowerCase().trim());
+  return result
     .replace(/\([^)]*\)/g, ' ')          // remove parenthetical disambiguations like (m) / (plural)
     .replace(/[.,!?;:'"¿¡]/g, '')
     .replace(/^(a |an |the |to )/i, '')

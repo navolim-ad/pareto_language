@@ -1237,19 +1237,20 @@ html, body {
 
 .welcome-banner {
   position: fixed;
-  top: calc(env(safe-area-inset-top, 0px) + 12px);
+  top: calc(env(safe-area-inset-top, 0px) + 14px);
   left: 50%;
-  transform: translate(-50%, -20px);
-  background: linear-gradient(135deg, #fff 0%, #fff8ec 100%);
-  color: var(--text);
-  padding: 14px 20px;
+  transform: translate(-50%, -24px);
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  color: #fff;
+  padding: 16px 26px;
   border-radius: var(--radius);
-  border: 1px solid var(--accent);
-  font-size: 15px;
+  border: none;
+  font-size: 17px;
+  font-weight: 500;
   font-style: italic;
-  max-width: calc(100vw - 32px);
+  max-width: calc(100vw - 28px);
   text-align: center;
-  box-shadow: 0 10px 28px rgba(80, 60, 30, 0.16);
+  box-shadow: 0 14px 32px rgba(40, 60, 90, 0.28), 0 4px 10px rgba(40, 60, 90, 0.14);
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.3s ease, transform 0.3s ease;
