@@ -337,6 +337,24 @@
     <!-- Toast (transient message) -->
     <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
+    <!-- Lesson-end modal popup -->
+    <div id="lesson-modal" class="lesson-modal hidden">
+      <div class="lesson-modal-backdrop"></div>
+      <div class="lesson-modal-card">
+        <div class="lesson-modal-emoji" id="lesson-modal-emoji">🎉</div>
+        <h2 class="lesson-modal-title" id="lesson-modal-title">Lesson complete</h2>
+        <p class="lesson-modal-quip" id="lesson-modal-quip"></p>
+        <div class="lesson-modal-stats" id="lesson-modal-stats"></div>
+        <div class="lesson-modal-tricky hidden" id="lesson-modal-tricky">
+          <span>⚡</span>
+          <span>Trickiest was <b id="lesson-modal-tricky-word"></b></span>
+        </div>
+        <button id="lesson-modal-again" class="primary-btn big">One more lesson</button>
+        <button id="lesson-modal-cheeky" class="secondary-btn">Cheeky 5 cards</button>
+        <button id="lesson-modal-done" class="text-link-btn">Done for today</button>
+      </div>
+    </div>
+
     <!-- Welcome banner (slides down from top on app launch) -->
     <div id="welcome-banner" class="welcome-banner" role="status" aria-live="polite"></div>
 

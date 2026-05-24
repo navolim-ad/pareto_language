@@ -1226,6 +1226,77 @@ html, body {
 
 .screen:not(.hidden)     { animation: screenFade 0.36s ease-out; }
 
+/* ---------- Lesson-end modal ---------- */
+
+.lesson-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.lesson-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(40, 50, 60, 0.55);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+.lesson-modal-card {
+  position: relative;
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  padding: 28px 24px 22px;
+  max-width: 420px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 24px 60px rgba(20, 30, 40, 0.32);
+  animation: cardEnter 0.34s ease-out;
+}
+.lesson-modal-emoji {
+  font-size: 56px;
+  line-height: 1;
+  animation: emojiPop 0.45s ease-out 0.05s both;
+}
+.lesson-modal-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--primary);
+  margin: 12px 0 6px;
+}
+.lesson-modal-quip {
+  font-size: 15px;
+  color: var(--text-soft);
+  font-style: italic;
+  margin: 0 0 16px;
+  padding: 0 4px;
+}
+.lesson-modal-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.lesson-modal-tricky {
+  background: #fff4e0;
+  border: 1px solid #f0d8a8;
+  border-radius: var(--radius);
+  padding: 10px 14px;
+  margin: 0 0 14px;
+  font-size: 14px;
+  color: var(--text);
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+}
+.lesson-modal-tricky b { color: var(--primary-dark); font-weight: 700; }
+.lesson-modal-card .primary-btn,
+.lesson-modal-card .secondary-btn { margin-top: 6px; }
+.lesson-modal-card .text-link-btn { margin-top: 10px; display: block; width: 100%; text-align: center; }
+
 /* ---------- Toast ---------- */
 
 .toast {

@@ -1781,18 +1781,22 @@ function finishSession() {
       if (c > trickyCount) { trickyCount = c; trickyId = id; }
     }
   }
-  // Cycle the done emoji and quip — random each lesson.
+
+  state._lastSessionTheme = lastTheme;
+  state.session = null;
+
+  // Populate the modal popup (overlay — appears on top of whatever screen is current).
   const DONE_EMOJIS = ['🎉', '🌱', '🏁', '✨', '🍵', '🎯', '🏆', '☕', '🌅', '💪', '🪴', '📚'];
-  const emojiEl = document.getElementById('done-emoji');
+  const emojiEl = document.getElementById('lesson-modal-emoji');
   emojiEl.textContent = DONE_EMOJIS[Math.floor(Math.random() * DONE_EMOJIS.length)];
-  // Re-trigger pop animation.
   emojiEl.style.animation = 'none';
   void emojiEl.offsetWidth;
   emojiEl.style.animation = '';
-  document.getElementById('done-quip').textContent = pickPhrase(PHRASES.sessionEnd, 'sessionEnd');
 
-  // Stats grid.
-  const statsEl = document.getElementById('done-stats');
+  document.getElementById('lesson-modal-quip').textContent = pickPhrase(PHRASES.sessionEnd, 'sessionEnd');
+
+  // Stats grid in modal.
+  const statsEl = document.getElementById('lesson-modal-stats');
   statsEl.innerHTML = '';
   const cells = [
     { num: newLearned, label: newLearned === 1 ? 'new word' : 'new words' },
@@ -1805,9 +1809,9 @@ function finishSession() {
     statsEl.appendChild(cell);
   }
 
-  // Trickiest card highlight (its own little card).
-  const trickyEl = document.getElementById('done-tricky');
-  const trickyWordEl = document.getElementById('done-tricky-word');
+  // Trickiest card highlight.
+  const trickyEl = document.getElementById('lesson-modal-tricky');
+  const trickyWordEl = document.getElementById('lesson-modal-tricky-word');
   const src = state.settings && state.settings.source;
   if (trickyId && src) {
     const w = state.words.find(x => x.id === trickyId);
@@ -1821,38 +1825,30 @@ function finishSession() {
     trickyEl.classList.add('hidden');
   }
 
-  state._lastSessionTheme = lastTheme;
-  state.session = null;
-
-  // Decide whether another lesson is possible — controls the done screen layout.
+  // Adjust button availability based on whether more cards exist.
   const futureQueue = buildQueue(lastTheme || null);
   const futureGeneral = buildQueue(null);
   const hasMore = futureQueue.length > 0 || futureGeneral.length > 0;
-
-  const titleEl = document.getElementById('done-title');
-  const againBtn = document.getElementById('done-again');
-  const backBtn = document.getElementById('done-back');
-  const quipEl = document.getElementById('done-quip');
-
-  clearTimeout(state._doneAutoTimer);
-
+  const titleEl = document.getElementById('lesson-modal-title');
+  const againBtn = document.getElementById('lesson-modal-again');
+  const cheekyBtn = document.getElementById('lesson-modal-cheeky');
   if (hasMore) {
     titleEl.textContent = 'Lesson complete';
     againBtn.classList.remove('hidden');
-    backBtn.textContent = 'Done for now';
+    cheekyBtn.classList.remove('hidden');
   } else {
     titleEl.textContent = 'Done for today';
-    quipEl.textContent = 'No more cards due. The vocabulary needs a break too.';
+    document.getElementById('lesson-modal-quip').textContent = 'No more cards due. The vocabulary needs a break too.';
     againBtn.classList.add('hidden');
-    backBtn.textContent = 'Back to home';
-    // Auto-redirect home after a beat so the user isn't stranded.
-    state._doneAutoTimer = setTimeout(() => {
-      renderHome();
-      show('screen-home');
-    }, 4000);
+    cheekyBtn.classList.add('hidden');
   }
 
-  show('screen-done');
+  // Show the modal overlay. This appears on top of whichever screen is current.
+  document.getElementById('lesson-modal').classList.remove('hidden');
+}
+
+function closeLessonModal() {
+  document.getElementById('lesson-modal').classList.add('hidden');
 }
 
 function skipKnown() {
@@ -2203,7 +2199,6 @@ async function init() {
     clearTimeout(state._doneAutoTimer);
     const theme = state._lastSessionTheme || null;
     if (buildQueue(theme).length === 0) {
-      // Theme exhausted — try general, otherwise send user home.
       if (theme && buildQueue(null).length > 0) {
         startSession(null);
       } else {
@@ -2214,6 +2209,31 @@ async function init() {
       return;
     }
     startSession(theme);
+  });
+
+  // Lesson-end modal popup handlers — force an explicit choice at the end of a lesson.
+  document.getElementById('lesson-modal-done').addEventListener('click', () => {
+    closeLessonModal();
+    renderHome();
+    show('screen-home');
+  });
+  document.getElementById('lesson-modal-again').addEventListener('click', () => {
+    closeLessonModal();
+    const theme = state._lastSessionTheme || null;
+    if (buildQueue(theme).length === 0) {
+      if (theme && buildQueue(null).length > 0) startSession(null);
+      else {
+        showToast("You're caught up. See you later.", 2500);
+        renderHome();
+        show('screen-home');
+      }
+      return;
+    }
+    startSession(theme);
+  });
+  document.getElementById('lesson-modal-cheeky').addEventListener('click', () => {
+    closeLessonModal();
+    startSession(null, null, { lessonSize: 5 });
   });
   document.getElementById('stat-mastered').addEventListener('click', openMasteredList);
   document.getElementById('close-mastered').addEventListener('click', () => {
