@@ -1057,6 +1057,33 @@ html, body {
   font-weight: 400;
 }
 
+.sentence-input {
+  display: inline-block;
+  border: none;
+  border-bottom: 2px solid var(--primary);
+  background: transparent;
+  color: var(--primary);
+  font: inherit;
+  font-style: normal;
+  font-weight: 600;
+  padding: 0 6px 2px;
+  margin: 0 4px;
+  min-width: 5em;
+  max-width: 12em;
+  text-align: center;
+  outline: none;
+}
+.sentence-input:focus { border-bottom-color: var(--accent); }
+
+.sentence-feedback {
+  margin-top: 10px;
+  font-size: 14px;
+  color: var(--text-soft);
+}
+.sentence-feedback:empty { display: none; }
+.sentence-feedback.correct { color: var(--easy); font-weight: 600; }
+.sentence-feedback.wrong { color: var(--again); font-weight: 600; }
+
 /* ---------- Matching round ---------- */
 
 .match-title {

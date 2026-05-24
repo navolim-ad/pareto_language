@@ -1384,7 +1384,14 @@ function tryClozeForWord(sentence, wid, srcLang) {
   const escaped = sourceWord.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   const regex = new RegExp(`\\b${escaped}\\b`, 'i');
   if (!regex.test(sourceText)) return null;
-  return sourceText.replace(regex, '_____');
+  // Split into [before, after] around the first match, keeping the case-true word.
+  const parts = sourceText.split(regex);
+  return {
+    before: parts[0],
+    after: parts.slice(1).join(sourceWord), // rejoin in case word appears multiple times
+    expected: sourceWord,
+    full: sourceText,
+  };
 }
 
 function makeClozeSource(sentence, srcLang) {
@@ -1418,11 +1425,30 @@ function renderSentenceCameo() {
   const fullSource = s[src] || '';
   const cloze = makeClozeSource(s, src);
   sourceEl.dataset.full = fullSource;
+  sourceEl.dataset.expected = '';
+
   if (cloze) {
-    // Active version: show source with a blank, user tries to fill, then reveals.
-    sourceEl.textContent = cloze;
+    // Render the source with an actual text input where the blank should be.
     sourceEl.classList.add('cloze');
+    sourceEl.innerHTML = '';
+    sourceEl.appendChild(document.createTextNode(cloze.before));
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.id = 'sentence-cloze-input';
+    input.className = 'sentence-input';
+    input.autocomplete = 'off';
+    input.autocorrect = 'off';
+    input.autocapitalize = 'off';
+    input.spellcheck = false;
+    input.setAttribute('aria-label', 'Fill in the missing word');
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') revealSentenceTranslation();
+    });
+    sourceEl.appendChild(input);
+    sourceEl.appendChild(document.createTextNode(cloze.after));
+    sourceEl.dataset.expected = cloze.expected;
     sourceWrap.classList.remove('hidden');
+    setTimeout(() => input.focus(), 80);
   } else {
     // Fallback: traditional reveal (no clozable word found).
     sourceEl.textContent = '';
@@ -1431,6 +1457,9 @@ function renderSentenceCameo() {
   }
   document.getElementById('sentence-reveal-row').classList.remove('hidden');
   document.getElementById('sentence-done-row').classList.add('hidden');
+  // Reset feedback label.
+  const fbEl = document.getElementById('sentence-feedback');
+  if (fbEl) { fbEl.textContent = ''; fbEl.className = 'sentence-feedback'; }
 
   // Audio button.
   const audioBtn = document.getElementById('sentence-audio-btn');
@@ -1446,6 +1475,33 @@ function revealSentenceTranslation() {
   if (!state.session || !state.session.sentenceCameo) return;
   const sourceWrap = document.getElementById('sentence-source-wrap');
   const sourceEl = document.getElementById('sentence-source');
+  const expected = sourceEl.dataset.expected || '';
+  const input = document.getElementById('sentence-cloze-input');
+  const fbEl = document.getElementById('sentence-feedback');
+
+  // If we have a cloze with input, evaluate before revealing.
+  if (input && expected) {
+    const userAns = input.value;
+    if (userAns.trim()) {
+      const result = checkTypedAnswer(userAns, expected);
+      if (fbEl) {
+        if (result === 'exact') {
+          fbEl.textContent = '✓ Correct!';
+          fbEl.className = 'sentence-feedback correct';
+        } else if (result === 'close') {
+          fbEl.textContent = `✓ Close — "${expected}"`;
+          fbEl.className = 'sentence-feedback correct';
+        } else {
+          fbEl.textContent = `✗ It was "${expected}"`;
+          fbEl.className = 'sentence-feedback wrong';
+        }
+      }
+    } else if (fbEl) {
+      fbEl.textContent = `The missing word was "${expected}"`;
+      fbEl.className = 'sentence-feedback muted';
+    }
+  }
+
   sourceEl.textContent = sourceEl.dataset.full || '';
   sourceEl.classList.remove('cloze');
   sourceWrap.classList.remove('hidden');
