@@ -193,6 +193,7 @@
             <div class="card-prompt" id="card-prompt"></div>
             <div class="card-meta" id="card-meta"></div>
             <button id="audio-btn" class="audio-btn hidden" aria-label="Hear pronunciation">🔊</button>
+            <div id="audio-hint" class="audio-hint hidden">tap or hold for slow</div>
             <div class="card-answer hidden" id="card-answer">
               <div class="card-answer-main-row">
                 <div class="card-answer-main" id="card-answer-main"></div>
@@ -277,6 +278,12 @@
         </header>
 
         <div class="sentence-card">
+          <!-- Reorder mode: source on top, build area, scrambled pool -->
+          <div class="reorder-source-prompt hidden" id="reorder-source-prompt"></div>
+          <div class="reorder-build hidden" id="reorder-build"></div>
+          <div class="reorder-pool hidden" id="reorder-pool"></div>
+
+          <!-- Cloze / reveal mode (default) -->
           <div class="sentence-target" id="sentence-target"></div>
           <div class="sentence-translit muted small" id="sentence-translit"></div>
           <button id="sentence-audio-btn" class="audio-btn hidden" aria-label="Hear sentence">🔊</button>
@@ -289,6 +296,9 @@
 
         <div id="sentence-reveal-row">
           <button id="sentence-show-btn" class="primary-btn">Show translation</button>
+        </div>
+        <div id="reorder-submit-row" class="hidden">
+          <button id="reorder-submit-btn" class="primary-btn">Check</button>
         </div>
         <div id="sentence-done-row" class="hidden">
           <button id="sentence-got-it" class="primary-btn big">Got it</button>

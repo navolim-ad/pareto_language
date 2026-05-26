@@ -73,7 +73,7 @@ function pickVoice(lang) {
   return matching[0];
 }
 
-function speak(text, lang) {
+function speak(text, lang, options) {
   const effective = resolvedSpeakLang(lang);
   if (!effective || !text) return;
   speechSynthesis.cancel();
@@ -81,8 +81,34 @@ function speak(text, lang) {
   u.lang = VOICE_LANG[effective] || effective;
   const v = pickVoice(effective);
   if (v) u.voice = v;
-  u.rate = 0.85;
+  u.rate = (options && options.rate) || 0.85;
   speechSynthesis.speak(u);
+}
+
+// Attach tap-to-play / long-press-to-play-slow behavior to an audio button.
+// Replaces the typical onclick handler.
+function attachAudioHandler(btn, text, lang) {
+  if (!btn) return;
+  let pressTimer = null;
+  let firedSlow = false;
+  const cleanup = () => { clearTimeout(pressTimer); pressTimer = null; };
+  btn.onpointerdown = (e) => {
+    e.stopPropagation();
+    firedSlow = false;
+    cleanup();
+    pressTimer = setTimeout(() => {
+      firedSlow = true;
+      speak(text, lang, { rate: 0.45 });
+    }, 480);
+  };
+  btn.onpointerup = (e) => {
+    e.stopPropagation();
+    cleanup();
+    if (!firedSlow) speak(text, lang);
+  };
+  btn.onpointerleave = cleanup;
+  btn.onpointercancel = cleanup;
+  btn.onclick = (e) => { e.stopPropagation(); }; // suppress duplicate click
 }
 
 // ============== Phrase bank (dry / sarcastic encouragement) ==============
@@ -822,7 +848,7 @@ function renderWordOfDay() {
   const wodAudio = document.getElementById('wod-audio-btn');
   if (canSpeak(tgt)) {
     wodAudio.classList.remove('hidden');
-    wodAudio.onclick = (e) => { e.stopPropagation(); speak(pick[tgt], tgt); };
+    attachAudioHandler(wodAudio, pick[tgt], tgt);
   } else {
     wodAudio.classList.add('hidden');
   }
@@ -964,12 +990,16 @@ function renderCard(word, showAnswer) {
   }
 
   // Audio button on prompt — show if the prompt language has TTS.
+  // Tap to play, long-press for slow playback.
   const audioBtn = document.getElementById('audio-btn');
+  const audioHint = document.getElementById('audio-hint');
   if (canSpeak(promptLang)) {
     audioBtn.classList.remove('hidden');
-    audioBtn.onclick = (e) => { e.stopPropagation(); speak(word[promptLang], promptLang); };
+    if (audioHint) audioHint.classList.remove('hidden');
+    attachAudioHandler(audioBtn, word[promptLang], promptLang);
   } else {
     audioBtn.classList.add('hidden');
+    if (audioHint) audioHint.classList.add('hidden');
   }
 
   const emojiEl = document.getElementById('card-emoji');
@@ -1009,6 +1039,8 @@ function renderCard(word, showAnswer) {
     promptEl.style.display = '';
     metaEl.style.display = '';
     if (audioBtn) audioBtn.style.display = '';
+    const _ah = document.getElementById('audio-hint');
+    if (_ah) _ah.style.display = '';
 
     answerEl.classList.remove('hidden');
     answerMain.textContent = getDisplayWord(word, answerLang);
@@ -1026,7 +1058,7 @@ function renderCard(word, showAnswer) {
     // Audio on the answer — show if answer language has TTS and isn't already on prompt side.
     if (canSpeak(answerLang) && answerLang !== promptLang) {
       answerAudioBtn.classList.remove('hidden');
-      answerAudioBtn.onclick = (e) => { e.stopPropagation(); speak(word[answerLang], answerLang); };
+      attachAudioHandler(answerAudioBtn, word[answerLang], answerLang);
     } else {
       answerAudioBtn.classList.add('hidden');
     }
@@ -1058,7 +1090,7 @@ function renderCard(word, showAnswer) {
       const exAudioBtn = document.getElementById('example-audio-btn');
       if (canSpeak(tgt) && word.example[tgt]) {
         exAudioBtn.classList.remove('hidden');
-        exAudioBtn.onclick = (e) => { e.stopPropagation(); speak(word.example[tgt], tgt); };
+        attachAudioHandler(exAudioBtn, word.example[tgt], tgt);
       } else {
         exAudioBtn.classList.add('hidden');
       }
@@ -1097,6 +1129,8 @@ function renderCard(word, showAnswer) {
   promptEl.style.display = promptVisible ? '' : 'none';
   metaEl.style.display = promptVisible ? '' : 'none';
   if (audioBtn) audioBtn.style.display = promptVisible ? '' : 'none';
+  const _audioHint2 = document.getElementById('audio-hint');
+  if (_audioHint2) _audioHint2.style.display = promptVisible ? '' : 'none';
 
   if (mode === 'reveal') {
     revealRow.classList.remove('hidden');
@@ -1111,7 +1145,7 @@ function renderCard(word, showAnswer) {
       btn.removeAttribute('dir'); // listen mode answer is always source (no RTL)
     });
     const playBtn = document.getElementById('listen-play-btn');
-    playBtn.onclick = (e) => { e.stopPropagation(); speak(word[tgt], tgt); };
+    attachAudioHandler(playBtn, word[tgt], tgt);
     // Auto-play after a beat so user has time to focus.
     setTimeout(() => speak(word[tgt], tgt), 250);
   } else if (mode === 'type') {
@@ -1212,6 +1246,28 @@ function submitChoice(idx) {
   }, 600);
 }
 
+// Builds a small "anchor" hint for a failed card — connects the missed word
+// to a same-theme word the user has already mastered.
+function buildHintForFail(word) {
+  if (!state.settings) return null;
+  const src = state.settings.source;
+  const tgt = state.settings.target;
+  if (!word[tgt] || !word[src]) return null;
+  const sameTheme = state.words.filter(w =>
+    w.theme === word.theme &&
+    w.id !== word.id &&
+    w[tgt] &&
+    w[src] &&
+    cardLabel(state.progress[w.id]) === 'mature'
+  );
+  if (sameTheme.length === 0) {
+    return `${word[tgt]} = ${word[src]}.`;
+  }
+  shuffle(sameTheme);
+  const anchor = sameTheme[0];
+  return `${word[tgt]} = ${word[src]}.   You know: ${anchor[tgt]} = ${anchor[src]}`;
+}
+
 function typeDontKnow() {
   if (!state.session) return;
   const w = state.session.queue[state.session.index];
@@ -1289,6 +1345,25 @@ function startSession(themeFilter, wordsOverride, options) {
     queue = [...wordsOverride];
   } else {
     queue = buildQueue(themeFilter);
+
+    // Daily warm-up: first lesson of the day gets up to 2 mastered cards
+    // prepended for momentum and confidence.
+    if (state.daily && state.daily.done === 0 && !state.daily.warmupGiven) {
+      const tgt = state.settings.target;
+      const inQueue = new Set(queue.map(w => w.id));
+      const mature = state.words.filter(w =>
+        w[tgt] &&
+        cardLabel(state.progress[w.id]) === 'mature' &&
+        !inQueue.has(w.id)
+      );
+      shuffle(mature);
+      const warmup = mature.slice(0, 2);
+      if (warmup.length > 0) {
+        queue = [...warmup, ...queue];
+        state.daily.warmupGiven = true;
+        saveDaily();
+      }
+    }
   }
   if (queue.length === 0) {
     showToast("You're caught up. New cards unlock as you finish today's goal.");
@@ -1584,6 +1659,18 @@ function tryClozeForWord(sentence, wid, srcLang) {
   };
 }
 
+// Check if a sentence can be reordered: needs at least 3 space-separated
+// tokens (no good for Thai data without spaces) and not too many (frustrating).
+function canReorderSentence(sentence, tgtLang) {
+  const text = sentence[tgtLang];
+  if (!text) return null;
+  const trimmed = text.replace(/[.,!?؟،]+$/u, '').trim();
+  const tokens = trimmed.split(/\s+/);
+  if (tokens.length < 3) return null;
+  if (tokens.length > 6) return null;
+  return tokens;
+}
+
 function makeClozeSource(sentence, srcLang) {
   // Only consider content words (nouns, verbs, adjectives, etc.). Pronouns,
   // possessives, prepositions, and very short words are too predictable in
@@ -1613,6 +1700,25 @@ function renderSentenceCameo() {
   if (!s) return;
   const tgt = state.settings.target;
   const src = state.settings.source;
+
+  // Decide interaction: reorder if we can split target into tokens; else cloze; else plain reveal.
+  const reorderTokens = canReorderSentence(s, tgt);
+  // Probabilistic mix: prefer reorder ~50% of the time when available.
+  if (reorderTokens && Math.random() < 0.55) {
+    state.session._cameoMode = 'reorder';
+    renderSentenceReorder(s, reorderTokens);
+    return;
+  }
+  state.session._cameoMode = 'cloze';
+
+  // Show cloze-mode elements; hide reorder elements.
+  document.getElementById('sentence-target').classList.remove('hidden');
+  document.getElementById('sentence-translit').classList.remove('hidden');
+  document.getElementById('sentence-glossary').classList.remove('hidden');
+  document.getElementById('reorder-source-prompt').classList.add('hidden');
+  document.getElementById('reorder-build').classList.add('hidden');
+  document.getElementById('reorder-pool').classList.add('hidden');
+  document.getElementById('reorder-submit-row').classList.add('hidden');
 
   const targetEl = document.getElementById('sentence-target');
   targetEl.textContent = s[tgt] || '';
@@ -1673,7 +1779,7 @@ function renderSentenceCameo() {
   const audioBtn = document.getElementById('sentence-audio-btn');
   if (canSpeak(tgt)) {
     audioBtn.classList.remove('hidden');
-    audioBtn.onclick = (e) => { e.stopPropagation(); speak(s[tgt], tgt); };
+    attachAudioHandler(audioBtn, s[tgt], tgt);
   } else {
     audioBtn.classList.add('hidden');
   }
@@ -1694,6 +1800,150 @@ function renderSentenceCameo() {
     });
     glossary.appendChild(chip);
   }
+}
+
+function renderSentenceReorder(s, tokens) {
+  const tgt = state.settings.target;
+  const src = state.settings.source;
+
+  // Hide cloze-mode elements.
+  document.getElementById('sentence-target').classList.add('hidden');
+  document.getElementById('sentence-translit').classList.add('hidden');
+  document.getElementById('sentence-source-wrap').classList.add('hidden');
+  document.getElementById('sentence-glossary').classList.add('hidden');
+  document.getElementById('sentence-reveal-row').classList.add('hidden');
+  document.getElementById('sentence-done-row').classList.add('hidden');
+
+  // Show reorder elements.
+  const sourcePrompt = document.getElementById('reorder-source-prompt');
+  const buildArea = document.getElementById('reorder-build');
+  const poolArea = document.getElementById('reorder-pool');
+  sourcePrompt.classList.remove('hidden');
+  buildArea.classList.remove('hidden');
+  poolArea.classList.remove('hidden');
+  document.getElementById('reorder-submit-row').classList.remove('hidden');
+
+  sourcePrompt.textContent = s[src] || '';
+
+  // RTL build flow for Arabic so words read right-to-left.
+  if (tgt === 'ar') buildArea.setAttribute('dir', 'rtl');
+  else buildArea.removeAttribute('dir');
+
+  // Initialize state: pool is shuffled indices, build is empty.
+  const indices = tokens.map((_, i) => i);
+  const shuffled = [...indices];
+  shuffle(shuffled);
+  state.session._reorderState = {
+    tokens,
+    pool: shuffled,
+    build: [],
+  };
+  renderReorderChips();
+
+  // Audio button for the sentence.
+  const audioBtn = document.getElementById('sentence-audio-btn');
+  if (canSpeak(tgt)) {
+    audioBtn.classList.remove('hidden');
+    attachAudioHandler(audioBtn, s[tgt], tgt);
+  } else {
+    audioBtn.classList.add('hidden');
+  }
+
+  // Reset submit button.
+  const submitBtn = document.getElementById('reorder-submit-btn');
+  submitBtn.disabled = false;
+  submitBtn.textContent = 'Check';
+  submitBtn.onclick = submitReorder;
+}
+
+function renderReorderChips() {
+  const r = state.session._reorderState;
+  if (!r) return;
+  const tgt = state.settings.target;
+  const buildArea = document.getElementById('reorder-build');
+  const poolArea = document.getElementById('reorder-pool');
+
+  buildArea.innerHTML = '';
+  poolArea.innerHTML = '';
+
+  if (r.build.length === 0) {
+    const ph = document.createElement('span');
+    ph.className = 'reorder-placeholder';
+    ph.textContent = 'Tap words below to build the sentence';
+    buildArea.appendChild(ph);
+  } else {
+    for (const idx of r.build) {
+      const chip = makeReorderChip(idx, 'build');
+      buildArea.appendChild(chip);
+    }
+  }
+  for (const idx of r.pool) {
+    const chip = makeReorderChip(idx, 'pool');
+    poolArea.appendChild(chip);
+  }
+}
+
+function makeReorderChip(tokenIdx, area) {
+  const r = state.session._reorderState;
+  const tgt = state.settings.target;
+  const chip = document.createElement('button');
+  chip.type = 'button';
+  chip.className = 'reorder-chip' + (area === 'build' ? ' placed' : '');
+  chip.textContent = r.tokens[tokenIdx];
+  chip.dataset.idx = String(tokenIdx);
+  if (tgt === 'ar') chip.setAttribute('dir', 'rtl');
+  chip.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (area === 'pool') moveChipToBuild(tokenIdx);
+    else moveChipToPool(tokenIdx);
+  });
+  return chip;
+}
+
+function moveChipToBuild(tokenIdx) {
+  const r = state.session._reorderState;
+  const i = r.pool.indexOf(tokenIdx);
+  if (i < 0) return;
+  r.pool.splice(i, 1);
+  r.build.push(tokenIdx);
+  renderReorderChips();
+}
+
+function moveChipToPool(tokenIdx) {
+  const r = state.session._reorderState;
+  const i = r.build.indexOf(tokenIdx);
+  if (i < 0) return;
+  r.build.splice(i, 1);
+  r.pool.push(tokenIdx);
+  renderReorderChips();
+}
+
+function submitReorder() {
+  const r = state.session._reorderState;
+  if (!r) return;
+  if (r.build.length === 0) return;
+  const correct = r.build.every((idx, i) => idx === i);
+  const submitBtn = document.getElementById('reorder-submit-btn');
+
+  // Highlight chips in build area
+  const buildArea = document.getElementById('reorder-build');
+  buildArea.querySelectorAll('.reorder-chip').forEach((chip, i) => {
+    chip.disabled = true;
+    if (parseInt(chip.dataset.idx, 10) === i) chip.classList.add('correct');
+    else chip.classList.add('wrong');
+  });
+
+  if (correct) {
+    showToast('✓ Correct! Nice assembly.', 2500);
+  } else {
+    // Show the correct order as toast
+    showToast(`Correct order: ${r.tokens.join(' ')}`, 3500);
+  }
+
+  // Switch submit button to "Continue" → triggers finishSentenceCameo
+  submitBtn.textContent = 'Continue';
+  submitBtn.disabled = false;
+  submitBtn.onclick = () => finishSentenceCameo();
 }
 
 function revealSentenceTranslation() {
@@ -1793,10 +2043,11 @@ function gradeAndAdvance(grade) {
 
   if (grade === 'again') {
     state.session.againCounts[w.id] = (state.session.againCounts[w.id] || 0) + 1;
-    // No within-session re-queue. If you didn't know it now, seeing it again
-    // a few cards later doesn't teach it — you need real time. The card's
-    // due time was set to 10 min from now in gradeCard's 'again' branch,
-    // so it'll be back in your next lesson naturally.
+    // Smart hint: anchor the failed word to one the user has already mastered.
+    const hint = buildHintForFail(w);
+    if (hint) showToast(hint, 4500);
+    // No within-session re-queue. The card's SRS due (10 min from now)
+    // brings it back in a later lesson, with fresh perspective.
   } else {
     // Track for matching rounds (only non-again so user has actually "got" the card).
     state.session.recentlySeen.push(w.id);

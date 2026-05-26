@@ -637,6 +637,15 @@ html, body {
 .audio-btn:active { transform: scale(0.94); }
 .audio-btn.speaking { background: var(--primary); color: white; }
 
+.audio-hint {
+  font-size: 11px;
+  color: var(--muted);
+  font-style: italic;
+  text-align: center;
+  margin-top: 4px;
+  letter-spacing: 0.02em;
+}
+
 .card-example {
   margin-top: 16px;
   padding-top: 14px;
@@ -1132,6 +1141,72 @@ html, body {
 .glossary-chip[dir="rtl"] {
   font-family: "Noto Naskh Arabic", "Geeza Pro", -apple-system, serif;
   font-size: 16px;
+}
+
+/* ---------- Reorder challenge ---------- */
+
+.reorder-source-prompt {
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 18px;
+  text-align: center;
+}
+.reorder-build {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+  min-height: 60px;
+  padding: 12px;
+  border-radius: var(--radius);
+  border: 1.5px dashed var(--line);
+  background: rgba(0,0,0,0.02);
+  margin-bottom: 16px;
+}
+.reorder-build[dir="rtl"] { direction: rtl; }
+.reorder-pool {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  padding: 4px;
+}
+.reorder-chip {
+  background: var(--bg-card);
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius);
+  padding: 10px 16px;
+  font-size: 16px;
+  font-family: inherit;
+  cursor: pointer;
+  color: var(--text);
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+.reorder-chip[dir="rtl"] {
+  font-family: "Noto Naskh Arabic", "Geeza Pro", -apple-system, serif;
+  font-size: 18px;
+}
+.reorder-chip:hover { background: var(--line); }
+.reorder-chip:active { transform: scale(0.96); }
+.reorder-chip.placed {
+  background: #ecf3e0;
+  border-color: #a8c994;
+  color: #4a6b3c;
+}
+.reorder-chip.correct {
+  background: #ecf3e0;
+  border-color: var(--easy);
+}
+.reorder-chip.wrong {
+  background: #f5dada;
+  border-color: var(--again);
+}
+.reorder-placeholder {
+  color: var(--muted);
+  font-style: italic;
+  font-size: 13px;
+  align-self: center;
 }
 
 .sentence-input {
