@@ -184,6 +184,10 @@
 
         <div id="card-area" class="flashcard">
           <div id="card-note-indicator" class="card-note-indicator hidden" title="You have a note for this word">📝</div>
+          <div id="listen-prompt" class="listen-prompt hidden">
+            <button id="listen-play-btn" class="listen-play-btn" aria-label="Play word">🔊</button>
+            <div class="listen-hint">Listen and pick the meaning</div>
+          </div>
           <div class="flashcard-inner">
             <div class="card-emoji" id="card-emoji"></div>
             <div class="card-prompt" id="card-prompt"></div>
@@ -276,6 +280,7 @@
           <div class="sentence-target" id="sentence-target"></div>
           <div class="sentence-translit muted small" id="sentence-translit"></div>
           <button id="sentence-audio-btn" class="audio-btn hidden" aria-label="Hear sentence">🔊</button>
+          <div class="sentence-glossary" id="sentence-glossary"></div>
           <div class="sentence-reveal hidden" id="sentence-source-wrap">
             <div class="sentence-source" id="sentence-source"></div>
             <div class="sentence-feedback" id="sentence-feedback"></div>
@@ -411,6 +416,15 @@
             <button class="choice" data-value="20">20</button>
             <button class="choice" data-value="30">30</button>
             <button class="choice" data-value="50">50</button>
+          </div>
+        </div>
+
+        <div class="setting-block">
+          <label class="setup-label">Show transliteration</label>
+          <p class="muted small setting-hint">Romanization under Arabic/Thai script. Turn off once you can read the script.</p>
+          <div class="choice-grid" data-group="translit">
+            <button class="choice" data-value="on">On</button>
+            <button class="choice" data-value="off">Off</button>
           </div>
         </div>
 

@@ -539,6 +539,32 @@ html, body {
   width: 100%;
 }
 
+.listen-prompt {
+  text-align: center;
+  padding: 24px 0;
+  width: 100%;
+}
+.listen-play-btn {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: white;
+  font-size: 44px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(80, 60, 30, 0.22);
+  transition: transform 0.12s ease;
+}
+.listen-play-btn:active { transform: scale(0.94); }
+.listen-play-btn.speaking { background: var(--accent); }
+.listen-hint {
+  margin-top: 14px;
+  font-size: 14px;
+  color: var(--text-soft);
+  font-style: italic;
+}
+
 .card-emoji {
   font-size: 56px;
   margin-bottom: 12px;
@@ -1077,6 +1103,32 @@ html, body {
   font-style: italic;
   color: var(--text-soft);
   font-weight: 400;
+}
+
+.sentence-glossary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+  margin-top: 14px;
+}
+.sentence-glossary:empty { display: none; }
+.glossary-chip {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: 14px;
+  cursor: pointer;
+  color: var(--text);
+  font-family: inherit;
+  transition: background 0.15s ease;
+}
+.glossary-chip:hover { background: var(--line); }
+.glossary-chip:active { transform: scale(0.96); }
+.glossary-chip[dir="rtl"] {
+  font-family: "Noto Naskh Arabic", "Geeza Pro", -apple-system, serif;
+  font-size: 16px;
 }
 
 .sentence-input {

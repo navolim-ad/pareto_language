@@ -347,7 +347,6 @@ function pickDirection(cardState) {
 function pickCardMode(direction) {
   if (direction === 'reverse') {
     // Recall direction needs active production — reveal mode is just peeking.
-    // Use type if the target uses a Latin script, otherwise force multiple choice.
     if (canTypeInTarget()) {
       const modes = ['type', 'choice'];
       return modes[Math.floor(Math.random() * modes.length)];
@@ -357,6 +356,8 @@ function pickCardMode(direction) {
   // Forward direction (target → source).
   if (!state.settings || state.settings.mixedMode === false) return 'reveal';
   const modes = ['reveal', 'type', 'choice'];
+  // Listening mode is forward-only and needs audio for the target language.
+  if (canSpeak(state.settings.target)) modes.push('listen');
   return modes[Math.floor(Math.random() * modes.length)];
 }
 
@@ -640,9 +641,10 @@ function buildQueue(themeFilter) {
   }
   fresh.sort((a, b) => a.order - b.order);
   shuffle(due);
-  // Pull from a wider frequency pool so the order isn't strictly deterministic
-  // — keeps Pareto roughly intact but breaks the predictable sequence.
-  const FRESH_POOL = 50;
+  // Pull from a wide frequency pool so the order isn't strictly deterministic
+  // and you don't see the same 30 words cycle. Keeps Pareto roughly intact
+  // (top 80 is still high-frequency) while breaking the strict sequence.
+  const FRESH_POOL = 80;
   const SESSION_NEW_CAP = 30;
   const newPool = fresh.slice(0, FRESH_POOL);
   shuffle(newPool);
@@ -947,11 +949,13 @@ function renderCard(word, showAnswer) {
   if (promptLang === 'ar') promptEl.setAttribute('dir', 'rtl');
   else promptEl.removeAttribute('dir');
 
-  // Meta (translit / alt script — shown only if prompt is target language with extras)
+  // Meta (translit / alt script — shown only if prompt is target language with extras).
+  // Honors the "Show transliteration" setting for ar/th.
   const metaEl = document.getElementById('card-meta');
-  if (promptLang === 'ar' && word.ar_translit) {
+  const translitOn = state.settings && state.settings.showTranslit !== false;
+  if (promptLang === 'ar' && word.ar_translit && translitOn) {
     metaEl.textContent = word.ar_translit;
-  } else if (promptLang === 'th' && word.th_translit) {
+  } else if (promptLang === 'th' && word.th_translit && translitOn) {
     metaEl.textContent = word.th_translit;
   } else if (promptLang === 'sr') {
     metaEl.textContent = state.settings.sr_script === 'cyrillic' ? word.sr : word.sr_cyr;
@@ -999,16 +1003,23 @@ function renderCard(word, showAnswer) {
     skipBtn.classList.add('hidden');
     skipHint.classList.add('hidden');
     gradeRow.classList.remove('hidden');
+    const lp = document.getElementById('listen-prompt');
+    if (lp) lp.classList.add('hidden');
+    // Restore visibility of prompt area in case listen mode hid them.
+    promptEl.style.display = '';
+    metaEl.style.display = '';
+    if (audioBtn) audioBtn.style.display = '';
 
     answerEl.classList.remove('hidden');
     answerMain.textContent = getDisplayWord(word, answerLang);
     if (answerLang === 'ar') answerMain.setAttribute('dir', 'rtl');
     else answerMain.removeAttribute('dir');
 
-    // Translit / alt script on answer (when target is the answer in recall direction)
+    // Translit / alt script on answer (when target is the answer in recall direction).
+    // Honors the showTranslit setting.
     let ansTranslitText = '';
-    if (answerLang === 'ar' && word.ar_translit) ansTranslitText = word.ar_translit;
-    else if (answerLang === 'th' && word.th_translit) ansTranslitText = word.th_translit;
+    if (answerLang === 'ar' && word.ar_translit && translitOn) ansTranslitText = word.ar_translit;
+    else if (answerLang === 'th' && word.th_translit && translitOn) ansTranslitText = word.th_translit;
     else if (answerLang === 'sr') ansTranslitText = state.settings.sr_script === 'cyrillic' ? word.sr : word.sr_cyr;
     answerTranslit.textContent = ansTranslitText;
 
@@ -1038,8 +1049,10 @@ function renderCard(word, showAnswer) {
       if (tgt === 'ar') exampleTgtEl.setAttribute('dir', 'rtl');
       else exampleTgtEl.removeAttribute('dir');
       let translitText = '';
-      if (tgt === 'ar' && word.example.ar_translit) translitText = word.example.ar_translit;
-      else if (tgt === 'th' && word.example.th_translit) translitText = word.example.th_translit;
+      if (translitOn) {
+        if (tgt === 'ar' && word.example.ar_translit) translitText = word.example.ar_translit;
+        else if (tgt === 'th' && word.example.th_translit) translitText = word.example.th_translit;
+      }
       exampleTransEl.textContent = translitText;
 
       const exAudioBtn = document.getElementById('example-audio-btn');
@@ -1074,11 +1087,33 @@ function renderCard(word, showAnswer) {
   revealRow.classList.add('hidden');
   typeRow.classList.add('hidden');
   choiceRow.classList.add('hidden');
+  const listenPrompt = document.getElementById('listen-prompt');
+  if (listenPrompt) listenPrompt.classList.add('hidden');
 
   dontknowRow.classList.add('hidden');
 
+  // Show or hide the visual prompt depending on whether listen mode hides it.
+  const promptVisible = mode !== 'listen';
+  promptEl.style.display = promptVisible ? '' : 'none';
+  metaEl.style.display = promptVisible ? '' : 'none';
+  if (audioBtn) audioBtn.style.display = promptVisible ? '' : 'none';
+
   if (mode === 'reveal') {
     revealRow.classList.remove('hidden');
+  } else if (mode === 'listen') {
+    listenPrompt.classList.remove('hidden');
+    choiceRow.classList.remove('hidden');
+    const ch = state.session.currentChoices;
+    document.querySelectorAll('.choice-option').forEach((btn, i) => {
+      btn.textContent = ch.options[i] || '';
+      btn.classList.remove('correct', 'wrong');
+      btn.disabled = false;
+      btn.removeAttribute('dir'); // listen mode answer is always source (no RTL)
+    });
+    const playBtn = document.getElementById('listen-play-btn');
+    playBtn.onclick = (e) => { e.stopPropagation(); speak(word[tgt], tgt); };
+    // Auto-play after a beat so user has time to focus.
+    setTimeout(() => speak(word[tgt], tgt), 250);
   } else if (mode === 'type') {
     typeRow.classList.remove('hidden');
     dontknowRow.classList.remove('hidden');
@@ -1333,11 +1368,11 @@ function renderCurrent() {
     `${cardIndex} / ${state.session.lessonSize}`;
 
   // Pick direction (forward = target→source; reverse = source→target) and mode.
-  // Reverse probability scales with how well the user knows this specific card.
   const cardStateForDir = state.progress[w.id];
   state.session.cardDirection = pickDirection(cardStateForDir);
   state.session.cardMode = pickCardMode(state.session.cardDirection);
-  if (state.session.cardMode === 'choice') {
+  // 'listen' mode reuses choice options (4 source-lang buttons), so generate them.
+  if (state.session.cardMode === 'choice' || state.session.cardMode === 'listen') {
     state.session.currentChoices = pickChoiceOptions(w, state.session.cardDirection);
   }
 
@@ -1550,9 +1585,30 @@ function tryClozeForWord(sentence, wid, srcLang) {
 }
 
 function makeClozeSource(sentence, srcLang) {
-  const uses = [...sentence.uses];
-  shuffle(uses);
-  for (const wid of uses) {
+  // Prefer content words (nouns, verbs, adjectives, etc.) — pronouns, possessives,
+  // and very short words give the answer away from sentence structure alone.
+  const SKIP_THEMES = new Set(['pronouns', 'possessives', 'prepositions']);
+  const goodCandidates = [];
+  const fallback = [];
+  for (const wid of sentence.uses) {
+    const word = state.words.find(w => w.id === wid);
+    if (!word) continue;
+    const src = word[srcLang];
+    if (!src) continue;
+    if (SKIP_THEMES.has(word.theme) || src.length < 4) {
+      fallback.push(wid);
+    } else {
+      goodCandidates.push(wid);
+    }
+  }
+  shuffle(goodCandidates);
+  for (const wid of goodCandidates) {
+    const cloze = tryClozeForWord(sentence, wid, srcLang);
+    if (cloze) return cloze;
+  }
+  // Only resort to weak candidates if no content word works.
+  shuffle(fallback);
+  for (const wid of fallback) {
     const cloze = tryClozeForWord(sentence, wid, srcLang);
     if (cloze) return cloze;
   }
@@ -1627,6 +1683,23 @@ function renderSentenceCameo() {
     audioBtn.onclick = (e) => { e.stopPropagation(); speak(s[tgt], tgt); };
   } else {
     audioBtn.classList.add('hidden');
+  }
+
+  // Glossary chips — tap any to see its translation in a toast.
+  const glossary = document.getElementById('sentence-glossary');
+  glossary.innerHTML = '';
+  for (const wid of s.uses) {
+    const word = state.words.find(w => w.id === wid);
+    if (!word || !word[tgt] || !word[src]) continue;
+    const chip = document.createElement('button');
+    chip.className = 'glossary-chip';
+    chip.textContent = getDisplayWord(word, tgt);
+    if (tgt === 'ar') chip.setAttribute('dir', 'rtl');
+    chip.addEventListener('click', (e) => {
+      e.stopPropagation();
+      showToast(`${word[tgt]}  →  ${word[src]}`, 2200);
+    });
+    glossary.appendChild(chip);
   }
 }
 
@@ -1992,6 +2065,7 @@ function initSetup() {
       lessonLength: 15,
       mixedMode: true,
       direction: 'both',
+      showTranslit: true,
       onboarded: false,
     };
     saveSettings();
@@ -2078,6 +2152,13 @@ function initSettingsScreen() {
       renderSettings();
     });
   });
+  document.querySelectorAll('[data-group="translit"] .choice').forEach(btn => {
+    btn.addEventListener('click', () => {
+      state.settings.showTranslit = btn.dataset.value === 'on';
+      saveSettings();
+      renderSettings();
+    });
+  });
   document.getElementById('reset-progress').addEventListener('click', () => {
     if (confirm('Reset all progress for this language pair? This cannot be undone.')) {
       state.progress = {};
@@ -2116,6 +2197,10 @@ function renderSettings() {
   const currentDir = state.settings.direction || 'both';
   document.querySelectorAll('[data-group="direction"] .choice').forEach(btn => {
     btn.classList.toggle('selected', btn.dataset.value === currentDir);
+  });
+  const translitOn = state.settings.showTranslit !== false;
+  document.querySelectorAll('[data-group="translit"] .choice').forEach(btn => {
+    btn.classList.toggle('selected', (btn.dataset.value === 'on') === translitOn);
   });
   document.getElementById('setting-script').style.display =
     state.settings.target === 'sr' ? 'flex' : 'none';
@@ -2260,6 +2345,30 @@ async function init() {
     state.session = null;
     renderHome();
     show('screen-home');
+  });
+
+  // Swipe gestures on the flashcard: right = Know it, left = Not sure.
+  // Only active during the answer/grade phase (when grade-row is visible).
+  const cardEl = document.getElementById('card-area');
+  let touchStartX = 0, touchStartY = 0, touchActive = false;
+  cardEl.addEventListener('touchstart', (e) => {
+    if (e.touches.length !== 1) return;
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+    touchActive = true;
+  }, { passive: true });
+  cardEl.addEventListener('touchend', (e) => {
+    if (!touchActive) return;
+    touchActive = false;
+    const gradeRow = document.getElementById('grade-row');
+    if (gradeRow.classList.contains('hidden')) return; // only swipe during grade phase
+    const t = e.changedTouches[0];
+    const dx = t.clientX - touchStartX;
+    const dy = t.clientY - touchStartY;
+    // Require mostly-horizontal swipe of at least 60px.
+    if (Math.abs(dx) < 60 || Math.abs(dy) > Math.abs(dx)) return;
+    if (dx > 0) gradeAndAdvance('easy');
+    else gradeAndAdvance('again');
   });
 
   // Initialize TTS voices
