@@ -1585,33 +1585,26 @@ function tryClozeForWord(sentence, wid, srcLang) {
 }
 
 function makeClozeSource(sentence, srcLang) {
-  // Prefer content words (nouns, verbs, adjectives, etc.) — pronouns, possessives,
-  // and very short words give the answer away from sentence structure alone.
+  // Only consider content words (nouns, verbs, adjectives, etc.). Pronouns,
+  // possessives, prepositions, and very short words are too predictable in
+  // cloze form — sentence structure gives them away.
   const SKIP_THEMES = new Set(['pronouns', 'possessives', 'prepositions']);
-  const goodCandidates = [];
-  const fallback = [];
+  const candidates = [];
   for (const wid of sentence.uses) {
     const word = state.words.find(w => w.id === wid);
     if (!word) continue;
     const src = word[srcLang];
     if (!src) continue;
-    if (SKIP_THEMES.has(word.theme) || src.length < 4) {
-      fallback.push(wid);
-    } else {
-      goodCandidates.push(wid);
-    }
+    if (SKIP_THEMES.has(word.theme)) continue;
+    if (src.length < 4) continue;
+    candidates.push(wid);
   }
-  shuffle(goodCandidates);
-  for (const wid of goodCandidates) {
+  shuffle(candidates);
+  for (const wid of candidates) {
     const cloze = tryClozeForWord(sentence, wid, srcLang);
     if (cloze) return cloze;
   }
-  // Only resort to weak candidates if no content word works.
-  shuffle(fallback);
-  for (const wid of fallback) {
-    const cloze = tryClozeForWord(sentence, wid, srcLang);
-    if (cloze) return cloze;
-  }
+  // No good cloze available — the cameo will play as plain reveal instead.
   return null;
 }
 
@@ -2347,25 +2340,26 @@ async function init() {
     show('screen-home');
   });
 
-  // Swipe gestures on the flashcard: right = Know it, left = Not sure.
+  // Swipe gestures: right = Know it, left = Not sure.
   // Only active during the answer/grade phase (when grade-row is visible).
-  const cardEl = document.getElementById('card-area');
+  // Attached to the study screen so swipes anywhere — including over the
+  // grade buttons themselves — register.
+  const studyScreen = document.getElementById('screen-study');
   let touchStartX = 0, touchStartY = 0, touchActive = false;
-  cardEl.addEventListener('touchstart', (e) => {
+  studyScreen.addEventListener('touchstart', (e) => {
     if (e.touches.length !== 1) return;
     touchStartX = e.touches[0].clientX;
     touchStartY = e.touches[0].clientY;
     touchActive = true;
   }, { passive: true });
-  cardEl.addEventListener('touchend', (e) => {
+  studyScreen.addEventListener('touchend', (e) => {
     if (!touchActive) return;
     touchActive = false;
     const gradeRow = document.getElementById('grade-row');
-    if (gradeRow.classList.contains('hidden')) return; // only swipe during grade phase
+    if (gradeRow.classList.contains('hidden')) return;
     const t = e.changedTouches[0];
     const dx = t.clientX - touchStartX;
     const dy = t.clientY - touchStartY;
-    // Require mostly-horizontal swipe of at least 60px.
     if (Math.abs(dx) < 60 || Math.abs(dy) > Math.abs(dx)) return;
     if (dx > 0) gradeAndAdvance('easy');
     else gradeAndAdvance('again');
