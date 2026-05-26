@@ -1797,7 +1797,10 @@ function gradeAndAdvance(grade) {
     // and defer its due time so it doesn't come right back in the next lesson.
     const MAX_FAILS_PER_SESSION = 2;
     if (state.session.againCounts[w.id] < MAX_FAILS_PER_SESSION) {
-      const offset = Math.min(3, state.session.queue.length - state.session.index - 1);
+      // Push the failed card at least 7 cards back so it doesn't immediately
+      // reappear. If the queue is shorter than that, send it to the end.
+      const remaining = state.session.queue.length - state.session.index - 1;
+      const offset = Math.min(7, remaining);
       const requeueAt = state.session.index + 1 + offset;
       state.session.queue.splice(requeueAt, 0, w);
     } else {
@@ -2341,29 +2344,28 @@ async function init() {
   });
 
   // Swipe gestures: right = Know it, left = Not sure.
-  // Only active during the answer/grade phase (when grade-row is visible).
-  // Attached to the study screen so swipes anywhere — including over the
-  // grade buttons themselves — register.
+  // Active only during the answer phase (grade-row visible).
+  // Uses pointer events which work for both touch and mouse on all modern browsers.
   const studyScreen = document.getElementById('screen-study');
-  let touchStartX = 0, touchStartY = 0, touchActive = false;
-  studyScreen.addEventListener('touchstart', (e) => {
-    if (e.touches.length !== 1) return;
-    touchStartX = e.touches[0].clientX;
-    touchStartY = e.touches[0].clientY;
-    touchActive = true;
-  }, { passive: true });
-  studyScreen.addEventListener('touchend', (e) => {
-    if (!touchActive) return;
-    touchActive = false;
+  let swipeStartX = 0, swipeStartY = 0, swipeTracking = false, swipePointerId = null;
+  studyScreen.addEventListener('pointerdown', (e) => {
+    swipeStartX = e.clientX;
+    swipeStartY = e.clientY;
+    swipeTracking = true;
+    swipePointerId = e.pointerId;
+  });
+  studyScreen.addEventListener('pointerup', (e) => {
+    if (!swipeTracking || e.pointerId !== swipePointerId) return;
+    swipeTracking = false;
     const gradeRow = document.getElementById('grade-row');
     if (gradeRow.classList.contains('hidden')) return;
-    const t = e.changedTouches[0];
-    const dx = t.clientX - touchStartX;
-    const dy = t.clientY - touchStartY;
+    const dx = e.clientX - swipeStartX;
+    const dy = e.clientY - swipeStartY;
     if (Math.abs(dx) < 60 || Math.abs(dy) > Math.abs(dx)) return;
     if (dx > 0) gradeAndAdvance('easy');
     else gradeAndAdvance('again');
   });
+  studyScreen.addEventListener('pointercancel', () => { swipeTracking = false; });
 
   // Initialize TTS voices
   if ('speechSynthesis' in window) {
