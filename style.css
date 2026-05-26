@@ -861,6 +861,9 @@ html, body {
 }
 .grade-btn .grade-label { font-size: 16px; font-weight: 600; }
 .grade-btn .grade-hint { display: none; }
+
+/* Allow horizontal swipes to pass through to the document handler. */
+.grade-row, .grade-btn, .flashcard, .study-container { touch-action: pan-y; }
 .grade-btn.again { background: var(--again); }
 .grade-btn.good  { background: var(--good); }
 .grade-btn.easy  { background: var(--easy); }

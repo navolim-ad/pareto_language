@@ -1793,22 +1793,10 @@ function gradeAndAdvance(grade) {
 
   if (grade === 'again') {
     state.session.againCounts[w.id] = (state.session.againCounts[w.id] || 0) + 1;
-    // Cap re-appearances per session. After this many fails, bench the card —
-    // and defer its due time so it doesn't come right back in the next lesson.
-    const MAX_FAILS_PER_SESSION = 2;
-    if (state.session.againCounts[w.id] < MAX_FAILS_PER_SESSION) {
-      // Push the failed card at least 7 cards back so it doesn't immediately
-      // reappear. If the queue is shorter than that, send it to the end.
-      const remaining = state.session.queue.length - state.session.index - 1;
-      const offset = Math.min(7, remaining);
-      const requeueAt = state.session.index + 1 + offset;
-      state.session.queue.splice(requeueAt, 0, w);
-    } else {
-      // Defer this card by an hour so it really takes a break.
-      card.due = Date.now() + 60 * 60 * 1000;
-      saveProgress();
-      showToast(`Benched for a bit. Take a breather.`, 2200);
-    }
+    // No within-session re-queue. If you didn't know it now, seeing it again
+    // a few cards later doesn't teach it — you need real time. The card's
+    // due time was set to 10 min from now in gradeCard's 'again' branch,
+    // so it'll be back in your next lesson naturally.
   } else {
     // Track for matching rounds (only non-again so user has actually "got" the card).
     state.session.recentlySeen.push(w.id);
@@ -2344,28 +2332,30 @@ async function init() {
   });
 
   // Swipe gestures: right = Know it, left = Not sure.
-  // Active only during the answer phase (grade-row visible).
-  // Uses pointer events which work for both touch and mouse on all modern browsers.
-  const studyScreen = document.getElementById('screen-study');
-  let swipeStartX = 0, swipeStartY = 0, swipeTracking = false, swipePointerId = null;
-  studyScreen.addEventListener('pointerdown', (e) => {
+  // Attached to document.body so swipes anywhere register, regardless of which
+  // element the touch lands on. Active only during the answer/grade phase.
+  let swipeStartX = null, swipeStartY = null;
+  document.body.addEventListener('pointerdown', (e) => {
+    if (document.getElementById('screen-study').classList.contains('hidden')) return;
+    if (document.getElementById('grade-row').classList.contains('hidden')) return;
     swipeStartX = e.clientX;
     swipeStartY = e.clientY;
-    swipeTracking = true;
-    swipePointerId = e.pointerId;
   });
-  studyScreen.addEventListener('pointerup', (e) => {
-    if (!swipeTracking || e.pointerId !== swipePointerId) return;
-    swipeTracking = false;
-    const gradeRow = document.getElementById('grade-row');
-    if (gradeRow.classList.contains('hidden')) return;
+  document.body.addEventListener('pointerup', (e) => {
+    if (swipeStartX === null) return;
     const dx = e.clientX - swipeStartX;
     const dy = e.clientY - swipeStartY;
+    swipeStartX = null;
+    swipeStartY = null;
+    if (document.getElementById('grade-row').classList.contains('hidden')) return;
     if (Math.abs(dx) < 60 || Math.abs(dy) > Math.abs(dx)) return;
     if (dx > 0) gradeAndAdvance('easy');
     else gradeAndAdvance('again');
   });
-  studyScreen.addEventListener('pointercancel', () => { swipeTracking = false; });
+  document.body.addEventListener('pointercancel', () => {
+    swipeStartX = null;
+    swipeStartY = null;
+  });
 
   // Initialize TTS voices
   if ('speechSynthesis' in window) {
