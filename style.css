@@ -1646,20 +1646,26 @@ html, body {
   text-align: center;
   font-style: italic;
 }
-/* Preview-mode card: tighter spacing so the "Got it, next" button stays
-   in view on small phones. Hide the mnemonic section here — preview is
-   for first-look only; notes can be added later when the word reappears. */
+/* Preview-mode card: stripped down to bare essentials so the "Got it, next"
+   button is always visible on any phone. Just emoji + target word + audio +
+   translation. No example, no mnemonic, no translit hint. */
 .flashcard.preview-mode {
   min-height: 0;
-  padding-top: 16px;
-  padding-bottom: 16px;
+  flex: 0 0 auto;
+  padding: 14px 16px;
+  gap: 8px;
 }
-.flashcard.preview-mode .mnemonic-section { display: none; }
-.flashcard.preview-mode .card-emoji { font-size: 36px; }
-.flashcard.preview-mode .card-prompt { font-size: 36px; }
-.flashcard.preview-mode .card-answer { margin-top: 6px; }
-.flashcard.preview-mode .card-answer-main { font-size: 22px; }
-.flashcard.preview-mode .card-example { margin-top: 10px; }
+.flashcard.preview-mode .mnemonic-section,
+.flashcard.preview-mode .card-example,
+.flashcard.preview-mode .card-answer-translit,
+.flashcard.preview-mode #audio-hint,
+.flashcard.preview-mode .card-meta:empty { display: none; }
+.flashcard.preview-mode .card-emoji { font-size: 32px; line-height: 1; margin: 0; }
+.flashcard.preview-mode .card-prompt { font-size: 30px; margin: 4px 0; }
+.flashcard.preview-mode .card-meta { font-size: 13px; margin-bottom: 4px; }
+.flashcard.preview-mode .card-answer { margin-top: 4px; }
+.flashcard.preview-mode .card-answer-main { font-size: 20px; }
+.flashcard.preview-mode .flashcard-inner { gap: 4px; }
 
 /* ---------- Toast ---------- */
 

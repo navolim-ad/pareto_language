@@ -1268,8 +1268,9 @@ function renderCard(word, showAnswer) {
       emojiEl.classList.add('pop');
     }
 
-    // Example — always shows source + target.
-    if (word.example && word.example[src] && word.example[tgt]) {
+    // Example — always shows source + target. SKIPPED in preview mode to keep
+    // the first-look card short enough to fit on any phone.
+    if (mode !== 'preview' && word.example && word.example[src] && word.example[tgt]) {
       exampleEl.classList.remove('hidden');
       exampleSrcEl.textContent = word.example[src];
       const tgtExample = (tgt === 'sr')
@@ -1296,8 +1297,10 @@ function renderCard(word, showAnswer) {
       exampleEl.classList.add('hidden');
     }
 
-    // Mnemonic note (P3)
-    renderMnemonic(word.id);
+    // Mnemonic note (skipped in preview — keeps the first-look card focused).
+    if (mode !== 'preview') {
+      renderMnemonic(word.id);
+    }
     return;
   }
 
@@ -2554,11 +2557,11 @@ function gradeAndAdvance(grade) {
         5500,
         () => openMnemonicModal(w)
       );
-    } else {
-      // Brief reminder of the answer — auto-dismissed when the next card renders.
-      const hint = buildHintForFail(w);
-      if (hint) showToast(hint, 2500);
     }
+    // Note: previously we surfaced a "X = Y" hint toast on every fail.
+    // Removed — it overlapped the next card's buttons and added noise
+    // without much value. The answer is already shown on the auto-graded
+    // card before transitioning away.
     // No within-session re-queue. The card's SRS due (25 min from now)
     // brings it back in a later lesson, with fresh perspective.
   } else {
