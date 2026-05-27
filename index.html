@@ -116,7 +116,7 @@
 
         <p class="home-welcome" id="home-welcome"></p>
 
-        <div class="card stat-card">
+        <div class="card stat-card" id="stat-card" role="button" tabindex="0">
           <div class="stat-main">
             <div class="stat-number" id="stat-mastered">0</div>
             <div class="stat-label">mastered / <span id="stat-total">0</span></div>
@@ -126,6 +126,7 @@
           <div class="stat-bar">
             <div class="stat-bar-fill" id="stat-bar-fill"></div>
           </div>
+          <div class="stat-card-hint muted small">tap for progress detail</div>
         </div>
 
         <div class="daily-goal" id="daily-goal-card" role="button" tabindex="0">
@@ -139,7 +140,10 @@
         </div>
 
         <button id="start-study" class="primary-btn big">Study now</button>
-        <button id="start-stretch" class="secondary-btn">Quick lesson · 5 cards</button>
+        <div class="study-options-row">
+          <button id="start-stretch" class="secondary-btn">Quick lesson · 5 cards</button>
+          <button id="start-review" class="secondary-btn">Review due · no new</button>
+        </div>
 
         <div id="word-of-day" class="word-of-day hidden">
           <div class="wod-header">
@@ -179,7 +183,7 @@
           <div class="progress-pill">
             <span id="study-progress">0 / 0</span>
           </div>
-          <div class="spacer"></div>
+          <button id="undo-grade" class="undo-btn hidden" aria-label="Undo last grade">↶ undo</button>
         </header>
 
         <div id="card-area" class="flashcard">
@@ -265,6 +269,57 @@
             <span class="grade-hint" id="hint-easy">4d</span>
           </button>
         </div>
+
+        <!-- New-word preview: a calm no-grade first encounter for brand-new words. -->
+        <div id="preview-row" class="preview-row hidden">
+          <div class="preview-hint muted small">First time seeing this — take it in.</div>
+          <button id="preview-next" class="primary-btn big">Got it, next</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Confusion compare screen: shown when two words keep getting mixed up. -->
+    <section id="screen-confusion" class="screen hidden">
+      <div class="container study-container">
+        <header class="study-header">
+          <button id="confusion-back" class="icon-btn" aria-label="Back">←</button>
+          <div class="progress-pill"><span>⚡ Easy to mix up</span></div>
+          <div class="spacer"></div>
+        </header>
+        <h2 class="confusion-title">These two keep tripping you up</h2>
+        <p class="confusion-sub muted small">Look at them side by side — find the detail that sets them apart.</p>
+        <div class="confusion-pair">
+          <div class="confusion-card" id="confusion-card-a">
+            <div class="confusion-emoji" id="confusion-emoji-a"></div>
+            <div class="confusion-target" id="confusion-target-a"></div>
+            <div class="confusion-translit muted small" id="confusion-translit-a"></div>
+            <div class="confusion-source" id="confusion-source-a"></div>
+            <button class="cluster-audio-btn" id="confusion-audio-a" aria-label="Hear pronunciation">🔊</button>
+          </div>
+          <div class="confusion-card" id="confusion-card-b">
+            <div class="confusion-emoji" id="confusion-emoji-b"></div>
+            <div class="confusion-target" id="confusion-target-b"></div>
+            <div class="confusion-translit muted small" id="confusion-translit-b"></div>
+            <div class="confusion-source" id="confusion-source-b"></div>
+            <button class="cluster-audio-btn" id="confusion-audio-b" aria-label="Hear pronunciation">🔊</button>
+          </div>
+        </div>
+        <button id="confusion-continue" class="primary-btn big">Got it, keep going</button>
+      </div>
+    </section>
+
+    <!-- Cluster intro screen: 3 themed words shown together at the start of a session. -->
+    <section id="screen-cluster" class="screen hidden">
+      <div class="container study-container">
+        <header class="study-header">
+          <button id="cluster-back" class="icon-btn" aria-label="Back">←</button>
+          <div class="progress-pill"><span>🪴 Word family</span></div>
+          <div class="spacer"></div>
+        </header>
+        <h2 class="cluster-title" id="cluster-title">Today's family</h2>
+        <p class="cluster-sub muted small">Three from the same theme. Just look at them — no quiz yet.</p>
+        <div class="cluster-list" id="cluster-list"></div>
+        <button id="cluster-continue" class="primary-btn big">Continue</button>
       </div>
     </section>
 
@@ -373,6 +428,20 @@
     <!-- Welcome banner (slides down from top on app launch) -->
     <div id="welcome-banner" class="welcome-banner" role="status" aria-live="polite"></div>
 
+    <!-- Mnemonic prompt modal: fires after a word has been failed 3+ times. -->
+    <div id="mnemonic-modal" class="lesson-modal hidden">
+      <div class="lesson-modal-backdrop"></div>
+      <div class="lesson-modal-card">
+        <div class="lesson-modal-emoji">🧠</div>
+        <h2 class="lesson-modal-title">Stuck on this one?</h2>
+        <p class="lesson-modal-quip" id="mnemonic-modal-quip">A quick memory hook makes it stick. One short note, in your words.</p>
+        <div class="mnemonic-modal-word" id="mnemonic-modal-word"></div>
+        <textarea id="mnemonic-modal-input" placeholder="e.g. sounds like another word you know, or paints a picture" rows="3"></textarea>
+        <button id="mnemonic-modal-save" class="primary-btn big">Save hook</button>
+        <button id="mnemonic-modal-skip" class="text-link-btn">Not now</button>
+      </div>
+    </div>
+
     <!-- Mastered words screen -->
     <section id="screen-mastered" class="screen hidden">
       <div class="container">
@@ -382,6 +451,38 @@
         </header>
         <p id="mastered-summary" class="muted small"></p>
         <div id="mastered-list" class="mastered-list"></div>
+      </div>
+    </section>
+
+    <!-- Progress / stats peek screen -->
+    <section id="screen-progress" class="screen hidden">
+      <div class="container">
+        <header class="home-header">
+          <h2>Your progress</h2>
+          <button id="close-progress" class="icon-btn" aria-label="Close">✕</button>
+        </header>
+
+        <div class="card progress-section">
+          <p class="muted small">Mastered over the last 30 days</p>
+          <div class="sparkline-wrap">
+            <svg id="progress-sparkline" viewBox="0 0 300 80" preserveAspectRatio="none"></svg>
+            <div id="progress-sparkline-empty" class="muted small hidden">Not enough days yet — come back tomorrow.</div>
+          </div>
+          <div class="sparkline-axis muted small">
+            <span id="sparkline-start"></span>
+            <span id="sparkline-end"></span>
+          </div>
+        </div>
+
+        <div class="card progress-section">
+          <p class="muted small">Words you've practiced most</p>
+          <div id="top-practiced-list" class="progress-list"></div>
+        </div>
+
+        <div class="card progress-section">
+          <p class="muted small">Words that still trip you up</p>
+          <div id="top-struggled-list" class="progress-list"></div>
+        </div>
       </div>
     </section>
 

@@ -18,7 +18,14 @@ const state = {
   daily: { date: '', done: 0 },
   session: null,
   voices: new Set(),
+  // Last ~40 word IDs shown across recent sessions, used to deprioritize
+  // recently-seen cards when building the next lesson queue so the same
+  // handful doesn't cycle back too quickly between sessions.
+  recentSeen: [],
 };
+
+// How many word IDs to remember across sessions for spacing.
+const RECENT_SEEN_LIMIT = 40;
 
 // ============== Audio (TTS) ==============
 const VOICE_LANG = { ar: 'ar-SA', es: 'es-ES', sr: 'sr-RS', hr: 'hr-HR', th: 'th-TH', en: 'en-US' };
@@ -301,6 +308,38 @@ function openMnemonicEdit(wordId) {
   setTimeout(() => input.focus(), 60);
 }
 
+// Standalone modal — used when we want to ask for a mnemonic on a word that
+// isn't currently the visible card (e.g. after the user has moved on from a
+// repeatedly-failed word). Resolves when the modal closes either way.
+function openMnemonicModal(word) {
+  const modal = document.getElementById('mnemonic-modal');
+  if (!modal) return;
+  const wordEl = document.getElementById('mnemonic-modal-word');
+  const input = document.getElementById('mnemonic-modal-input');
+  const tgt = state.settings.target;
+  const src = state.settings.source;
+  // Show both the target form and the translation so the user remembers
+  // exactly which word they're hooking.
+  wordEl.textContent = `${getDisplayWord(word, tgt)}  ·  ${word[src]}`;
+  if (tgt === 'ar') wordEl.setAttribute('dir', 'rtl');
+  else wordEl.removeAttribute('dir');
+  input.value = getMnemonic(word.id);
+  modal.classList.remove('hidden');
+  setTimeout(() => input.focus(), 80);
+
+  const close = () => {
+    modal.classList.add('hidden');
+    document.getElementById('mnemonic-modal-save').onclick = null;
+    document.getElementById('mnemonic-modal-skip').onclick = null;
+  };
+  document.getElementById('mnemonic-modal-save').onclick = () => {
+    saveMnemonic(word.id, input.value);
+    close();
+    showToast('Saved. That hook is yours forever.', 2200);
+  };
+  document.getElementById('mnemonic-modal-skip').onclick = close;
+}
+
 function nextMilestoneText(mature, total) {
   const targets = [1, 10, 25, 50, 100, 200, 350];
   for (const t of targets) {
@@ -318,11 +357,11 @@ function recordMasteredSnapshot(currentMastered) {
   let snaps = {};
   try { snaps = JSON.parse(localStorage.getItem(key) || '{}'); } catch (e) {}
   snaps[today] = currentMastered;
-  // Keep last 14 days only.
+  // Keep last 30 days — gives the progress sparkline a real curve to draw.
   const dates = Object.keys(snaps).sort();
-  if (dates.length > 14) {
+  if (dates.length > 30) {
     const trimmed = {};
-    for (const d of dates.slice(-14)) trimmed[d] = snaps[d];
+    for (const d of dates.slice(-30)) trimmed[d] = snaps[d];
     snaps = trimmed;
   }
   localStorage.setItem(key, JSON.stringify(snaps));
@@ -370,7 +409,7 @@ function pickDirection(cardState) {
   return Math.random() < reverseProb ? 'reverse' : 'forward';
 }
 
-function pickCardMode(direction) {
+function pickCardMode(direction, cardState) {
   if (direction === 'reverse') {
     // Recall direction needs active production — reveal mode is just peeking.
     if (canTypeInTarget()) {
@@ -382,8 +421,11 @@ function pickCardMode(direction) {
   // Forward direction (target → source).
   if (!state.settings || state.settings.mixedMode === false) return 'reveal';
   const modes = ['reveal', 'type', 'choice'];
-  // Listening mode is forward-only and needs audio for the target language.
-  if (canSpeak(state.settings.target)) modes.push('listen');
+  // Listening mode is forward-only, needs audio, AND should only appear once
+  // the user has seen the word at least once — otherwise it's an audio
+  // ambush of a word they've never encountered.
+  const seenBefore = cardState && cardState.reps > 0;
+  if (seenBefore && canSpeak(state.settings.target)) modes.push('listen');
   return modes[Math.floor(Math.random() * modes.length)];
 }
 
@@ -538,21 +580,31 @@ function pickChoiceOptions(word, direction) {
   const candidates = state.words.filter(w => w[ansLang] && w.id !== word.id && w[ansLang] !== correct);
   const sameTheme = candidates.filter(w => w.theme === word.theme);
   shuffle(sameTheme);
-  const distractors = [];
+  const distractorPairs = []; // {text, wordId}
+  const taken = new Set([correct]);
   for (const w of sameTheme) {
-    if (distractors.length >= 3) break;
-    if (!distractors.includes(w[ansLang])) distractors.push(w[ansLang]);
-  }
-  if (distractors.length < 3) {
-    shuffle(candidates);
-    for (const w of candidates) {
-      if (distractors.length >= 3) break;
-      if (!distractors.includes(w[ansLang])) distractors.push(w[ansLang]);
+    if (distractorPairs.length >= 3) break;
+    if (!taken.has(w[ansLang])) {
+      distractorPairs.push({ text: w[ansLang], wordId: w.id });
+      taken.add(w[ansLang]);
     }
   }
-  const options = [correct, ...distractors];
-  shuffle(options);
-  return { options, correct };
+  if (distractorPairs.length < 3) {
+    shuffle(candidates);
+    for (const w of candidates) {
+      if (distractorPairs.length >= 3) break;
+      if (!taken.has(w[ansLang])) {
+        distractorPairs.push({ text: w[ansLang], wordId: w.id });
+        taken.add(w[ansLang]);
+      }
+    }
+  }
+  // Map every option text → word id (correct option maps to the prompt word itself).
+  const all = [{ text: correct, wordId: word.id }, ...distractorPairs];
+  shuffle(all);
+  const options = all.map(p => p.text);
+  const optionWordIds = all.map(p => p.wordId);
+  return { options, optionWordIds, correct };
 }
 
 // ============== Storage ==============
@@ -572,6 +624,75 @@ function saveProgress() {
 function loadProgress() {
   const raw = localStorage.getItem(storageKey(`progress:${pairKey()}`));
   state.progress = raw ? JSON.parse(raw) : {};
+  loadRecentSeen();
+}
+function saveRecentSeen() {
+  localStorage.setItem(storageKey(`recent:${pairKey()}`), JSON.stringify(state.recentSeen));
+}
+function loadRecentSeen() {
+  const raw = localStorage.getItem(storageKey(`recent:${pairKey()}`));
+  state.recentSeen = raw ? JSON.parse(raw) : [];
+}
+function noteSeen(wordId) {
+  // Drop any earlier occurrence, push to the end, trim to limit.
+  const idx = state.recentSeen.indexOf(wordId);
+  if (idx !== -1) state.recentSeen.splice(idx, 1);
+  state.recentSeen.push(wordId);
+  while (state.recentSeen.length > RECENT_SEEN_LIMIT) state.recentSeen.shift();
+  saveRecentSeen();
+}
+
+// ============== Confusion pairs ==============
+// Tracks {correctId, wrongId} mix-ups. After 2+ repeats of the same pair,
+// the next session surfaces a one-time side-by-side compare card.
+function confusionKey(idA, idB) {
+  // Order-insensitive: which word was correct vs. wrong doesn't matter for
+  // deciding they're confusable — we want to know they're a tricky pair.
+  return idA < idB ? `${idA}::${idB}` : `${idB}::${idA}`;
+}
+function loadConfusions() {
+  const raw = localStorage.getItem(storageKey(`confusions:${pairKey()}`));
+  try { return raw ? JSON.parse(raw) : {}; } catch (e) { return {}; }
+}
+function saveConfusions(data) {
+  localStorage.setItem(storageKey(`confusions:${pairKey()}`), JSON.stringify(data));
+}
+function recordConfusion(correctId, wrongId) {
+  if (!correctId || !wrongId || correctId === wrongId) return;
+  const data = loadConfusions();
+  const k = confusionKey(correctId, wrongId);
+  if (!data[k]) data[k] = { count: 0, surfaced: false };
+  data[k].count += 1;
+  saveConfusions(data);
+}
+function pickConfusionPair() {
+  // Return a {idA, idB} pair whose count is >= 2 and which we haven't already
+  // surfaced. Picks the highest-count one first.
+  const data = loadConfusions();
+  let best = null;
+  for (const k of Object.keys(data)) {
+    const entry = data[k];
+    if (entry.surfaced) continue;
+    if (entry.count < 2) continue;
+    if (!best || entry.count > best.count) {
+      const [idA, idB] = k.split('::');
+      best = { idA, idB, count: entry.count, key: k };
+    }
+  }
+  if (!best) return null;
+  // Only surface if both words still exist in our dataset (and have target translations).
+  const tgt = state.settings.target;
+  const wA = state.words.find(w => w.id === best.idA);
+  const wB = state.words.find(w => w.id === best.idB);
+  if (!wA || !wB || !wA[tgt] || !wB[tgt]) return null;
+  return { wA, wB, key: best.key };
+}
+function markConfusionSurfaced(key) {
+  const data = loadConfusions();
+  if (data[key]) {
+    data[key].surfaced = true;
+    saveConfusions(data);
+  }
 }
 function saveDaily() {
   localStorage.setItem(storageKey(`daily:${pairKey()}`), JSON.stringify(state.daily));
@@ -601,9 +722,9 @@ function gradeCard(card, grade) {
   if (grade === 'again') {
     card.ease = Math.max(1.3, card.ease - 0.2);
     card.interval = 0;
-    // Defer by 10 minutes so the failed card doesn't reappear in the very
-    // next lesson — gives a real beat between attempts.
-    card.due = now + 10 * 60 * 1000;
+    // Defer by 25 minutes so a failed card doesn't keep popping up across
+    // back-to-back lessons — gives the brain a real break before retry.
+    card.due = now + 25 * 60 * 1000;
     card.reps = Math.max(1, card.reps);
   } else if (grade === 'good') {
     if (card.reps === 0 || card.interval === 0) {
@@ -650,7 +771,8 @@ function calcStats() {
 }
 
 // ============== Queue ==============
-function buildQueue(themeFilter) {
+function buildQueue(themeFilter, options) {
+  const reviewOnly = !!(options && options.reviewOnly);
   const now = Date.now();
   const tgt = state.settings.target;
   const due = [];
@@ -660,7 +782,7 @@ function buildQueue(themeFilter) {
     if (themeFilter && w.theme !== themeFilter) continue;
     const s = state.progress[w.id];
     if (!s || s.reps === 0) {
-      fresh.push(w);
+      if (!reviewOnly) fresh.push(w);
     } else if (s.due <= now) {
       due.push(w);
     }
@@ -668,16 +790,43 @@ function buildQueue(themeFilter) {
   fresh.sort((a, b) => a.order - b.order);
   shuffle(due);
   // Pull from a wide frequency pool so the order isn't strictly deterministic
-  // and you don't see the same 30 words cycle. Keeps Pareto roughly intact
-  // (top 80 is still high-frequency) while breaking the strict sequence.
-  const FRESH_POOL = 80;
+  // and you don't see the same handful cycle. Wider pool = bigger gap between
+  // re-encounters of any given word across consecutive sessions.
+  const FRESH_POOL = 150;
   const SESSION_NEW_CAP = 30;
-  const newPool = fresh.slice(0, FRESH_POOL);
-  shuffle(newPool);
-  const newCap = themeFilter ? fresh.length : Math.min(newPool.length, SESSION_NEW_CAP);
-  const newSlice = themeFilter ? (shuffle([...fresh]).slice(0, newCap)) : newPool.slice(0, newCap);
-  // Shuffle the combined queue so due and new aren't separated into blocks.
-  const combined = [...due, ...newSlice];
+
+  // Deprioritize words that appeared in recent sessions: anything in
+  // state.recentSeen is shoved to the back of the candidate list so we
+  // first burn through cards the user hasn't seen lately.
+  const recent = new Set(state.recentSeen || []);
+  const splitByRecent = (arr) => {
+    const unseen = [];
+    const seenRecently = [];
+    for (const w of arr) {
+      if (recent.has(w.id)) seenRecently.push(w);
+      else unseen.push(w);
+    }
+    return [unseen, seenRecently];
+  };
+
+  const [freshUnseen, freshRecent] = splitByRecent(fresh);
+  shuffle(freshUnseen);
+  shuffle(freshRecent);
+  const freshOrdered = themeFilter
+    ? [...freshUnseen, ...freshRecent]
+    : [...freshUnseen, ...freshRecent].slice(0, FRESH_POOL);
+  const newCap = themeFilter ? fresh.length : Math.min(freshOrdered.length, SESSION_NEW_CAP);
+  // For non-theme runs we already pulled an unseen-first slice; take the head.
+  const newSlice = freshOrdered.slice(0, newCap);
+
+  const [dueUnseen, dueRecent] = splitByRecent(due);
+  shuffle(dueUnseen);
+  shuffle(dueRecent);
+  const dueOrdered = [...dueUnseen, ...dueRecent];
+
+  // Shuffle the combined queue so due and new aren't separated into blocks,
+  // but the unseen-first ordering above already gave us good spacing.
+  const combined = [...dueOrdered, ...newSlice];
   shuffle(combined);
   return combined;
 }
@@ -753,6 +902,18 @@ function renderHome() {
     studyBtn.textContent = 'Nothing due — but you can try anyway';
   } else {
     studyBtn.textContent = `Study now · ${lessonSize} cards`;
+  }
+
+  // Review-due button: only show when there are actually due cards to review.
+  const reviewBtn = document.getElementById('start-review');
+  if (reviewBtn) {
+    const dueCount = buildQueue(null, { reviewOnly: true }).length;
+    if (dueCount > 0) {
+      reviewBtn.textContent = `Review due · ${dueCount}`;
+      reviewBtn.classList.remove('hidden');
+    } else {
+      reviewBtn.classList.add('hidden');
+    }
   }
 
   renderThemeProgress();
@@ -1024,6 +1185,8 @@ function renderCard(word, showAnswer) {
   const cardState = state.progress[word.id];
   const isNew = !cardState || cardState.reps === 0;
 
+  const previewRow = document.getElementById('preview-row');
+
   if (showAnswer) {
     // Hide all input UIs.
     revealRow.classList.add('hidden');
@@ -1032,7 +1195,18 @@ function renderCard(word, showAnswer) {
     choiceRow.classList.add('hidden');
     skipBtn.classList.add('hidden');
     skipHint.classList.add('hidden');
-    gradeRow.classList.remove('hidden');
+    // In preview mode the user gets a single "Got it" button and the
+    // small skip-known shortcut — no grading at all.
+    if (mode === 'preview') {
+      gradeRow.classList.add('hidden');
+      if (previewRow) previewRow.classList.remove('hidden');
+      // Still allow "I already know this" as a fast-track for previewed words.
+      skipBtn.classList.remove('hidden');
+      skipHint.classList.remove('hidden');
+    } else {
+      gradeRow.classList.remove('hidden');
+      if (previewRow) previewRow.classList.add('hidden');
+    }
     const lp = document.getElementById('listen-prompt');
     if (lp) lp.classList.add('hidden');
     // Restore visibility of prompt area in case listen mode hid them.
@@ -1107,6 +1281,7 @@ function renderCard(word, showAnswer) {
   answerEl.classList.add('hidden');
   exampleEl.classList.add('hidden');
   gradeRow.classList.add('hidden');
+  if (previewRow) previewRow.classList.add('hidden');
   feedback.classList.add('hidden');
 
   // Emoji is a hint for new cards in reveal mode only. In type/choice modes the
@@ -1146,8 +1321,12 @@ function renderCard(word, showAnswer) {
     });
     const playBtn = document.getElementById('listen-play-btn');
     attachAudioHandler(playBtn, word[tgt], tgt);
-    // Auto-play after a beat so user has time to focus.
-    setTimeout(() => speak(word[tgt], tgt), 250);
+    // Auto-play after a beat — but only for words the user has seen before.
+    // First-time encounters get the play button only (no audio ambush);
+    // they have to tap to hear it.
+    if (cardState && cardState.reps > 0) {
+      setTimeout(() => speak(word[tgt], tgt), 250);
+    }
   } else if (mode === 'type') {
     typeRow.classList.remove('hidden');
     dontknowRow.classList.remove('hidden');
@@ -1235,6 +1414,11 @@ function submitChoice(idx) {
   } else {
     feedback.classList.add('wrong');
     feedback.textContent = `✗ Answer: ${correct}`;
+    // Log the confusion pair so we can surface a side-by-side compare later.
+    const wrongWordId = ch.optionWordIds && ch.optionWordIds[idx];
+    if (wrongWordId && wrongWordId !== w.id) {
+      recordConfusion(w.id, wrongWordId);
+    }
   }
 
   // Show full answer screen and auto-grade.
@@ -1311,13 +1495,27 @@ function simulate(s, grade) {
 }
 
 // ============== Session ==============
-function showToast(message, ms = 3200) {
+function showToast(message, ms = 3200, onTap) {
   const el = document.getElementById('toast');
   if (!el) return;
   el.textContent = message;
   el.classList.add('visible');
+  el.classList.toggle('actionable', !!onTap);
   clearTimeout(el._timer);
-  el._timer = setTimeout(() => el.classList.remove('visible'), ms);
+  // Reset previous handler regardless.
+  el.onclick = null;
+  if (onTap) {
+    el.onclick = () => {
+      el.classList.remove('visible', 'actionable');
+      el.onclick = null;
+      clearTimeout(el._timer);
+      onTap();
+    };
+  }
+  el._timer = setTimeout(() => {
+    el.classList.remove('visible', 'actionable');
+    el.onclick = null;
+  }, ms);
 }
 
 function maybeShowWelcomeBanner() {
@@ -1344,11 +1542,12 @@ function startSession(themeFilter, wordsOverride, options) {
   if (wordsOverride && wordsOverride.length > 0) {
     queue = [...wordsOverride];
   } else {
-    queue = buildQueue(themeFilter);
+    queue = buildQueue(themeFilter, { reviewOnly: !!opts.reviewOnly });
 
     // Daily warm-up: first lesson of the day gets up to 2 mastered cards
-    // prepended for momentum and confidence.
-    if (state.daily && state.daily.done === 0 && !state.daily.warmupGiven) {
+    // prepended for momentum and confidence. Skip warm-up in review-only mode
+    // since the whole point of that mode is "no new noise".
+    if (!opts.reviewOnly && state.daily && state.daily.done === 0 && !state.daily.warmupGiven) {
       const tgt = state.settings.target;
       const inQueue = new Set(queue.map(w => w.id));
       const mature = state.words.filter(w =>
@@ -1366,7 +1565,11 @@ function startSession(themeFilter, wordsOverride, options) {
     }
   }
   if (queue.length === 0) {
-    showToast("You're caught up. New cards unlock as you finish today's goal.");
+    if (opts.reviewOnly) {
+      showToast("Nothing due to review right now. Try Study now instead.");
+    } else {
+      showToast("You're caught up. New cards unlock as you finish today's goal.");
+    }
     return;
   }
   const freshIds = new Set();
@@ -1392,6 +1595,8 @@ function startSession(themeFilter, wordsOverride, options) {
     nextSentenceAt: 7 + Math.floor(Math.random() * 4), // first sentence at 7..10
     matchRound: null,
     sentenceCameo: null,
+    clusterPending: null,
+    confusionPending: null,
     shownSentenceIds: new Set(),
     lessonTarget,
     lessonSize: Math.min(queue.length, lessonTarget),
@@ -1404,12 +1609,55 @@ function startSession(themeFilter, wordsOverride, options) {
     state.session.lessonTarget = wordsOverride.length;
     state.session.lessonSize = wordsOverride.length;
   }
+
+  // Plan a cluster intro: once a day, if there are 3+ unseen new cards in the
+  // queue from the same theme, group them as a "word family" intro. Skips
+  // theme-filtered lessons (already same theme) and short/override sessions.
+  if (!themeFilter && !wordsOverride && !opts.reviewOnly &&
+      !state.daily.clusterShown && state.session.lessonSize >= 10) {
+    const cluster = planClusterIntro(queue);
+    if (cluster) {
+      state.session.clusterPending = cluster;
+    }
+  }
+
+  // Plan a confusion compare: if there's an unsurfaced pair the user has
+  // mixed up 2+ times, show the side-by-side card once at the start of the
+  // session. Skipped in tiny sessions to keep them snappy.
+  if (!wordsOverride && state.session.lessonSize >= 8) {
+    const conf = pickConfusionPair();
+    if (conf) state.session.confusionPending = conf;
+  }
+
   show('screen-study');
   renderCurrent();
 }
 
+// Look for a "word family" — 3 unseen new cards in the queue sharing a theme.
+// Returns the 3 words (or null if no such cluster exists).
+function planClusterIntro(queue) {
+  const byTheme = {};
+  for (const w of queue) {
+    const s = state.progress[w.id];
+    if (s && s.reps > 0) continue; // only group genuinely new words
+    if (!w.theme) continue;
+    (byTheme[w.theme] = byTheme[w.theme] || []).push(w);
+  }
+  // Prefer themes with the most new cards (so we surface meaty clusters first).
+  const candidates = Object.keys(byTheme)
+    .filter(t => byTheme[t].length >= 3)
+    .sort((a, b) => byTheme[b].length - byTheme[a].length);
+  if (candidates.length === 0) return null;
+  const theme = candidates[0];
+  return { theme, words: byTheme[theme].slice(0, 3) };
+}
+
 function renderCurrent() {
   if (!state.session) { finishSession(); return; }
+
+  // Show or hide the "undo last grade" button.
+  // Visible for 5 seconds after a grade, on the very next card only.
+  refreshUndoButton();
 
   // End the lesson at the size we promised on the Study now button.
   // (Uses lessonSize, not lessonTarget — they differ when the queue was smaller
@@ -1424,6 +1672,16 @@ function renderCurrent() {
     return;
   }
 
+  // Cluster intro: shown once at the start of a session, before any cards.
+  if (state.session.clusterPending && state.session.answered === 0) {
+    startClusterIntro();
+    return;
+  }
+  // Confusion compare: also at the start, after cluster (if any).
+  if (state.session.confusionPending && state.session.answered === 0) {
+    startConfusionCompare();
+    return;
+  }
   // Sentence cameos take priority — they're the rarer interlude.
   if (shouldTriggerSentence()) {
     startSentenceCameo();
@@ -1444,14 +1702,27 @@ function renderCurrent() {
 
   // Pick direction (forward = target→source; reverse = source→target) and mode.
   const cardStateForDir = state.progress[w.id];
-  state.session.cardDirection = pickDirection(cardStateForDir);
-  state.session.cardMode = pickCardMode(state.session.cardDirection);
+  const isFirstEncounter = !cardStateForDir || cardStateForDir.reps === 0;
+  if (isFirstEncounter) {
+    // Calm no-quiz preview for words the user has never seen before. The user
+    // taps "Got it" once, which silently grades 'good' so the card enters
+    // normal SRS rotation. Next time they meet this word, it's a real card.
+    state.session.cardDirection = 'forward';
+    state.session.cardMode = 'preview';
+  } else {
+    state.session.cardDirection = pickDirection(cardStateForDir);
+    state.session.cardMode = pickCardMode(state.session.cardDirection, cardStateForDir);
+  }
+  // Remember this word for cross-session spacing (so next lesson tries to
+  // pick fresh-er candidates first). Done once per card appearance.
+  noteSeen(w.id);
   // 'listen' mode reuses choice options (4 source-lang buttons), so generate them.
   if (state.session.cardMode === 'choice' || state.session.cardMode === 'listen') {
     state.session.currentChoices = pickChoiceOptions(w, state.session.cardDirection);
   }
 
-  renderCard(w, false);
+  // Preview mode shows the answer immediately; other modes hide it until reveal.
+  renderCard(w, state.session.cardMode === 'preview');
 
   const cardEl = document.getElementById('card-area');
   cardEl.classList.remove('enter', 'exit-again', 'exit-good', 'exit-easy');
@@ -1997,6 +2268,202 @@ function reveal() {
   renderCard(w, true);
 }
 
+// Preview "Got it" — silent grade 'good' for a brand-new word, advancing
+// without making the user pick a confidence level on first sight.
+function previewGotIt() {
+  if (!state.session || state.session._busy) return;
+  // Reuse gradeAndAdvance so daily counter, milestones, animations all behave
+  // the same as a normal 'good' grade. The card.reps was 0 going in, so
+  // gradeCard('good') will set interval = 1 day.
+  gradeAndAdvance('good');
+}
+
+// ============== Cluster intro (word family) ==============
+function startClusterIntro() {
+  const cluster = state.session.clusterPending;
+  if (!cluster) return;
+  const tgt = state.settings.target;
+  const src = state.settings.source;
+  document.getElementById('cluster-title').textContent = humanTheme(cluster.theme);
+  const list = document.getElementById('cluster-list');
+  list.innerHTML = '';
+  for (const w of cluster.words) {
+    const row = document.createElement('div');
+    row.className = 'cluster-row';
+
+    const emoji = document.createElement('div');
+    emoji.className = 'cluster-emoji';
+    emoji.textContent = w.emoji || '·';
+    row.appendChild(emoji);
+
+    const text = document.createElement('div');
+    text.className = 'cluster-text';
+    const tgtEl = document.createElement('div');
+    tgtEl.className = 'cluster-target';
+    tgtEl.textContent = getDisplayWord(w, tgt);
+    if (tgt === 'ar') tgtEl.setAttribute('dir', 'rtl');
+    text.appendChild(tgtEl);
+    const translitOn = state.settings && state.settings.showTranslit !== false;
+    let translitText = '';
+    if (translitOn) {
+      if (tgt === 'ar' && w.ar_translit) translitText = w.ar_translit;
+      else if (tgt === 'th' && w.th_translit) translitText = w.th_translit;
+    }
+    if (translitText) {
+      const trEl = document.createElement('div');
+      trEl.className = 'cluster-translit';
+      trEl.textContent = translitText;
+      text.appendChild(trEl);
+    }
+    const srcEl = document.createElement('div');
+    srcEl.className = 'cluster-source';
+    srcEl.textContent = w[src];
+    text.appendChild(srcEl);
+    row.appendChild(text);
+
+    if (canSpeak(tgt)) {
+      const audioBtn = document.createElement('button');
+      audioBtn.className = 'cluster-audio-btn';
+      audioBtn.setAttribute('aria-label', 'Hear pronunciation');
+      audioBtn.textContent = '🔊';
+      attachAudioHandler(audioBtn, w[tgt], tgt);
+      row.appendChild(audioBtn);
+    }
+
+    list.appendChild(row);
+  }
+  show('screen-cluster');
+}
+
+// ============== Confusion compare ==============
+function startConfusionCompare() {
+  const conf = state.session.confusionPending;
+  if (!conf) return;
+  const { wA, wB } = conf;
+  const tgt = state.settings.target;
+  const src = state.settings.source;
+  const translitOn = state.settings && state.settings.showTranslit !== false;
+
+  const fill = (suffix, w) => {
+    document.getElementById(`confusion-emoji-${suffix}`).textContent = w.emoji || '·';
+    const tgtEl = document.getElementById(`confusion-target-${suffix}`);
+    tgtEl.textContent = getDisplayWord(w, tgt);
+    if (tgt === 'ar') tgtEl.setAttribute('dir', 'rtl');
+    else tgtEl.removeAttribute('dir');
+    let translit = '';
+    if (translitOn) {
+      if (tgt === 'ar' && w.ar_translit) translit = w.ar_translit;
+      else if (tgt === 'th' && w.th_translit) translit = w.th_translit;
+    }
+    document.getElementById(`confusion-translit-${suffix}`).textContent = translit;
+    document.getElementById(`confusion-source-${suffix}`).textContent = w[src];
+    const audioBtn = document.getElementById(`confusion-audio-${suffix}`);
+    if (canSpeak(tgt)) {
+      audioBtn.classList.remove('hidden');
+      attachAudioHandler(audioBtn, w[tgt], tgt);
+    } else {
+      audioBtn.classList.add('hidden');
+    }
+  };
+  fill('a', wA);
+  fill('b', wB);
+  show('screen-confusion');
+}
+
+function finishConfusionCompare() {
+  if (!state.session || !state.session.confusionPending) return;
+  markConfusionSurfaced(state.session.confusionPending.key);
+  state.session.confusionPending = null;
+  show('screen-study');
+  renderCurrent();
+}
+
+function finishClusterIntro() {
+  if (!state.session || !state.session.clusterPending) return;
+  const cluster = state.session.clusterPending;
+  // Silently bump these 3 cards out of "new" state so they no longer trigger
+  // the individual preview screens when they come up in the lesson. They'll
+  // appear as normal cards (reveal/type/choice) with the cluster fresh in mind.
+  for (const w of cluster.words) {
+    let card = state.progress[w.id];
+    if (!card) { card = defaultCardState(); state.progress[w.id] = card; }
+    if (card.reps === 0) {
+      card.reps = 1;
+      card.interval = MS_PER_DAY;
+      card.due = Date.now() + card.interval;
+      // freshIds tracking: the card was new in the queue, so countedIds will
+      // still see it as "new learned" when the user actually grades it.
+    }
+  }
+  saveProgress();
+  state.session.clusterPending = null;
+  state.daily.clusterShown = true;
+  saveDaily();
+  show('screen-study');
+  renderCurrent();
+}
+
+// ============== Undo last grade ==============
+// Shows the undo button if there's a recent grade to reverse, hides otherwise.
+// Auto-hides after 5 seconds — meant for accidental taps, not real reconsideration.
+function refreshUndoButton() {
+  const btn = document.getElementById('undo-grade');
+  if (!btn) return;
+  clearTimeout(state.session && state.session._undoHideTimer);
+  const last = state.session && state.session._lastGrade;
+  if (!last) {
+    btn.classList.add('hidden');
+    return;
+  }
+  btn.classList.remove('hidden');
+  state.session._undoHideTimer = setTimeout(() => {
+    // After 5s the snapshot expires — no more silent undo.
+    if (state.session) state.session._lastGrade = null;
+    btn.classList.add('hidden');
+  }, 5000);
+}
+
+function undoLastGrade() {
+  if (!state.session || !state.session._lastGrade) return;
+  if (state.session._busy) return;
+  const snap = state.session._lastGrade;
+  state.session._lastGrade = null;
+
+  // Restore the per-card SRS state.
+  if (snap.cardBefore) {
+    state.progress[snap.wordId] = snap.cardBefore;
+  } else {
+    delete state.progress[snap.wordId];
+  }
+  // Roll back daily counter (only if the grade was counted in the first place).
+  if (snap.wasCounted && !snap.recountedAfterUndo) {
+    state.daily.done = snap.dailyDoneBefore;
+    state.session.countedIds.delete(snap.wordId);
+    saveDaily();
+  }
+  // Roll back session bookkeeping.
+  state.session.againCounts[snap.wordId] = snap.againCountBefore;
+  if (snap.againCountBefore === 0) delete state.session.againCounts[snap.wordId];
+  // Recently-seen had the word appended in advance() — pop if the last entry
+  // matches (it almost always will since this is the card we just left).
+  const rs = state.session.recentlySeen;
+  if (rs.length && rs[rs.length - 1] === snap.wordId) rs.pop();
+  // Cross-session recently-seen.
+  state.recentSeen = snap.recentSeenBefore;
+  saveRecentSeen();
+
+  // Wind back position counters and re-show the same card.
+  state.session.index = snap.index;
+  state.session.answered = Math.max(0, state.session.answered - 1);
+  saveProgress();
+
+  // Hide undo button immediately.
+  const btn = document.getElementById('undo-grade');
+  if (btn) btn.classList.add('hidden');
+
+  renderCurrent();
+}
+
 function gradeAndAdvance(grade) {
   if (!state.session || state.session._busy) return;
   // If an auto-grade was scheduled (from type/choice modes), cancel it —
@@ -2005,8 +2472,21 @@ function gradeAndAdvance(grade) {
   state.session._busy = true;
 
   const w = state.session.queue[state.session.index];
+  const hadCardBefore = !!state.progress[w.id];
   let card = state.progress[w.id];
   if (!card) { card = defaultCardState(); state.progress[w.id] = card; }
+  // Snapshot for undo — store everything we're about to mutate so we can
+  // reverse it cleanly if the user mis-tapped.
+  state.session._lastGrade = {
+    wordId: w.id,
+    grade,
+    index: state.session.index,
+    cardBefore: hadCardBefore ? { ...card } : null,
+    dailyDoneBefore: state.daily.done,
+    wasCounted: state.session.countedIds.has(w.id),
+    againCountBefore: state.session.againCounts[w.id] || 0,
+    recentSeenBefore: [...state.recentSeen],
+  };
   const prevMature = calcStats().mature;
   gradeCard(card, grade);
   const newMature = calcStats().mature;
@@ -2043,10 +2523,31 @@ function gradeAndAdvance(grade) {
 
   if (grade === 'again') {
     state.session.againCounts[w.id] = (state.session.againCounts[w.id] || 0) + 1;
-    // Smart hint: anchor the failed word to one the user has already mastered.
-    const hint = buildHintForFail(w);
-    if (hint) showToast(hint, 4500);
-    // No within-session re-queue. The card's SRS due (10 min from now)
+    // Lifetime "again" counter, persisted with the card. Used to surface
+    // the mnemonic prompt after repeated fails.
+    card.lifetimeAgains = (card.lifetimeAgains || 0) + 1;
+    saveProgress();
+    // If the user has now failed this word 3+ times across all sessions and
+    // hasn't written a memory hook yet, prompt them. Done once per word
+    // (mnemonicPromptShown flag) so we don't nag.
+    const ALREADY_PROMPTED = !!card.mnemonicPromptShown;
+    const HAS_MNEMONIC = !!getMnemonic(w.id);
+    if (card.lifetimeAgains >= 3 && !ALREADY_PROMPTED && !HAS_MNEMONIC) {
+      card.mnemonicPromptShown = true;
+      saveProgress();
+      // Use the actionable toast so the user can opt in without interruption.
+      const labelTgt = getDisplayWord(w, state.settings.target);
+      showToast(
+        `"${labelTgt}" keeps slipping. Tap to add a memory hook.`,
+        5500,
+        () => openMnemonicModal(w)
+      );
+    } else {
+      // Smart hint: anchor the failed word to one the user has already mastered.
+      const hint = buildHintForFail(w);
+      if (hint) showToast(hint, 4500);
+    }
+    // No within-session re-queue. The card's SRS due (25 min from now)
     // brings it back in a later lesson, with fresh perspective.
   } else {
     // Track for matching rounds (only non-again so user has actually "got" the card).
@@ -2236,6 +2737,175 @@ function openMasteredList() {
   show('screen-mastered');
 }
 
+// ============== Progress / stats peek screen ==============
+function openProgressScreen() {
+  renderProgressSparkline();
+  renderTopPracticed();
+  renderTopStruggled();
+  show('screen-progress');
+}
+
+function renderProgressSparkline() {
+  const svg = document.getElementById('progress-sparkline');
+  const emptyMsg = document.getElementById('progress-sparkline-empty');
+  const startLabel = document.getElementById('sparkline-start');
+  const endLabel = document.getElementById('sparkline-end');
+  if (!svg) return;
+  svg.innerHTML = '';
+
+  const key = storageKey(`mastered-snap:${pairKey()}`);
+  let snaps = {};
+  try { snaps = JSON.parse(localStorage.getItem(key) || '{}'); } catch (e) {}
+  // Make sure today is in there.
+  const today = todayStr();
+  if (!(today in snaps)) snaps[today] = calcStats().mature;
+  const dates = Object.keys(snaps).sort();
+
+  if (dates.length < 2) {
+    emptyMsg.classList.remove('hidden');
+    startLabel.textContent = '';
+    endLabel.textContent = '';
+    return;
+  }
+  emptyMsg.classList.add('hidden');
+
+  const W = 300, H = 80, PAD = 6;
+  const values = dates.map(d => snaps[d]);
+  const max = Math.max(...values);
+  const min = Math.min(...values);
+  const range = Math.max(1, max - min);
+
+  // Map data points to SVG coords.
+  const xStep = (W - PAD * 2) / Math.max(1, dates.length - 1);
+  const points = values.map((v, i) => {
+    const x = PAD + i * xStep;
+    const norm = (v - min) / range;
+    const y = H - PAD - norm * (H - PAD * 2);
+    return [x, y];
+  });
+
+  // Filled area under the curve (subtle gradient feel via fill-opacity).
+  const areaPath =
+    `M ${PAD} ${H - PAD} ` +
+    points.map(p => `L ${p[0].toFixed(1)} ${p[1].toFixed(1)}`).join(' ') +
+    ` L ${(W - PAD).toFixed(1)} ${H - PAD} Z`;
+  const area = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  area.setAttribute('d', areaPath);
+  area.setAttribute('fill', '#a8c994');
+  area.setAttribute('fill-opacity', '0.25');
+  svg.appendChild(area);
+
+  // Line on top.
+  const linePath = 'M ' + points.map(p => `${p[0].toFixed(1)} ${p[1].toFixed(1)}`).join(' L ');
+  const line = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  line.setAttribute('d', linePath);
+  line.setAttribute('fill', 'none');
+  line.setAttribute('stroke', '#527c3e');
+  line.setAttribute('stroke-width', '2');
+  line.setAttribute('stroke-linejoin', 'round');
+  svg.appendChild(line);
+
+  // Last-point dot.
+  const last = points[points.length - 1];
+  const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+  dot.setAttribute('cx', last[0]);
+  dot.setAttribute('cy', last[1]);
+  dot.setAttribute('r', '3.5');
+  dot.setAttribute('fill', '#527c3e');
+  svg.appendChild(dot);
+
+  // Axis labels — show the earliest and latest dates with their counts.
+  startLabel.textContent = `${formatShortDate(dates[0])} · ${values[0]}`;
+  endLabel.textContent = `${formatShortDate(dates[dates.length - 1])} · ${values[values.length - 1]}`;
+}
+
+function formatShortDate(yyyymmdd) {
+  // yyyy-mm-dd → "May 14"
+  const parts = yyyymmdd.split('-');
+  const d = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
+  return d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+}
+
+function renderTopPracticed() {
+  // Top 5 by reps — what the user has worked on most.
+  const list = document.getElementById('top-practiced-list');
+  list.innerHTML = '';
+  const tgt = state.settings.target;
+  const src = state.settings.source;
+  const rows = state.words
+    .filter(w => w[tgt] && state.progress[w.id] && state.progress[w.id].reps > 0)
+    .map(w => ({ w, reps: state.progress[w.id].reps }))
+    .sort((a, b) => b.reps - a.reps)
+    .slice(0, 5);
+  if (rows.length === 0) {
+    const empty = document.createElement('div');
+    empty.className = 'progress-list-empty';
+    empty.textContent = 'Nothing practiced yet — finish a few lessons first.';
+    list.appendChild(empty);
+    return;
+  }
+  for (const r of rows) {
+    const row = document.createElement('div');
+    row.className = 'progress-list-row';
+    const left = document.createElement('div');
+    const word = document.createElement('span');
+    word.className = 'pl-word';
+    word.textContent = getDisplayWord(r.w, tgt);
+    if (tgt === 'ar') word.setAttribute('dir', 'rtl');
+    left.appendChild(word);
+    const trans = document.createElement('span');
+    trans.className = 'pl-trans';
+    trans.textContent = r.w[src];
+    left.appendChild(trans);
+    row.appendChild(left);
+    const count = document.createElement('span');
+    count.className = 'pl-count';
+    count.textContent = `${r.reps}×`;
+    row.appendChild(count);
+    list.appendChild(row);
+  }
+}
+
+function renderTopStruggled() {
+  // Top 5 by lifetimeAgains — the words that have tripped the user up most.
+  const list = document.getElementById('top-struggled-list');
+  list.innerHTML = '';
+  const tgt = state.settings.target;
+  const src = state.settings.source;
+  const rows = state.words
+    .filter(w => w[tgt] && state.progress[w.id] && (state.progress[w.id].lifetimeAgains || 0) > 0)
+    .map(w => ({ w, agains: state.progress[w.id].lifetimeAgains || 0 }))
+    .sort((a, b) => b.agains - a.agains)
+    .slice(0, 5);
+  if (rows.length === 0) {
+    const empty = document.createElement('div');
+    empty.className = 'progress-list-empty';
+    empty.textContent = 'No tricky words yet. Brag carefully.';
+    list.appendChild(empty);
+    return;
+  }
+  for (const r of rows) {
+    const row = document.createElement('div');
+    row.className = 'progress-list-row';
+    const left = document.createElement('div');
+    const word = document.createElement('span');
+    word.className = 'pl-word';
+    word.textContent = getDisplayWord(r.w, tgt);
+    if (tgt === 'ar') word.setAttribute('dir', 'rtl');
+    left.appendChild(word);
+    const trans = document.createElement('span');
+    trans.className = 'pl-trans';
+    trans.textContent = r.w[src];
+    left.appendChild(trans);
+    row.appendChild(left);
+    const count = document.createElement('span');
+    count.className = 'pl-count';
+    count.textContent = `${r.agains} miss${r.agains === 1 ? '' : 'es'}`;
+    row.appendChild(count);
+    list.appendChild(row);
+  }
+}
+
 function buildSessionSummary() {
   if (!state.session) return 'Session complete.';
   let newLearned = 0, revisited = 0;
@@ -2398,8 +3068,12 @@ function initSettingsScreen() {
     if (confirm('Reset all progress for this language pair? This cannot be undone.')) {
       state.progress = {};
       state.daily = { date: todayStr(), done: 0 };
+      state.recentSeen = [];
       saveProgress();
       saveDaily();
+      saveRecentSeen();
+      // Wipe per-pair confusion history too.
+      localStorage.removeItem(storageKey(`confusions:${pairKey()}`));
       renderSettings();
     }
   });
@@ -2491,6 +3165,21 @@ async function init() {
 
   document.getElementById('start-study').addEventListener('click', () => startSession(null));
   document.getElementById('start-stretch').addEventListener('click', () => startSession(null, null, { lessonSize: 5 }));
+  document.getElementById('start-review').addEventListener('click', () => startSession(null, null, { reviewOnly: true }));
+  document.getElementById('undo-grade').addEventListener('click', undoLastGrade);
+  document.getElementById('preview-next').addEventListener('click', previewGotIt);
+  document.getElementById('cluster-continue').addEventListener('click', finishClusterIntro);
+  document.getElementById('cluster-back').addEventListener('click', () => {
+    state.session = null;
+    renderHome();
+    show('screen-home');
+  });
+  document.getElementById('confusion-continue').addEventListener('click', finishConfusionCompare);
+  document.getElementById('confusion-back').addEventListener('click', () => {
+    state.session = null;
+    renderHome();
+    show('screen-home');
+  });
   document.getElementById('reveal-btn').addEventListener('click', reveal);
   document.getElementById('skip-known-btn').addEventListener('click', skipKnown);
   document.getElementById('type-submit').addEventListener('click', submitTypeAnswer);
@@ -2556,8 +3245,19 @@ async function init() {
     closeLessonModal();
     startSession(null, null, { lessonSize: 5 });
   });
-  document.getElementById('stat-mastered').addEventListener('click', openMasteredList);
+  document.getElementById('stat-mastered').addEventListener('click', (e) => {
+    // The stat number drills into the mastered-words list.
+    // Stop propagation so the surrounding stat-card click (progress screen) doesn't also fire.
+    e.stopPropagation();
+    openMasteredList();
+  });
   document.getElementById('close-mastered').addEventListener('click', () => {
+    renderHome();
+    show('screen-home');
+  });
+  // Tap anywhere else on the stat-card → progress screen.
+  document.getElementById('stat-card').addEventListener('click', openProgressScreen);
+  document.getElementById('close-progress').addEventListener('click', () => {
     renderHome();
     show('screen-home');
   });

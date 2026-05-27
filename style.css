@@ -180,6 +180,17 @@ html, body {
 .secondary-btn:hover { background: #dfeacd; }
 .secondary-btn:active { transform: scale(0.98); }
 
+/* Two-up row under the primary Study-now button (Quick lesson / Review due). */
+.study-options-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.study-options-row .secondary-btn { margin-top: 10px; }
+.study-options-row .secondary-btn.hidden { display: none; }
+/* When only one button is visible, let it span full width naturally. */
+.study-options-row:has(.secondary-btn.hidden) { grid-template-columns: 1fr; }
+
 .skip-hint {
   text-align: center;
   font-size: 13px;
@@ -263,6 +274,65 @@ html, body {
 .stat-label {
   font-size: 15px;
   color: var(--text-soft);
+}
+
+/* Whole stat-card is tappable now (opens the Progress screen). */
+.stat-card { cursor: pointer; transition: transform 0.12s ease; }
+.stat-card:active { transform: scale(0.99); }
+.stat-card-hint {
+  margin-top: 8px;
+  text-align: right;
+  font-style: italic;
+}
+
+/* ---------- Progress screen ---------- */
+.progress-section { margin-bottom: 14px; }
+.progress-section p { margin-bottom: 10px; }
+.sparkline-wrap {
+  position: relative;
+  width: 100%;
+  height: 80px;
+  margin-bottom: 4px;
+}
+.sparkline-wrap svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.sparkline-axis {
+  display: flex;
+  justify-content: space-between;
+}
+.progress-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.progress-list-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px;
+  background: #faf7ef;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font-size: 14px;
+}
+.progress-list-row .pl-word { font-weight: 600; color: var(--text); }
+.progress-list-row .pl-trans { color: var(--text-soft); font-size: 13px; margin-left: 8px; }
+.progress-list-row .pl-count {
+  color: var(--text-soft);
+  font-size: 12px;
+  background: #fff;
+  padding: 3px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+}
+.progress-list-empty {
+  font-style: italic;
+  color: var(--muted);
+  font-size: 13px;
+  padding: 6px 2px;
 }
 
 .next-milestone {
@@ -511,6 +581,27 @@ html, body {
   gap: 12px;
 }
 .spacer { flex: 1; }
+
+/* Undo last grade — small pill, appears for 5s after grading. */
+.undo-btn {
+  margin-left: auto;
+  background: #fff5e1;
+  color: #8c6b2a;
+  border: 1px solid #e6c987;
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 13px;
+  font-family: inherit;
+  cursor: pointer;
+  animation: undo-fade-in 0.2s ease;
+}
+.undo-btn:active { transform: scale(0.96); }
+.undo-btn.hidden { display: none; }
+@keyframes undo-fade-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 .progress-pill {
   background: var(--bg-card);
   border: 1px solid var(--line);
@@ -1427,6 +1518,132 @@ html, body {
 .lesson-modal-card .secondary-btn { margin-top: 6px; }
 .lesson-modal-card .text-link-btn { margin-top: 10px; display: block; width: 100%; text-align: center; }
 
+/* Mnemonic prompt modal — same shell as lesson-end modal. */
+.mnemonic-modal-word {
+  font-size: 22px;
+  font-weight: 600;
+  margin: 4px 0 12px 0;
+  color: var(--text);
+}
+#mnemonic-modal-input {
+  width: 100%;
+  font-size: 15px;
+  font-family: inherit;
+  padding: 10px 12px;
+  border: 1.5px solid var(--line);
+  border-radius: 10px;
+  resize: vertical;
+  background: #fcfaf5;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+#mnemonic-modal-input:focus {
+  outline: none;
+  border-color: #a8c994;
+}
+
+/* ---------- Confusion compare ---------- */
+.confusion-title {
+  font-size: 22px;
+  margin: 8px 0 4px;
+  color: var(--text);
+}
+.confusion-sub { margin-bottom: 18px; }
+.confusion-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+.confusion-card {
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 16px 12px;
+  box-shadow: var(--shadow);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+.confusion-emoji { font-size: 30px; }
+.confusion-target {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text);
+}
+.confusion-translit { font-size: 12px; }
+.confusion-source {
+  font-size: 14px;
+  color: var(--text-soft);
+  font-style: italic;
+}
+.confusion-card .cluster-audio-btn { margin-top: 4px; }
+
+/* ---------- Cluster intro ---------- */
+.cluster-title {
+  font-size: 22px;
+  margin: 8px 0 4px;
+  color: var(--text);
+}
+.cluster-sub { margin-bottom: 14px; }
+.cluster-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+.cluster-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 12px 14px;
+  box-shadow: var(--shadow);
+}
+.cluster-emoji { font-size: 26px; }
+.cluster-text { flex: 1; min-width: 0; }
+.cluster-target {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text);
+}
+.cluster-translit {
+  font-size: 13px;
+  color: var(--muted);
+}
+.cluster-source {
+  font-size: 14px;
+  color: var(--text-soft);
+  margin-top: 2px;
+}
+.cluster-audio-btn {
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  font-size: 15px;
+}
+.cluster-audio-btn:active { transform: scale(0.95); }
+
+/* ---------- New-word preview ---------- */
+.preview-row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+}
+.preview-row.hidden { display: none; }
+.preview-hint {
+  text-align: center;
+  font-style: italic;
+}
+
 /* ---------- Toast ---------- */
 
 .toast {
@@ -1451,6 +1668,19 @@ html, body {
   opacity: 1;
   transform: translate(-50%, 0);
 }
+/* Tappable toast variant — used for "add a memory hook" prompts after repeated fails. */
+.toast.actionable {
+  cursor: pointer;
+  pointer-events: auto;
+  background: #2e4d6b;
+  border: 1.5px solid #5d8ab8;
+}
+.toast.actionable::after {
+  content: ' →';
+  font-weight: 700;
+  margin-left: 4px;
+}
+.toast.actionable:active { transform: translate(-50%, 0) scale(0.97); }
 
 /* ---------- Welcome banner (appears on app launch) ---------- */
 
