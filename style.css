@@ -574,7 +574,10 @@ html, body {
 
 /* ---------- Study ---------- */
 
-.study-container { gap: 16px; }
+.study-container { gap: 16px; overflow-y: auto; }
+/* When study screen is the active one, let the page itself scroll on small
+   viewports so action buttons never get clipped below the fold. */
+#screen-study { overflow-y: auto; -webkit-overflow-scrolling: touch; }
 .study-header {
   display: flex;
   align-items: center;
@@ -1643,14 +1646,31 @@ html, body {
   text-align: center;
   font-style: italic;
 }
+/* Preview-mode card: tighter spacing so the "Got it, next" button stays
+   in view on small phones. Hide the mnemonic section here — preview is
+   for first-look only; notes can be added later when the word reappears. */
+.flashcard.preview-mode {
+  min-height: 0;
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+.flashcard.preview-mode .mnemonic-section { display: none; }
+.flashcard.preview-mode .card-emoji { font-size: 36px; }
+.flashcard.preview-mode .card-prompt { font-size: 36px; }
+.flashcard.preview-mode .card-answer { margin-top: 6px; }
+.flashcard.preview-mode .card-answer-main { font-size: 22px; }
+.flashcard.preview-mode .card-example { margin-top: 10px; }
 
 /* ---------- Toast ---------- */
 
 .toast {
   position: fixed;
   left: 50%;
-  bottom: calc(env(safe-area-inset-bottom, 0px) + 28px);
-  transform: translate(-50%, 12px);
+  /* Anchor near the top of the screen so it never sits on top of the
+     action buttons at the bottom (Not sure / Recognize / Know it). */
+  top: calc(env(safe-area-inset-top, 0px) + 64px);
+  bottom: auto;
+  transform: translate(-50%, -12px);
   background: var(--text);
   color: var(--bg);
   padding: 12px 18px;
@@ -1667,6 +1687,11 @@ html, body {
 .toast.visible {
   opacity: 1;
   transform: translate(-50%, 0);
+}
+/* Welcome banner uses the top slot already — push the toast down a touch
+   when both could appear, so they don't stack on the same line. */
+.welcome-banner.visible ~ .toast.visible {
+  top: calc(env(safe-area-inset-top, 0px) + 110px);
 }
 /* Tappable toast variant — used for "add a memory hook" prompts after repeated fails. */
 .toast.actionable {

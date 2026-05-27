@@ -1123,6 +1123,27 @@ function renderCard(word, showAnswer) {
   const answerLang = direction === 'reverse' ? tgt : src;
   const mode = (state.session && state.session.cardMode) || 'reveal';
 
+  // CRITICAL: clear any stale per-card UI from the previous card before we
+  // start setting things up. The check-feedback ("✗ Answer: X") and the
+  // correct/wrong classes on choice buttons used to leak onto the next card.
+  const feedbackEl = document.getElementById('check-feedback');
+  if (feedbackEl) {
+    feedbackEl.textContent = '';
+    feedbackEl.classList.add('hidden');
+    feedbackEl.classList.remove('correct', 'wrong');
+  }
+  document.querySelectorAll('.choice-option').forEach(btn => {
+    btn.classList.remove('correct', 'wrong');
+    btn.disabled = false;
+  });
+  // Also auto-dismiss any non-actionable toast lingering from the previous
+  // card so it doesn't sit on top of the new card's buttons. Actionable
+  // toasts (with onclick) stay — those are user-initiated prompts.
+  const toastEl = document.getElementById('toast');
+  if (toastEl && !toastEl.onclick) {
+    toastEl.classList.remove('visible', 'actionable');
+  }
+
   // Note indicator — shows a small 📝 if user has written a mnemonic for this word.
   const noteIndicator = document.getElementById('card-note-indicator');
   if (noteIndicator) {
@@ -1186,6 +1207,9 @@ function renderCard(word, showAnswer) {
   const isNew = !cardState || cardState.reps === 0;
 
   const previewRow = document.getElementById('preview-row');
+  // Tighter spacing/styling for the preview card so it fits on small screens.
+  const cardEl = document.getElementById('card-area');
+  if (cardEl) cardEl.classList.toggle('preview-mode', mode === 'preview');
 
   if (showAnswer) {
     // Hide all input UIs.
@@ -1195,14 +1219,14 @@ function renderCard(word, showAnswer) {
     choiceRow.classList.add('hidden');
     skipBtn.classList.add('hidden');
     skipHint.classList.add('hidden');
-    // In preview mode the user gets a single "Got it" button and the
-    // small skip-known shortcut — no grading at all.
+    // In preview mode the user gets a single "Got it, next" button — no
+    // grading, no fast-track. Brand-new words shouldn't ask for confidence
+    // judgments at all.
     if (mode === 'preview') {
       gradeRow.classList.add('hidden');
       if (previewRow) previewRow.classList.remove('hidden');
-      // Still allow "I already know this" as a fast-track for previewed words.
-      skipBtn.classList.remove('hidden');
-      skipHint.classList.remove('hidden');
+      skipBtn.classList.add('hidden');
+      skipHint.classList.add('hidden');
     } else {
       gradeRow.classList.remove('hidden');
       if (previewRow) previewRow.classList.add('hidden');
@@ -1430,26 +1454,14 @@ function submitChoice(idx) {
   }, 600);
 }
 
-// Builds a small "anchor" hint for a failed card — connects the missed word
-// to a same-theme word the user has already mastered.
+// Brief reminder of the failed word's translation — no anchor, no extra noise.
+// Just so the answer lingers a moment after the card has moved on.
 function buildHintForFail(word) {
   if (!state.settings) return null;
   const src = state.settings.source;
   const tgt = state.settings.target;
   if (!word[tgt] || !word[src]) return null;
-  const sameTheme = state.words.filter(w =>
-    w.theme === word.theme &&
-    w.id !== word.id &&
-    w[tgt] &&
-    w[src] &&
-    cardLabel(state.progress[w.id]) === 'mature'
-  );
-  if (sameTheme.length === 0) {
-    return `${word[tgt]} = ${word[src]}.`;
-  }
-  shuffle(sameTheme);
-  const anchor = sameTheme[0];
-  return `${word[tgt]} = ${word[src]}.   You know: ${anchor[tgt]} = ${anchor[src]}`;
+  return `${word[tgt]} = ${word[src]}`;
 }
 
 function typeDontKnow() {
@@ -2543,9 +2555,9 @@ function gradeAndAdvance(grade) {
         () => openMnemonicModal(w)
       );
     } else {
-      // Smart hint: anchor the failed word to one the user has already mastered.
+      // Brief reminder of the answer — auto-dismissed when the next card renders.
       const hint = buildHintForFail(w);
-      if (hint) showToast(hint, 4500);
+      if (hint) showToast(hint, 2500);
     }
     // No within-session re-queue. The card's SRS due (25 min from now)
     // brings it back in a later lesson, with fresh perspective.
