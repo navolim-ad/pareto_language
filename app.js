@@ -1606,6 +1606,7 @@ function startSession(themeFilter, wordsOverride, options) {
     dueIds,
     againCounts: {},
     recentlySeen: [],
+    previewedIds: new Set(),
     nextMatchAt: 5 + Math.floor(Math.random() * 3), // first match at 5, 6, or 7
     nextSentenceAt: 7 + Math.floor(Math.random() * 4), // first sentence at 7..10
     matchRound: null,
@@ -1709,25 +1710,34 @@ function renderCurrent() {
   }
 
   const w = state.session.queue[state.session.index];
-  // Show progress as position in lesson, capped at the lesson size. Matches the
-  // "Study now · 15 cards" promise on the home button.
-  const cardIndex = Math.min(state.session.answered + 1, state.session.lessonSize);
-  document.getElementById('study-progress').textContent =
-    `${cardIndex} / ${state.session.lessonSize}`;
 
   // Pick direction (forward = target→source; reverse = source→target) and mode.
+  // A word gets the calm no-quiz preview only on its genuine first sight this
+  // session (never seen before AND not yet previewed in this session). After
+  // the preview it's re-queued as a real quiz, so the lesson stays varied
+  // even when every word is brand new (e.g. a fresh language pair).
   const cardStateForDir = state.progress[w.id];
-  const isFirstEncounter = !cardStateForDir || cardStateForDir.reps === 0;
+  const neverSeen = !cardStateForDir || cardStateForDir.reps === 0;
+  const isFirstEncounter = neverSeen && !state.session.previewedIds.has(w.id);
   if (isFirstEncounter) {
-    // Calm no-quiz preview for words the user has never seen before. The user
-    // taps "Got it" once, which silently grades 'good' so the card enters
-    // normal SRS rotation. Next time they meet this word, it's a real card.
     state.session.cardDirection = 'forward';
     state.session.cardMode = 'preview';
   } else {
     state.session.cardDirection = pickDirection(cardStateForDir);
     state.session.cardMode = pickCardMode(state.session.cardDirection, cardStateForDir);
   }
+
+  // Progress pill — counts every screen (preview or quiz) toward the lesson
+  // tally so "15 cards" stays honest. Preview screens add a small tag so the
+  // user knows it's a no-pressure first look.
+  const progressEl = document.getElementById('study-progress');
+  const cardIndex = Math.min(state.session.answered + 1, state.session.lessonSize);
+  if (state.session.cardMode === 'preview') {
+    progressEl.textContent = `✨ New · ${cardIndex} / ${state.session.lessonSize}`;
+  } else {
+    progressEl.textContent = `${cardIndex} / ${state.session.lessonSize}`;
+  }
+
   // Remember this word for cross-session spacing (so next lesson tries to
   // pick fresh-er candidates first). Done once per card appearance.
   noteSeen(w.id);
@@ -2283,14 +2293,34 @@ function reveal() {
   renderCard(w, true);
 }
 
-// Preview "Got it" — silent grade 'good' for a brand-new word, advancing
-// without making the user pick a confidence level on first sight.
+// Preview "Got it" — the user has just met a brand-new word. We DON'T grade
+// it (a first look isn't a recall test). Instead we mark it previewed and
+// re-queue it a few cards ahead so it comes back as a real quiz this session.
+// That keeps lessons varied even when every word is new.
 function previewGotIt() {
   if (!state.session || state.session._busy) return;
-  // Reuse gradeAndAdvance so daily counter, milestones, animations all behave
-  // the same as a normal 'good' grade. The card.reps was 0 going in, so
-  // gradeCard('good') will set interval = 1 day.
-  gradeAndAdvance('good');
+  // A preview isn't gradeable, so clear any pending undo from a prior card.
+  state.session._lastGrade = null;
+  const w = state.session.queue[state.session.index];
+  state.session.previewedIds.add(w.id);
+  // Re-insert 2–4 cards ahead for an immediate first test.
+  const offset = 2 + Math.floor(Math.random() * 3);
+  const insertAt = Math.min(state.session.index + offset, state.session.queue.length);
+  state.session.queue.splice(insertAt, 0, w);
+
+  // Advance without grading (a first look isn't a recall test), but DO count
+  // the screen toward the lesson tally so lessons stay the promised length.
+  state.session._busy = true;
+  const cardEl = document.getElementById('card-area');
+  cardEl.classList.remove('enter', 'exit-again', 'exit-good', 'exit-easy');
+  void cardEl.offsetWidth;
+  cardEl.classList.add('exit-good');
+  setTimeout(() => {
+    state.session._busy = false;
+    state.session.answered += 1;
+    state.session.index += 1;
+    renderCurrent();
+  }, 360);
 }
 
 // ============== Cluster intro (word family) ==============
