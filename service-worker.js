@@ -1,4 +1,4 @@
-const CACHE = 'pareto-v49';
+const CACHE = 'pareto-v50';
 const SHELL = [
   './',
   './index.html',
@@ -23,8 +23,8 @@ self.addEventListener('activate', e => {
 self.addEventListener('fetch', e => {
   const url = new URL(e.request.url);
 
-  // Network-first for words.json and sentences.json so updates propagate quickly.
-  if (url.pathname.endsWith('/data/words.json') || url.pathname.endsWith('/data/sentences.json')) {
+  // Network-first for all data files so content updates propagate quickly.
+  if (url.pathname.includes('/data/') && url.pathname.endsWith('.json')) {
     e.respondWith(
       fetch(e.request)
         .then(resp => {

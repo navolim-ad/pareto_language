@@ -1,0 +1,149 @@
+{
+  "meta": {
+    "version": "0.1.0",
+    "updated": "2026-06-11",
+    "note": "Micro-dialogues built from the core word list plus minimal glue words. Arabic is MSA, unverified by a native teacher yet (flagged for review). Tap any line in the player to see its translation. 'uses' lists the key vocabulary ids that gate unlocking.",
+    "transliteration_system": "Same as words.json: macrons for long vowels, ʿ for ayn, ʾ for hamza."
+  },
+  "dialogues": [
+    {
+      "id": "d001",
+      "emoji": "👋",
+      "title": { "en": "Saying hello", "es": "Saludar" },
+      "uses": ["w001", "w015", "w004"],
+      "lines": [
+        { "speaker": "A", "en": "Hello!", "es": "¡Hola!", "ar": "مرحباً!", "ar_translit": "marḥaban!", "sr": "Zdravo!", "sr_cyr": "Здраво!", "th": "สวัสดี", "th_translit": "sa-wat-dee" },
+        { "speaker": "B", "en": "Hello! How are you?", "es": "¡Hola! ¿Cómo estás?", "ar": "مرحباً! كيف حالك؟", "ar_translit": "marḥaban! kayfa ḥāluk?", "sr": "Zdravo! Kako si?", "sr_cyr": "Здраво! Како си?", "th": "สวัสดี สบายดีไหม", "th_translit": "sa-wat-dee, sa-baai-dee mai" },
+        { "speaker": "A", "en": "I'm fine, thank you. And you?", "es": "Estoy bien, gracias. ¿Y tú?", "ar": "أنا بخير، شكراً. وأنتَ؟", "ar_translit": "anā bi-khayr, shukran. wa-anta?", "sr": "Dobro sam, hvala. A ti?", "sr_cyr": "Добро сам, хвала. А ти?", "th": "สบายดี ขอบคุณ แล้วคุณล่ะ", "th_translit": "sa-baai-dee khop-khun, laeo khun la" },
+        { "speaker": "B", "en": "Fine too!", "es": "¡Bien también!", "ar": "بخير أيضاً!", "ar_translit": "bi-khayr ayḍan!", "sr": "I ja sam dobro!", "sr_cyr": "И ја сам добро!", "th": "ก็สบายดี", "th_translit": "gor sa-baai-dee" }
+      ]
+    },
+    {
+      "id": "d002",
+      "emoji": "☕",
+      "title": { "en": "At the café", "es": "En el café" },
+      "uses": ["w017", "w085", "w005", "w042", "w046"],
+      "lines": [
+        { "speaker": "A", "en": "I want a coffee, please.", "es": "Quiero un café, por favor.", "ar": "أريد قهوة من فضلك.", "ar_translit": "urīdu qahwa min faḍlik.", "sr": "Želim kafu, molim.", "sr_cyr": "Желим кафу, молим.", "th": "ขอกาแฟหน่อย", "th_translit": "khor gaa-fae noi" },
+        { "speaker": "B", "en": "Yes. Anything else?", "es": "Sí. ¿Algo más?", "ar": "نعم. شيء آخر؟", "ar_translit": "naʿam. shayʾ ākhar?", "sr": "Da. Još nešto?", "sr_cyr": "Да. Још нешто?", "th": "ได้ รับอะไรอีกไหม", "th_translit": "dai, rap a-rai eek mai" },
+        { "speaker": "A", "en": "No, thank you. How much is it?", "es": "No, gracias. ¿Cuánto es?", "ar": "لا، شكراً. كم الثمن؟", "ar_translit": "lā, shukran. kam al-thaman?", "sr": "Ne, hvala. Koliko košta?", "sr_cyr": "Не, хвала. Колико кошта?", "th": "ไม่ ขอบคุณ เท่าไหร่", "th_translit": "mai, khop-khun, tao-rai" },
+        { "speaker": "B", "en": "Five.", "es": "Cinco.", "ar": "خمسة.", "ar_translit": "khamsa.", "sr": "Pet.", "sr_cyr": "Пет.", "th": "ห้าบาท", "th_translit": "haa baat" }
+      ]
+    },
+    {
+      "id": "d003",
+      "emoji": "🚪",
+      "title": { "en": "Finding the bathroom", "es": "Buscando el baño" },
+      "uses": ["w012", "w110", "w106", "w302", "w199"],
+      "lines": [
+        { "speaker": "A", "en": "Excuse me, where is the bathroom?", "es": "Por favor, ¿dónde está el baño?", "ar": "من فضلك، أين الحمام؟", "ar_translit": "min faḍlik, ayna al-ḥammām?", "sr": "Molim te, gde je kupatilo?", "sr_cyr": "Молим те, где је купатило?", "th": "ขอโทษ ห้องน้ำอยู่ที่ไหน", "th_translit": "khor-thot, hong-nam yuu thee-nai" },
+        { "speaker": "B", "en": "There, after the door.", "es": "Allí, después de la puerta.", "ar": "هناك، بعد الباب.", "ar_translit": "hunāk, baʿda al-bāb.", "sr": "Tamo, posle vrata.", "sr_cyr": "Тамо, после врата.", "th": "อยู่ตรงนั้น หลังประตู", "th_translit": "yuu trong-nan, lang bpra-tuu" },
+        { "speaker": "A", "en": "Thank you very much!", "es": "¡Muchas gracias!", "ar": "شكراً جزيلاً!", "ar_translit": "shukran jazīlan!", "sr": "Hvala puno!", "sr_cyr": "Хвала пуно!", "th": "ขอบคุณมาก", "th_translit": "khop-khun maak" }
+      ]
+    },
+    {
+      "id": "d004",
+      "emoji": "👨‍👩‍👧",
+      "title": { "en": "Family", "es": "La familia" },
+      "uses": ["w143", "w134", "w135", "w131", "w169", "w170"],
+      "lines": [
+        { "speaker": "A", "en": "I have a brother and a sister.", "es": "Tengo un hermano y una hermana.", "ar": "عندي أخ وأخت.", "ar_translit": "ʿindī akh wa-ukht.", "sr": "Imam brata i sestru.", "sr_cyr": "Имам брата и сестру.", "th": "ฉันมีพี่ชายและน้องสาว", "th_translit": "chan mee phee-chaai lae nong-saao" },
+        { "speaker": "B", "en": "Nice! Is the family big?", "es": "¡Qué bien! ¿Es grande la familia?", "ar": "جميل! هل العائلة كبيرة؟", "ar_translit": "jamīl! hal al-ʿāʾila kabīra?", "sr": "Lepo! Da li je porodica velika?", "sr_cyr": "Лепо! Да ли је породица велика?", "th": "ดีจัง ครอบครัวใหญ่ไหม", "th_translit": "dee jang, khrop-khrua yai mai" },
+        { "speaker": "A", "en": "No, small.", "es": "No, pequeña.", "ar": "لا، صغيرة.", "ar_translit": "lā, ṣaghīra.", "sr": "Ne, mala je.", "sr_cyr": "Не, мала је.", "th": "ไม่ใหญ่ เล็กๆ", "th_translit": "mai yai, lek lek" }
+      ]
+    },
+    {
+      "id": "d005",
+      "emoji": "🛒",
+      "title": { "en": "Off to the market", "es": "Al mercado" },
+      "uses": ["w018", "w192", "w158", "w091", "w083", "w349"],
+      "lines": [
+        { "speaker": "A", "en": "I'm going to the market.", "es": "Voy al mercado.", "ar": "أذهب إلى السوق.", "ar_translit": "adhhabu ilā al-sūq.", "sr": "Idem na pijacu.", "sr_cyr": "Идем на пијацу.", "th": "ฉันไปตลาด", "th_translit": "chan bpai ta-laat" },
+        { "speaker": "B", "en": "What are you buying?", "es": "¿Qué compras?", "ar": "ماذا تشتري؟", "ar_translit": "mādhā tashtarī?", "sr": "Šta kupuješ?", "sr_cyr": "Шта купујеш?", "th": "ซื้ออะไร", "th_translit": "seu a-rai" },
+        { "speaker": "A", "en": "Fruit and bread.", "es": "Fruta y pan.", "ar": "فاكهة وخبز.", "ar_translit": "fākiha wa-khubz.", "sr": "Voće i hleb.", "sr_cyr": "Воће и хлеб.", "th": "ผลไม้กับขนมปัง", "th_translit": "pon-la-mai gap kha-nom-bpang" },
+        { "speaker": "B", "en": "OK, see you later!", "es": "Vale, ¡hasta luego!", "ar": "حسناً، أراك لاحقاً!", "ar_translit": "ḥasanan, arāka lāḥiqan!", "sr": "U redu, vidimo se kasnije!", "sr_cyr": "У реду, видимо се касније!", "th": "โอเค แล้วเจอกัน", "th_translit": "oo-khee, laeo jer gan" }
+      ]
+    },
+    {
+      "id": "d006",
+      "emoji": "📅",
+      "title": { "en": "Today and tomorrow", "es": "Hoy y mañana" },
+      "uses": ["w024", "w144", "w064", "w018", "w257", "w011"],
+      "lines": [
+        { "speaker": "A", "en": "What are you doing today?", "es": "¿Qué haces hoy?", "ar": "ماذا تفعل اليوم؟", "ar_translit": "mādhā tafʿal al-yawm?", "sr": "Šta radiš danas?", "sr_cyr": "Шта радиш данас?", "th": "วันนี้ทำอะไร", "th_translit": "wan-nee tham a-rai" },
+        { "speaker": "B", "en": "Today I work.", "es": "Hoy trabajo.", "ar": "اليوم أعمل.", "ar_translit": "al-yawm aʿmal.", "sr": "Danas radim.", "sr_cyr": "Данас радим.", "th": "วันนี้ทำงาน", "th_translit": "wan-nee tham-ngaan" },
+        { "speaker": "A", "en": "And tomorrow?", "es": "¿Y mañana?", "ar": "وغداً؟", "ar_translit": "wa-ghadan?", "sr": "A sutra?", "sr_cyr": "А сутра?", "th": "แล้วพรุ่งนี้ล่ะ", "th_translit": "laeo phrung-nee la" },
+        { "speaker": "B", "en": "Tomorrow I go to the sea!", "es": "¡Mañana voy al mar!", "ar": "غداً أذهب إلى البحر!", "ar_translit": "ghadan adhhabu ilā al-baḥr!", "sr": "Sutra idem na more!", "sr_cyr": "Сутра идем на море!", "th": "พรุ่งนี้ไปทะเล", "th_translit": "phrung-nee bpai tha-lee" }
+      ]
+    },
+    {
+      "id": "d007",
+      "emoji": "🍽️",
+      "title": { "en": "Dinner together", "es": "Cena juntos" },
+      "uses": ["w021", "w182", "w004", "w017", "w020", "w002", "w005"],
+      "lines": [
+        { "speaker": "A", "en": "The food is delicious!", "es": "¡La comida está deliciosa!", "ar": "الطعام لذيذ!", "ar_translit": "al-ṭaʿām ladhīdh!", "sr": "Hrana je ukusna!", "sr_cyr": "Храна је укусна!", "th": "อาหารอร่อย", "th_translit": "aa-haan a-roi" },
+        { "speaker": "B", "en": "Thank you! Do you want water?", "es": "¡Gracias! ¿Quieres agua?", "ar": "شكراً! هل تريد ماء؟", "ar_translit": "shukran! hal turīd māʾ?", "sr": "Hvala! Da li želiš vodu?", "sr_cyr": "Хвала! Да ли желиш воду?", "th": "ขอบคุณ เอาน้ำไหม", "th_translit": "khop-khun, ao nam mai" },
+        { "speaker": "A", "en": "Yes, please.", "es": "Sí, por favor.", "ar": "نعم، من فضلك.", "ar_translit": "naʿam, min faḍlik.", "sr": "Da, molim.", "sr_cyr": "Да, молим.", "th": "ครับ ขอบคุณ", "th_translit": "khrap, khop-khun" }
+      ]
+    },
+    {
+      "id": "d008",
+      "emoji": "☀️",
+      "title": { "en": "The weather", "es": "El clima" },
+      "uses": ["w015", "w265", "w024", "w173", "w155", "w251"],
+      "lines": [
+        { "speaker": "A", "en": "How is the weather today?", "es": "¿Cómo está el clima hoy?", "ar": "كيف الطقس اليوم؟", "ar_translit": "kayfa al-ṭaqs al-yawm?", "sr": "Kakvo je vreme danas?", "sr_cyr": "Какво је време данас?", "th": "วันนี้อากาศเป็นยังไง", "th_translit": "wan-nee aa-gaat bpen yang-ngai" },
+        { "speaker": "B", "en": "Very hot!", "es": "¡Muy caliente!", "ar": "حار جداً!", "ar_translit": "ḥārr jiddan!", "sr": "Veoma vruće!", "sr_cyr": "Веома вруће!", "th": "ร้อนมาก", "th_translit": "ron maak" },
+        { "speaker": "A", "en": "I love the sun.", "es": "Me encanta el sol.", "ar": "أنا أحب الشمس.", "ar_translit": "anā uḥibb al-shams.", "sr": "Volim sunce.", "sr_cyr": "Волим сунце.", "th": "ฉันชอบแดด", "th_translit": "chan chop daet" }
+      ]
+    },
+    {
+      "id": "d009",
+      "emoji": "🤝",
+      "title": { "en": "What's your name?", "es": "¿Cómo te llamas?" },
+      "uses": ["w027", "w006", "w007"],
+      "lines": [
+        { "speaker": "A", "en": "What's your name?", "es": "¿Cómo te llamas?", "ar": "ما اسمك؟", "ar_translit": "mā ismuk?", "sr": "Kako se zoveš?", "sr_cyr": "Како се зовеш?", "th": "คุณชื่ออะไร", "th_translit": "khun cheu a-rai" },
+        { "speaker": "B", "en": "My name is Sara. And you?", "es": "Me llamo Sara. ¿Y tú?", "ar": "اسمي سارة. وأنتَ؟", "ar_translit": "ismī Sāra. wa-anta?", "sr": "Zovem se Sara. A ti?", "sr_cyr": "Зовем се Сара. А ти?", "th": "ฉันชื่อซาร่า แล้วคุณล่ะ", "th_translit": "chan cheu Saa-raa, laeo khun la" },
+        { "speaker": "A", "en": "I am Adam.", "es": "Yo soy Adam.", "ar": "أنا آدم.", "ar_translit": "anā Ādam.", "sr": "Ja sam Adam.", "sr_cyr": "Ја сам Адам.", "th": "ผมชื่ออดัม", "th_translit": "phom cheu A-dam" }
+      ]
+    },
+    {
+      "id": "d010",
+      "emoji": "🍴",
+      "title": { "en": "At the restaurant", "es": "En el restaurante" },
+      "uses": ["w011", "w017", "w088", "w090", "w086", "w103"],
+      "lines": [
+        { "speaker": "A", "en": "What do you want?", "es": "¿Qué quieres?", "ar": "ماذا تريد؟", "ar_translit": "mādhā turīd?", "sr": "Šta želiš?", "sr_cyr": "Шта желиш?", "th": "รับอะไรดี", "th_translit": "rap a-rai dee" },
+        { "speaker": "B", "en": "I want chicken and rice.", "es": "Quiero pollo y arroz.", "ar": "أريد دجاجاً وأرزاً.", "ar_translit": "urīdu dajājan wa-aruzzan.", "sr": "Želim piletinu i pirinač.", "sr_cyr": "Желим пилетину и пиринач.", "th": "เอาไก่กับข้าว", "th_translit": "ao gai gap khaao" },
+        { "speaker": "A", "en": "And what will you drink?", "es": "¿Y qué bebes?", "ar": "وماذا تشرب؟", "ar_translit": "wa-mādhā tashrab?", "sr": "A šta piješ?", "sr_cyr": "А шта пијеш?", "th": "แล้วดื่มอะไร", "th_translit": "laeo deum a-rai" },
+        { "speaker": "B", "en": "Tea, please.", "es": "Té, por favor.", "ar": "شاي، من فضلك.", "ar_translit": "shāy, min faḍlik.", "sr": "Čaj, molim.", "sr_cyr": "Чај, молим.", "th": "ชา ขอบคุณ", "th_translit": "chaa, khop-khun" }
+      ]
+    },
+    {
+      "id": "d011",
+      "emoji": "👕",
+      "title": { "en": "Haggling for a shirt", "es": "Regateando una camisa" },
+      "uses": ["w042", "w039", "w275", "w061", "w336", "w143", "w051", "w346"],
+      "lines": [
+        { "speaker": "A", "en": "How much is this shirt?", "es": "¿Cuánto cuesta esta camisa?", "ar": "كم هذا القميص؟", "ar_translit": "kam hādhā al-qamīṣ?", "sr": "Koliko košta ova košulja?", "sr_cyr": "Колико кошта ова кошуља?", "th": "เสื้อตัวนี้เท่าไหร่", "th_translit": "seua tua-nee tao-rai" },
+        { "speaker": "B", "en": "Twenty.", "es": "Veinte.", "ar": "عشرون.", "ar_translit": "ʿishrūn.", "sr": "Dvadeset.", "sr_cyr": "Двадесет.", "th": "ยี่สิบ", "th_translit": "yee-sip" },
+        { "speaker": "A", "en": "Expensive! I have only ten.", "es": "¡Caro! Solo tengo diez.", "ar": "غالٍ! عندي عشرة فقط.", "ar_translit": "ghālin! ʿindī ʿashara faqaṭ.", "sr": "Skupo! Imam samo deset.", "sr_cyr": "Скупо! Имам само десет.", "th": "แพง มีแค่สิบ", "th_translit": "phaeng, mee khae sip" },
+        { "speaker": "B", "en": "OK, ten.", "es": "Vale, diez.", "ar": "حسناً، عشرة.", "ar_translit": "ḥasanan, ʿashara.", "sr": "U redu, deset.", "sr_cyr": "У реду, десет.", "th": "โอเค สิบก็ได้", "th_translit": "oo-khee, sip gor dai" }
+      ]
+    },
+    {
+      "id": "d012",
+      "emoji": "🌙",
+      "title": { "en": "Good night", "es": "Buenas noches" },
+      "uses": ["w308", "w082", "w145", "w065", "w350"],
+      "lines": [
+        { "speaker": "A", "en": "I'm tired.", "es": "Estoy cansado.", "ar": "أنا متعب.", "ar_translit": "anā mutʿab.", "sr": "Umoran sam.", "sr_cyr": "Уморан сам.", "th": "ฉันเหนื่อย", "th_translit": "chan neuay" },
+        { "speaker": "B", "en": "It's late.", "es": "Es tarde.", "ar": "الوقت متأخر.", "ar_translit": "al-waqt mutaʾakhkhir.", "sr": "Kasno je.", "sr_cyr": "Касно је.", "th": "ดึกแล้ว", "th_translit": "deuk laeo" },
+        { "speaker": "A", "en": "Yes, I'll sleep now.", "es": "Sí, duermo ahora.", "ar": "نعم، أنام الآن.", "ar_translit": "naʿam, anāmu al-ān.", "sr": "Da, sada spavam.", "sr_cyr": "Да, сада спавам.", "th": "ใช่ จะนอนแล้ว", "th_translit": "chai, ja non laeo" },
+        { "speaker": "B", "en": "Take care!", "es": "¡Cuídate!", "ar": "اعتنِ بنفسك!", "ar_translit": "iʿtani bi-nafsik!", "sr": "Čuvaj se!", "sr_cyr": "Чувај се!", "th": "ฝันดีนะ", "th_translit": "fan dee na" }
+      ]
+    }
+  ]
+}

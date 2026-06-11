@@ -145,6 +145,17 @@
           <button id="start-review" class="secondary-btn">Review due · no new</button>
         </div>
 
+        <div id="say-card" class="say-card hidden" role="button" tabindex="0">
+          <div class="say-card-row">
+            <span class="say-card-icon">💬</span>
+            <div class="say-card-text">
+              <div class="say-card-title">You can already say</div>
+              <div class="say-card-sub" id="say-card-sub"></div>
+            </div>
+            <span class="say-card-arrow">›</span>
+          </div>
+        </div>
+
         <div id="word-of-day" class="word-of-day hidden">
           <div class="wod-header">
             <span class="wod-label">Word of the day</span>
@@ -308,6 +319,83 @@
       </div>
     </section>
 
+    <!-- "You can say" capability screen -->
+    <section id="screen-say" class="screen hidden">
+      <div class="container">
+        <header class="home-header">
+          <h2>You can say</h2>
+          <button id="close-say" class="icon-btn" aria-label="Close">✕</button>
+        </header>
+        <p class="muted small">Everything below uses only words you've learned. It grows with every lesson.</p>
+        <div id="say-missions-section" class="hidden">
+          <p class="say-section-label">🎯 Missions</p>
+          <div id="say-missions-list" class="say-list"></div>
+        </div>
+        <div id="say-dialogues-section" class="hidden">
+          <p class="say-section-label">💬 Conversations</p>
+          <div id="say-dialogues-list" class="say-list"></div>
+        </div>
+        <div id="say-sentences-section" class="hidden">
+          <p class="say-section-label">📝 Sentences</p>
+          <div id="say-sentences-list" class="say-list"></div>
+        </div>
+        <p id="say-locked-note" class="muted small hidden"></p>
+        <p id="say-empty" class="say-empty hidden">Nothing unlocked yet. Every word you learn brings the first sentence closer.</p>
+      </div>
+    </section>
+
+    <!-- Dialogue player -->
+    <section id="screen-dialogue" class="screen hidden">
+      <div class="container study-container">
+        <header class="study-header">
+          <button id="dialogue-back" class="icon-btn" aria-label="Back">←</button>
+          <div class="progress-pill"><span id="dialogue-pill">💬 Conversation</span></div>
+          <div class="spacer"></div>
+        </header>
+        <h2 class="dialogue-title" id="dialogue-title"></h2>
+        <p class="muted small dialogue-hint">Tap a line to see what it means.</p>
+        <div id="dialogue-lines" class="dialogue-lines"></div>
+        <button id="dialogue-next" class="primary-btn big">Next line</button>
+      </div>
+    </section>
+
+    <!-- Mission player -->
+    <section id="screen-mission" class="screen hidden">
+      <div class="container study-container">
+        <header class="study-header">
+          <button id="mission-back" class="icon-btn" aria-label="Back">←</button>
+          <div class="progress-pill"><span>🎯 Mission</span></div>
+          <div class="spacer"></div>
+        </header>
+        <div id="mission-intro">
+          <div class="mission-emoji" id="mission-emoji"></div>
+          <h2 class="mission-title" id="mission-title"></h2>
+          <p class="mission-intro-text" id="mission-intro-text"></p>
+          <button id="mission-start" class="primary-btn big">Start</button>
+        </div>
+        <div id="mission-step" class="hidden">
+          <p class="mission-progress muted small" id="mission-progress"></p>
+          <div class="mission-prompt" id="mission-prompt"></div>
+          <div id="mission-build" class="reorder-build hidden"></div>
+          <div id="mission-pool" class="reorder-pool hidden"></div>
+          <div id="mission-repeat" class="mission-repeat hidden">
+            <div class="mission-repeat-text" id="mission-repeat-text"></div>
+            <div class="mission-repeat-translit muted small" id="mission-repeat-translit"></div>
+            <p class="mission-repeat-hint muted small">Say it out loud. Audio is on the button below.</p>
+          </div>
+          <button id="mission-audio-btn" class="audio-btn hidden" aria-label="Hear sentence">🔊</button>
+          <div class="mission-feedback" id="mission-feedback"></div>
+          <button id="mission-submit" class="primary-btn big">Check</button>
+        </div>
+        <div id="mission-recap" class="hidden">
+          <h2 class="mission-title">Mission complete 🎉</h2>
+          <p class="muted small">You just said all of this:</p>
+          <div id="mission-recap-list" class="say-list"></div>
+          <button id="mission-done" class="primary-btn big">Done</button>
+        </div>
+      </div>
+    </section>
+
     <!-- Cluster intro screen: 3 themed words shown together at the start of a session. -->
     <section id="screen-cluster" class="screen hidden">
       <div class="container study-container">
@@ -419,6 +507,10 @@
           <span>⚡</span>
           <span>Trickiest was <b id="lesson-modal-tricky-word"></b></span>
         </div>
+        <div class="lesson-modal-unlocked hidden" id="lesson-modal-unlocked">
+          <span>🔓</span>
+          <span id="lesson-modal-unlocked-text"></span>
+        </div>
         <button id="lesson-modal-again" class="primary-btn big">One more lesson</button>
         <button id="lesson-modal-cheeky" class="secondary-btn">Quick lesson · 5 cards</button>
         <button id="lesson-modal-done" class="text-link-btn">Done for today</button>
@@ -461,6 +553,15 @@
           <h2>Your progress</h2>
           <button id="close-progress" class="icon-btn" aria-label="Close">✕</button>
         </header>
+
+        <div class="card progress-section" id="coverage-section">
+          <p class="muted small">Everyday speech coverage</p>
+          <div class="coverage-number" id="coverage-number">–</div>
+          <div class="stat-bar small">
+            <div class="stat-bar-fill" id="coverage-bar-fill"></div>
+          </div>
+          <p class="coverage-note muted small">Rough estimate: how much of typical daily speech is made of words you've learned. High-frequency words carry most conversations — that's the whole Pareto idea.</p>
+        </div>
 
         <div class="card progress-section">
           <p class="muted small">Mastered over the last 30 days</p>

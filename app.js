@@ -13,6 +13,8 @@ const state = {
   words: [],
   themes: [],
   sentences: [],
+  dialogues: [],
+  missions: [],
   settings: null,
   progress: {},
   daily: { date: '', done: 0 },
@@ -916,6 +918,9 @@ function renderHome() {
     }
   }
 
+  // "You can already say" card.
+  renderSayCard();
+
   renderThemeProgress();
   renderWordOfDay();
   renderActivityCalendar();
@@ -1613,9 +1618,12 @@ function startSession(themeFilter, wordsOverride, options) {
     sentenceCameo: null,
     clusterPending: null,
     confusionPending: null,
+    dialoguePlayed: false,
     shownSentenceIds: new Set(),
     lessonTarget,
     lessonSize: Math.min(queue.length, lessonTarget),
+    // Snapshot for the lesson-end "you unlocked N new things" callout.
+    _sayableBefore: countSayables(),
   };
   // Single-word "study this" sessions (e.g. from word-of-day) skip matching and
   // sentence rounds — they're meant to be quick focused practice.
@@ -1696,6 +1704,12 @@ function renderCurrent() {
   // Confusion compare: also at the start, after cluster (if any).
   if (state.session.confusionPending && state.session.answered === 0) {
     startConfusionCompare();
+    return;
+  }
+  // Dialogue cameo: once per session, a short conversation made entirely of
+  // words the user knows. Shares the sentence-cameo schedule slot.
+  if (shouldTriggerDialogueCameo()) {
+    startDialogueCameo();
     return;
   }
   // Sentence cameos take priority — they're the rarer interlude.
@@ -2625,8 +2639,10 @@ function gradeAndAdvance(grade) {
 function finishSession() {
   let newLearned = 0, revisited = 0, lastTheme = null;
   let trickyId = null, trickyCount = 0;
+  let sayableBefore = null;
   if (state.session) {
     lastTheme = state.session.filterTheme;
+    sayableBefore = state.session._sayableBefore;
     for (const id of state.session.countedIds) {
       if (state.session.freshIds.has(id)) newLearned++;
       else revisited++;
@@ -2639,6 +2655,22 @@ function finishSession() {
 
   state._lastSessionTheme = lastTheme;
   state.session = null;
+
+  // Unlock callout: did this session make new sentences/dialogues/missions sayable?
+  const unlockedEl = document.getElementById('lesson-modal-unlocked');
+  if (unlockedEl) {
+    const sayableAfter = countSayables();
+    const gained = (typeof sayableBefore === 'number') ? sayableAfter - sayableBefore : 0;
+    if (gained > 0) {
+      document.getElementById('lesson-modal-unlocked-text').textContent =
+        gained === 1
+          ? 'You unlocked 1 new thing you can say'
+          : `You unlocked ${gained} new things you can say`;
+      unlockedEl.classList.remove('hidden');
+    } else {
+      unlockedEl.classList.add('hidden');
+    }
+  }
 
   // Populate the modal popup (overlay — appears on top of whatever screen is current).
   const DONE_EMOJIS = ['🎉', '🌱', '🏁', '✨', '🍵', '🎯', '🏆', '☕', '🌅', '💪', '🪴', '📚'];
@@ -2738,6 +2770,575 @@ function skipKnown() {
   }, 360);
 }
 
+// ============== "You can say" — capability tracking ==============
+function isLearnedWord(wid) {
+  const s = state.progress[wid];
+  return !!s && s.reps > 0;
+}
+
+// Sentences fully made of learned words (more generous than the cameo's
+// mature-only gate — this list is about motivation, not testing).
+function sayableSentences() {
+  if (!state.sentences || !state.settings) return [];
+  const tgt = state.settings.target;
+  const src = state.settings.source;
+  return state.sentences.filter(s =>
+    s[tgt] && s[src] && s.uses.every(isLearnedWord)
+  );
+}
+
+function unlockedDialogues() {
+  if (!state.dialogues || !state.settings) return [];
+  const tgt = state.settings.target;
+  const src = state.settings.source;
+  return state.dialogues.filter(d =>
+    d.lines.every(l => l[tgt] && l[src]) &&
+    d.uses.every(isLearnedWord)
+  );
+}
+
+function unlockedMissions() {
+  if (!state.missions || !state.settings) return [];
+  const tgt = state.settings.target;
+  return state.missions.filter(m =>
+    m.steps.every(st => st.text[tgt]) &&
+    m.uses.every(isLearnedWord)
+  );
+}
+
+function countSayables() {
+  return sayableSentences().length + unlockedDialogues().length + unlockedMissions().length;
+}
+
+// Dialogue/sentence line text honoring the Serbian script setting.
+function lineDisplayText(obj, lang) {
+  if (lang === 'sr' && state.settings.sr_script === 'cyrillic' && obj.sr_cyr) return obj.sr_cyr;
+  return obj[lang];
+}
+function lineTranslit(obj, lang) {
+  if (lang === 'ar') return obj.ar_translit || '';
+  if (lang === 'th') return obj.th_translit || '';
+  return '';
+}
+
+function getMissionCompletions() {
+  try {
+    return JSON.parse(localStorage.getItem(storageKey(`missions-done:${pairKey()}`)) || '{}');
+  } catch (e) { return {}; }
+}
+function markMissionComplete(missionId) {
+  const done = getMissionCompletions();
+  done[missionId] = (done[missionId] || 0) + 1;
+  localStorage.setItem(storageKey(`missions-done:${pairKey()}`), JSON.stringify(done));
+}
+
+function renderSayCard() {
+  const card = document.getElementById('say-card');
+  if (!card) return;
+  const s = sayableSentences().length;
+  const d = unlockedDialogues().length;
+  const m = unlockedMissions().length;
+  if (s + d + m === 0) {
+    card.classList.add('hidden');
+    return;
+  }
+  const parts = [];
+  if (s) parts.push(`${s} sentence${s === 1 ? '' : 's'}`);
+  if (d) parts.push(`${d} conversation${d === 1 ? '' : 's'}`);
+  if (m) parts.push(`${m} mission${m === 1 ? '' : 's'}`);
+  document.getElementById('say-card-sub').textContent = parts.join(' · ');
+  card.classList.remove('hidden');
+}
+
+function openSayScreen() {
+  const tgt = state.settings.target;
+  const src = state.settings.source;
+
+  // Missions
+  const missions = unlockedMissions();
+  const mSection = document.getElementById('say-missions-section');
+  const mList = document.getElementById('say-missions-list');
+  mList.innerHTML = '';
+  if (missions.length > 0) {
+    const completions = getMissionCompletions();
+    for (const m of missions) {
+      const item = document.createElement('button');
+      item.className = 'say-item';
+      const emoji = document.createElement('span');
+      emoji.className = 'si-emoji';
+      emoji.textContent = m.emoji;
+      item.appendChild(emoji);
+      const text = document.createElement('div');
+      text.className = 'si-text';
+      const title = document.createElement('div');
+      title.className = 'si-target';
+      title.textContent = m.title[src] || m.title.en;
+      text.appendChild(title);
+      const sub = document.createElement('div');
+      sub.className = 'si-source';
+      sub.textContent = m.intro[src] || m.intro.en;
+      text.appendChild(sub);
+      item.appendChild(text);
+      if (completions[m.id]) {
+        const done = document.createElement('span');
+        done.className = 'si-done';
+        done.textContent = '✓';
+        item.appendChild(done);
+      }
+      item.addEventListener('click', () => openMission(m));
+      mList.appendChild(item);
+    }
+    mSection.classList.remove('hidden');
+  } else {
+    mSection.classList.add('hidden');
+  }
+
+  // Dialogues
+  const dialogues = unlockedDialogues();
+  const dSection = document.getElementById('say-dialogues-section');
+  const dList = document.getElementById('say-dialogues-list');
+  dList.innerHTML = '';
+  if (dialogues.length > 0) {
+    for (const d of dialogues) {
+      const item = document.createElement('button');
+      item.className = 'say-item';
+      const emoji = document.createElement('span');
+      emoji.className = 'si-emoji';
+      emoji.textContent = d.emoji;
+      item.appendChild(emoji);
+      const text = document.createElement('div');
+      text.className = 'si-text';
+      const title = document.createElement('div');
+      title.className = 'si-target';
+      title.textContent = d.title[src] || d.title.en;
+      text.appendChild(title);
+      const sub = document.createElement('div');
+      sub.className = 'si-source';
+      sub.textContent = `${d.lines.length} lines`;
+      text.appendChild(sub);
+      item.appendChild(text);
+      const play = document.createElement('span');
+      play.className = 'si-play';
+      play.textContent = '▶';
+      item.appendChild(play);
+      item.addEventListener('click', () => openDialogue(d, 'say'));
+      dList.appendChild(item);
+    }
+    dSection.classList.remove('hidden');
+  } else {
+    dSection.classList.add('hidden');
+  }
+
+  // Sentences
+  const sentences = sayableSentences();
+  const sSection = document.getElementById('say-sentences-section');
+  const sList = document.getElementById('say-sentences-list');
+  sList.innerHTML = '';
+  if (sentences.length > 0) {
+    for (const s of sentences) {
+      const item = document.createElement('button');
+      item.className = 'say-item';
+      const text = document.createElement('div');
+      text.className = 'si-text';
+      const targetEl = document.createElement('div');
+      targetEl.className = 'si-target';
+      targetEl.textContent = lineDisplayText(s, tgt);
+      if (tgt === 'ar') targetEl.setAttribute('dir', 'rtl');
+      text.appendChild(targetEl);
+      const translitOn = state.settings.showTranslit !== false;
+      const tr = translitOn ? lineTranslit(s, tgt) : '';
+      if (tr) {
+        const trEl = document.createElement('div');
+        trEl.className = 'si-translit';
+        trEl.textContent = tr;
+        text.appendChild(trEl);
+      }
+      const srcEl = document.createElement('div');
+      srcEl.className = 'si-source';
+      srcEl.textContent = s[src];
+      text.appendChild(srcEl);
+      item.appendChild(text);
+      if (canSpeak(tgt)) {
+        const play = document.createElement('span');
+        play.className = 'si-play';
+        play.textContent = '🔊';
+        item.appendChild(play);
+        item.addEventListener('click', () => speak(s[tgt], tgt));
+      }
+      sList.appendChild(item);
+    }
+    sSection.classList.remove('hidden');
+  } else {
+    sSection.classList.add('hidden');
+  }
+
+  // Locked teaser + empty state
+  const lockedNote = document.getElementById('say-locked-note');
+  const lockedCount =
+    (state.dialogues.length - dialogues.length) +
+    (state.missions.length - missions.length);
+  if (lockedCount > 0) {
+    lockedNote.textContent = `${lockedCount} more unlock as you learn new words.`;
+    lockedNote.classList.remove('hidden');
+  } else {
+    lockedNote.classList.add('hidden');
+  }
+  document.getElementById('say-empty').classList.toggle(
+    'hidden', sentences.length + dialogues.length + missions.length > 0
+  );
+
+  show('screen-say');
+}
+
+// ============== Dialogue player ==============
+function openDialogue(d, origin) {
+  state._dialogue = { d, lineIdx: 0, origin: origin || 'say' };
+  const src = state.settings.source;
+  document.getElementById('dialogue-title').textContent =
+    `${d.emoji} ${d.title[src] || d.title.en}`;
+  document.getElementById('dialogue-lines').innerHTML = '';
+  const nextBtn = document.getElementById('dialogue-next');
+  nextBtn.textContent = 'Next line';
+  show('screen-dialogue');
+  revealDialogueLine();
+}
+
+function revealDialogueLine() {
+  const dlg = state._dialogue;
+  if (!dlg) return;
+  const tgt = state.settings.target;
+  const src = state.settings.source;
+  const line = dlg.d.lines[dlg.lineIdx];
+  const container = document.getElementById('dialogue-lines');
+
+  const bubble = document.createElement('div');
+  bubble.className = `dialogue-bubble ${line.speaker === 'A' ? 'a' : 'b'}`;
+
+  const target = document.createElement('div');
+  target.className = 'db-target';
+  target.textContent = lineDisplayText(line, tgt);
+  if (tgt === 'ar') target.setAttribute('dir', 'rtl');
+  bubble.appendChild(target);
+
+  const translitOn = state.settings.showTranslit !== false;
+  const tr = translitOn ? lineTranslit(line, tgt) : '';
+  if (tr) {
+    const trEl = document.createElement('div');
+    trEl.className = 'db-translit';
+    trEl.textContent = tr;
+    bubble.appendChild(trEl);
+  }
+
+  const source = document.createElement('div');
+  source.className = 'db-source hidden';
+  source.textContent = line[src];
+  bubble.appendChild(source);
+
+  // Tap to toggle translation; replay audio on tap too.
+  bubble.addEventListener('click', () => {
+    source.classList.toggle('hidden');
+    if (canSpeak(tgt)) speak(line[tgt], tgt);
+  });
+
+  container.appendChild(bubble);
+  container.scrollTop = container.scrollHeight;
+
+  // Auto audio — every word here is one the user already knows.
+  if (canSpeak(tgt)) setTimeout(() => speak(line[tgt], tgt), 250);
+
+  dlg.lineIdx += 1;
+  const nextBtn = document.getElementById('dialogue-next');
+  nextBtn.textContent = dlg.lineIdx >= dlg.d.lines.length ? 'Done' : 'Next line';
+}
+
+function dialogueNext() {
+  const dlg = state._dialogue;
+  if (!dlg) return;
+  if (dlg.lineIdx < dlg.d.lines.length) {
+    revealDialogueLine();
+  } else {
+    closeDialogue();
+  }
+}
+
+function closeDialogue() {
+  const dlg = state._dialogue;
+  state._dialogue = null;
+  if (dlg && dlg.origin === 'session' && state.session) {
+    show('screen-study');
+    renderCurrent();
+  } else if (dlg && dlg.origin === 'say') {
+    openSayScreen();
+  } else {
+    renderHome();
+    show('screen-home');
+  }
+}
+
+// Lesson cameo: occasionally play an unlocked dialogue instead of a sentence.
+function shouldTriggerDialogueCameo() {
+  if (!state.session) return false;
+  if (state.session.dialoguePlayed) return false;
+  if (state.session.sentenceCameo) return false;
+  if (state.session.answered < state.session.nextSentenceAt) return false;
+  if (unlockedDialogues().length === 0) return false;
+  return Math.random() < 0.4;
+}
+
+function startDialogueCameo() {
+  state.session.nextSentenceAt = state.session.answered + 6 + Math.floor(Math.random() * 5);
+  state.session.dialoguePlayed = true;
+  const candidates = unlockedDialogues();
+  const d = candidates[Math.floor(Math.random() * candidates.length)];
+  openDialogue(d, 'session');
+}
+
+// ============== Mission player ==============
+function missionTokensFor(step, tgt) {
+  if (!step.tokens) return null;
+  if (tgt === 'sr' && state.settings.sr_script === 'cyrillic' && step.tokens.sr_cyr) {
+    return step.tokens.sr_cyr;
+  }
+  const tokens = step.tokens[tgt];
+  return (tokens && tokens.length >= 3) ? tokens : null;
+}
+
+function openMission(m) {
+  state._mission = { m, stepIdx: 0 };
+  const src = state.settings.source;
+  document.getElementById('mission-emoji').textContent = m.emoji;
+  document.getElementById('mission-title').textContent = m.title[src] || m.title.en;
+  document.getElementById('mission-intro-text').textContent = m.intro[src] || m.intro.en;
+  document.getElementById('mission-intro').classList.remove('hidden');
+  document.getElementById('mission-step').classList.add('hidden');
+  document.getElementById('mission-recap').classList.add('hidden');
+  show('screen-mission');
+}
+
+function startMissionSteps() {
+  document.getElementById('mission-intro').classList.add('hidden');
+  document.getElementById('mission-step').classList.remove('hidden');
+  renderMissionStep();
+}
+
+function renderMissionStep() {
+  const ms = state._mission;
+  if (!ms) return;
+  const tgt = state.settings.target;
+  const src = state.settings.source;
+  const step = ms.m.steps[ms.stepIdx];
+
+  document.getElementById('mission-progress').textContent =
+    `Step ${ms.stepIdx + 1} of ${ms.m.steps.length}`;
+  document.getElementById('mission-prompt').textContent =
+    step.prompt[src] || step.prompt.en;
+
+  const feedback = document.getElementById('mission-feedback');
+  feedback.textContent = '';
+  feedback.className = 'mission-feedback';
+
+  const buildArea = document.getElementById('mission-build');
+  const poolArea = document.getElementById('mission-pool');
+  const repeatArea = document.getElementById('mission-repeat');
+  const submitBtn = document.getElementById('mission-submit');
+  const audioBtn = document.getElementById('mission-audio-btn');
+
+  const fullText = lineDisplayText(step.text, tgt);
+  const tokens = missionTokensFor(step, tgt);
+
+  if (canSpeak(tgt)) {
+    audioBtn.classList.remove('hidden');
+    attachAudioHandler(audioBtn, step.text[tgt], tgt);
+  } else {
+    audioBtn.classList.add('hidden');
+  }
+
+  if (tokens) {
+    // Build mode: assemble the sentence from shuffled chips.
+    ms.mode = 'build';
+    ms.tokens = tokens;
+    ms.build = [];
+    ms.pool = tokens.map((_, i) => i);
+    shuffle(ms.pool);
+    repeatArea.classList.add('hidden');
+    buildArea.classList.remove('hidden');
+    poolArea.classList.remove('hidden');
+    if (tgt === 'ar') buildArea.setAttribute('dir', 'rtl');
+    else buildArea.removeAttribute('dir');
+    renderMissionChips();
+    submitBtn.textContent = 'Check';
+    submitBtn.onclick = submitMissionStep;
+  } else {
+    // Repeat mode: short line — show it, hear it, say it out loud.
+    ms.mode = 'repeat';
+    buildArea.classList.add('hidden');
+    poolArea.classList.add('hidden');
+    repeatArea.classList.remove('hidden');
+    const textEl = document.getElementById('mission-repeat-text');
+    textEl.textContent = fullText;
+    if (tgt === 'ar') textEl.setAttribute('dir', 'rtl');
+    else textEl.removeAttribute('dir');
+    const translitOn = state.settings.showTranslit !== false;
+    document.getElementById('mission-repeat-translit').textContent =
+      translitOn ? lineTranslit(step.text, tgt) : '';
+    if (canSpeak(tgt)) setTimeout(() => speak(step.text[tgt], tgt), 300);
+    submitBtn.textContent = 'Said it ✓';
+    submitBtn.onclick = missionStepDone;
+  }
+}
+
+function renderMissionChips() {
+  const ms = state._mission;
+  if (!ms) return;
+  const tgt = state.settings.target;
+  const buildArea = document.getElementById('mission-build');
+  const poolArea = document.getElementById('mission-pool');
+  buildArea.innerHTML = '';
+  poolArea.innerHTML = '';
+
+  if (ms.build.length === 0) {
+    const ph = document.createElement('span');
+    ph.className = 'reorder-placeholder';
+    ph.textContent = 'Tap words below to build the sentence';
+    buildArea.appendChild(ph);
+  } else {
+    for (const idx of ms.build) {
+      buildArea.appendChild(makeMissionChip(idx, 'build'));
+    }
+  }
+  for (const idx of ms.pool) {
+    poolArea.appendChild(makeMissionChip(idx, 'pool'));
+  }
+}
+
+function makeMissionChip(tokenIdx, area) {
+  const ms = state._mission;
+  const tgt = state.settings.target;
+  const chip = document.createElement('button');
+  chip.type = 'button';
+  chip.className = 'reorder-chip' + (area === 'build' ? ' placed' : '');
+  chip.textContent = ms.tokens[tokenIdx];
+  chip.dataset.idx = String(tokenIdx);
+  if (tgt === 'ar') chip.setAttribute('dir', 'rtl');
+  chip.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const list = area === 'pool' ? ms.pool : ms.build;
+    const other = area === 'pool' ? ms.build : ms.pool;
+    const i = list.indexOf(tokenIdx);
+    if (i < 0) return;
+    list.splice(i, 1);
+    other.push(tokenIdx);
+    renderMissionChips();
+  });
+  return chip;
+}
+
+function submitMissionStep() {
+  const ms = state._mission;
+  if (!ms || ms.build.length === 0) return;
+  const tgt = state.settings.target;
+  const step = ms.m.steps[ms.stepIdx];
+  const correct = ms.build.length === ms.tokens.length &&
+    ms.build.every((idx, i) => idx === i);
+
+  document.getElementById('mission-build').querySelectorAll('.reorder-chip').forEach((chip, i) => {
+    chip.disabled = true;
+    if (parseInt(chip.dataset.idx, 10) === i) chip.classList.add('correct');
+    else chip.classList.add('wrong');
+  });
+
+  const feedback = document.getElementById('mission-feedback');
+  if (correct) {
+    feedback.textContent = '✓ You just said it!';
+    feedback.className = 'mission-feedback correct';
+    if (canSpeak(tgt)) setTimeout(() => speak(step.text[tgt], tgt), 300);
+  } else {
+    feedback.textContent = `It goes: ${ms.tokens.join(' ')}`;
+    feedback.className = 'mission-feedback wrong';
+  }
+
+  const submitBtn = document.getElementById('mission-submit');
+  submitBtn.textContent = 'Continue';
+  submitBtn.onclick = missionStepDone;
+}
+
+function missionStepDone() {
+  const ms = state._mission;
+  if (!ms) return;
+  if (ms.stepIdx + 1 < ms.m.steps.length) {
+    ms.stepIdx += 1;
+    renderMissionStep();
+  } else {
+    renderMissionRecap();
+  }
+}
+
+function renderMissionRecap() {
+  const ms = state._mission;
+  if (!ms) return;
+  const tgt = state.settings.target;
+  markMissionComplete(ms.m.id);
+
+  document.getElementById('mission-step').classList.add('hidden');
+  const recapList = document.getElementById('mission-recap-list');
+  recapList.innerHTML = '';
+  const translitOn = state.settings.showTranslit !== false;
+  for (const step of ms.m.steps) {
+    const item = document.createElement('button');
+    item.className = 'say-item';
+    const text = document.createElement('div');
+    text.className = 'si-text';
+    const targetEl = document.createElement('div');
+    targetEl.className = 'si-target';
+    targetEl.textContent = lineDisplayText(step.text, tgt);
+    if (tgt === 'ar') targetEl.setAttribute('dir', 'rtl');
+    text.appendChild(targetEl);
+    const tr = translitOn ? lineTranslit(step.text, tgt) : '';
+    if (tr) {
+      const trEl = document.createElement('div');
+      trEl.className = 'si-translit';
+      trEl.textContent = tr;
+      text.appendChild(trEl);
+    }
+    item.appendChild(text);
+    if (canSpeak(tgt)) {
+      const play = document.createElement('span');
+      play.className = 'si-play';
+      play.textContent = '🔊';
+      item.appendChild(play);
+      item.addEventListener('click', () => speak(step.text[tgt], tgt));
+    }
+    recapList.appendChild(item);
+  }
+  document.getElementById('mission-recap').classList.remove('hidden');
+}
+
+function closeMission() {
+  state._mission = null;
+  openSayScreen();
+}
+
+// ============== Pareto coverage estimate ==============
+// Zipf approximation: the word at frequency rank r carries weight ~1/r of
+// everyday speech. Coverage = share of total weight (top ~5000 words ≈ "all
+// of daily conversation") carried by the words you've learned.
+function computeCoverage() {
+  const H5000 = 9.094; // harmonic number approximation: ln(5000) + 0.5772
+  let sum = 0;
+  const tgt = state.settings.target;
+  for (const w of state.words) {
+    if (!w[tgt]) continue;
+    if (isLearnedWord(w.id)) sum += 1 / w.order;
+  }
+  return Math.min(0.99, sum / H5000);
+}
+
+function renderCoverage() {
+  const pct = Math.round(computeCoverage() * 100);
+  document.getElementById('coverage-number').textContent = `~${pct}%`;
+  document.getElementById('coverage-bar-fill').style.width = `${pct}%`;
+}
+
 // ============== Mastered words list ==============
 function openMasteredList() {
   const stats = calcStats();
@@ -2784,6 +3385,7 @@ function openMasteredList() {
 
 // ============== Progress / stats peek screen ==============
 function openProgressScreen() {
+  renderCoverage();
   renderProgressSparkline();
   renderTopPracticed();
   renderTopStruggled();
@@ -3179,6 +3781,21 @@ async function init() {
       state.sentences = sData.sentences || [];
     }
   } catch (e) { /* sentences are non-essential */ }
+  // Dialogues and missions are also optional extras.
+  try {
+    const dResp = await fetch('data/dialogues.json');
+    if (dResp.ok) {
+      const dData = await dResp.json();
+      state.dialogues = dData.dialogues || [];
+    }
+  } catch (e) { /* non-essential */ }
+  try {
+    const mResp = await fetch('data/missions.json');
+    if (mResp.ok) {
+      const mData = await mResp.json();
+      state.missions = mData.missions || [];
+    }
+  } catch (e) { /* non-essential */ }
 
   if (!state.words || state.words.length === 0) {
     document.body.innerHTML =
@@ -3225,6 +3842,17 @@ async function init() {
     renderHome();
     show('screen-home');
   });
+  // "You can say" + dialogue + mission screens.
+  document.getElementById('say-card').addEventListener('click', openSayScreen);
+  document.getElementById('close-say').addEventListener('click', () => {
+    renderHome();
+    show('screen-home');
+  });
+  document.getElementById('dialogue-next').addEventListener('click', dialogueNext);
+  document.getElementById('dialogue-back').addEventListener('click', closeDialogue);
+  document.getElementById('mission-start').addEventListener('click', startMissionSteps);
+  document.getElementById('mission-done').addEventListener('click', closeMission);
+  document.getElementById('mission-back').addEventListener('click', closeMission);
   document.getElementById('reveal-btn').addEventListener('click', reveal);
   document.getElementById('skip-known-btn').addEventListener('click', skipKnown);
   document.getElementById('type-submit').addEventListener('click', submitTypeAnswer);

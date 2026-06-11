@@ -1,0 +1,154 @@
+{
+  "meta": {
+    "version": "0.1.0",
+    "updated": "2026-06-11",
+    "note": "Situational missions: assemble each sentence from word chips. Steps without 3+ tokens in the target language play as say-it-aloud repeat steps instead. Arabic is MSA, unverified by a native teacher yet. 'uses' lists key vocabulary ids that gate unlocking.",
+    "transliteration_system": "Same as words.json."
+  },
+  "missions": [
+    {
+      "id": "m001",
+      "emoji": "☕",
+      "title": { "en": "Café run", "es": "En el café" },
+      "intro": { "en": "You walk into a café. Order, ask the price, and compliment the coffee.", "es": "Entras en un café. Pide, pregunta el precio y elogia el café." },
+      "uses": ["w017", "w085", "w005", "w042"],
+      "steps": [
+        {
+          "prompt": { "en": "Order: \"I want a coffee, please.\"", "es": "Pide: \"Quiero un café, por favor.\"" },
+          "text": { "ar": "أريد قهوة من فضلك.", "ar_translit": "urīdu qahwa min faḍlik.", "es": "Quiero un café, por favor.", "sr": "Želim kafu, molim.", "sr_cyr": "Желим кафу, молим.", "th": "ขอกาแฟหน่อย", "th_translit": "khor gaa-fae noi" },
+          "tokens": { "ar": ["أريد", "قهوة", "من", "فضلك"], "es": ["Quiero", "un", "café", "por", "favor"], "sr": ["Želim", "kafu", "molim"], "sr_cyr": ["Желим", "кафу", "молим"], "th": ["ขอ", "กาแฟ", "หน่อย"] }
+        },
+        {
+          "prompt": { "en": "Ask: \"How much is the coffee?\"", "es": "Pregunta: \"¿Cuánto cuesta el café?\"" },
+          "text": { "ar": "كم ثمن القهوة؟", "ar_translit": "kam thaman al-qahwa?", "es": "¿Cuánto cuesta el café?", "sr": "Koliko košta kafa?", "sr_cyr": "Колико кошта кафа?", "th": "กาแฟเท่าไหร่", "th_translit": "gaa-fae tao-rai" },
+          "tokens": { "ar": ["كم", "ثمن", "القهوة"], "es": ["Cuánto", "cuesta", "el", "café"], "sr": ["Koliko", "košta", "kafa"], "sr_cyr": ["Колико", "кошта", "кафа"] }
+        },
+        {
+          "prompt": { "en": "Compliment: \"This coffee is delicious!\"", "es": "Elogia: \"¡Este café está delicioso!\"" },
+          "text": { "ar": "هذه القهوة لذيذة!", "ar_translit": "hādhihi al-qahwa ladhīdha!", "es": "¡Este café está delicioso!", "sr": "Ova kafa je ukusna!", "sr_cyr": "Ова кафа је укусна!", "th": "กาแฟอร่อยมาก", "th_translit": "gaa-fae a-roi maak" },
+          "tokens": { "ar": ["هذه", "القهوة", "لذيذة"], "es": ["Este", "café", "está", "delicioso"], "sr": ["Ova", "kafa", "je", "ukusna"], "sr_cyr": ["Ова", "кафа", "је", "укусна"], "th": ["กาแฟ", "อร่อย", "มาก"] }
+        }
+      ]
+    },
+    {
+      "id": "m002",
+      "emoji": "🛒",
+      "title": { "en": "Market shopping", "es": "Compras en el mercado" },
+      "intro": { "en": "You're at the market buying food. Haggle a little.", "es": "Estás en el mercado comprando comida. Regatea un poco." },
+      "uses": ["w017", "w083", "w097", "w042", "w336"],
+      "steps": [
+        {
+          "prompt": { "en": "Say: \"I want bread and cheese.\"", "es": "Di: \"Quiero pan y queso.\"" },
+          "text": { "ar": "أريد خبزاً وجبناً.", "ar_translit": "urīdu khubzan wa-jubnan.", "es": "Quiero pan y queso.", "sr": "Želim hleb i sir.", "sr_cyr": "Желим хлеб и сир.", "th": "เอาขนมปังกับชีส", "th_translit": "ao kha-nom-bpang gap chees" },
+          "tokens": { "ar": ["أريد", "خبزاً", "وجبناً"], "es": ["Quiero", "pan", "y", "queso"], "sr": ["Želim", "hleb", "i", "sir"], "sr_cyr": ["Желим", "хлеб", "и", "сир"], "th": ["เอา", "ขนมปัง", "กับ", "ชีส"] }
+        },
+        {
+          "prompt": { "en": "Ask: \"How much is this?\"", "es": "Pregunta: \"¿Cuánto cuesta esto?\"" },
+          "text": { "ar": "كم ثمن هذا؟", "ar_translit": "kam thaman hādhā?", "es": "¿Cuánto cuesta esto?", "sr": "Koliko ovo košta?", "sr_cyr": "Колико ово кошта?", "th": "อันนี้เท่าไหร่", "th_translit": "an-nee tao-rai" },
+          "tokens": { "ar": ["كم", "ثمن", "هذا"], "es": ["Cuánto", "cuesta", "esto"], "sr": ["Koliko", "ovo", "košta"], "sr_cyr": ["Колико", "ово", "кошта"] }
+        },
+        {
+          "prompt": { "en": "Push back: \"This is very expensive!\"", "es": "Protesta: \"¡Es muy caro!\"" },
+          "text": { "ar": "هذا غالٍ جداً!", "ar_translit": "hādhā ghālin jiddan!", "es": "¡Es muy caro!", "sr": "To je skupo!", "sr_cyr": "То је скупо!", "th": "แพงมาก", "th_translit": "phaeng maak" },
+          "tokens": { "ar": ["هذا", "غالٍ", "جداً"], "es": ["Es", "muy", "caro"], "sr": ["To", "je", "skupo"], "sr_cyr": ["То", "је", "скупо"] }
+        }
+      ]
+    },
+    {
+      "id": "m003",
+      "emoji": "🚕",
+      "title": { "en": "Getting to the airport", "es": "Al aeropuerto" },
+      "intro": { "en": "Flight day. Find a taxi and get to the airport.", "es": "Día de vuelo. Encuentra un taxi y llega al aeropuerto." },
+      "uses": ["w012", "w286", "w190", "w018", "w300"],
+      "steps": [
+        {
+          "prompt": { "en": "Ask: \"Please, where is the taxi?\"", "es": "Pregunta: \"Por favor, ¿dónde hay un taxi?\"" },
+          "text": { "ar": "من فضلك، أين التاكسي؟", "ar_translit": "min faḍlik, ayna al-tāksī?", "es": "Por favor, ¿dónde hay un taxi?", "sr": "Molim te, gde je taksi?", "sr_cyr": "Молим те, где је такси?", "th": "แท็กซี่อยู่ที่ไหน", "th_translit": "thaek-see yuu thee-nai" },
+          "tokens": { "ar": ["من", "فضلك", "أين", "التاكسي"], "es": ["Por", "favor", "dónde", "hay", "un", "taxi"], "sr": ["Molim", "te", "gde", "je", "taksi"], "sr_cyr": ["Молим", "те", "где", "је", "такси"], "th": ["แท็กซี่", "อยู่", "ที่ไหน"] }
+        },
+        {
+          "prompt": { "en": "Tell the driver: \"I'm going to the airport.\"", "es": "Dile al conductor: \"Voy al aeropuerto.\"" },
+          "text": { "ar": "أذهب إلى المطار.", "ar_translit": "adhhabu ilā al-maṭār.", "es": "Voy al aeropuerto.", "sr": "Idem na aerodrom.", "sr_cyr": "Идем на аеродром.", "th": "ไปสนามบิน", "th_translit": "bpai sa-naam-bin" },
+          "tokens": { "ar": ["أذهب", "إلى", "المطار"], "es": ["Voy", "al", "aeropuerto"], "sr": ["Idem", "na", "aerodrom"], "sr_cyr": ["Идем", "на", "аеродром"] }
+        },
+        {
+          "prompt": { "en": "Ask: \"Is it very far?\"", "es": "Pregunta: \"¿Está muy lejos?\"" },
+          "text": { "ar": "هل هو بعيد؟", "ar_translit": "hal huwa baʿīd?", "es": "¿Está muy lejos?", "sr": "Da li je daleko?", "sr_cyr": "Да ли је далеко?", "th": "ไกลไหม", "th_translit": "glai mai" },
+          "tokens": { "ar": ["هل", "هو", "بعيد"], "es": ["Está", "muy", "lejos"], "sr": ["Da", "li", "je", "daleko"], "sr_cyr": ["Да", "ли", "је", "далеко"] }
+        }
+      ]
+    },
+    {
+      "id": "m004",
+      "emoji": "🍴",
+      "title": { "en": "Dinner out", "es": "Cena fuera" },
+      "intro": { "en": "You're hungry and at a restaurant. Order a proper meal.", "es": "Tienes hambre y estás en un restaurante. Pide una buena comida." },
+      "uses": ["w310", "w017", "w089", "w341", "w342"],
+      "steps": [
+        {
+          "prompt": { "en": "Announce: \"I'm very hungry!\"", "es": "Anuncia: \"¡Tengo mucha hambre!\"" },
+          "text": { "ar": "أنا جائع جداً!", "ar_translit": "anā jāʾiʿ jiddan!", "es": "¡Tengo mucha hambre!", "sr": "Mnogo sam gladan!", "sr_cyr": "Много сам гладан!", "th": "หิวมาก", "th_translit": "hiu maak" },
+          "tokens": { "ar": ["أنا", "جائع", "جداً"], "es": ["Tengo", "mucha", "hambre"], "sr": ["Mnogo", "sam", "gladan"], "sr_cyr": ["Много", "сам", "гладан"] }
+        },
+        {
+          "prompt": { "en": "Order: \"I want fish and salad.\"", "es": "Pide: \"Quiero pescado y ensalada.\"" },
+          "text": { "ar": "أريد سمكاً وسلطة.", "ar_translit": "urīdu samakan wa-salaṭa.", "es": "Quiero pescado y ensalada.", "sr": "Želim ribu i salatu.", "sr_cyr": "Желим рибу и салату.", "th": "เอาปลากับสลัด", "th_translit": "ao bplaa gap sa-lat" },
+          "tokens": { "ar": ["أريد", "سمكاً", "وسلطة"], "es": ["Quiero", "pescado", "y", "ensalada"], "sr": ["Želim", "ribu", "i", "salatu"], "sr_cyr": ["Желим", "рибу", "и", "салату"], "th": ["เอา", "ปลา", "กับ", "สลัด"] }
+        },
+        {
+          "prompt": { "en": "Add: \"Juice, please.\"", "es": "Añade: \"Jugo, por favor.\"" },
+          "text": { "ar": "عصير من فضلك.", "ar_translit": "ʿaṣīr min faḍlik.", "es": "Jugo, por favor.", "sr": "Sok, molim te.", "sr_cyr": "Сок, молим те.", "th": "ขอน้ำผลไม้หน่อย", "th_translit": "khor nam-pon-la-mai noi" },
+          "tokens": { "ar": ["عصير", "من", "فضلك"], "es": ["Jugo", "por", "favor"], "sr": ["Sok", "molim", "te"], "sr_cyr": ["Сок", "молим", "те"], "th": ["ขอ", "น้ำผลไม้", "หน่อย"] }
+        }
+      ]
+    },
+    {
+      "id": "m005",
+      "emoji": "🏡",
+      "title": { "en": "Meeting the family", "es": "Conociendo a la familia" },
+      "intro": { "en": "You're invited to a friend's home. Make a good impression.", "es": "Te invitan a casa de un amigo. Causa buena impresión." },
+      "uses": ["w033", "w022", "w175", "w021", "w182"],
+      "steps": [
+        {
+          "prompt": { "en": "Greet everyone: \"Good evening!\"", "es": "Saluda: \"¡Buenas tardes!\"" },
+          "text": { "ar": "مساء الخير!", "ar_translit": "masāʾ al-khayr!", "es": "¡Buenas tardes!", "sr": "Dobro veče!", "sr_cyr": "Добро вече!", "th": "สวัสดีตอนเย็น", "th_translit": "sa-wat-dee dton-yen" },
+          "tokens": {}
+        },
+        {
+          "prompt": { "en": "Compliment: \"The house is very beautiful.\"", "es": "Elogia: \"La casa es muy hermosa.\"" },
+          "text": { "ar": "البيت جميل جداً.", "ar_translit": "al-bayt jamīl jiddan.", "es": "La casa es muy hermosa.", "sr": "Kuća je veoma lepa.", "sr_cyr": "Кућа је веома лепа.", "th": "บ้านสวยมาก", "th_translit": "baan suay maak" },
+          "tokens": { "ar": ["البيت", "جميل", "جداً"], "es": ["La", "casa", "es", "muy", "hermosa"], "sr": ["Kuća", "je", "veoma", "lepa"], "sr_cyr": ["Кућа", "је", "веома", "лепа"], "th": ["บ้าน", "สวย", "มาก"] }
+        },
+        {
+          "prompt": { "en": "After dinner: \"The food is delicious, thank you.\"", "es": "Después de cenar: \"La comida está deliciosa, gracias.\"" },
+          "text": { "ar": "الطعام لذيذ، شكراً.", "ar_translit": "al-ṭaʿām ladhīdh, shukran.", "es": "La comida está deliciosa, gracias.", "sr": "Hrana je ukusna, hvala.", "sr_cyr": "Храна је укусна, хвала.", "th": "อาหารอร่อย ขอบคุณ", "th_translit": "aa-haan a-roi, khop-khun" },
+          "tokens": { "ar": ["الطعام", "لذيذ", "شكراً"], "es": ["La", "comida", "está", "deliciosa", "gracias"], "sr": ["Hrana", "je", "ukusna", "hvala"], "sr_cyr": ["Храна", "је", "укусна", "хвала"], "th": ["อาหาร", "อร่อย", "ขอบคุณ"] }
+        }
+      ]
+    },
+    {
+      "id": "m006",
+      "emoji": "💬",
+      "title": { "en": "Small talk", "es": "Charla casual" },
+      "intro": { "en": "Someone friendly sits next to you. Keep the conversation going.", "es": "Alguien simpático se sienta a tu lado. Mantén la conversación." },
+      "uses": ["w027", "w144", "w183", "w349"],
+      "steps": [
+        {
+          "prompt": { "en": "Ask: \"What's your name?\"", "es": "Pregunta: \"¿Cómo te llamas?\"" },
+          "text": { "ar": "ما اسمك؟", "ar_translit": "mā ismuk?", "es": "¿Cómo te llamas?", "sr": "Kako se zoveš?", "sr_cyr": "Како се зовеш?", "th": "คุณชื่ออะไร", "th_translit": "khun cheu a-rai" },
+          "tokens": { "es": ["Cómo", "te", "llamas"], "sr": ["Kako", "se", "zoveš"], "sr_cyr": ["Како", "се", "зовеш"], "th": ["คุณ", "ชื่อ", "อะไร"] }
+        },
+        {
+          "prompt": { "en": "Share: \"I work in the city.\"", "es": "Comparte: \"Trabajo en la ciudad.\"" },
+          "text": { "ar": "أعمل في المدينة.", "ar_translit": "aʿmalu fī al-madīna.", "es": "Trabajo en la ciudad.", "sr": "Radim u gradu.", "sr_cyr": "Радим у граду.", "th": "ทำงานในเมือง", "th_translit": "tham-ngaan nai meuang" },
+          "tokens": { "ar": ["أعمل", "في", "المدينة"], "es": ["Trabajo", "en", "la", "ciudad"], "sr": ["Radim", "u", "gradu"], "sr_cyr": ["Радим", "у", "граду"], "th": ["ทำงาน", "ใน", "เมือง"] }
+        },
+        {
+          "prompt": { "en": "Wrap up: \"See you later!\"", "es": "Despídete: \"¡Hasta luego!\"" },
+          "text": { "ar": "أراك لاحقاً!", "ar_translit": "arāka lāḥiqan!", "es": "¡Hasta luego!", "sr": "Vidimo se kasnije!", "sr_cyr": "Видимо се касније!", "th": "แล้วเจอกัน", "th_translit": "laeo jer gan" },
+          "tokens": { "sr": ["Vidimo", "se", "kasnije"], "sr_cyr": ["Видимо", "се", "касније"], "th": ["แล้ว", "เจอ", "กัน"] }
+        }
+      ]
+    }
+  ]
+}

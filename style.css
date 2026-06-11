@@ -1545,6 +1545,214 @@ html, body {
   border-color: #a8c994;
 }
 
+/* ---------- "You can say" ---------- */
+.say-card {
+  background: linear-gradient(135deg, #f3f8ea 0%, #eaf2f8 100%);
+  border: 1.5px solid #b8d4a0;
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  cursor: pointer;
+  transition: transform 0.12s ease;
+}
+.say-card:active { transform: scale(0.99); }
+.say-card-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.say-card-icon { font-size: 26px; }
+.say-card-text { flex: 1; min-width: 0; }
+.say-card-title {
+  font-weight: 600;
+  color: var(--text);
+  font-size: 15px;
+}
+.say-card-sub {
+  font-size: 13px;
+  color: var(--text-soft);
+  margin-top: 2px;
+}
+.say-card-arrow {
+  font-size: 22px;
+  color: var(--muted);
+}
+.say-section-label {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--text-soft);
+  margin: 14px 0 8px;
+}
+.say-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.say-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 14px;
+  text-align: left;
+  width: 100%;
+  font-family: inherit;
+  cursor: pointer;
+}
+.say-item:active { transform: scale(0.99); }
+.say-item .si-emoji { font-size: 20px; }
+.say-item .si-text { flex: 1; min-width: 0; }
+.say-item .si-target { font-weight: 600; color: var(--text); font-size: 15px; }
+.say-item .si-translit { font-size: 12px; color: var(--muted); }
+.say-item .si-source { font-size: 13px; color: var(--text-soft); margin-top: 1px; }
+.say-item .si-done { font-size: 13px; color: #527c3e; }
+.say-item .si-play { font-size: 16px; color: var(--muted); }
+.say-empty {
+  font-style: italic;
+  color: var(--muted);
+  padding: 18px 4px;
+  text-align: center;
+}
+
+/* ---------- Dialogue player ---------- */
+.dialogue-title {
+  font-size: 22px;
+  margin: 8px 0 2px;
+  color: var(--text);
+}
+.dialogue-hint { margin-bottom: 12px; }
+.dialogue-lines {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: auto;
+  padding-bottom: 8px;
+}
+.dialogue-bubble {
+  max-width: 85%;
+  padding: 10px 14px;
+  border-radius: 16px;
+  cursor: pointer;
+  animation: bubbleIn 0.3s ease-out;
+}
+@keyframes bubbleIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.dialogue-bubble.a {
+  align-self: flex-start;
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-bottom-left-radius: 4px;
+}
+.dialogue-bubble.b {
+  align-self: flex-end;
+  background: #e3efd7;
+  border: 1px solid #b8d4a0;
+  border-bottom-right-radius: 4px;
+}
+.dialogue-bubble .db-target {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--text);
+}
+.dialogue-bubble .db-translit {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+.dialogue-bubble .db-source {
+  font-size: 13px;
+  color: var(--text-soft);
+  margin-top: 6px;
+  padding-top: 6px;
+  border-top: 1px dashed var(--line);
+}
+.dialogue-bubble .db-source.hidden { display: none; }
+
+/* ---------- Mission player ---------- */
+.mission-emoji {
+  font-size: 52px;
+  text-align: center;
+  margin: 24px 0 8px;
+}
+.mission-title {
+  font-size: 22px;
+  text-align: center;
+  margin: 4px 0 8px;
+  color: var(--text);
+}
+.mission-intro-text {
+  text-align: center;
+  color: var(--text-soft);
+  font-size: 15px;
+  margin-bottom: 22px;
+}
+.mission-progress { margin: 6px 0 10px; }
+.mission-prompt {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--text);
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 14px;
+}
+.mission-repeat {
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 18px 16px;
+  text-align: center;
+  margin-bottom: 12px;
+}
+.mission-repeat-text {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--text);
+}
+.mission-repeat-translit { margin-top: 4px; }
+.mission-repeat-hint { margin-top: 10px; font-style: italic; }
+.mission-feedback {
+  min-height: 22px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+  margin: 8px 0;
+}
+.mission-feedback.correct { color: #527c3e; }
+.mission-feedback.wrong { color: #b3504f; }
+
+/* ---------- Coverage meter ---------- */
+.coverage-number {
+  font-size: 40px;
+  font-weight: 800;
+  color: var(--primary);
+  line-height: 1.1;
+  margin: 4px 0 8px;
+}
+.coverage-note { margin-top: 8px; }
+
+/* ---------- Lesson modal unlock callout ---------- */
+.lesson-modal-unlocked {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #527c3e;
+  background: #eef5e3;
+  border: 1px solid #b8d4a0;
+  border-radius: 10px;
+  padding: 8px 12px;
+  margin: 8px 0;
+}
+.lesson-modal-unlocked.hidden { display: none; }
+
 /* ---------- Confusion compare ---------- */
 .confusion-title {
   font-size: 22px;
