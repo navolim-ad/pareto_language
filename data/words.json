@@ -1,6 +1,6 @@
 {
   "meta": {
-    "version": "0.5.1-no-number-emoji",
+    "version": "0.5.2-nuqud-fix",
     "updated": "2026-05-19",
     "source_languages": [
       "en",
@@ -2708,15 +2708,15 @@
       "es": "dinero",
       "sr": "novac",
       "sr_cyr": "новац",
-      "ar": "مال",
-      "ar_translit": "māl",
+      "ar": "نقود",
+      "ar_translit": "nuqūd",
       "example": {
         "en": "I need money.",
         "es": "Necesito dinero.",
         "sr": "Treba mi novac.",
         "sr_cyr": "Треба ми новац.",
-        "ar": "أحتاج مالاً.",
-        "ar_translit": "aḥtāj mālan"
+        "ar": "أحتاج نقودًا.",
+        "ar_translit": "aḥtāj nuqūdan"
       },
       "th": "เงิน",
       "th_translit": "ngen"

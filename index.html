@@ -55,10 +55,18 @@
         </div>
 
         <div class="onboarding-item">
+          <div class="onboarding-icon">✨</div>
+          <div>
+            <h3>New words introduce themselves first</h3>
+            <p>The first time you meet a word it just shows itself — word, sound, meaning, no quiz. Tap "Got it" and it comes back a few cards later as a real question, now that you've been introduced.</p>
+          </div>
+        </div>
+
+        <div class="onboarding-item">
           <div class="onboarding-icon">🃏</div>
           <div>
             <h3>Sessions feel different each time</h3>
-            <p>The app rotates between three styles: tap to reveal, type the answer, or pick from four. Every few cards, a quick matching round mixes things up. It picks for you — just tap "Study now."</p>
+            <p>The app rotates between styles: tap to reveal, type the answer, pick from four, or listen and choose. Every few cards a matching round or a short conversation mixes things up. It picks for you — just tap "Study now."</p>
           </div>
         </div>
 
@@ -71,7 +79,15 @@
               <b>Recognize</b>: you knew it once you saw the answer.<br>
               <b>Know it</b>: instant, no hesitation.
             </p>
-            <p>If you really blank on a typing card, tap "I don't know — show me" to reveal the answer without guessing. Honest taps keep the app accurate.</p>
+            <p>If you really blank on a typing card, tap "I don't know — show me" to reveal the answer without guessing. Mis-tapped a grade? An undo button appears for a few seconds. Honest taps keep the app accurate.</p>
+          </div>
+        </div>
+
+        <div class="onboarding-item">
+          <div class="onboarding-icon">💬</div>
+          <div>
+            <h3>Words turn into things you can say</h3>
+            <p>As words stick, you unlock real sentences, short conversations, and missions — like ordering a coffee or haggling at the market — built only from words you know. Find them under "You can already say" on your home screen.</p>
           </div>
         </div>
 
@@ -115,6 +131,12 @@
         </header>
 
         <p class="home-welcome" id="home-welcome"></p>
+
+        <div id="whatsnew-banner" class="whatsnew-banner hidden" role="button" tabindex="0">
+          <span class="wn-icon">✨</span>
+          <span class="wn-text" id="whatsnew-text"></span>
+          <button class="wn-close" id="whatsnew-close" aria-label="Dismiss">✕</button>
+        </div>
 
         <div class="card stat-card" id="stat-card" role="button" tabindex="0">
           <div class="stat-main">
@@ -513,6 +535,7 @@
         </div>
         <button id="lesson-modal-again" class="primary-btn big">One more lesson</button>
         <button id="lesson-modal-cheeky" class="secondary-btn">Quick lesson · 5 cards</button>
+        <button id="lesson-modal-mission" class="secondary-btn hidden">🎯 Try a mission</button>
         <button id="lesson-modal-done" class="text-link-btn">Done for today</button>
       </div>
     </div>

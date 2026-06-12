@@ -1,5 +1,11 @@
 // ============== Constants ==============
 const MS_PER_DAY = 24 * 60 * 60 * 1000;
+
+// Bump together with the service worker cache version on each release.
+// When WHATSNEW_TEXT is non-null, users who haven't seen this version get a
+// one-time banner on the home screen.
+const APP_VERSION = 51;
+const WHATSNEW_TEXT = 'New: conversations and missions! Tap the 💬 card to see what you can already say.';
 const LANG_LABELS = {
   en: 'English',
   es: 'Español',
@@ -920,6 +926,9 @@ function renderHome() {
 
   // "You can already say" card.
   renderSayCard();
+
+  // One-time what's-new banner after updates.
+  maybeShowWhatsNew();
 
   renderThemeProgress();
   renderWordOfDay();
@@ -2672,6 +2681,24 @@ function finishSession() {
     }
   }
 
+  // "Try a mission" button: surface an unlocked, not-yet-completed mission at
+  // the natural what-now moment.
+  const missionBtn = document.getElementById('lesson-modal-mission');
+  if (missionBtn) {
+    const completions = getMissionCompletions();
+    const fresh = unlockedMissions().filter(m => !completions[m.id]);
+    if (fresh.length > 0) {
+      const m = fresh[0];
+      const src2 = state.settings.source;
+      missionBtn.textContent = `🎯 Try a mission: ${m.title[src2] || m.title.en}`;
+      missionBtn.classList.remove('hidden');
+      state._pendingMission = m;
+    } else {
+      missionBtn.classList.add('hidden');
+      state._pendingMission = null;
+    }
+  }
+
   // Populate the modal popup (overlay — appears on top of whatever screen is current).
   const DONE_EMOJIS = ['🎉', '🌱', '🏁', '✨', '🍵', '🎯', '🏆', '☕', '🌅', '💪', '🪴', '📚'];
   const emojiEl = document.getElementById('lesson-modal-emoji');
@@ -2832,6 +2859,39 @@ function markMissionComplete(missionId) {
   localStorage.setItem(storageKey(`missions-done:${pairKey()}`), JSON.stringify(done));
 }
 
+// One-time "what's new" banner after an app update.
+function maybeShowWhatsNew() {
+  const banner = document.getElementById('whatsnew-banner');
+  if (!banner) return;
+  if (!WHATSNEW_TEXT) { banner.classList.add('hidden'); return; }
+  const seen = parseInt(localStorage.getItem(storageKey('seenVersion')) || '0', 10);
+  if (seen >= APP_VERSION) { banner.classList.add('hidden'); return; }
+  document.getElementById('whatsnew-text').textContent = WHATSNEW_TEXT;
+  banner.classList.remove('hidden');
+}
+function dismissWhatsNew() {
+  localStorage.setItem(storageKey('seenVersion'), String(APP_VERSION));
+  const banner = document.getElementById('whatsnew-banner');
+  if (banner) banner.classList.add('hidden');
+}
+
+// Fewest words still missing for ANY locked sentence/dialogue/mission —
+// powers the "your first sentence unlocks in N more words" teaser.
+function nearestUnlockDistance() {
+  const tgt = state.settings.target;
+  const src = state.settings.source;
+  let best = null;
+  const consider = (uses, available) => {
+    if (!available) return;
+    const missing = uses.filter(u => !isLearnedWord(u)).length;
+    if (missing > 0 && (best === null || missing < best)) best = missing;
+  };
+  for (const s of state.sentences) consider(s.uses, s[tgt] && s[src]);
+  for (const d of state.dialogues) consider(d.uses, d.lines.every(l => l[tgt] && l[src]));
+  for (const m of state.missions) consider(m.uses, m.steps.every(st => st.text[tgt]));
+  return best;
+}
+
 function renderSayCard() {
   const card = document.getElementById('say-card');
   if (!card) return;
@@ -2839,9 +2899,20 @@ function renderSayCard() {
   const d = unlockedDialogues().length;
   const m = unlockedMissions().length;
   if (s + d + m === 0) {
-    card.classList.add('hidden');
+    // Locked state: keep the card visible so the payoff is in view from
+    // lesson one — that's the motivation engine, don't hide it.
+    const dist = nearestUnlockDistance();
+    if (dist === null) {
+      card.classList.add('hidden'); // no data for this pair at all
+      return;
+    }
+    document.getElementById('say-card-sub').textContent =
+      `Your first sentence unlocks in ${dist} more word${dist === 1 ? '' : 's'}`;
+    card.classList.add('locked');
+    card.classList.remove('hidden');
     return;
   }
+  card.classList.remove('locked');
   const parts = [];
   if (s) parts.push(`${s} sentence${s === 1 ? '' : 's'}`);
   if (d) parts.push(`${d} conversation${d === 1 ? '' : 's'}`);
@@ -2850,84 +2921,111 @@ function renderSayCard() {
   card.classList.remove('hidden');
 }
 
+// Build one row for the say screen. opts: {emoji, title, sub, trailing, locked, missing, onClick}
+function makeSayItem(opts) {
+  const item = document.createElement('button');
+  item.className = 'say-item' + (opts.locked ? ' locked' : '');
+  if (opts.locked) item.disabled = true;
+  if (opts.emoji) {
+    const emoji = document.createElement('span');
+    emoji.className = 'si-emoji';
+    emoji.textContent = opts.emoji;
+    item.appendChild(emoji);
+  }
+  const text = document.createElement('div');
+  text.className = 'si-text';
+  const title = document.createElement('div');
+  title.className = 'si-target';
+  title.textContent = opts.title;
+  text.appendChild(title);
+  if (opts.sub) {
+    const sub = document.createElement('div');
+    sub.className = 'si-source';
+    sub.textContent = opts.sub;
+    text.appendChild(sub);
+  }
+  item.appendChild(text);
+  if (opts.locked) {
+    const lock = document.createElement('span');
+    lock.className = 'si-lock';
+    lock.textContent = `🔒 ${opts.missing} more word${opts.missing === 1 ? '' : 's'}`;
+    item.appendChild(lock);
+  } else if (opts.trailing) {
+    const tr = document.createElement('span');
+    tr.className = opts.trailing.cls;
+    tr.textContent = opts.trailing.text;
+    item.appendChild(tr);
+  }
+  if (opts.onClick && !opts.locked) item.addEventListener('click', opts.onClick);
+  return item;
+}
+
+function missingWordCount(uses) {
+  return uses.filter(u => !isLearnedWord(u)).length;
+}
+
 function openSayScreen() {
   const tgt = state.settings.target;
   const src = state.settings.source;
 
-  // Missions
+  // Missions — unlocked first, then up to 3 nearest locked ones as teasers.
   const missions = unlockedMissions();
   const mSection = document.getElementById('say-missions-section');
   const mList = document.getElementById('say-missions-list');
   mList.innerHTML = '';
-  if (missions.length > 0) {
-    const completions = getMissionCompletions();
-    for (const m of missions) {
-      const item = document.createElement('button');
-      item.className = 'say-item';
-      const emoji = document.createElement('span');
-      emoji.className = 'si-emoji';
-      emoji.textContent = m.emoji;
-      item.appendChild(emoji);
-      const text = document.createElement('div');
-      text.className = 'si-text';
-      const title = document.createElement('div');
-      title.className = 'si-target';
-      title.textContent = m.title[src] || m.title.en;
-      text.appendChild(title);
-      const sub = document.createElement('div');
-      sub.className = 'si-source';
-      sub.textContent = m.intro[src] || m.intro.en;
-      text.appendChild(sub);
-      item.appendChild(text);
-      if (completions[m.id]) {
-        const done = document.createElement('span');
-        done.className = 'si-done';
-        done.textContent = '✓';
-        item.appendChild(done);
-      }
-      item.addEventListener('click', () => openMission(m));
-      mList.appendChild(item);
-    }
-    mSection.classList.remove('hidden');
-  } else {
-    mSection.classList.add('hidden');
+  const completions = getMissionCompletions();
+  for (const m of missions) {
+    mList.appendChild(makeSayItem({
+      emoji: m.emoji,
+      title: m.title[src] || m.title.en,
+      sub: m.intro[src] || m.intro.en,
+      trailing: completions[m.id] ? { cls: 'si-done', text: '✓' } : null,
+      onClick: () => openMission(m),
+    }));
   }
+  const lockedMissions = state.missions
+    .filter(m => m.steps.every(st => st.text[tgt]) && !missions.includes(m))
+    .map(m => ({ m, missing: missingWordCount(m.uses) }))
+    .sort((a, b) => a.missing - b.missing)
+    .slice(0, 3);
+  for (const { m, missing } of lockedMissions) {
+    mList.appendChild(makeSayItem({
+      emoji: m.emoji,
+      title: m.title[src] || m.title.en,
+      locked: true,
+      missing,
+    }));
+  }
+  mSection.classList.toggle('hidden', missions.length + lockedMissions.length === 0);
 
-  // Dialogues
+  // Dialogues — same pattern.
   const dialogues = unlockedDialogues();
   const dSection = document.getElementById('say-dialogues-section');
   const dList = document.getElementById('say-dialogues-list');
   dList.innerHTML = '';
-  if (dialogues.length > 0) {
-    for (const d of dialogues) {
-      const item = document.createElement('button');
-      item.className = 'say-item';
-      const emoji = document.createElement('span');
-      emoji.className = 'si-emoji';
-      emoji.textContent = d.emoji;
-      item.appendChild(emoji);
-      const text = document.createElement('div');
-      text.className = 'si-text';
-      const title = document.createElement('div');
-      title.className = 'si-target';
-      title.textContent = d.title[src] || d.title.en;
-      text.appendChild(title);
-      const sub = document.createElement('div');
-      sub.className = 'si-source';
-      sub.textContent = `${d.lines.length} lines`;
-      text.appendChild(sub);
-      item.appendChild(text);
-      const play = document.createElement('span');
-      play.className = 'si-play';
-      play.textContent = '▶';
-      item.appendChild(play);
-      item.addEventListener('click', () => openDialogue(d, 'say'));
-      dList.appendChild(item);
-    }
-    dSection.classList.remove('hidden');
-  } else {
-    dSection.classList.add('hidden');
+  for (const d of dialogues) {
+    dList.appendChild(makeSayItem({
+      emoji: d.emoji,
+      title: d.title[src] || d.title.en,
+      sub: `${d.lines.length} lines`,
+      trailing: { cls: 'si-play', text: '▶' },
+      onClick: () => openDialogue(d, 'say'),
+    }));
   }
+  const lockedDialogues = state.dialogues
+    .filter(d => d.lines.every(l => l[tgt] && l[src]) && !dialogues.includes(d))
+    .map(d => ({ d, missing: missingWordCount(d.uses) }))
+    .sort((a, b) => a.missing - b.missing)
+    .slice(0, 3);
+  for (const { d, missing } of lockedDialogues) {
+    dList.appendChild(makeSayItem({
+      emoji: d.emoji,
+      title: d.title[src] || d.title.en,
+      locked: true,
+      missing,
+    }));
+  }
+  dSection.classList.toggle('hidden', dialogues.length + lockedDialogues.length === 0);
 
   // Sentences
   const sentences = sayableSentences();
@@ -2972,19 +3070,19 @@ function openSayScreen() {
     sSection.classList.add('hidden');
   }
 
-  // Locked teaser + empty state
+  // Note for sentences (locked dialogues/missions already show as teasers above).
   const lockedNote = document.getElementById('say-locked-note');
-  const lockedCount =
-    (state.dialogues.length - dialogues.length) +
-    (state.missions.length - missions.length);
-  if (lockedCount > 0) {
-    lockedNote.textContent = `${lockedCount} more unlock as you learn new words.`;
+  const lockedSentences = state.sentences.filter(s => s[tgt] && s[src]).length - sentences.length;
+  if (lockedSentences > 0) {
+    lockedNote.textContent = `${lockedSentences} more sentence${lockedSentences === 1 ? '' : 's'} unlock as you learn new words.`;
     lockedNote.classList.remove('hidden');
   } else {
     lockedNote.classList.add('hidden');
   }
   document.getElementById('say-empty').classList.toggle(
-    'hidden', sentences.length + dialogues.length + missions.length > 0
+    'hidden',
+    sentences.length + dialogues.length + missions.length +
+      lockedDialogues.length + lockedMissions.length > 0
   );
 
   show('screen-say');
@@ -3853,6 +3951,20 @@ async function init() {
   document.getElementById('mission-start').addEventListener('click', startMissionSteps);
   document.getElementById('mission-done').addEventListener('click', closeMission);
   document.getElementById('mission-back').addEventListener('click', closeMission);
+  // What's-new banner: tap → mark seen + open the say screen; ✕ just dismisses.
+  document.getElementById('whatsnew-banner').addEventListener('click', () => {
+    dismissWhatsNew();
+    openSayScreen();
+  });
+  document.getElementById('whatsnew-close').addEventListener('click', (e) => {
+    e.stopPropagation();
+    dismissWhatsNew();
+  });
+  // Lesson-end "Try a mission" button.
+  document.getElementById('lesson-modal-mission').addEventListener('click', () => {
+    closeLessonModal();
+    if (state._pendingMission) openMission(state._pendingMission);
+  });
   document.getElementById('reveal-btn').addEventListener('click', reveal);
   document.getElementById('skip-known-btn').addEventListener('click', skipKnown);
   document.getElementById('type-submit').addEventListener('click', submitTypeAnswer);
