@@ -1,6 +1,6 @@
 {
   "meta": {
-    "version": "1.0.0",
+    "version": "1.1.0",
     "updated": "2026-10-30",
     "title": "Class practice",
     "note": "Original practice material based on the vocabulary, grammar patterns and transliteration conventions in Berlitz Arabic Level 1. The clock phrases follow the supplied class handout. This is a separate spoken-Arabic track and does not replace the existing MSA course."
@@ -8,8 +8,8 @@
   "topics": [
     { "id": "mixed", "emoji": "🎯", "title": "Mixed class practice", "subtitle": "Verbs, numbers, time and useful phrases" },
     { "id": "verbs", "emoji": "🏃", "title": "Present verbs", "subtitle": "I work, she works, you work" },
-    { "id": "numbers", "emoji": "🔢", "title": "Numbers", "subtitle": "0–20 and the tens to 100" },
-    { "id": "time", "emoji": "🕒", "title": "Clock time", "subtitle": "Past, half past and to the hour" },
+    { "id": "numbers", "emoji": "🔢", "title": "Numbers", "subtitle": "0–100, with fresh combinations each round" },
+    { "id": "time", "emoji": "🕒", "title": "Clock time", "subtitle": "A new set of five-minute times each round" },
     { "id": "weekdays", "emoji": "📅", "title": "Weekdays", "subtitle": "Class days and work days" },
     { "id": "phrases", "emoji": "💬", "title": "Practical phrases", "subtitle": "Greetings, background and daily routine" }
   ],
@@ -207,6 +207,20 @@
     { "digital": "3:00 pm", "en": "three in the afternoon", "ar": "الساعة ثلاثة بعد الظهر", "translit": "is-saa3a thalaatha ba3d idh-dhuhur" },
     { "digital": "4:00 pm", "en": "four in the afternoon", "ar": "الساعة أربعة بعد الظهر", "translit": "is-saa3a 'arba3a ba3d idh-dhuhur" }
   ],
+  "clockHours": [
+    { "value": 1, "ar": "وحدة", "translit": "wahda" },
+    { "value": 2, "ar": "ثنتين", "translit": "thintayn" },
+    { "value": 3, "ar": "ثلاثة", "translit": "thalaatha" },
+    { "value": 4, "ar": "أربعة", "translit": "'arba3a" },
+    { "value": 5, "ar": "خمسة", "translit": "khamsa" },
+    { "value": 6, "ar": "ستة", "translit": "sitta" },
+    { "value": 7, "ar": "سبعة", "translit": "sab3a" },
+    { "value": 8, "ar": "ثمانية", "translit": "thamaaniya" },
+    { "value": 9, "ar": "تسعة", "translit": "tis3a" },
+    { "value": 10, "ar": "عشرة", "translit": "3ashara" },
+    { "value": 11, "ar": "حدعش", "translit": "hda3sh" },
+    { "value": 12, "ar": "ثنعش", "translit": "thna3sh" }
+  ],
   "weekdays": [
     { "en": "Sunday", "ar": "الأحد", "translit": "il-ahad" },
     { "en": "Monday", "ar": "الإثنين", "translit": "il-ithnayn" },
@@ -239,5 +253,28 @@
     { "id": "walk-corniche", "group": "routine", "en": "Sometimes I walk on the Corniche", "ar": "أحياناً أنا أمشي على الكورنيش", "translit": "'ahyaanan 'anaa 'amshii 3alaa il-Corniche" },
     { "id": "what-do", "group": "routine", "en": "What do you do?", "ar": "شو تساوي؟", "translit": "shuu tisaawi?" },
     { "id": "where-work", "group": "routine", "en": "Where do you work?", "ar": "وين تشتغل؟", "translit": "wayn tishtghil?" }
+  ],
+  "missions": [
+    {
+      "id": "meet-someone",
+      "emoji": "👋",
+      "title": "Meet someone new",
+      "intro": "Greet someone, answer how you are and exchange basic background information.",
+      "phraseIds": ["hello", "how", "fine", "from-where", "from-serbia", "live-where", "live-ad"]
+    },
+    {
+      "id": "work-languages",
+      "emoji": "🏢",
+      "title": "Talk about work and languages",
+      "intro": "Handle the questions you are likely to get when meeting a colleague.",
+      "phraseIds": ["what-do", "work-office", "where-work", "learn-arabic", "speak-english"]
+    },
+    {
+      "id": "weekly-routine",
+      "emoji": "📅",
+      "title": "Explain your working week",
+      "intro": "Build your normal schedule, class days and Friday routine.",
+      "phraseIds": ["go-nine", "go-tuesday", "go-thursday", "return-four", "friday-three", "walk-corniche"]
+    }
   ]
 }
