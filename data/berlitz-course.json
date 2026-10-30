@@ -1,0 +1,243 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "updated": "2026-10-30",
+    "title": "Class practice",
+    "note": "Original practice material based on the vocabulary, grammar patterns and transliteration conventions in Berlitz Arabic Level 1. The clock phrases follow the supplied class handout. This is a separate spoken-Arabic track and does not replace the existing MSA course."
+  },
+  "topics": [
+    { "id": "mixed", "emoji": "🎯", "title": "Mixed class practice", "subtitle": "Verbs, numbers, time and useful phrases" },
+    { "id": "verbs", "emoji": "🏃", "title": "Present verbs", "subtitle": "I work, she works, you work" },
+    { "id": "numbers", "emoji": "🔢", "title": "Numbers", "subtitle": "0–20 and the tens to 100" },
+    { "id": "time", "emoji": "🕒", "title": "Clock time", "subtitle": "Past, half past and to the hour" },
+    { "id": "weekdays", "emoji": "📅", "title": "Weekdays", "subtitle": "Class days and work days" },
+    { "id": "phrases", "emoji": "💬", "title": "Practical phrases", "subtitle": "Greetings, background and daily routine" }
+  ],
+  "verbs": [
+    {
+      "id": "work",
+      "forms": [
+        { "person": "I", "en": "I work", "ar": "أنا أشتغل", "translit": "'anaa 'ashtghil" },
+        { "person": "he", "en": "he works", "ar": "هو يشتغل", "translit": "huwa yishtghil" },
+        { "person": "she", "en": "she works", "ar": "هي تشتغل", "translit": "hiya tishtghil" },
+        { "person": "you (man)", "en": "you work", "ar": "إنت تشتغل", "translit": "'inta tishtghil" },
+        { "person": "you (woman)", "en": "you work", "ar": "إنتِ تشتغلي", "translit": "'inti tishtghlii" }
+      ]
+    },
+    {
+      "id": "learn",
+      "forms": [
+        { "person": "I", "en": "I learn", "ar": "أنا أتعلم", "translit": "'anaa 'at3allam" },
+        { "person": "he", "en": "he learns", "ar": "هو يتعلم", "translit": "huwa yit3allam" },
+        { "person": "she", "en": "she learns", "ar": "هي تتعلم", "translit": "hiya tit3allam" },
+        { "person": "you (man)", "en": "you learn", "ar": "إنت تتعلم", "translit": "'inta tit3allam" },
+        { "person": "you (woman)", "en": "you learn", "ar": "إنتِ تتعلمي", "translit": "'inti tit3allamii" }
+      ]
+    },
+    {
+      "id": "speak",
+      "forms": [
+        { "person": "I", "en": "I speak", "ar": "أنا أتكلم", "translit": "'anaa 'atkallam" },
+        { "person": "he", "en": "he speaks", "ar": "هو يتكلم", "translit": "huwa yitkallam" },
+        { "person": "she", "en": "she speaks", "ar": "هي تتكلم", "translit": "hiya titkallam" },
+        { "person": "you (man)", "en": "you speak", "ar": "إنت تتكلم", "translit": "'inta titkallam" },
+        { "person": "you (woman)", "en": "you speak", "ar": "إنتِ تتكلمي", "translit": "'inti titkallamii" }
+      ]
+    },
+    {
+      "id": "live",
+      "forms": [
+        { "person": "I", "en": "I live", "ar": "أنا أسكن", "translit": "'anaa 'askun" },
+        { "person": "he", "en": "he lives", "ar": "هو يسكن", "translit": "huwa yiskun" },
+        { "person": "she", "en": "she lives", "ar": "هي تسكن", "translit": "hiya tiskun" },
+        { "person": "you (man)", "en": "you live", "ar": "إنت تسكن", "translit": "'inta tiskun" },
+        { "person": "you (woman)", "en": "you live", "ar": "إنتِ تسكني", "translit": "'inti tiskunii" }
+      ]
+    },
+    {
+      "id": "go",
+      "forms": [
+        { "person": "I", "en": "I go", "ar": "أنا أروح", "translit": "'anaa 'aruuh" },
+        { "person": "he", "en": "he goes", "ar": "هو يروح", "translit": "huwa yiruuh" },
+        { "person": "she", "en": "she goes", "ar": "هي تروح", "translit": "hiya truuh" },
+        { "person": "you (man)", "en": "you go", "ar": "إنت تروح", "translit": "'inta truuh" },
+        { "person": "you (woman)", "en": "you go", "ar": "إنتِ تروحي", "translit": "'inti truuhi" }
+      ]
+    },
+    {
+      "id": "return",
+      "forms": [
+        { "person": "I", "en": "I return", "ar": "أنا أرجع", "translit": "'anaa 'arja3" },
+        { "person": "he", "en": "he returns", "ar": "هو يرجع", "translit": "huwa yirja3" },
+        { "person": "she", "en": "she returns", "ar": "هي ترجع", "translit": "hiya tirja3" },
+        { "person": "you (man)", "en": "you return", "ar": "إنت ترجع", "translit": "'inta tirja3" },
+        { "person": "you (woman)", "en": "you return", "ar": "إنتِ ترجعي", "translit": "'inti tirja3ii" }
+      ]
+    },
+    {
+      "id": "walk",
+      "forms": [
+        { "person": "I", "en": "I walk", "ar": "أنا أمشي", "translit": "'anaa 'amshii" },
+        { "person": "he", "en": "he walks", "ar": "هو يمشي", "translit": "huwa yimshii" },
+        { "person": "she", "en": "she walks", "ar": "هي تمشي", "translit": "hiya timshii" },
+        { "person": "you (man)", "en": "you walk", "ar": "إنت تمشي", "translit": "'inta timshii" },
+        { "person": "you (woman)", "en": "you walk", "ar": "إنتِ تمشي", "translit": "'inti timshii" }
+      ]
+    },
+    {
+      "id": "come",
+      "forms": [
+        { "person": "I", "en": "I come", "ar": "أنا أجي", "translit": "'anaa 'aajii" },
+        { "person": "he", "en": "he comes", "ar": "هو يجي", "translit": "huwa yiijii" },
+        { "person": "she", "en": "she comes", "ar": "هي تيجي", "translit": "hiya tiijii" },
+        { "person": "you (man)", "en": "you come", "ar": "إنت تيجي", "translit": "'inta tiijii" },
+        { "person": "you (woman)", "en": "you come", "ar": "إنتِ تيجي", "translit": "'inti tiijii" }
+      ]
+    },
+    {
+      "id": "teach",
+      "forms": [
+        { "person": "I", "en": "I teach", "ar": "أنا أعلم", "translit": "'anaa 'a3allim" },
+        { "person": "he", "en": "he teaches", "ar": "هو يعلم", "translit": "huwa yi3allim" },
+        { "person": "she", "en": "she teaches", "ar": "هي تعلم", "translit": "hiya t3allim" },
+        { "person": "you (man)", "en": "you teach", "ar": "إنت تعلم", "translit": "'inta t3allim" },
+        { "person": "you (woman)", "en": "you teach", "ar": "إنتِ تعلمي", "translit": "'inti t3allmii" }
+      ]
+    },
+    {
+      "id": "see",
+      "forms": [
+        { "person": "I", "en": "I see", "ar": "أنا أشوف", "translit": "'anaa 'ashuuf" },
+        { "person": "he", "en": "he sees", "ar": "هو يشوف", "translit": "huwa yishuuf" },
+        { "person": "she", "en": "she sees", "ar": "هي تشوف", "translit": "hiya tshuuf" },
+        { "person": "you (man)", "en": "you see", "ar": "إنت تشوف", "translit": "'inta tshuuf" },
+        { "person": "you (woman)", "en": "you see", "ar": "إنتِ تشوفي", "translit": "'inti tshuufii" }
+      ]
+    },
+    {
+      "id": "write",
+      "forms": [
+        { "person": "I", "en": "I write", "ar": "أنا أكتب", "translit": "'anaa 'aktub" },
+        { "person": "he", "en": "he writes", "ar": "هو يكتب", "translit": "huwa yiktub" },
+        { "person": "she", "en": "she writes", "ar": "هي تكتب", "translit": "hiya tiktub" },
+        { "person": "you (man)", "en": "you write", "ar": "إنت تكتب", "translit": "'inta tiktub" },
+        { "person": "you (woman)", "en": "you write", "ar": "إنتِ تكتبي", "translit": "'inti tiktubii" }
+      ]
+    },
+    {
+      "id": "read",
+      "forms": [
+        { "person": "I", "en": "I read", "ar": "أنا أقرأ", "translit": "'anaa 'aqraa" },
+        { "person": "he", "en": "he reads", "ar": "هو يقرأ", "translit": "huwa yiqraa" },
+        { "person": "she", "en": "she reads", "ar": "هي تقرأ", "translit": "hiya tiqraa" },
+        { "person": "you (man)", "en": "you read", "ar": "إنت تقرأ", "translit": "'inta tiqraa" },
+        { "person": "you (woman)", "en": "you read", "ar": "إنتِ تقري", "translit": "'inti tiqrii" }
+      ]
+    },
+    {
+      "id": "do",
+      "forms": [
+        { "person": "I", "en": "I do", "ar": "أنا أساوي", "translit": "'anaa 'asaawii" },
+        { "person": "he", "en": "he does", "ar": "هو يساوي", "translit": "huwa yisaawii" },
+        { "person": "she", "en": "she does", "ar": "هي تساوي", "translit": "hiya tsaawii" },
+        { "person": "you (man)", "en": "you do", "ar": "إنت تساوي", "translit": "'inta tsaawii" },
+        { "person": "you (woman)", "en": "you do", "ar": "إنتِ تساوي", "translit": "'inti tsaawii" }
+      ]
+    },
+    {
+      "id": "count",
+      "forms": [
+        { "person": "I", "en": "I count", "ar": "أنا أعد", "translit": "'anaa 'a3idd" },
+        { "person": "he", "en": "he counts", "ar": "هو يعد", "translit": "huwa yi3idd" },
+        { "person": "she", "en": "she counts", "ar": "هي تعد", "translit": "hiya ti3idd" },
+        { "person": "you (man)", "en": "you count", "ar": "إنت تعد", "translit": "'inta ti3idd" },
+        { "person": "you (woman)", "en": "you count", "ar": "إنتِ تعدي", "translit": "'inti ti3iddii" }
+      ]
+    }
+  ],
+  "numbers": [
+    { "value": 0, "ar": "صفر", "translit": "sifr" },
+    { "value": 1, "ar": "واحد", "translit": "waahid" },
+    { "value": 2, "ar": "اثنين", "translit": "thnayn" },
+    { "value": 3, "ar": "ثلاثة", "translit": "thalaatha" },
+    { "value": 4, "ar": "أربعة", "translit": "'arba3a" },
+    { "value": 5, "ar": "خمسة", "translit": "khamsa" },
+    { "value": 6, "ar": "ستة", "translit": "sitta" },
+    { "value": 7, "ar": "سبعة", "translit": "sab3a" },
+    { "value": 8, "ar": "ثمانية", "translit": "thamaaniya" },
+    { "value": 9, "ar": "تسعة", "translit": "tis3a" },
+    { "value": 10, "ar": "عشرة", "translit": "3ashara" },
+    { "value": 11, "ar": "حدعش", "translit": "hda3sh" },
+    { "value": 12, "ar": "ثنعش", "translit": "thna3sh" },
+    { "value": 13, "ar": "تلاتتعش", "translit": "thalatta3sh" },
+    { "value": 14, "ar": "أربعتعش", "translit": "'arba3ta3sh" },
+    { "value": 15, "ar": "خمستعش", "translit": "khamsta3sh" },
+    { "value": 16, "ar": "ستعش", "translit": "sitta3sh" },
+    { "value": 17, "ar": "سبعتعش", "translit": "saba3ta3sh" },
+    { "value": 18, "ar": "ثمانتعش", "translit": "thamaanta3sh" },
+    { "value": 19, "ar": "تسعتعش", "translit": "tisa3ta3sh" },
+    { "value": 20, "ar": "عشرين", "translit": "3ishriin" },
+    { "value": 30, "ar": "ثلاثين", "translit": "thalaathiin" },
+    { "value": 40, "ar": "أربعين", "translit": "'arb3iin" },
+    { "value": 50, "ar": "خمسين", "translit": "khamsiin" },
+    { "value": 60, "ar": "ستين", "translit": "sittiin" },
+    { "value": 70, "ar": "سبعين", "translit": "sab3iin" },
+    { "value": 80, "ar": "ثمانين", "translit": "thamaaniin" },
+    { "value": 90, "ar": "تسعين", "translit": "tis3iin" },
+    { "value": 100, "ar": "مية", "translit": "miyya" }
+  ],
+  "times": [
+    { "digital": "1:00", "en": "one in the morning", "ar": "الساعة وحدة الصبح", "translit": "is-saa3a wahda is-subuh" },
+    { "digital": "12:00", "en": "twelve noon", "ar": "الساعة ثنعش الظهر", "translit": "is-saa3a thna3sh idh-dhuhur" },
+    { "digital": "1:00 pm", "en": "one in the afternoon", "ar": "الساعة وحدة بعد الظهر", "translit": "is-saa3a wahda ba3d idh-dhuhur" },
+    { "digital": "5:00 pm", "en": "five in the evening", "ar": "الساعة خمسة المساء", "translit": "is-saa3a khamsa il-masaa" },
+    { "digital": "2:05", "en": "five past two", "ar": "ثنتين وخمسة", "translit": "thintayn w khamsa" },
+    { "digital": "2:10", "en": "ten past two", "ar": "ثنتين وعشرة", "translit": "thintayn w 3ashara" },
+    { "digital": "2:15", "en": "quarter past two", "ar": "ثنتين وربع", "translit": "thintayn w rub3" },
+    { "digital": "2:20", "en": "twenty past two", "ar": "ثنتين وثلث", "translit": "thintayn w thulth" },
+    { "digital": "2:25", "en": "twenty-five past two", "ar": "ثنتين ونص إلا خمسة", "translit": "thintayn w nuss 'illaa khamsa" },
+    { "digital": "2:30", "en": "half past two", "ar": "ثنتين ونص", "translit": "thintayn w nuss" },
+    { "digital": "2:35", "en": "twenty-five to three", "ar": "ثنتين ونص وخمسة", "translit": "thintayn w nuss w khamsa" },
+    { "digital": "2:40", "en": "twenty to three", "ar": "ثلاثة إلا ثلث", "translit": "thalaatha 'illaa thulth" },
+    { "digital": "2:45", "en": "quarter to three", "ar": "ثلاثة إلا ربع", "translit": "thalaatha 'illaa rub3" },
+    { "digital": "2:50", "en": "ten to three", "ar": "ثلاثة إلا عشرة", "translit": "thalaatha 'illaa 3ashara" },
+    { "digital": "2:55", "en": "five to three", "ar": "ثلاثة إلا خمسة", "translit": "thalaatha 'illaa khamsa" },
+    { "digital": "8:30", "en": "half past eight", "ar": "ثمانية ونص", "translit": "thamaaniya w nuss" },
+    { "digital": "9:00", "en": "nine o'clock", "ar": "الساعة تسعة", "translit": "is-saa3a tis3a" },
+    { "digital": "3:00 pm", "en": "three in the afternoon", "ar": "الساعة ثلاثة بعد الظهر", "translit": "is-saa3a thalaatha ba3d idh-dhuhur" },
+    { "digital": "4:00 pm", "en": "four in the afternoon", "ar": "الساعة أربعة بعد الظهر", "translit": "is-saa3a 'arba3a ba3d idh-dhuhur" }
+  ],
+  "weekdays": [
+    { "en": "Sunday", "ar": "الأحد", "translit": "il-ahad" },
+    { "en": "Monday", "ar": "الإثنين", "translit": "il-ithnayn" },
+    { "en": "Tuesday", "ar": "الثلاثاء", "translit": "ith-thalaatha" },
+    { "en": "Wednesday", "ar": "الأربعاء", "translit": "il-arbi3aa" },
+    { "en": "Thursday", "ar": "الخميس", "translit": "il-khamiis" },
+    { "en": "Friday", "ar": "الجمعة", "translit": "il-jum3a" },
+    { "en": "Saturday", "ar": "السبت", "translit": "is-sabt" }
+  ],
+  "phrases": [
+    { "id": "hello", "group": "greetings", "en": "Hello / peace be upon you", "ar": "السلام عليكم", "translit": "is-salaamu 3alaykum" },
+    { "id": "hello-reply", "group": "greetings", "en": "And peace be upon you", "ar": "وعليكم السلام", "translit": "w 3alaykum is-salaam" },
+    { "id": "how", "group": "greetings", "en": "How are you?", "ar": "كيف حالك؟", "translit": "kiif haalak?" },
+    { "id": "fine", "group": "greetings", "en": "Thank God, I am fine", "ar": "الحمد لله بخير", "translit": "il-hamdulillaah bi-khayr" },
+    { "id": "morning", "group": "greetings", "en": "Good morning", "ar": "صباح الخير", "translit": "sabaah il-khayr" },
+    { "id": "evening", "group": "greetings", "en": "Good evening", "ar": "مساء الخير", "translit": "masaa il-khayr" },
+    { "id": "from-where", "group": "background", "en": "Where are you from?", "ar": "من وين إنت؟", "translit": "min wayn 'inta?" },
+    { "id": "from-serbia", "group": "background", "en": "I am from Serbia", "ar": "أنا من صربيا", "translit": "'anaa min Sirbiya" },
+    { "id": "from-australia", "group": "background", "en": "I am from Australia", "ar": "أنا من أستراليا", "translit": "'anaa min 'Ustraaliya" },
+    { "id": "live-where", "group": "background", "en": "Where do you live?", "ar": "وين تسكن؟", "translit": "wayn tiskun?" },
+    { "id": "live-ad", "group": "background", "en": "I live in Abu Dhabi", "ar": "أنا أسكن في أبو ظبي", "translit": "'anaa 'askun fii Abu Dhabi" },
+    { "id": "work-office", "group": "routine", "en": "I work in an office", "ar": "أنا أشتغل في مكتب", "translit": "'anaa 'ashtghil fii maktab" },
+    { "id": "learn-arabic", "group": "routine", "en": "I am learning Arabic", "ar": "أنا أتعلم عربي", "translit": "'anaa 'at3allam 3Arabii" },
+    { "id": "speak-english", "group": "routine", "en": "I speak English and Serbian", "ar": "أنا أتكلم إنجليزي وصربي", "translit": "'anaa 'atkallam Inglizi w Serbi" },
+    { "id": "go-nine", "group": "routine", "en": "I go to the office at nine", "ar": "أنا أروح المكتب الساعة تسعة", "translit": "'anaa 'aruuh il-maktab is-saa3a tis3a" },
+    { "id": "go-tuesday", "group": "routine", "en": "On Tuesday I go at half past eight", "ar": "يوم الثلاثاء أروح الساعة ثمانية ونص", "translit": "yawm ith-thalaatha 'aruuh is-saa3a thamaaniya w nuss" },
+    { "id": "go-thursday", "group": "routine", "en": "On Thursday I go at half past eight", "ar": "يوم الخميس أروح الساعة ثمانية ونص", "translit": "yawm il-khamiis 'aruuh is-saa3a thamaaniya w nuss" },
+    { "id": "return-four", "group": "routine", "en": "I return home at four", "ar": "أنا أرجع البيت الساعة أربعة", "translit": "'anaa 'arja3 il-bayt is-saa3a 'arba3a" },
+    { "id": "friday-three", "group": "routine", "en": "On Friday I return at three", "ar": "يوم الجمعة أرجع الساعة ثلاثة", "translit": "yawm il-jum3a 'arja3 is-saa3a thalaatha" },
+    { "id": "walk-corniche", "group": "routine", "en": "Sometimes I walk on the Corniche", "ar": "أحياناً أنا أمشي على الكورنيش", "translit": "'ahyaanan 'anaa 'amshii 3alaa il-Corniche" },
+    { "id": "what-do", "group": "routine", "en": "What do you do?", "ar": "شو تساوي؟", "translit": "shuu tisaawi?" },
+    { "id": "where-work", "group": "routine", "en": "Where do you work?", "ar": "وين تشتغل؟", "translit": "wayn tishtghil?" }
+  ]
+}
