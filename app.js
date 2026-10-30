@@ -4,8 +4,8 @@ const MS_PER_DAY = 24 * 60 * 60 * 1000;
 // Bump together with the service worker cache version on each release.
 // When WHATSNEW_TEXT is non-null, users who haven't seen this version get a
 // one-time banner on the home screen.
-const APP_VERSION = 52;
-const WHATSNEW_TEXT = 'New: Class practice for spoken Arabic, with verbs, numbers, weekdays and clock time.';
+const APP_VERSION = 53;
+const WHATSNEW_TEXT = 'New: spoken-Arabic missions, mistake review and fresh number and clock questions.';
 const LANG_LABELS = {
   en: 'English',
   es: 'Español',
@@ -3703,10 +3703,16 @@ function buildSessionSummary() {
 
 function loadCourseProgress() {
   try {
-    return JSON.parse(localStorage.getItem(storageKey('course-progress:berlitz-l1')) || '') ||
-      { attempts: 0, correct: 0, byTopic: {} };
+    const saved = JSON.parse(localStorage.getItem(storageKey('course-progress:berlitz-l1')) || '') || {};
+    return {
+      attempts: saved.attempts || 0,
+      correct: saved.correct || 0,
+      byTopic: saved.byTopic || {},
+      mistakes: saved.mistakes || {},
+      missionsDone: saved.missionsDone || {},
+    };
   } catch (e) {
-    return { attempts: 0, correct: 0, byTopic: {} };
+    return { attempts: 0, correct: 0, byTopic: {}, mistakes: {}, missionsDone: {} };
   }
 }
 
@@ -3714,13 +3720,26 @@ function saveCourseProgress(progress) {
   localStorage.setItem(storageKey('course-progress:berlitz-l1'), JSON.stringify(progress));
 }
 
-function recordCourseResult(topic, correct) {
+function recordCourseResult(topic, correct, itemKey) {
   const progress = loadCourseProgress();
   progress.attempts += 1;
   if (correct) progress.correct += 1;
   if (!progress.byTopic[topic]) progress.byTopic[topic] = { attempts: 0, correct: 0 };
   progress.byTopic[topic].attempts += 1;
   if (correct) progress.byTopic[topic].correct += 1;
+  if (itemKey) {
+    const previous = progress.mistakes[itemKey];
+    if (!correct) {
+      progress.mistakes[itemKey] = {
+        misses: (previous && previous.misses ? previous.misses : 0) + 1,
+        correctStreak: 0,
+        lastMissed: Date.now(),
+      };
+    } else if (previous) {
+      previous.correctStreak = (previous.correctStreak || 0) + 1;
+      if (previous.correctStreak >= 2) delete progress.mistakes[itemKey];
+    }
+  }
   saveCourseProgress(progress);
 }
 
@@ -3743,6 +3762,18 @@ function renderCourseScreen() {
 
   const list = document.getElementById('course-topic-list');
   list.innerHTML = '';
+  const mistakeCount = Object.keys(progress.mistakes).length;
+  if (mistakeCount > 0) {
+    const review = document.createElement('button');
+    review.className = 'course-topic-btn course-review-btn';
+    review.innerHTML =
+      '<span class="course-topic-emoji">⚡</span>' +
+      '<span class="course-topic-copy"><span class="course-topic-title">Review mistakes</span>' +
+      `<span class="course-topic-sub">${mistakeCount} form${mistakeCount === 1 ? '' : 's'} waiting for another try</span></span>` +
+      '<span class="course-topic-arrow">›</span>';
+    review.addEventListener('click', () => startCoursePractice('mistakes'));
+    list.appendChild(review);
+  }
   for (const topic of data.topics) {
     const btn = document.createElement('button');
     btn.className = 'course-topic-btn';
@@ -3758,6 +3789,21 @@ function renderCourseScreen() {
       '<span class="course-topic-arrow">›</span>';
     btn.addEventListener('click', () => startCoursePractice(topic.id));
     list.appendChild(btn);
+  }
+
+  const missionList = document.getElementById('course-mission-list');
+  missionList.innerHTML = '';
+  for (const mission of (data.missions || [])) {
+    const done = progress.missionsDone[mission.id] || 0;
+    const btn = document.createElement('button');
+    btn.className = 'course-topic-btn';
+    btn.innerHTML =
+      `<span class="course-topic-emoji">${mission.emoji}</span>` +
+      `<span class="course-topic-copy"><span class="course-topic-title">${mission.title}</span>` +
+      `<span class="course-topic-sub">${mission.intro}${done ? ` · completed ${done}×` : ''}</span></span>` +
+      '<span class="course-topic-arrow">›</span>';
+    btn.addEventListener('click', () => startCourseMission(mission.id));
+    missionList.appendChild(btn);
   }
 }
 
@@ -3777,6 +3823,69 @@ function courseChoiceOptions(correct, candidates) {
   const choices = [correct, ...different.slice(0, 3)];
   shuffle(choices);
   return choices;
+}
+
+function generatedNumberAnswers(data) {
+  const answers = [];
+  for (let value = 21; value < 100; value++) {
+    if (value % 10 === 0) continue;
+    const unit = data.numbers.find(n => n.value === value % 10);
+    const tens = data.numbers.find(n => n.value === value - (value % 10));
+    if (!unit || !tens) continue;
+    answers.push(courseAnswer(`number:${value}`, {
+      en: String(value),
+      ar: `${unit.ar} و${tens.ar}`,
+      translit: `${unit.translit} w ${tens.translit}`,
+    }));
+  }
+  return answers;
+}
+
+function generatedClockAnswers(data) {
+  const answers = [];
+  const minuteForms = {
+    5: { ar: 'خمسة', translit: 'khamsa' },
+    10: { ar: 'عشرة', translit: '3ashara' },
+    15: { ar: 'ربع', translit: 'rub3' },
+    20: { ar: 'ثلث', translit: 'thulth' },
+  };
+  for (const hour of data.clockHours || []) {
+    for (let minute = 0; minute < 60; minute += 5) {
+      const next = data.clockHours.find(h => h.value === (hour.value === 12 ? 1 : hour.value + 1));
+      let ar = '', translit = '';
+      if (minute === 0) {
+        ar = `الساعة ${hour.ar}`;
+        translit = `is-saa3a ${hour.translit}`;
+      } else if (minute <= 20) {
+        ar = `${hour.ar} و${minuteForms[minute].ar}`;
+        translit = `${hour.translit} w ${minuteForms[minute].translit}`;
+      } else if (minute === 25) {
+        ar = `${hour.ar} ونص إلا خمسة`;
+        translit = `${hour.translit} w nuss 'illaa khamsa`;
+      } else if (minute === 30) {
+        ar = `${hour.ar} ونص`;
+        translit = `${hour.translit} w nuss`;
+      } else if (minute === 35) {
+        ar = `${hour.ar} ونص وخمسة`;
+        translit = `${hour.translit} w nuss w khamsa`;
+      } else if (minute === 40) {
+        ar = `${next.ar} إلا ثلث`;
+        translit = `${next.translit} 'illaa thulth`;
+      } else if (minute === 45) {
+        ar = `${next.ar} إلا ربع`;
+        translit = `${next.translit} 'illaa rub3`;
+      } else if (minute === 50) {
+        ar = `${next.ar} إلا عشرة`;
+        translit = `${next.translit} 'illaa 3ashara`;
+      } else {
+        ar = `${next.ar} إلا خمسة`;
+        translit = `${next.translit} 'illaa khamsa`;
+      }
+      const digital = `${hour.value}:${String(minute).padStart(2, '0')}`;
+      answers.push(courseAnswer(`clock:${hour.value}:${minute}`, { en: digital, ar, translit }, digital));
+    }
+  }
+  return answers;
 }
 
 function buildCoursePool(topic) {
@@ -3812,6 +3921,14 @@ function buildCoursePool(topic) {
       options: courseChoiceOptions(answer, numberAnswers),
     });
   });
+  const generatedNumbers = generatedNumberAnswers(data);
+  for (const answer of generatedNumbers) {
+    pools.numbers.push({
+      kind: 'choice', topic: 'numbers', label: 'Fresh number',
+      question: `Choose ${answer.en}`, optionMode: 'arabic', answer,
+      options: courseChoiceOptions(answer, generatedNumbers),
+    });
+  }
 
   const timeAnswers = data.times.map((time, i) =>
     courseAnswer(`time:${i}`, time, `${time.digital} · ${time.en}`));
@@ -3829,6 +3946,14 @@ function buildCoursePool(topic) {
       options: courseChoiceOptions(answer, timeAnswers),
     });
   });
+  const generatedTimes = generatedClockAnswers(data);
+  for (const answer of generatedTimes) {
+    pools.time.push({
+      kind: 'choice', topic: 'time', label: 'Fresh clock',
+      question: answer.en, optionMode: 'arabic', answer,
+      options: courseChoiceOptions(answer, generatedTimes),
+    });
+  }
 
   const weekdayAnswers = data.weekdays.map((day, i) =>
     courseAnswer(`weekday:${i}`, day));
@@ -3862,6 +3987,17 @@ function buildCoursePool(topic) {
     });
   });
 
+  Object.values(pools).forEach(group => group.forEach(item => { item.key = item.answer.id; }));
+
+  if (topic === 'mistakes') {
+    const mistakes = loadCourseProgress().mistakes;
+    const all = Object.values(pools).flat();
+    const seen = new Set();
+    return all
+      .filter(item => mistakes[item.key] && !seen.has(item.key) && seen.add(item.key))
+      .sort((a, b) => (mistakes[b.key].misses || 0) - (mistakes[a.key].misses || 0));
+  }
+
   if (topic === 'mixed') {
     const mixed = [];
     for (const name of ['verbs', 'numbers', 'time', 'weekdays', 'phrases']) {
@@ -3874,21 +4010,100 @@ function buildCoursePool(topic) {
   return pools[topic] || [];
 }
 
+function uniqueCourseItems(items) {
+  const seen = new Set();
+  return items.filter(item => {
+    if (seen.has(item.key)) return false;
+    seen.add(item.key);
+    return true;
+  });
+}
+
 function startCoursePractice(topic) {
   const pool = buildCoursePool(topic);
-  shuffle(pool);
-  const length = Math.min(10, pool.length);
+  if (pool.length === 0) {
+    showToast(topic === 'mistakes' ? 'No mistakes are waiting for review.' : 'No questions are available yet.', 2200);
+    openCourseScreen();
+    return;
+  }
+
+  let items;
+  if (topic === 'mistakes') {
+    items = uniqueCourseItems(pool).slice(0, 10);
+  } else {
+    const waiting = buildCoursePool('mistakes')
+      .filter(item => topic === 'mixed' || item.topic === topic);
+    shuffle(waiting);
+    const reviewItems = uniqueCourseItems(waiting).slice(0, 4);
+    const reviewKeys = new Set(reviewItems.map(item => item.key));
+    const freshItems = pool.filter(item => !reviewKeys.has(item.key));
+    shuffle(freshItems);
+    items = [...reviewItems, ...freshItems].slice(0, 10);
+    shuffle(items);
+  }
+
   state.courseSession = {
     topic,
-    items: pool.slice(0, length),
+    items,
     index: 0,
     correct: 0,
     answered: false,
+    isMission: false,
+    recycledKeys: new Set(),
     selectedTokens: [],
     availableTokens: [],
   };
   renderCourseQuestion();
   show('screen-course-practice');
+}
+
+function startCourseMission(missionId) {
+  const data = state.courseData;
+  const mission = (data.missions || []).find(item => item.id === missionId);
+  if (!mission) {
+    showToast('That mission could not be loaded.', 2200);
+    return;
+  }
+  const phraseMap = new Map(data.phrases.map(phrase => [phrase.id, phrase]));
+  const items = mission.phraseIds.map(phraseId => {
+    const phrase = phraseMap.get(phraseId);
+    if (!phrase) return null;
+    const answer = courseAnswer(`phrase:${phrase.id}`, phrase);
+    return {
+      kind: 'build',
+      topic: 'phrases',
+      key: answer.id,
+      label: `${mission.emoji} ${mission.title}`,
+      question: phrase.en,
+      answer,
+    };
+  }).filter(Boolean);
+  if (items.length === 0) {
+    showToast('This mission has no phrases yet.', 2200);
+    return;
+  }
+  state.courseSession = {
+    topic: `mission:${mission.id}`,
+    mission,
+    isMission: true,
+    items,
+    index: 0,
+    correct: 0,
+    answered: false,
+    recycledKeys: new Set(),
+    selectedTokens: [],
+    availableTokens: [],
+  };
+  renderCourseQuestion();
+  show('screen-course-practice');
+}
+
+function queueCourseRetry(item) {
+  const session = state.courseSession;
+  if (!session || session.recycledKeys.has(item.key)) return;
+  session.recycledKeys.add(item.key);
+  const insertAt = Math.min(session.index + 3, session.items.length);
+  session.items.splice(insertAt, 0, item);
 }
 
 function renderCourseQuestion() {
@@ -3943,7 +4158,8 @@ function answerCourseChoice(button, optionId) {
   const correct = optionId === item.answer.id;
   session.answered = true;
   if (correct) session.correct += 1;
-  recordCourseResult(session.topic, correct);
+  recordCourseResult(item.topic, correct, item.key);
+  if (!correct) queueCourseRetry(item);
   document.querySelectorAll('#course-choice-options .course-option').forEach(btn => {
     btn.disabled = true;
     if (btn.dataset.id === item.answer.id) btn.classList.add('correct');
@@ -4017,7 +4233,8 @@ function checkCourseBuild() {
   const correct = built === expected;
   session.answered = true;
   if (correct) session.correct += 1;
-  recordCourseResult(session.topic, correct);
+  recordCourseResult(item.topic, correct, item.key);
+  if (!correct) queueCourseRetry(item);
   document.getElementById('course-check').classList.add('hidden');
   showCourseFeedback(item, correct);
 }
@@ -4046,9 +4263,24 @@ function nextCourseQuestion() {
 function finishCoursePractice() {
   const session = state.courseSession;
   const pct = Math.round((session.correct / session.items.length) * 100);
-  document.getElementById('course-done-summary').textContent = pct >= 80
-    ? 'The patterns are settling in. Short, repeated practice is doing its job.'
-    : 'Useful first pass. The missed forms will feel easier on the next round.';
+  const emoji = document.getElementById('course-done-emoji');
+  const title = document.getElementById('course-done-title');
+  if (session.isMission) {
+    const progress = loadCourseProgress();
+    progress.missionsDone[session.mission.id] = (progress.missionsDone[session.mission.id] || 0) + 1;
+    saveCourseProgress(progress);
+    emoji.textContent = session.mission.emoji;
+    title.textContent = 'Mission complete';
+    document.getElementById('course-done-summary').textContent = pct >= 80
+      ? 'You can now build this interaction from beginning to end.'
+      : 'Good first run. Repeat the mission and the difficult lines will return.';
+  } else {
+    emoji.textContent = '🎓';
+    title.textContent = session.topic === 'mistakes' ? 'Mistake review complete' : 'Class practice complete';
+    document.getElementById('course-done-summary').textContent = pct >= 80
+      ? 'The patterns are settling in. Short, repeated practice is doing its job.'
+      : 'Useful first pass. The missed forms will feel easier on the next round.';
+  }
   document.getElementById('course-done-score').textContent = `${session.correct} / ${session.items.length}`;
   show('screen-course-done');
 }
@@ -4312,8 +4544,9 @@ async function init() {
   document.getElementById('course-check').addEventListener('click', checkCourseBuild);
   document.getElementById('course-next').addEventListener('click', nextCourseQuestion);
   document.getElementById('course-again').addEventListener('click', () => {
-    const topic = state.courseSession ? state.courseSession.topic : 'mixed';
-    startCoursePractice(topic);
+    const session = state.courseSession;
+    if (session && session.isMission) startCourseMission(session.mission.id);
+    else startCoursePractice(session ? session.topic : 'mixed');
   });
   document.getElementById('course-done').addEventListener('click', openCourseScreen);
   document.getElementById('undo-grade').addEventListener('click', undoLastGrade);

@@ -1967,13 +1967,30 @@ html, body {
   font-family: inherit;
   cursor: pointer;
 }
-.course-topic-btn:first-child { border-color: var(--primary); background: #f3f8fb; }
+#course-topic-list .course-topic-btn:first-child { border-color: var(--primary); background: #f3f8fb; }
 .course-topic-btn:active { transform: scale(0.99); }
 .course-topic-emoji { font-size: 25px; }
 .course-topic-copy { flex: 1; }
 .course-topic-title { display: block; font-size: 16px; font-weight: 650; }
 .course-topic-sub { display: block; color: var(--text-soft); font-size: 12px; margin-top: 2px; }
 .course-topic-arrow { color: var(--muted); font-size: 24px; }
+.course-section-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 4px 0 10px;
+  font-size: 15px;
+  font-weight: 700;
+}
+#course-mission-list .course-topic-btn {
+  border-color: #dbc8a8;
+  background: #fffaf1;
+}
+.course-review-btn {
+  border-color: #d9b5b5 !important;
+  background: #fff4f4 !important;
+}
 
 .course-question-card {
   flex: 1;
