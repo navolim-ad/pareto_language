@@ -4,8 +4,8 @@ const MS_PER_DAY = 24 * 60 * 60 * 1000;
 // Bump together with the service worker cache version on each release.
 // When WHATSNEW_TEXT is non-null, users who haven't seen this version get a
 // one-time banner on the home screen.
-const APP_VERSION = 51;
-const WHATSNEW_TEXT = 'New: conversations and missions! Tap the 💬 card to see what you can already say.';
+const APP_VERSION = 52;
+const WHATSNEW_TEXT = 'New: Class practice for spoken Arabic, with verbs, numbers, weekdays and clock time.';
 const LANG_LABELS = {
   en: 'English',
   es: 'Español',
@@ -21,6 +21,8 @@ const state = {
   sentences: [],
   dialogues: [],
   missions: [],
+  courseData: null,
+  courseSession: null,
   settings: null,
   progress: {},
   daily: { date: '', done: 0 },
@@ -926,6 +928,20 @@ function renderHome() {
 
   // "You can already say" card.
   renderSayCard();
+
+  // The class companion is intentionally separate from the MSA word course.
+  // It appears only for English → Arabic, the pair used for Milovan's class.
+  const courseCard = document.getElementById('open-course');
+  if (courseCard) {
+    const available = !!state.courseData && state.settings.source === 'en' && state.settings.target === 'ar';
+    courseCard.classList.toggle('hidden', !available);
+    if (available) {
+      const p = loadCourseProgress();
+      document.getElementById('course-home-sub').textContent = p.attempts
+        ? `${p.attempts} class questions answered · continue practising`
+        : 'Verbs, numbers, time and daily life';
+    }
+  }
 
   // One-time what's-new banner after updates.
   maybeShowWhatsNew();
@@ -3683,6 +3699,360 @@ function buildSessionSummary() {
   return parts.join(' ');
 }
 
+// ============== Berlitz class practice ==============
+
+function loadCourseProgress() {
+  try {
+    return JSON.parse(localStorage.getItem(storageKey('course-progress:berlitz-l1')) || '') ||
+      { attempts: 0, correct: 0, byTopic: {} };
+  } catch (e) {
+    return { attempts: 0, correct: 0, byTopic: {} };
+  }
+}
+
+function saveCourseProgress(progress) {
+  localStorage.setItem(storageKey('course-progress:berlitz-l1'), JSON.stringify(progress));
+}
+
+function recordCourseResult(topic, correct) {
+  const progress = loadCourseProgress();
+  progress.attempts += 1;
+  if (correct) progress.correct += 1;
+  if (!progress.byTopic[topic]) progress.byTopic[topic] = { attempts: 0, correct: 0 };
+  progress.byTopic[topic].attempts += 1;
+  if (correct) progress.byTopic[topic].correct += 1;
+  saveCourseProgress(progress);
+}
+
+function openCourseScreen() {
+  if (!state.courseData) {
+    showToast('Class practice data could not be loaded.', 2500);
+    return;
+  }
+  renderCourseScreen();
+  show('screen-course');
+}
+
+function renderCourseScreen() {
+  const data = state.courseData;
+  const progress = loadCourseProgress();
+  document.getElementById('course-total-answered').textContent = progress.attempts;
+  document.getElementById('course-accuracy').textContent = progress.attempts
+    ? `${Math.round((progress.correct / progress.attempts) * 100)}% correct overall`
+    : 'Ready to begin';
+
+  const list = document.getElementById('course-topic-list');
+  list.innerHTML = '';
+  for (const topic of data.topics) {
+    const btn = document.createElement('button');
+    btn.className = 'course-topic-btn';
+    btn.dataset.topic = topic.id;
+    const topicProgress = progress.byTopic[topic.id];
+    const extra = topicProgress && topicProgress.attempts
+      ? ` · ${Math.round((topicProgress.correct / topicProgress.attempts) * 100)}% correct`
+      : '';
+    btn.innerHTML =
+      `<span class="course-topic-emoji">${topic.emoji}</span>` +
+      `<span class="course-topic-copy"><span class="course-topic-title">${topic.title}</span>` +
+      `<span class="course-topic-sub">${topic.subtitle}${extra}</span></span>` +
+      '<span class="course-topic-arrow">›</span>';
+    btn.addEventListener('click', () => startCoursePractice(topic.id));
+    list.appendChild(btn);
+  }
+}
+
+function courseAnswer(id, item, englishLabel) {
+  return {
+    id,
+    ar: item.ar,
+    translit: item.translit,
+    en: item.en,
+    choiceText: englishLabel || item.en,
+  };
+}
+
+function courseChoiceOptions(correct, candidates) {
+  const different = candidates.filter(c => c.id !== correct.id);
+  shuffle(different);
+  const choices = [correct, ...different.slice(0, 3)];
+  shuffle(choices);
+  return choices;
+}
+
+function buildCoursePool(topic) {
+  const data = state.courseData;
+  const pools = { verbs: [], numbers: [], time: [], weekdays: [], phrases: [] };
+
+  for (const verb of data.verbs) {
+    const answers = verb.forms.map((form, i) =>
+      courseAnswer(`verb:${verb.id}:${i}`, form, `${form.en} (${form.person})`));
+    verb.forms.forEach((form, i) => {
+      const answer = answers[i];
+      pools.verbs.push({
+        kind: 'choice', topic: 'verbs', label: `Present verb · ${verb.id}`,
+        question: `${form.en} (${form.person})`, optionMode: 'arabic', answer,
+        options: courseChoiceOptions(answer, answers),
+      });
+      pools.verbs.push({
+        kind: 'choice', topic: 'verbs', label: 'Recognise the verb form',
+        question: 'What does this form mean?', promptArabic: form.ar,
+        promptTranslit: form.translit, optionMode: 'english', answer,
+        options: courseChoiceOptions(answer, answers),
+      });
+    });
+  }
+
+  const numberAnswers = data.numbers.map(n =>
+    courseAnswer(`number:${n.value}`, { ...n, en: String(n.value) }));
+  data.numbers.forEach((number, i) => {
+    const answer = numberAnswers[i];
+    pools.numbers.push({
+      kind: 'choice', topic: 'numbers', label: 'Numbers',
+      question: `Choose ${number.value}`, optionMode: 'arabic', answer,
+      options: courseChoiceOptions(answer, numberAnswers),
+    });
+  });
+
+  const timeAnswers = data.times.map((time, i) =>
+    courseAnswer(`time:${i}`, time, `${time.digital} · ${time.en}`));
+  data.times.forEach((time, i) => {
+    const answer = timeAnswers[i];
+    pools.time.push({
+      kind: 'choice', topic: 'time', label: 'What time is it?',
+      question: time.digital, optionMode: 'arabic', answer,
+      options: courseChoiceOptions(answer, timeAnswers),
+    });
+    pools.time.push({
+      kind: 'choice', topic: 'time', label: 'Recognise the time',
+      question: 'Which clock time is this?', promptArabic: time.ar,
+      promptTranslit: time.translit, optionMode: 'english', answer,
+      options: courseChoiceOptions(answer, timeAnswers),
+    });
+  });
+
+  const weekdayAnswers = data.weekdays.map((day, i) =>
+    courseAnswer(`weekday:${i}`, day));
+  data.weekdays.forEach((day, i) => {
+    const answer = weekdayAnswers[i];
+    pools.weekdays.push({
+      kind: 'choice', topic: 'weekdays', label: 'Weekdays',
+      question: day.en, optionMode: 'arabic', answer,
+      options: courseChoiceOptions(answer, weekdayAnswers),
+    });
+    pools.weekdays.push({
+      kind: 'choice', topic: 'weekdays', label: 'Recognise the weekday',
+      question: 'Which day is this?', promptArabic: day.ar,
+      promptTranslit: day.translit, optionMode: 'english', answer,
+      options: courseChoiceOptions(answer, weekdayAnswers),
+    });
+  });
+
+  const phraseAnswers = data.phrases.map(phrase => courseAnswer(`phrase:${phrase.id}`, phrase));
+  data.phrases.forEach((phrase, i) => {
+    const answer = phraseAnswers[i];
+    pools.phrases.push({
+      kind: 'choice', topic: 'phrases', label: phrase.group === 'routine' ? 'Daily routine' : 'Useful phrase',
+      question: 'What does this mean?', promptArabic: phrase.ar,
+      promptTranslit: phrase.translit, optionMode: 'english', answer,
+      options: courseChoiceOptions(answer, phraseAnswers),
+    });
+    pools.phrases.push({
+      kind: 'build', topic: 'phrases', label: phrase.group === 'routine' ? 'Build your routine' : 'Build the phrase',
+      question: phrase.en, answer,
+    });
+  });
+
+  if (topic === 'mixed') {
+    const mixed = [];
+    for (const name of ['verbs', 'numbers', 'time', 'weekdays', 'phrases']) {
+      const group = pools[name].slice();
+      shuffle(group);
+      mixed.push(...group.slice(0, 5));
+    }
+    return mixed;
+  }
+  return pools[topic] || [];
+}
+
+function startCoursePractice(topic) {
+  const pool = buildCoursePool(topic);
+  shuffle(pool);
+  const length = Math.min(10, pool.length);
+  state.courseSession = {
+    topic,
+    items: pool.slice(0, length),
+    index: 0,
+    correct: 0,
+    answered: false,
+    selectedTokens: [],
+    availableTokens: [],
+  };
+  renderCourseQuestion();
+  show('screen-course-practice');
+}
+
+function renderCourseQuestion() {
+  const session = state.courseSession;
+  const item = session.items[session.index];
+  session.answered = false;
+  session.selectedTokens = [];
+  document.getElementById('course-practice-progress').textContent =
+    `${session.index + 1} / ${session.items.length}`;
+  document.getElementById('course-question-label').textContent = item.label;
+  document.getElementById('course-question').textContent = item.question;
+
+  const promptAr = document.getElementById('course-question-arabic');
+  const promptTr = document.getElementById('course-question-translit');
+  promptAr.textContent = item.promptArabic || '';
+  promptTr.textContent = item.promptTranslit || '';
+  promptAr.classList.toggle('hidden', !item.promptArabic);
+  promptTr.classList.toggle('hidden', !item.promptTranslit);
+
+  document.getElementById('course-feedback').className = 'course-feedback hidden';
+  document.getElementById('course-next').classList.add('hidden');
+  document.getElementById('course-check').classList.toggle('hidden', item.kind !== 'build');
+  document.getElementById('course-choice-options').classList.toggle('hidden', item.kind !== 'choice');
+  document.getElementById('course-build-area').classList.toggle('hidden', item.kind !== 'build');
+
+  if (item.kind === 'choice') renderCourseChoices(item);
+  else renderCourseBuild(item);
+}
+
+function renderCourseChoices(item) {
+  const wrap = document.getElementById('course-choice-options');
+  wrap.innerHTML = '';
+  for (const option of item.options) {
+    const btn = document.createElement('button');
+    btn.className = 'course-option';
+    btn.dataset.id = option.id;
+    if (item.optionMode === 'arabic') {
+      btn.innerHTML = `<span class="course-option-arabic" dir="rtl">${option.ar}</span>` +
+        `<span class="course-option-translit">${option.translit}</span>`;
+    } else {
+      btn.textContent = option.choiceText;
+    }
+    btn.addEventListener('click', () => answerCourseChoice(btn, option.id));
+    wrap.appendChild(btn);
+  }
+}
+
+function answerCourseChoice(button, optionId) {
+  const session = state.courseSession;
+  if (!session || session.answered) return;
+  const item = session.items[session.index];
+  const correct = optionId === item.answer.id;
+  session.answered = true;
+  if (correct) session.correct += 1;
+  recordCourseResult(session.topic, correct);
+  document.querySelectorAll('#course-choice-options .course-option').forEach(btn => {
+    btn.disabled = true;
+    if (btn.dataset.id === item.answer.id) btn.classList.add('correct');
+  });
+  if (!correct) button.classList.add('wrong');
+  showCourseFeedback(item, correct);
+}
+
+function courseTokens(text) {
+  return text.replace(/[?!.,]/g, '').split(/\s+/).filter(Boolean)
+    .map((token, index) => ({ token, index }));
+}
+
+function renderCourseBuild(item) {
+  const session = state.courseSession;
+  session.availableTokens = courseTokens(item.answer.translit);
+  shuffle(session.availableTokens);
+  renderCourseTokenAreas();
+}
+
+function renderCourseTokenAreas() {
+  const session = state.courseSession;
+  const answer = document.getElementById('course-build-answer');
+  const pool = document.getElementById('course-build-pool');
+  answer.innerHTML = '';
+  pool.innerHTML = '';
+  session.selectedTokens.forEach((item, position) => {
+    const btn = document.createElement('button');
+    btn.className = 'course-token';
+    btn.textContent = item.token;
+    btn.addEventListener('click', () => {
+      session.selectedTokens.splice(position, 1);
+      session.availableTokens.push(item);
+      renderCourseTokenAreas();
+    });
+    answer.appendChild(btn);
+  });
+  session.availableTokens.forEach((item, position) => {
+    const btn = document.createElement('button');
+    btn.className = 'course-token';
+    btn.textContent = item.token;
+    btn.addEventListener('click', () => {
+      session.availableTokens.splice(position, 1);
+      session.selectedTokens.push(item);
+      renderCourseTokenAreas();
+    });
+    pool.appendChild(btn);
+  });
+}
+
+function resetCourseBuild() {
+  const session = state.courseSession;
+  if (!session || session.answered) return;
+  const item = session.items[session.index];
+  session.selectedTokens = [];
+  session.availableTokens = courseTokens(item.answer.translit);
+  shuffle(session.availableTokens);
+  renderCourseTokenAreas();
+}
+
+function checkCourseBuild() {
+  const session = state.courseSession;
+  if (!session || session.answered) return;
+  const item = session.items[session.index];
+  if (session.selectedTokens.length === 0) {
+    showToast('Build the phrase first.', 1800);
+    return;
+  }
+  const built = session.selectedTokens.map(t => t.token).join(' ');
+  const expected = courseTokens(item.answer.translit).map(t => t.token).join(' ');
+  const correct = built === expected;
+  session.answered = true;
+  if (correct) session.correct += 1;
+  recordCourseResult(session.topic, correct);
+  document.getElementById('course-check').classList.add('hidden');
+  showCourseFeedback(item, correct);
+}
+
+function showCourseFeedback(item, correct) {
+  const box = document.getElementById('course-feedback');
+  box.className = `course-feedback ${correct ? 'correct' : 'wrong'}`;
+  document.getElementById('course-feedback-mark').textContent = correct ? 'Correct' : 'Not quite. This is the course form:';
+  document.getElementById('course-feedback-arabic').textContent = item.answer.ar;
+  document.getElementById('course-feedback-translit').textContent = item.answer.translit;
+  document.getElementById('course-feedback-english').textContent = item.answer.en;
+  document.getElementById('course-next').classList.remove('hidden');
+}
+
+function nextCourseQuestion() {
+  const session = state.courseSession;
+  if (!session || !session.answered) return;
+  session.index += 1;
+  if (session.index >= session.items.length) {
+    finishCoursePractice();
+    return;
+  }
+  renderCourseQuestion();
+}
+
+function finishCoursePractice() {
+  const session = state.courseSession;
+  const pct = Math.round((session.correct / session.items.length) * 100);
+  document.getElementById('course-done-summary').textContent = pct >= 80
+    ? 'The patterns are settling in. Short, repeated practice is doing its job.'
+    : 'Useful first pass. The missed forms will feel easier on the next round.';
+  document.getElementById('course-done-score').textContent = `${session.correct} / ${session.items.length}`;
+  show('screen-course-done');
+}
+
 // ============== Setup screen ==============
 function initSetup() {
   let pickedSource = null, pickedTarget = null;
@@ -3894,6 +4264,12 @@ async function init() {
       state.missions = mData.missions || [];
     }
   } catch (e) { /* non-essential */ }
+  // Separate spoken-Arabic class companion. Optional so the core app still
+  // opens if this add-on ever fails to load.
+  try {
+    const cResp = await fetch('data/berlitz-course.json');
+    if (cResp.ok) state.courseData = await cResp.json();
+  } catch (e) { /* non-essential */ }
 
   if (!state.words || state.words.length === 0) {
     document.body.innerHTML =
@@ -3926,6 +4302,20 @@ async function init() {
   document.getElementById('start-study').addEventListener('click', () => startSession(null));
   document.getElementById('start-stretch').addEventListener('click', () => startSession(null, null, { lessonSize: 5 }));
   document.getElementById('start-review').addEventListener('click', () => startSession(null, null, { reviewOnly: true }));
+  document.getElementById('open-course').addEventListener('click', openCourseScreen);
+  document.getElementById('course-close').addEventListener('click', () => {
+    renderHome();
+    show('screen-home');
+  });
+  document.getElementById('course-practice-back').addEventListener('click', openCourseScreen);
+  document.getElementById('course-build-reset').addEventListener('click', resetCourseBuild);
+  document.getElementById('course-check').addEventListener('click', checkCourseBuild);
+  document.getElementById('course-next').addEventListener('click', nextCourseQuestion);
+  document.getElementById('course-again').addEventListener('click', () => {
+    const topic = state.courseSession ? state.courseSession.topic : 'mixed';
+    startCoursePractice(topic);
+  });
+  document.getElementById('course-done').addEventListener('click', openCourseScreen);
   document.getElementById('undo-grade').addEventListener('click', undoLastGrade);
   document.getElementById('preview-next').addEventListener('click', previewGotIt);
   document.getElementById('cluster-continue').addEventListener('click', finishClusterIntro);

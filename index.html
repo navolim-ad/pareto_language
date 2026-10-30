@@ -167,6 +167,16 @@
           <button id="start-review" class="secondary-btn">Review due · no new</button>
         </div>
 
+        <button id="open-course" class="course-home-card hidden">
+          <span class="course-home-icon">🎓</span>
+          <span class="course-home-copy">
+            <span class="course-home-kicker">Berlitz Level 1</span>
+            <span class="course-home-title">Class practice</span>
+            <span class="course-home-sub" id="course-home-sub">Verbs, numbers, time and daily life</span>
+          </span>
+          <span class="course-home-arrow">›</span>
+        </button>
+
         <div id="say-card" class="say-card hidden" role="button" tabindex="0">
           <div class="say-card-row">
             <span class="say-card-icon">💬</span>
@@ -205,6 +215,86 @@
           <p class="muted small">Or pick a theme</p>
           <div id="theme-progress" class="theme-progress-list"></div>
         </div>
+      </div>
+    </section>
+
+    <!-- Separate spoken-Arabic practice based on the user's current class. -->
+    <section id="screen-course" class="screen hidden">
+      <div class="container">
+        <header class="home-header">
+          <div>
+            <p class="muted small">Berlitz Arabic Level 1</p>
+            <h2>Class practice</h2>
+          </div>
+          <button id="course-close" class="icon-btn" aria-label="Close">✕</button>
+        </header>
+
+        <div class="course-intro-card">
+          <div class="course-intro-icon">🎯</div>
+          <div>
+            <b>Practise the patterns, not just the words.</b>
+            <p>Spoken forms from your book, with transliteration and Arabic together. No Arabic typing and no pronunciation scoring.</p>
+          </div>
+        </div>
+
+        <div class="course-progress-card">
+          <div>
+            <span class="muted small">Class questions answered</span>
+            <div class="course-progress-number" id="course-total-answered">0</div>
+          </div>
+          <div class="course-accuracy" id="course-accuracy">Ready to begin</div>
+        </div>
+
+        <div id="course-topic-list" class="course-topic-list"></div>
+      </div>
+    </section>
+
+    <section id="screen-course-practice" class="screen hidden">
+      <div class="container study-container">
+        <header class="study-header">
+          <button id="course-practice-back" class="icon-btn" aria-label="Back">←</button>
+          <div class="progress-pill"><span id="course-practice-progress">1 / 10</span></div>
+          <div class="spacer"></div>
+        </header>
+
+        <div class="course-question-card">
+          <div class="course-question-label" id="course-question-label"></div>
+          <div class="course-question" id="course-question"></div>
+          <div class="course-question-arabic hidden" id="course-question-arabic" dir="rtl"></div>
+          <div class="course-question-translit hidden" id="course-question-translit"></div>
+
+          <div id="course-choice-options" class="course-choice-options"></div>
+
+          <div id="course-build-area" class="hidden">
+            <div class="course-build-label">Build it in transliteration</div>
+            <div id="course-build-answer" class="course-build-answer"></div>
+            <div id="course-build-pool" class="course-build-pool"></div>
+            <button id="course-build-reset" class="text-link-btn">Reset</button>
+          </div>
+
+          <div id="course-feedback" class="course-feedback hidden" role="status">
+            <div id="course-feedback-mark" class="course-feedback-mark"></div>
+            <div id="course-feedback-arabic" class="course-feedback-arabic" dir="rtl"></div>
+            <div id="course-feedback-translit" class="course-feedback-translit"></div>
+            <div id="course-feedback-english" class="course-feedback-english"></div>
+          </div>
+        </div>
+
+        <button id="course-check" class="primary-btn big hidden">Check</button>
+        <button id="course-next" class="primary-btn big hidden">Next</button>
+      </div>
+    </section>
+
+    <section id="screen-course-done" class="screen hidden">
+      <div class="container">
+        <div class="done-hero">
+          <div class="done-emoji">🎓</div>
+          <h2 class="done-title">Class practice complete</h2>
+          <p class="done-quip" id="course-done-summary"></p>
+        </div>
+        <div class="course-done-score" id="course-done-score"></div>
+        <button id="course-again" class="primary-btn big">Practise again</button>
+        <button id="course-done" class="secondary-btn">Back to class practice</button>
       </div>
     </section>
 
