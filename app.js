@@ -4,8 +4,8 @@ const MS_PER_DAY = 24 * 60 * 60 * 1000;
 // Bump together with the service worker cache version on each release.
 // When WHATSNEW_TEXT is non-null, users who haven't seen this version get a
 // one-time banner on the home screen.
-const APP_VERSION = 53;
-const WHATSNEW_TEXT = 'New: spoken-Arabic missions, mistake review and fresh number and clock questions.';
+const APP_VERSION = 54;
+const WHATSNEW_TEXT = 'New: a complete Level 1 course built from the book glossary, phrases and verb tables.';
 const LANG_LABELS = {
   en: 'English',
   es: 'Español',
@@ -22,6 +22,7 @@ const state = {
   dialogues: [],
   missions: [],
   courseData: null,
+  glossaryData: null,
   courseSession: null,
   settings: null,
   progress: {},
@@ -3720,6 +3721,66 @@ function saveCourseProgress(progress) {
   localStorage.setItem(storageKey('course-progress:berlitz-l1'), JSON.stringify(progress));
 }
 
+function loadSprintProgress() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(storageKey('level1-sprint-progress')) || '') || {};
+    return {
+      cards: saved.cards || {},
+      sessions: saved.sessions || 0,
+      answered: saved.answered || 0,
+    };
+  } catch (e) {
+    return { cards: {}, sessions: 0, answered: 0 };
+  }
+}
+
+function saveSprintProgress(progress) {
+  localStorage.setItem(storageKey('level1-sprint-progress'), JSON.stringify(progress));
+}
+
+function sprintCardCount() {
+  if (!state.glossaryData || !state.courseData) return 0;
+  const glossary = state.glossaryData;
+  const verbForms = state.courseData.verbs.reduce((sum, verb) => sum + verb.forms.length, 0);
+  return glossary.vocabulary.length + glossary.expressions.length + (glossary.imperatives.length * 2) + verbForms;
+}
+
+function sprintStats() {
+  const progress = loadSprintProgress();
+  const total = sprintCardCount();
+  const entries = Object.values(progress.cards);
+  const reliable = entries.filter(card => (card.level || 0) >= 3).length;
+  const seen = entries.length;
+  const now = Date.now();
+  const review = entries.filter(card =>
+    (card.level || 0) < 3 && ((card.misses || 0) > 0 || (card.due || 0) <= now)
+  ).length;
+  return { total, reliable, seen, review, progress };
+}
+
+function recordSprintResult(item, correct) {
+  const progress = loadSprintProgress();
+  const previous = progress.cards[item.sprintKey] || { level: 0, misses: 0, correct: 0, due: 0 };
+  const wasReliable = previous.level >= 3;
+  if (correct) {
+    previous.correct = (previous.correct || 0) + 1;
+    previous.level = Math.min(3, (previous.level || 0) + 1);
+    const delays = [0, 1, 3, 7];
+    previous.due = Date.now() + delays[previous.level] * MS_PER_DAY;
+  } else {
+    previous.misses = (previous.misses || 0) + 1;
+    previous.level = Math.max(0, (previous.level || 0) - 1);
+    previous.due = Date.now();
+  }
+  previous.lastSeen = Date.now();
+  progress.cards[item.sprintKey] = previous;
+  progress.answered += 1;
+  saveSprintProgress(progress);
+  if (!wasReliable && previous.level >= 3 && state.courseSession) {
+    state.courseSession.newlyReliable = (state.courseSession.newlyReliable || 0) + 1;
+  }
+}
+
 function recordCourseResult(topic, correct, itemKey) {
   const progress = loadCourseProgress();
   progress.attempts += 1;
@@ -3755,6 +3816,7 @@ function openCourseScreen() {
 function renderCourseScreen() {
   const data = state.courseData;
   const progress = loadCourseProgress();
+  renderSprintCard();
   document.getElementById('course-total-answered').textContent = progress.attempts;
   document.getElementById('course-accuracy').textContent = progress.attempts
     ? `${Math.round((progress.correct / progress.attempts) * 100)}% correct overall`
@@ -3807,6 +3869,25 @@ function renderCourseScreen() {
   }
 }
 
+function renderSprintCard() {
+  const card = document.getElementById('sprint-card');
+  if (!card) return;
+  const available = !!state.glossaryData && !!state.courseData;
+  card.classList.toggle('hidden', !available);
+  if (!available) return;
+  const stats = sprintStats();
+  const pct = stats.total ? Math.round((stats.reliable / stats.total) * 100) : 0;
+  document.getElementById('sprint-percent').textContent = `${pct}%`;
+  document.getElementById('sprint-progress-fill').style.width = `${pct}%`;
+  document.getElementById('sprint-stats').textContent =
+    `${stats.reliable} reliable · ${stats.seen} seen · ${stats.total - stats.seen} not yet tested`;
+  const button = document.getElementById('sprint-continue');
+  button.textContent = stats.seen ? 'Continue Level 1' : 'Start Level 1';
+  document.getElementById('sprint-note').textContent = stats.review
+    ? `${stats.review} item${stats.review === 1 ? '' : 's'} need review. They will come first.`
+    : 'Thirty adaptive questions. Missed material returns automatically.';
+}
+
 function courseAnswer(id, item, englishLabel) {
   return {
     id,
@@ -3823,6 +3904,178 @@ function courseChoiceOptions(correct, candidates) {
   const choices = [correct, ...different.slice(0, 3)];
   shuffle(choices);
   return choices;
+}
+
+function sprintChoiceOptions(correct, candidates, mode) {
+  const keyFor = answer => mode === 'english'
+    ? answer.choiceText
+    : `${answer.ar}|${answer.translit}`;
+  const correctDisplay = keyFor(correct);
+  const seen = new Set([correctDisplay]);
+  const different = candidates.filter(answer => {
+    const key = keyFor(answer);
+    if (answer.id === correct.id || seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+  shuffle(different);
+  const choices = [correct, ...different.slice(0, 3)];
+  shuffle(choices);
+  return choices;
+}
+
+function buildLevelOnePool() {
+  const glossary = state.glossaryData;
+  const course = state.courseData;
+  if (!glossary || !course) return [];
+  const items = [];
+
+  const vocabAnswers = glossary.vocabulary.map(entry => ({
+    ...courseAnswer(`sprint:vocab:${entry.id}`, entry),
+    tier: entry.tier,
+  }));
+  glossary.vocabulary.forEach((entry, index) => {
+    const answer = vocabAnswers[index];
+    const recognition = Math.random() < 0.5;
+    items.push({
+      kind: 'choice',
+      topic: 'vocabulary',
+      sprintType: 'vocabulary',
+      sprintKey: answer.id,
+      key: answer.id,
+      priority: entry.tier === 'core' ? 0 : 1,
+      label: `Glossary · Lesson ${entry.lesson}`,
+      question: recognition ? 'What does this mean?' : entry.en,
+      promptArabic: recognition ? entry.ar : '',
+      promptTranslit: recognition ? entry.translit : '',
+      optionMode: recognition ? 'english' : 'arabic',
+      answer,
+      options: sprintChoiceOptions(answer, vocabAnswers, recognition ? 'english' : 'arabic'),
+    });
+  });
+
+  const expressionAnswers = glossary.expressions.map(entry =>
+    courseAnswer(`sprint:expression:${entry.id}`, entry));
+  glossary.expressions.forEach((entry, index) => {
+    const answer = expressionAnswers[index];
+    const build = Math.random() < 0.55;
+    items.push(build ? {
+      kind: 'build', topic: 'phrases', sprintType: 'expression', sprintKey: answer.id,
+      key: answer.id, priority: 0, label: `Useful expression · Lesson ${entry.lesson}`,
+      question: entry.en, answer,
+    } : {
+      kind: 'choice', topic: 'phrases', sprintType: 'expression', sprintKey: answer.id,
+      key: answer.id, priority: 0, label: `Useful expression · Lesson ${entry.lesson}`,
+      question: 'What does this expression mean?', promptArabic: entry.ar,
+      promptTranslit: entry.translit, optionMode: 'english', answer,
+      options: sprintChoiceOptions(answer, expressionAnswers, 'english'),
+    });
+  });
+
+  const imperativeAnswers = [];
+  for (const verb of glossary.imperatives) {
+    imperativeAnswers.push(courseAnswer(`sprint:imperative:${verb.id}:m`, {
+      en: `${verb.en} - to a man`, ar: verb.masculine.ar, translit: verb.masculine.translit,
+    }));
+    imperativeAnswers.push(courseAnswer(`sprint:imperative:${verb.id}:f`, {
+      en: `${verb.en} - to a woman`, ar: verb.feminine.ar, translit: verb.feminine.translit,
+    }));
+  }
+  imperativeAnswers.forEach(answer => {
+    items.push({
+      kind: 'choice', topic: 'verbs', sprintType: 'imperative', sprintKey: answer.id,
+      key: answer.id, priority: 0, label: 'Imperative verb',
+      question: answer.en, optionMode: 'arabic', answer,
+      options: sprintChoiceOptions(answer, imperativeAnswers, 'arabic'),
+    });
+  });
+
+  for (const verb of course.verbs) {
+    const answers = verb.forms.map((form, index) =>
+      courseAnswer(`sprint:verb:${verb.id}:${index}`, form, `${form.en} (${form.person})`));
+    verb.forms.forEach((form, index) => {
+      const answer = answers[index];
+      items.push({
+        kind: 'choice', topic: 'verbs', sprintType: 'verb', sprintKey: answer.id,
+        key: answer.id, priority: 0, label: `Present verb · ${verb.id}`,
+        question: `${form.en} (${form.person})`, optionMode: 'arabic', answer,
+        options: sprintChoiceOptions(answer, answers, 'arabic'),
+      });
+    });
+  }
+  return items;
+}
+
+function balancedSprintPick(items, count) {
+  const groups = { vocabulary: [], verb: [], expression: [], imperative: [] };
+  for (const item of items) groups[item.sprintType].push(item);
+  for (const group of Object.values(groups)) {
+    const core = group.filter(item => item.priority === 0);
+    const extra = group.filter(item => item.priority !== 0);
+    shuffle(core);
+    shuffle(extra);
+    group.splice(0, group.length, ...core, ...extra);
+  }
+  const targets = {
+    vocabulary: Math.round(count * 0.66),
+    verb: Math.round(count * 0.18),
+    expression: Math.round(count * 0.09),
+    imperative: 0,
+  };
+  targets.imperative = Math.max(0, count - targets.vocabulary - targets.verb - targets.expression);
+  const picked = [];
+  for (const type of ['vocabulary', 'verb', 'expression', 'imperative']) {
+    picked.push(...groups[type].splice(0, targets[type]));
+  }
+  const leftovers = Object.values(groups).flat();
+  shuffle(leftovers);
+  picked.push(...leftovers.slice(0, Math.max(0, count - picked.length)));
+  return picked.slice(0, count);
+}
+
+function startLevelOneSprint() {
+  const pool = buildLevelOnePool();
+  if (pool.length === 0) {
+    showToast('The Level 1 glossary could not be loaded.', 2400);
+    return;
+  }
+  const progress = loadSprintProgress();
+  const now = Date.now();
+  const due = pool.filter(item => {
+    const card = progress.cards[item.sprintKey];
+    return card && (card.due || 0) <= now;
+  }).sort((a, b) => {
+    const cardA = progress.cards[a.sprintKey];
+    const cardB = progress.cards[b.sprintKey];
+    return (cardB.misses || 0) - (cardA.misses || 0) || (cardA.due || 0) - (cardB.due || 0);
+  });
+  const reviewItems = due.slice(0, 8);
+  const selectedKeys = new Set(reviewItems.map(item => item.sprintKey));
+  const unseen = pool.filter(item => !progress.cards[item.sprintKey] && !selectedKeys.has(item.sprintKey));
+  const newItems = balancedSprintPick(unseen, 30 - reviewItems.length);
+  newItems.forEach(item => selectedKeys.add(item.sprintKey));
+  let items = [...reviewItems, ...newItems];
+  if (items.length < 30) {
+    const remaining = pool.filter(item => !selectedKeys.has(item.sprintKey));
+    shuffle(remaining);
+    items.push(...remaining.slice(0, 30 - items.length));
+  }
+  shuffle(items);
+  state.courseSession = {
+    topic: 'level1-sprint',
+    isSprint: true,
+    isMission: false,
+    items,
+    index: 0,
+    correct: 0,
+    answered: false,
+    newlyReliable: 0,
+    recycledKeys: new Set(),
+    selectedTokens: [],
+    availableTokens: [],
+  };
+  renderCourseQuestion();
+  show('screen-course-practice');
 }
 
 function generatedNumberAnswers(data) {
@@ -4101,6 +4354,7 @@ function startCourseMission(missionId) {
 function queueCourseRetry(item) {
   const session = state.courseSession;
   if (!session || session.recycledKeys.has(item.key)) return;
+  if (session.isSprint && session.recycledKeys.size >= 5) return;
   session.recycledKeys.add(item.key);
   const insertAt = Math.min(session.index + 3, session.items.length);
   session.items.splice(insertAt, 0, item);
@@ -4158,7 +4412,8 @@ function answerCourseChoice(button, optionId) {
   const correct = optionId === item.answer.id;
   session.answered = true;
   if (correct) session.correct += 1;
-  recordCourseResult(item.topic, correct, item.key);
+  if (session.isSprint) recordSprintResult(item, correct);
+  else recordCourseResult(item.topic, correct, item.key);
   if (!correct) queueCourseRetry(item);
   document.querySelectorAll('#course-choice-options .course-option').forEach(btn => {
     btn.disabled = true;
@@ -4233,7 +4488,8 @@ function checkCourseBuild() {
   const correct = built === expected;
   session.answered = true;
   if (correct) session.correct += 1;
-  recordCourseResult(item.topic, correct, item.key);
+  if (session.isSprint) recordSprintResult(item, correct);
+  else recordCourseResult(item.topic, correct, item.key);
   if (!correct) queueCourseRetry(item);
   document.getElementById('course-check').classList.add('hidden');
   showCourseFeedback(item, correct);
@@ -4265,7 +4521,19 @@ function finishCoursePractice() {
   const pct = Math.round((session.correct / session.items.length) * 100);
   const emoji = document.getElementById('course-done-emoji');
   const title = document.getElementById('course-done-title');
-  if (session.isMission) {
+  if (session.isSprint) {
+    const progress = loadSprintProgress();
+    progress.sessions += 1;
+    saveSprintProgress(progress);
+    const stats = sprintStats();
+    emoji.textContent = '📘';
+    title.textContent = 'Level 1 practice complete';
+    const reliableNote = session.newlyReliable
+      ? ` ${session.newlyReliable} item${session.newlyReliable === 1 ? ' is' : 's are'} now reliable.`
+      : '';
+    document.getElementById('course-done-summary').textContent =
+      `${stats.reliable} of ${stats.total} items are now reliable.${reliableNote}`;
+  } else if (session.isMission) {
     const progress = loadCourseProgress();
     progress.missionsDone[session.mission.id] = (progress.missionsDone[session.mission.id] || 0) + 1;
     saveCourseProgress(progress);
@@ -4502,6 +4770,10 @@ async function init() {
     const cResp = await fetch('data/berlitz-course.json');
     if (cResp.ok) state.courseData = await cResp.json();
   } catch (e) { /* non-essential */ }
+  try {
+    const gResp = await fetch('data/level1-glossary.json');
+    if (gResp.ok) state.glossaryData = await gResp.json();
+  } catch (e) { /* non-essential */ }
 
   if (!state.words || state.words.length === 0) {
     document.body.innerHTML =
@@ -4543,9 +4815,11 @@ async function init() {
   document.getElementById('course-build-reset').addEventListener('click', resetCourseBuild);
   document.getElementById('course-check').addEventListener('click', checkCourseBuild);
   document.getElementById('course-next').addEventListener('click', nextCourseQuestion);
+  document.getElementById('sprint-continue').addEventListener('click', startLevelOneSprint);
   document.getElementById('course-again').addEventListener('click', () => {
     const session = state.courseSession;
-    if (session && session.isMission) startCourseMission(session.mission.id);
+    if (session && session.isSprint) startLevelOneSprint();
+    else if (session && session.isMission) startCourseMission(session.mission.id);
     else startCoursePractice(session ? session.topic : 'mixed');
   });
   document.getElementById('course-done').addEventListener('click', openCourseScreen);

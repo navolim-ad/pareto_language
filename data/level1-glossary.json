@@ -1,0 +1,2759 @@
+{
+  "meta": {
+    "id": "berlitz-level-1-sprint",
+    "version": "1.1.0",
+    "source": "Berlitz Arabic Level 1 glossary, book pages 110-128",
+    "paceDays": 14,
+    "transliteration": "Course spelling retained; OCR checked against the rendered glossary tables."
+  },
+  "vocabulary": [
+    {
+      "id": "g1-009",
+      "lesson": 1,
+      "en": "purposes / goals",
+      "translit": "ahdaaf",
+      "ar": "أهداف",
+      "tier": "core"
+    },
+    {
+      "id": "g1-010",
+      "lesson": 1,
+      "en": "welcome",
+      "translit": "ahlan",
+      "ar": "أهلاً",
+      "tier": "core"
+    },
+    {
+      "id": "g1-015",
+      "lesson": 1,
+      "en": "numbers",
+      "translit": "'arqaam",
+      "ar": "أرقام",
+      "tier": "core"
+    },
+    {
+      "id": "g1-020",
+      "lesson": 1,
+      "en": "which",
+      "translit": "ay",
+      "ar": "أي",
+      "tier": "core"
+    },
+    {
+      "id": "g1-023",
+      "lesson": 1,
+      "en": "far - masculine",
+      "translit": "b3iid",
+      "ar": "بعيد",
+      "tier": "core"
+    },
+    {
+      "id": "g1-024",
+      "lesson": 1,
+      "en": "far - feminine",
+      "translit": "b3iida",
+      "ar": "بعيدة",
+      "tier": "core"
+    },
+    {
+      "id": "g1-025",
+      "lesson": 1,
+      "en": "country",
+      "translit": "balad",
+      "ar": "بلد",
+      "tier": "core"
+    },
+    {
+      "id": "g1-027",
+      "lesson": 1,
+      "en": "copy-book",
+      "translit": "daftar",
+      "ar": "دفتر",
+      "tier": "core"
+    },
+    {
+      "id": "g1-031",
+      "lesson": 1,
+      "en": "that - masculine",
+      "translit": "hadaak",
+      "ar": "هداك",
+      "tier": "core"
+    },
+    {
+      "id": "g1-032",
+      "lesson": 1,
+      "en": "that - feminine",
+      "translit": "hadiik",
+      "ar": "هديك",
+      "tier": "core"
+    },
+    {
+      "id": "g1-034",
+      "lesson": 1,
+      "en": "here",
+      "translit": "hinaa",
+      "ar": "هنا",
+      "tier": "core"
+    },
+    {
+      "id": "g1-035",
+      "lesson": 1,
+      "en": "there",
+      "translit": "hinaak",
+      "ar": "هناك",
+      "tier": "core"
+    },
+    {
+      "id": "g1-038",
+      "lesson": 1,
+      "en": "name / noun",
+      "translit": "ism",
+      "ar": "إسم",
+      "tier": "core"
+    },
+    {
+      "id": "g1-039",
+      "lesson": 1,
+      "en": "newspaper",
+      "translit": "jariida",
+      "ar": "جريدة",
+      "tier": "core"
+    },
+    {
+      "id": "g1-040",
+      "lesson": 1,
+      "en": "nationality",
+      "translit": "jinsiyya",
+      "ar": "جنسيّة",
+      "tier": "core"
+    },
+    {
+      "id": "g1-041",
+      "lesson": 1,
+      "en": "nationalities",
+      "translit": "jinsiyyaat",
+      "ar": "جنسيّات",
+      "tier": "core"
+    },
+    {
+      "id": "g1-043",
+      "lesson": 1,
+      "en": "big - masculine",
+      "translit": "kbiir",
+      "ar": "كبير",
+      "tier": "core"
+    },
+    {
+      "id": "g1-044",
+      "lesson": 1,
+      "en": "big - feminine",
+      "translit": "kbiira",
+      "ar": "كبيرة",
+      "tier": "core"
+    },
+    {
+      "id": "g1-047",
+      "lesson": 1,
+      "en": "book",
+      "translit": "ktaab",
+      "ar": "كتاب",
+      "tier": "core"
+    },
+    {
+      "id": "g1-049",
+      "lesson": 1,
+      "en": "no",
+      "translit": "laa",
+      "ar": "لا",
+      "tier": "core"
+    },
+    {
+      "id": "g1-051",
+      "lesson": 1,
+      "en": "knowledge",
+      "translit": "ma3rifa",
+      "ar": "معرفة",
+      "tier": "core"
+    },
+    {
+      "id": "g1-054",
+      "lesson": 1,
+      "en": "hello",
+      "translit": "marhabaa",
+      "ar": "مرحبا",
+      "tier": "core"
+    },
+    {
+      "id": "g1-057",
+      "lesson": 1,
+      "en": "place",
+      "translit": "mawdi3",
+      "ar": "موضع",
+      "tier": "core"
+    },
+    {
+      "id": "g1-058",
+      "lesson": 1,
+      "en": "who",
+      "translit": "miin",
+      "ar": "مين",
+      "tier": "core"
+    },
+    {
+      "id": "g1-059",
+      "lesson": 1,
+      "en": "from",
+      "translit": "min",
+      "ar": "من",
+      "tier": "core"
+    },
+    {
+      "id": "g1-061",
+      "lesson": 1,
+      "en": "not",
+      "translit": "muu / mish",
+      "ar": "مو / مش",
+      "tier": "core"
+    },
+    {
+      "id": "g1-062",
+      "lesson": 1,
+      "en": "yes",
+      "translit": "na3am",
+      "ar": "نعم",
+      "tier": "core"
+    },
+    {
+      "id": "g1-063",
+      "lesson": 1,
+      "en": "negation",
+      "translit": "nafii",
+      "ar": "نفي",
+      "tier": "core"
+    },
+    {
+      "id": "g1-064",
+      "lesson": 1,
+      "en": "relation",
+      "translit": "nisba",
+      "ar": "نسبة",
+      "tier": "core"
+    },
+    {
+      "id": "g1-068",
+      "lesson": 1,
+      "en": "close - masculine",
+      "translit": "qariib",
+      "ar": "قريب",
+      "tier": "core"
+    },
+    {
+      "id": "g1-069",
+      "lesson": 1,
+      "en": "close - feminine",
+      "translit": "qariiba",
+      "ar": "قريبة",
+      "tier": "core"
+    },
+    {
+      "id": "g1-071",
+      "lesson": 1,
+      "en": "number",
+      "translit": "raqam",
+      "ar": "رقم",
+      "tier": "core"
+    },
+    {
+      "id": "g1-075",
+      "lesson": 1,
+      "en": "small - masculine",
+      "translit": "sghiir",
+      "ar": "صغير",
+      "tier": "core"
+    },
+    {
+      "id": "g1-076",
+      "lesson": 1,
+      "en": "small - feminine",
+      "translit": "sghiira",
+      "ar": "صغيرة",
+      "tier": "core"
+    },
+    {
+      "id": "g1-077",
+      "lesson": 1,
+      "en": "thanks",
+      "translit": "shukran",
+      "ar": "شكراً",
+      "tier": "core"
+    },
+    {
+      "id": "g1-078",
+      "lesson": 1,
+      "en": "what",
+      "translit": "shuu",
+      "ar": "شو",
+      "tier": "core"
+    },
+    {
+      "id": "g1-079",
+      "lesson": 1,
+      "en": "look/see/ watch - masculine",
+      "translit": "shuuf",
+      "ar": "شوف",
+      "tier": "core"
+    },
+    {
+      "id": "g1-080",
+      "lesson": 1,
+      "en": "look/ see/ watch - feminine",
+      "translit": "shuufii",
+      "ar": "شوفي",
+      "tier": "core"
+    },
+    {
+      "id": "g1-087",
+      "lesson": 1,
+      "en": "there you go - masculine",
+      "translit": "tfaddal",
+      "ar": "تفضّل",
+      "tier": "core"
+    },
+    {
+      "id": "g1-088",
+      "lesson": 1,
+      "en": "here you go - feminine",
+      "translit": "tfaddalii",
+      "ar": "تفضّلي",
+      "tier": "core"
+    },
+    {
+      "id": "g1-089",
+      "lesson": 1,
+      "en": "enumerate",
+      "translit": "ti3daad",
+      "ar": "تعداد",
+      "tier": "core"
+    },
+    {
+      "id": "g1-091",
+      "lesson": 1,
+      "en": "nor / neither / not even",
+      "translit": "walaa",
+      "ar": "ولا",
+      "tier": "core"
+    },
+    {
+      "id": "g1-093",
+      "lesson": 1,
+      "en": "where",
+      "translit": "wayn",
+      "ar": "وين",
+      "tier": "core"
+    },
+    {
+      "id": "g2-094",
+      "lesson": 2,
+      "en": "excuse me/sorry",
+      "translit": "3afwan",
+      "ar": "عفواً",
+      "tier": "core"
+    },
+    {
+      "id": "g2-098",
+      "lesson": 2,
+      "en": "I write",
+      "translit": "'aktub",
+      "ar": "أكتب",
+      "tier": "core"
+    },
+    {
+      "id": "g2-099",
+      "lesson": 2,
+      "en": "I read",
+      "translit": "'aqraa",
+      "ar": "أقرا",
+      "tier": "core"
+    },
+    {
+      "id": "g2-101",
+      "lesson": 2,
+      "en": "I work",
+      "translit": "'ashtghil",
+      "ar": "أشتغل",
+      "tier": "core"
+    },
+    {
+      "id": "g2-102",
+      "lesson": 2,
+      "en": "I learn",
+      "translit": "'at3allam",
+      "ar": "أتعلّم",
+      "tier": "core"
+    },
+    {
+      "id": "g2-103",
+      "lesson": 2,
+      "en": "I see/I watch",
+      "translit": "'ashuuf",
+      "ar": "أشوف",
+      "tier": "core"
+    },
+    {
+      "id": "g2-105",
+      "lesson": 2,
+      "en": "the teacher",
+      "translit": "il-mudarris",
+      "ar": "المدرس",
+      "tier": "core"
+    },
+    {
+      "id": "g2-108",
+      "lesson": 2,
+      "en": "fine",
+      "translit": "bi-khayr",
+      "ar": "بخير",
+      "tier": "core"
+    },
+    {
+      "id": "g2-111",
+      "lesson": 2,
+      "en": "there is / there are",
+      "translit": "fii",
+      "ar": "في",
+      "tier": "core"
+    },
+    {
+      "id": "g2-113",
+      "lesson": 2,
+      "en": "bathroom",
+      "translit": "hammam",
+      "ar": "حمّام",
+      "tier": "core"
+    },
+    {
+      "id": "g2-116",
+      "lesson": 2,
+      "en": "new - masculine",
+      "translit": "jdiid",
+      "ar": "جديد",
+      "tier": "core"
+    },
+    {
+      "id": "g2-117",
+      "lesson": 2,
+      "en": "new - feminine",
+      "translit": "jdiida",
+      "ar": "جديدة",
+      "tier": "core"
+    },
+    {
+      "id": "g2-122",
+      "lesson": 2,
+      "en": "language",
+      "translit": "lugha",
+      "ar": "لغة",
+      "tier": "core"
+    },
+    {
+      "id": "g2-123",
+      "lesson": 2,
+      "en": "languages",
+      "translit": "lughaat",
+      "ar": "لغات",
+      "tier": "core"
+    },
+    {
+      "id": "g2-125",
+      "lesson": 2,
+      "en": "not = maa + verb",
+      "translit": "maa",
+      "ar": "ما",
+      "tier": "core"
+    },
+    {
+      "id": "g2-127",
+      "lesson": 2,
+      "en": "office/desk",
+      "translit": "maktab",
+      "ar": "مكتب",
+      "tier": "core"
+    },
+    {
+      "id": "g2-130",
+      "lesson": 2,
+      "en": "teacher - masculine",
+      "translit": "mu3allim",
+      "ar": "معلِّم",
+      "tier": "core"
+    },
+    {
+      "id": "g2-131",
+      "lesson": 2,
+      "en": "teacher - feminine",
+      "translit": "mu3allma",
+      "ar": "معلّمة",
+      "tier": "core"
+    },
+    {
+      "id": "g2-132",
+      "lesson": 2,
+      "en": "manager - masculine",
+      "translit": "mudiir",
+      "ar": "مدير",
+      "tier": "core"
+    },
+    {
+      "id": "g2-133",
+      "lesson": 2,
+      "en": "manager - feminine",
+      "translit": "mudiira",
+      "ar": "مديرة",
+      "tier": "core"
+    },
+    {
+      "id": "g2-136",
+      "lesson": 2,
+      "en": "employee - masculine",
+      "translit": "muwadhdhaf",
+      "ar": "موظّف",
+      "tier": "core"
+    },
+    {
+      "id": "g2-137",
+      "lesson": 2,
+      "en": "employee - feminine",
+      "translit": "muwadhdhafa",
+      "ar": "موظّفة",
+      "tier": "core"
+    },
+    {
+      "id": "g2-139",
+      "lesson": 2,
+      "en": "clean - masculine",
+      "translit": "ndhiif",
+      "ar": "نظيف",
+      "tier": "core"
+    },
+    {
+      "id": "g2-140",
+      "lesson": 2,
+      "en": "clean - feminine",
+      "translit": "ndhiifa",
+      "ar": "نظيفة",
+      "tier": "core"
+    },
+    {
+      "id": "g2-141",
+      "lesson": 2,
+      "en": "piano",
+      "translit": "piano",
+      "ar": "پيانو",
+      "tier": "core"
+    },
+    {
+      "id": "g2-142",
+      "lesson": 2,
+      "en": "reading",
+      "translit": "qiraaat",
+      "ar": "قراءة",
+      "tier": "core"
+    },
+    {
+      "id": "g3-143",
+      "lesson": 3,
+      "en": "great",
+      "translit": "3adhiim",
+      "ar": "عظيم",
+      "tier": "core"
+    },
+    {
+      "id": "g3-145",
+      "lesson": 3,
+      "en": "at",
+      "translit": "3ind",
+      "ar": "عند",
+      "tier": "core"
+    },
+    {
+      "id": "g3-151",
+      "lesson": 3,
+      "en": "address",
+      "translit": "3inwaan",
+      "ar": "عِنوان",
+      "tier": "core"
+    },
+    {
+      "id": "g3-152",
+      "lesson": 3,
+      "en": "I come",
+      "translit": "'aajii",
+      "ar": "آجي",
+      "tier": "core"
+    },
+    {
+      "id": "g3-153",
+      "lesson": 3,
+      "en": "places",
+      "translit": "'amaakin",
+      "ar": "أماكن",
+      "tier": "core"
+    },
+    {
+      "id": "g3-154",
+      "lesson": 3,
+      "en": "I walk",
+      "translit": "'amshii",
+      "ar": "أمشي",
+      "tier": "core"
+    },
+    {
+      "id": "g3-155",
+      "lesson": 3,
+      "en": "I return",
+      "translit": "'arja3",
+      "ar": "أرجع",
+      "tier": "core"
+    },
+    {
+      "id": "g3-156",
+      "lesson": 3,
+      "en": "I go",
+      "translit": "'aruuh",
+      "ar": "أروح",
+      "tier": "core"
+    },
+    {
+      "id": "g3-157",
+      "lesson": 3,
+      "en": "I live",
+      "translit": "'askun",
+      "ar": "أسكن",
+      "tier": "core"
+    },
+    {
+      "id": "g3-158",
+      "lesson": 3,
+      "en": "I speak",
+      "translit": "'atkallam",
+      "ar": "أتكلّم",
+      "tier": "core"
+    },
+    {
+      "id": "g3-159",
+      "lesson": 3,
+      "en": "now",
+      "translit": "il-hiin",
+      "ar": "الحين",
+      "tier": "core"
+    },
+    {
+      "id": "g3-160",
+      "lesson": 3,
+      "en": "that / who / which",
+      "translit": "illii",
+      "ar": "إللي",
+      "tier": "core"
+    },
+    {
+      "id": "g3-161",
+      "lesson": 3,
+      "en": "the evening",
+      "translit": "il-masaa",
+      "ar": "المساء",
+      "tier": "core"
+    },
+    {
+      "id": "g3-162",
+      "lesson": 3,
+      "en": "today",
+      "translit": "il-yawm",
+      "ar": "اليوم",
+      "tier": "core"
+    },
+    {
+      "id": "g3-163",
+      "lesson": 3,
+      "en": "after",
+      "translit": "ba3d",
+      "ar": "بعد",
+      "tier": "core"
+    },
+    {
+      "id": "g3-164",
+      "lesson": 3,
+      "en": "afterwards",
+      "translit": "ba3dayn",
+      "ar": "بعدين",
+      "tier": "core"
+    },
+    {
+      "id": "g3-165",
+      "lesson": 3,
+      "en": "boat",
+      "translit": "baakhira",
+      "ar": "باخرة",
+      "tier": "core"
+    },
+    {
+      "id": "g3-166",
+      "lesson": 3,
+      "en": "bus",
+      "translit": "baas",
+      "ar": "باص",
+      "tier": "core"
+    },
+    {
+      "id": "g3-167",
+      "lesson": 3,
+      "en": "slow - masculine",
+      "translit": "batii'",
+      "ar": "بطيء",
+      "tier": "core"
+    },
+    {
+      "id": "g3-168",
+      "lesson": 3,
+      "en": "slow - feminine",
+      "translit": "batii'a",
+      "ar": "بطيئة",
+      "tier": "core"
+    },
+    {
+      "id": "g3-169",
+      "lesson": 3,
+      "en": "between/in the middle of",
+      "translit": "bayn",
+      "ar": "بين",
+      "tier": "core"
+    },
+    {
+      "id": "g3-170",
+      "lesson": 3,
+      "en": "house",
+      "translit": "bayt",
+      "ar": "بيت",
+      "tier": "core"
+    },
+    {
+      "id": "g3-171",
+      "lesson": 3,
+      "en": "by / with / in",
+      "translit": "bi",
+      "ar": "بـ",
+      "tier": "core"
+    },
+    {
+      "id": "g3-172",
+      "lesson": 3,
+      "en": "building",
+      "translit": "binaaya",
+      "ar": "بناية",
+      "tier": "core"
+    },
+    {
+      "id": "g3-173",
+      "lesson": 3,
+      "en": "card",
+      "translit": "bitaaqa",
+      "ar": "بطاقة",
+      "tier": "core"
+    },
+    {
+      "id": "g3-183",
+      "lesson": 3,
+      "en": "next to/beside",
+      "translit": "janb",
+      "ar": "جنب",
+      "tier": "core"
+    },
+    {
+      "id": "g3-184",
+      "lesson": 3,
+      "en": "behind",
+      "translit": "khalf",
+      "ar": "خلف",
+      "tier": "core"
+    },
+    {
+      "id": "g3-187",
+      "lesson": 3,
+      "en": "with",
+      "translit": "ma3",
+      "ar": "مع",
+      "tier": "core"
+    },
+    {
+      "id": "g3-188",
+      "lesson": 3,
+      "en": "walking - feminine",
+      "translit": "maashiya",
+      "ar": "ماشية",
+      "tier": "core"
+    },
+    {
+      "id": "g3-189",
+      "lesson": 3,
+      "en": "walking - masculine",
+      "translit": "maashii",
+      "ar": "ماشي",
+      "tier": "core"
+    },
+    {
+      "id": "g3-191",
+      "lesson": 3,
+      "en": "station",
+      "translit": "mahatta",
+      "ar": "محطّة",
+      "tier": "core"
+    },
+    {
+      "id": "g3-192",
+      "lesson": 3,
+      "en": "airport",
+      "translit": "mataar",
+      "ar": "مطار",
+      "tier": "core"
+    },
+    {
+      "id": "g3-196",
+      "lesson": 3,
+      "en": "good - masculine",
+      "translit": "mniih",
+      "ar": "منيح",
+      "tier": "core"
+    },
+    {
+      "id": "g3-197",
+      "lesson": 3,
+      "en": "good - feminine",
+      "translit": "mniiha",
+      "ar": "منيحة",
+      "tier": "core"
+    },
+    {
+      "id": "g3-198",
+      "lesson": 3,
+      "en": "possible",
+      "translit": "mumkin",
+      "ar": "مُمكن",
+      "tier": "core"
+    },
+    {
+      "id": "g3-201",
+      "lesson": 3,
+      "en": "before",
+      "translit": "qabil",
+      "ar": "قبل",
+      "tier": "core"
+    },
+    {
+      "id": "g3-202",
+      "lesson": 3,
+      "en": "in front of",
+      "translit": "qiddaam",
+      "ar": "قدّام",
+      "tier": "core"
+    },
+    {
+      "id": "g3-203",
+      "lesson": 3,
+      "en": "train",
+      "translit": "qitaar",
+      "ar": "قطار",
+      "tier": "core"
+    },
+    {
+      "id": "g3-206",
+      "lesson": 3,
+      "en": "going - feminine",
+      "translit": "raayha",
+      "ar": "رايحة",
+      "tier": "core"
+    },
+    {
+      "id": "g3-207",
+      "lesson": 3,
+      "en": "going - masculine",
+      "translit": "raayih",
+      "ar": "رايح",
+      "tier": "core"
+    },
+    {
+      "id": "g3-211",
+      "lesson": 3,
+      "en": "fast - masculine",
+      "translit": "sarii3",
+      "ar": "سريع",
+      "tier": "core"
+    },
+    {
+      "id": "g3-212",
+      "lesson": 3,
+      "en": "fast - feminine",
+      "translit": "sarii3a",
+      "ar": "سريعة",
+      "tier": "core"
+    },
+    {
+      "id": "g3-213",
+      "lesson": 3,
+      "en": "car",
+      "translit": "sayyaara",
+      "ar": "سيّارة",
+      "tier": "core"
+    },
+    {
+      "id": "g3-214",
+      "lesson": 3,
+      "en": "street",
+      "translit": "shaari3",
+      "ar": "شارع",
+      "tier": "core"
+    },
+    {
+      "id": "g2-218",
+      "lesson": 2,
+      "en": "company",
+      "translit": "sharika",
+      "ar": "شركة",
+      "tier": "core"
+    },
+    {
+      "id": "g2-220",
+      "lesson": 2,
+      "en": "student - feminine",
+      "translit": "taalba",
+      "ar": "طالبة",
+      "tier": "core"
+    },
+    {
+      "id": "g2-221",
+      "lesson": 2,
+      "en": "student - masculine",
+      "translit": "taalib",
+      "ar": "طالب",
+      "tier": "core"
+    },
+    {
+      "id": "g2-225",
+      "lesson": 2,
+      "en": "jobs",
+      "translit": "wadhaa'if",
+      "ar": "وظائف",
+      "tier": "core"
+    },
+    {
+      "id": "g2-226",
+      "lesson": 2,
+      "en": "dirty - masculine",
+      "translit": "wisikh",
+      "ar": "وسخ",
+      "tier": "core"
+    },
+    {
+      "id": "g2-227",
+      "lesson": 2,
+      "en": "dirty - feminine",
+      "translit": "wiskha",
+      "ar": "وسخة",
+      "tier": "core"
+    },
+    {
+      "id": "g2-228",
+      "lesson": 2,
+      "en": "good - masculine",
+      "translit": "zayn",
+      "ar": "زين",
+      "tier": "core"
+    },
+    {
+      "id": "g2-229",
+      "lesson": 2,
+      "en": "good - feminine",
+      "translit": "zayna",
+      "ar": "زينة",
+      "tier": "core"
+    },
+    {
+      "id": "g3-230",
+      "lesson": 3,
+      "en": "apartment/flat",
+      "translit": "shaqqa",
+      "ar": "شقّة",
+      "tier": "core"
+    },
+    {
+      "id": "g3-231",
+      "lesson": 3,
+      "en": "job",
+      "translit": "shughl",
+      "ar": "شغل",
+      "tier": "core"
+    },
+    {
+      "id": "g3-232",
+      "lesson": 3,
+      "en": "taxi",
+      "translit": "taxi",
+      "ar": "تاكسي",
+      "tier": "core"
+    },
+    {
+      "id": "g3-234",
+      "lesson": 3,
+      "en": "day",
+      "translit": "yawm",
+      "ar": "يوم",
+      "tier": "core"
+    },
+    {
+      "id": "g3-248",
+      "lesson": 3,
+      "en": "between / in the middle of",
+      "translit": "bayn",
+      "ar": "بين",
+      "tier": "core"
+    },
+    {
+      "id": "g1-001",
+      "lesson": 1,
+      "en": "capital",
+      "translit": "3aasima",
+      "ar": "عاصمة",
+      "tier": "extra"
+    },
+    {
+      "id": "g1-002",
+      "lesson": 1,
+      "en": "on",
+      "translit": "3alaa",
+      "ar": "على",
+      "tier": "extra"
+    },
+    {
+      "id": "g1-003",
+      "lesson": 1,
+      "en": "Arab - masculine",
+      "translit": "3Arabii",
+      "ar": "عربي",
+      "tier": "extra"
+    },
+    {
+      "id": "g1-004",
+      "lesson": 1,
+      "en": "Arab - feminine",
+      "translit": "3Arabiyya",
+      "ar": "عربيّة",
+      "tier": "extra"
+    },
+    {
+      "id": "g1-005",
+      "lesson": 1,
+      "en": "give me",
+      "translit": "'a3tiinii",
+      "ar": "أعطيني",
+      "tier": "extra"
+    },
+    {
+      "id": "g1-006",
+      "lesson": 1,
+      "en": "miss",
+      "translit": "aanisa",
+      "ar": "آنسة",
+      "tier": "extra"
+    },
+    {
+      "id": "g1-007",
+      "lesson": 1,
+      "en": "Asia",
+      "translit": "'Aasia",
+      "ar": "آسيا",
+      "tier": "extra"
+    },
+    {
+      "id": "g1-008",
+      "lesson": 1,
+      "en": "Africa",
+      "translit": "'Afriiqia",
+      "ar": "أفريقيا",
+      "tier": "extra"
+    },
+    {
+      "id": "g1-011",
+      "lesson": 1,
+      "en": "letters - alphabet",
+      "translit": "'ahruf",
+      "ar": "أحرف",
+      "tier": "extra"
+    },
+    {
+      "id": "g1-012",
+      "lesson": 1,
+      "en": "America",
+      "translit": "'Amriikaa",
+      "ar": "أمريكا",
+      "tier": "extra"
+    },
+    {
+      "id": "g1-013",
+      "lesson": 1,
+      "en": "me, I",
+      "translit": "'anaa",
+      "ar": "أنا",
+      "tier": "extra"
+    },
+    {
+      "id": "g1-014",
+      "lesson": 1,
+      "en": "floor / ground / earth",
+      "translit": "'ard",
+      "ar": "أرض",
+      "tier": "extra"
+    },
+    {
+      "id": "g1-016",
+      "lesson": 1,
+      "en": "things",
+      "translit": "'ashyaa'",
+      "ar": "أشياء",
+      "tier": "extra"
+    },
+    {
+      "id": "g1-017",
+      "lesson": 1,
+      "en": "names",
+      "translit": "'asmaa'",
+      "ar": "أسماء",
+      "tier": "extra"
+    },
+    {
+      "id": "g1-018",
+      "lesson": 1,
+      "en": "Australia",
+      "translit": "Australia",
+      "ar": "أستراليا",
+      "tier": "extra"
+    },
+    {
+      "id": "g1-019",
+      "lesson": 1,
+      "en": "or",
+      "translit": "'aw",
+      "ar": "أو",
+      "tier": "extra"
+    },
+    {
+      "id": "g1-021",
+      "lesson": 1,
+      "en": "say",
+      "translit": "'ilgaa'",
+      "ar": "إلقاء",
+      "tier": "extra"
+    },
+    {
+      "id": "g1-022",
+      "lesson": 1,
+      "en": "fill-in",
+      "translit": "'imla'",
+      "ar": "إملأ",
+      "tier": "extra"
+    },
+    {
+      "id": "g1-026",
+      "lesson": 1,
+      "en": "countries",
+      "translit": "buldaan",
+      "ar": "بلدان",
+      "tier": "extra"
+    },
+    {
+      "id": "g1-028",
+      "lesson": 1,
+      "en": "in",
+      "translit": "fii",
+      "ar": "في",
+      "tier": "extra"
+    },
+    {
+      "id": "g1-029",
+      "lesson": 1,
+      "en": "this - masculine",
+      "translit": "haadaa",
+      "ar": "هدا",
+      "tier": "extra"
+    },
+    {
+      "id": "g1-030",
+      "lesson": 1,
+      "en": "this - feminine",
+      "translit": "haadii",
+      "ar": "هدي",
+      "tier": "extra"
+    },
+    {
+      "id": "g1-033",
+      "lesson": 1,
+      "en": "wall",
+      "translit": "hayt",
+      "ar": "حيط",
+      "tier": "extra"
+    },
+    {
+      "id": "g1-036",
+      "lesson": 1,
+      "en": "you - masculine",
+      "translit": "'inta",
+      "ar": "إنت",
+      "tier": "extra"
+    },
+    {
+      "id": "g1-037",
+      "lesson": 1,
+      "en": "you - feminine",
+      "translit": "'inti",
+      "ar": "إنتِ",
+      "tier": "extra"
+    },
+    {
+      "id": "g1-042",
+      "lesson": 1,
+      "en": "also",
+      "translit": "kamaan",
+      "ar": "كمان",
+      "tier": "extra"
+    },
+    {
+      "id": "g1-045",
+      "lesson": 1,
+      "en": "map",
+      "translit": "khariita",
+      "ar": "خريطة",
+      "tier": "extra"
+    },
+    {
+      "id": "g1-046",
+      "lesson": 1,
+      "en": "word",
+      "translit": "kilma",
+      "ar": "كلمة",
+      "tier": "extra"
+    },
+    {
+      "id": "g1-048",
+      "lesson": 1,
+      "en": "chair",
+      "translit": "kursii",
+      "ar": "كرسي",
+      "tier": "extra"
+    },
+    {
+      "id": "g1-052",
+      "lesson": 1,
+      "en": "town/city",
+      "translit": "madiina",
+      "ar": "مدينة",
+      "tier": "extra"
+    },
+    {
+      "id": "g1-053",
+      "lesson": 1,
+      "en": "magazine",
+      "translit": "majalla",
+      "ar": "مجلّة",
+      "tier": "extra"
+    },
+    {
+      "id": "g1-055",
+      "lesson": 1,
+      "en": "for example",
+      "translit": "mathalan",
+      "ar": "مثلاً",
+      "tier": "extra"
+    },
+    {
+      "id": "g1-056",
+      "lesson": 1,
+      "en": "subjects",
+      "translit": "mawaadii3",
+      "ar": "مواضيع",
+      "tier": "extra"
+    },
+    {
+      "id": "g1-060",
+      "lesson": 1,
+      "en": "key",
+      "translit": "muftaah",
+      "ar": "مفتاح",
+      "tier": "extra"
+    },
+    {
+      "id": "g1-065",
+      "lesson": 1,
+      "en": "Europe",
+      "translit": "'Oroppa",
+      "ar": "أوروپا",
+      "tier": "extra"
+    },
+    {
+      "id": "g1-066",
+      "lesson": 1,
+      "en": "continent",
+      "translit": "qaarra",
+      "ar": "قارّة",
+      "tier": "extra"
+    },
+    {
+      "id": "g1-067",
+      "lesson": 1,
+      "en": "pen",
+      "translit": "qalam",
+      "ar": "قلم",
+      "tier": "extra"
+    },
+    {
+      "id": "g1-070",
+      "lesson": 1,
+      "en": "grammar",
+      "translit": "qawaa3id",
+      "ar": "قواعد",
+      "tier": "extra"
+    },
+    {
+      "id": "g1-072",
+      "lesson": 1,
+      "en": "page",
+      "translit": "safha",
+      "ar": "صفحة",
+      "tier": "extra"
+    },
+    {
+      "id": "g1-073",
+      "lesson": 1,
+      "en": "Mr.",
+      "translit": "sayyid",
+      "ar": "سيّد",
+      "tier": "extra"
+    },
+    {
+      "id": "g1-074",
+      "lesson": 1,
+      "en": "Mrs.",
+      "translit": "sayyida",
+      "ar": "سيّدة",
+      "tier": "extra"
+    },
+    {
+      "id": "g1-081",
+      "lesson": 1,
+      "en": "adjectives",
+      "translit": "sifaat",
+      "ar": "صفات",
+      "tier": "extra"
+    },
+    {
+      "id": "g1-082",
+      "lesson": 1,
+      "en": "photo / picture",
+      "translit": "suura",
+      "ar": "صورة",
+      "tier": "extra"
+    },
+    {
+      "id": "g1-083",
+      "lesson": 1,
+      "en": "table",
+      "translit": "taawla",
+      "ar": "طاولة",
+      "tier": "extra"
+    },
+    {
+      "id": "g1-084",
+      "lesson": 1,
+      "en": "under",
+      "translit": "taht",
+      "ar": "تحت",
+      "tier": "extra"
+    },
+    {
+      "id": "g1-085",
+      "lesson": 1,
+      "en": "exercise",
+      "translit": "tamriin",
+      "ar": "تمرين",
+      "tier": "extra"
+    },
+    {
+      "id": "g1-086",
+      "lesson": 1,
+      "en": "telephone",
+      "translit": "telephone",
+      "ar": "تلفون",
+      "tier": "extra"
+    },
+    {
+      "id": "g1-090",
+      "lesson": 1,
+      "en": "and",
+      "translit": "w / wa / wi",
+      "ar": "و",
+      "tier": "extra"
+    },
+    {
+      "id": "g1-092",
+      "lesson": 1,
+      "en": "paper",
+      "translit": "waraqa",
+      "ar": "ورقة",
+      "tier": "extra"
+    },
+    {
+      "id": "g2-095",
+      "lesson": 2,
+      "en": "I teach",
+      "translit": "'a3allim",
+      "ar": "أعلِّم",
+      "tier": "extra"
+    },
+    {
+      "id": "g2-096",
+      "lesson": 2,
+      "en": "I count",
+      "translit": "'a3idd",
+      "ar": "أعدّ",
+      "tier": "extra"
+    },
+    {
+      "id": "g2-097",
+      "lesson": 2,
+      "en": "verbs",
+      "translit": "'af3aal",
+      "ar": "أفعال",
+      "tier": "extra"
+    },
+    {
+      "id": "g2-100",
+      "lesson": 2,
+      "en": "I do",
+      "translit": "'asaawii",
+      "ar": "أساوي",
+      "tier": "extra"
+    },
+    {
+      "id": "g2-104",
+      "lesson": 2,
+      "en": "present",
+      "translit": "'il-haadir",
+      "ar": "الحاضر",
+      "tier": "extra"
+    },
+    {
+      "id": "g2-106",
+      "lesson": 2,
+      "en": "balcony",
+      "translit": "balkon",
+      "ar": "بلكون",
+      "tier": "extra"
+    },
+    {
+      "id": "g2-107",
+      "lesson": 2,
+      "en": "bank",
+      "translit": "bank",
+      "ar": "بنك",
+      "tier": "extra"
+    },
+    {
+      "id": "g2-109",
+      "lesson": 2,
+      "en": "computer",
+      "translit": "computer",
+      "ar": "كمپيوتر",
+      "tier": "extra"
+    },
+    {
+      "id": "g2-110",
+      "lesson": 2,
+      "en": "verb",
+      "translit": "fi3l",
+      "ar": "فعل",
+      "tier": "extra"
+    },
+    {
+      "id": "g2-112",
+      "lesson": 2,
+      "en": "guitar",
+      "translit": "guitar",
+      "ar": "جيتار",
+      "tier": "extra"
+    },
+    {
+      "id": "g2-114",
+      "lesson": 2,
+      "en": "she",
+      "translit": "hiya",
+      "ar": "هي",
+      "tier": "extra"
+    },
+    {
+      "id": "g2-115",
+      "lesson": 2,
+      "en": "he",
+      "translit": "huwa",
+      "ar": "هو",
+      "tier": "extra"
+    },
+    {
+      "id": "g2-118",
+      "lesson": 2,
+      "en": "writing",
+      "translit": "kitaabat",
+      "ar": "كتابة",
+      "tier": "extra"
+    },
+    {
+      "id": "g2-119",
+      "lesson": 2,
+      "en": "much",
+      "translit": "ktiir",
+      "ar": "كتير",
+      "tier": "extra"
+    },
+    {
+      "id": "g2-120",
+      "lesson": 2,
+      "en": "to",
+      "translit": "la",
+      "ar": "لـ",
+      "tier": "extra"
+    },
+    {
+      "id": "g2-121",
+      "lesson": 2,
+      "en": "but",
+      "translit": "laakin",
+      "ar": "لكن",
+      "tier": "extra"
+    },
+    {
+      "id": "g2-124",
+      "lesson": 2,
+      "en": "institute/center",
+      "translit": "ma3had",
+      "ar": "معهد",
+      "tier": "extra"
+    },
+    {
+      "id": "g2-126",
+      "lesson": 2,
+      "en": "entrance",
+      "translit": "madkhal",
+      "ar": "مدخل",
+      "tier": "extra"
+    },
+    {
+      "id": "g2-128",
+      "lesson": 2,
+      "en": "corridor",
+      "translit": "mamarr",
+      "ar": "ممرّ",
+      "tier": "extra"
+    },
+    {
+      "id": "g2-129",
+      "lesson": 2,
+      "en": "feminine",
+      "translit": "mu'annath",
+      "ar": "مؤنّث",
+      "tier": "extra"
+    },
+    {
+      "id": "g2-134",
+      "lesson": 2,
+      "en": "masculine",
+      "translit": "muzakkar",
+      "ar": "مذكّر",
+      "tier": "extra"
+    },
+    {
+      "id": "g2-135",
+      "lesson": 2,
+      "en": "music",
+      "translit": "muusiiqaa",
+      "ar": "موسيقى",
+      "tier": "extra"
+    },
+    {
+      "id": "g2-138",
+      "lesson": 2,
+      "en": "oil",
+      "translit": "naft",
+      "ar": "نفط",
+      "tier": "extra"
+    },
+    {
+      "id": "g3-144",
+      "lesson": 3,
+      "en": "about",
+      "translit": "3an",
+      "ar": "عن",
+      "tier": "extra"
+    },
+    {
+      "id": "g3-146",
+      "lesson": 3,
+      "en": "you have - masculine",
+      "translit": "3indak",
+      "ar": "عِندك",
+      "tier": "extra"
+    },
+    {
+      "id": "g3-147",
+      "lesson": 3,
+      "en": "she has",
+      "translit": "3indhaa",
+      "ar": "عِندها",
+      "tier": "extra"
+    },
+    {
+      "id": "g3-148",
+      "lesson": 3,
+      "en": "I have",
+      "translit": "3indii",
+      "ar": "عِندي",
+      "tier": "extra"
+    },
+    {
+      "id": "g3-149",
+      "lesson": 3,
+      "en": "you have - feminine",
+      "translit": "3indik",
+      "ar": "عِندِك",
+      "tier": "extra"
+    },
+    {
+      "id": "g3-150",
+      "lesson": 3,
+      "en": "he has",
+      "translit": "3induh",
+      "ar": "عِنده",
+      "tier": "extra"
+    },
+    {
+      "id": "g3-174",
+      "lesson": 3,
+      "en": "cinema",
+      "translit": "cinema",
+      "ar": "سينما",
+      "tier": "extra"
+    },
+    {
+      "id": "g3-175",
+      "lesson": 3,
+      "en": "elephant - masculine",
+      "translit": "fiil",
+      "ar": "فيل",
+      "tier": "extra"
+    },
+    {
+      "id": "g3-176",
+      "lesson": 3,
+      "en": "elephant - feminine",
+      "translit": "fiila",
+      "ar": "فيلة",
+      "tier": "extra"
+    },
+    {
+      "id": "g3-177",
+      "lesson": 3,
+      "en": "garage",
+      "translit": "garage",
+      "ar": "جراج",
+      "tier": "extra"
+    },
+    {
+      "id": "g3-178",
+      "lesson": 3,
+      "en": "letter-alphabet",
+      "translit": "harf",
+      "ar": "حرف",
+      "tier": "extra"
+    },
+    {
+      "id": "g3-179",
+      "lesson": 3,
+      "en": "sitting - masculine",
+      "translit": "jaalis",
+      "ar": "جالس",
+      "tier": "extra"
+    },
+    {
+      "id": "g3-180",
+      "lesson": 3,
+      "en": "sitting - feminine",
+      "translit": "jaalsa",
+      "ar": "جالسة",
+      "tier": "extra"
+    },
+    {
+      "id": "g3-181",
+      "lesson": 3,
+      "en": "coming - feminine",
+      "translit": "jaaya",
+      "ar": "جاية",
+      "tier": "extra"
+    },
+    {
+      "id": "g3-182",
+      "lesson": 3,
+      "en": "coming - masculine",
+      "translit": "jaayii",
+      "ar": "جايي",
+      "tier": "extra"
+    },
+    {
+      "id": "g3-185",
+      "lesson": 3,
+      "en": "how",
+      "translit": "kiif",
+      "ar": "كيف",
+      "tier": "extra"
+    },
+    {
+      "id": "g3-186",
+      "lesson": 3,
+      "en": "all",
+      "translit": "kull",
+      "ar": "كلّ",
+      "tier": "extra"
+    },
+    {
+      "id": "g3-190",
+      "lesson": 3,
+      "en": "school",
+      "translit": "madrasa",
+      "ar": "مدرسة",
+      "tier": "extra"
+    },
+    {
+      "id": "g3-193",
+      "lesson": 3,
+      "en": "metro",
+      "translit": "metro",
+      "ar": "مترو",
+      "tier": "extra"
+    },
+    {
+      "id": "g3-194",
+      "lesson": 3,
+      "en": "port",
+      "translit": "miinaa",
+      "ar": "ميناء",
+      "tier": "extra"
+    },
+    {
+      "id": "g3-195",
+      "lesson": 3,
+      "en": "area",
+      "translit": "mintaqa",
+      "ar": "منطقة",
+      "tier": "extra"
+    },
+    {
+      "id": "g3-199",
+      "lesson": 3,
+      "en": "excellent",
+      "translit": "mumtaaz",
+      "ar": "ممتاز",
+      "tier": "extra"
+    },
+    {
+      "id": "g3-200",
+      "lesson": 3,
+      "en": "opposite/facing",
+      "translit": "muqaabil",
+      "ar": "مُقابل",
+      "tier": "extra"
+    },
+    {
+      "id": "g3-204",
+      "lesson": 3,
+      "en": "coming back - feminine",
+      "translit": "raaj3a",
+      "ar": "راجعة",
+      "tier": "extra"
+    },
+    {
+      "id": "g3-205",
+      "lesson": 3,
+      "en": "coming back - masculine",
+      "translit": "raaji3",
+      "ar": "راجع",
+      "tier": "extra"
+    },
+    {
+      "id": "g3-208",
+      "lesson": 3,
+      "en": "living - masculine",
+      "translit": "saakin",
+      "ar": "ساكن",
+      "tier": "extra"
+    },
+    {
+      "id": "g3-209",
+      "lesson": 3,
+      "en": "living - feminine",
+      "translit": "saakna",
+      "ar": "ساكنة",
+      "tier": "extra"
+    },
+    {
+      "id": "g3-210",
+      "lesson": 3,
+      "en": "residence",
+      "translit": "sakan",
+      "ar": "سَكن",
+      "tier": "extra"
+    },
+    {
+      "id": "g2-215",
+      "lesson": 2,
+      "en": "classroom",
+      "translit": "saff",
+      "ar": "صفّ",
+      "tier": "extra"
+    },
+    {
+      "id": "g2-216",
+      "lesson": 2,
+      "en": "secretary - masculine",
+      "translit": "secreter",
+      "ar": "سكرتير",
+      "tier": "extra"
+    },
+    {
+      "id": "g2-217",
+      "lesson": 2,
+      "en": "secretary - feminine",
+      "translit": "secretera",
+      "ar": "سكرتيرة",
+      "tier": "extra"
+    },
+    {
+      "id": "g2-219",
+      "lesson": 2,
+      "en": "little",
+      "translit": "shuway",
+      "ar": "شوي",
+      "tier": "extra"
+    },
+    {
+      "id": "g2-222",
+      "lesson": 2,
+      "en": "ok",
+      "translit": "tayyib",
+      "ar": "طيّب",
+      "tier": "extra"
+    },
+    {
+      "id": "g2-223",
+      "lesson": 2,
+      "en": "tennis",
+      "translit": "tennis",
+      "ar": "تنس/كرة مضرب",
+      "tier": "extra"
+    },
+    {
+      "id": "g2-224",
+      "lesson": 2,
+      "en": "Urdu",
+      "translit": "'Urdu",
+      "ar": "اردو",
+      "tier": "extra"
+    },
+    {
+      "id": "g3-233",
+      "lesson": 3,
+      "en": "airplane",
+      "translit": "tayyaara",
+      "ar": "طيّارة",
+      "tier": "extra"
+    },
+    {
+      "id": "g3-235",
+      "lesson": 3,
+      "en": "standing - feminine",
+      "translit": "waaqfa",
+      "ar": "واقفة",
+      "tier": "extra"
+    },
+    {
+      "id": "g3-236",
+      "lesson": 3,
+      "en": "standing - masculine",
+      "translit": "waaqif",
+      "ar": "واقف",
+      "tier": "extra"
+    },
+    {
+      "id": "g1-237",
+      "lesson": 1,
+      "en": "the first - masculine",
+      "translit": "il-awwal",
+      "ar": "الأوّل",
+      "tier": "extra"
+    },
+    {
+      "id": "g1-238",
+      "lesson": 1,
+      "en": "the second - masculine",
+      "translit": "ith-thaanii",
+      "ar": "الثّاني",
+      "tier": "extra"
+    },
+    {
+      "id": "g1-239",
+      "lesson": 1,
+      "en": "the third - masculine",
+      "translit": "ith-thaalith",
+      "ar": "الثالث",
+      "tier": "extra"
+    },
+    {
+      "id": "g1-240",
+      "lesson": 1,
+      "en": "the fourth - masculine",
+      "translit": "'ir-raabi3",
+      "ar": "الرّابع",
+      "tier": "extra"
+    },
+    {
+      "id": "g1-241",
+      "lesson": 1,
+      "en": "the fifth - masculine",
+      "translit": "'il-khaamis",
+      "ar": "الخامس",
+      "tier": "extra"
+    },
+    {
+      "id": "g1-242",
+      "lesson": 1,
+      "en": "the sixth - masculine",
+      "translit": "'is-saadis",
+      "ar": "السّادس",
+      "tier": "extra"
+    },
+    {
+      "id": "g1-243",
+      "lesson": 1,
+      "en": "the seventh - masculine",
+      "translit": "is-saabi3",
+      "ar": "السّابع",
+      "tier": "extra"
+    },
+    {
+      "id": "g1-244",
+      "lesson": 1,
+      "en": "the eighth - masculine",
+      "translit": "'ith-thaamin",
+      "ar": "الثّامن",
+      "tier": "extra"
+    },
+    {
+      "id": "g1-245",
+      "lesson": 1,
+      "en": "the ninth - masculine",
+      "translit": "'it-taasi3",
+      "ar": "التّاسع",
+      "tier": "extra"
+    },
+    {
+      "id": "g1-246",
+      "lesson": 1,
+      "en": "the tenth - masculine",
+      "translit": "il-3aashir",
+      "ar": "العاشر",
+      "tier": "extra"
+    },
+    {
+      "id": "g1-247",
+      "lesson": 1,
+      "en": "lesson",
+      "translit": "dars",
+      "ar": "درس",
+      "tier": "extra"
+    },
+    {
+      "id": "g1-248",
+      "lesson": 1,
+      "en": "the definite article",
+      "translit": "il / li / it / ish / is / in / ir",
+      "ar": "الـ",
+      "tier": "extra"
+    }
+  ],
+  "expressions": [
+    {
+      "id": "e1-01",
+      "lesson": 1,
+      "en": "welcome",
+      "translit": "ahlan wa sahlan",
+      "ar": "أهلاً وسهلاً",
+      "tier": "core"
+    },
+    {
+      "id": "e1-02",
+      "lesson": 1,
+      "en": "thank God",
+      "translit": "il-hamdulillah",
+      "ar": "الحمد للّه",
+      "tier": "core"
+    },
+    {
+      "id": "e1-03",
+      "lesson": 1,
+      "en": "peace be upon you",
+      "translit": "is-salaamu 3alaykum",
+      "ar": "السّلام عليكم",
+      "tier": "core"
+    },
+    {
+      "id": "e1-04",
+      "lesson": 1,
+      "en": "and peace be upon you",
+      "translit": "wa 3alaykum is-salaam",
+      "ar": "وعليكم السّلام",
+      "tier": "core"
+    },
+    {
+      "id": "e1-05",
+      "lesson": 1,
+      "en": "how is everything?",
+      "translit": "kiif il-haal?",
+      "ar": "كيف الحال؟",
+      "tier": "core"
+    },
+    {
+      "id": "e1-06",
+      "lesson": 1,
+      "en": "please - masculine",
+      "translit": "min fadlak",
+      "ar": "من فضلَك",
+      "tier": "core"
+    },
+    {
+      "id": "e1-07",
+      "lesson": 1,
+      "en": "please - feminine",
+      "translit": "min fadlik",
+      "ar": "من فضلِك",
+      "tier": "core"
+    },
+    {
+      "id": "e1-08",
+      "lesson": 1,
+      "en": "isn't it?",
+      "translit": "muu hayk? / mish hayk?",
+      "ar": "مو هيك؟ / مش هيك؟",
+      "tier": "core"
+    },
+    {
+      "id": "e1-09",
+      "lesson": 1,
+      "en": "of course",
+      "translit": "tab3an",
+      "ar": "طبعاً",
+      "tier": "core"
+    },
+    {
+      "id": "e1-10",
+      "lesson": 1,
+      "en": "where from?",
+      "translit": "min wayn?",
+      "ar": "من وين؟",
+      "tier": "core"
+    },
+    {
+      "id": "e1-11",
+      "lesson": 1,
+      "en": "in which?",
+      "translit": "fii 'ay?",
+      "ar": "في أي؟",
+      "tier": "core"
+    },
+    {
+      "id": "e2-01",
+      "lesson": 2,
+      "en": "hello to you - masculine",
+      "translit": "ahlan biik",
+      "ar": "أهلاً بيك",
+      "tier": "core"
+    },
+    {
+      "id": "e2-02",
+      "lesson": 2,
+      "en": "hello to you - feminine",
+      "translit": "ahlan biiki",
+      "ar": "أهلاً بيكِ",
+      "tier": "core"
+    },
+    {
+      "id": "e2-03",
+      "lesson": 2,
+      "en": "well / fine",
+      "translit": "bi-khayr",
+      "ar": "بخير",
+      "tier": "core"
+    },
+    {
+      "id": "e2-04",
+      "lesson": 2,
+      "en": "I don't know",
+      "translit": "maa 'a3rif",
+      "ar": "ما أعرف",
+      "tier": "core"
+    },
+    {
+      "id": "e2-05",
+      "lesson": 2,
+      "en": "goodbye",
+      "translit": "ma3 is-salaama",
+      "ar": "مع السّلامة",
+      "tier": "core"
+    },
+    {
+      "id": "e2-06",
+      "lesson": 2,
+      "en": "good evening",
+      "translit": "masaa il-khayr",
+      "ar": "مساء الخير",
+      "tier": "core"
+    },
+    {
+      "id": "e2-07",
+      "lesson": 2,
+      "en": "reply to good evening",
+      "translit": "masaa in-nuur",
+      "ar": "مساء النّور",
+      "tier": "core"
+    },
+    {
+      "id": "e2-08",
+      "lesson": 2,
+      "en": "good morning",
+      "translit": "sabaah il-khayr",
+      "ar": "صباح الخير",
+      "tier": "core"
+    },
+    {
+      "id": "e2-09",
+      "lesson": 2,
+      "en": "reply to good morning",
+      "translit": "sabaah in-nuur",
+      "ar": "صباح النّور",
+      "tier": "core"
+    },
+    {
+      "id": "e3-01",
+      "lesson": 3,
+      "en": "how are you? - masculine",
+      "translit": "kiifak?",
+      "ar": "كيفَك؟",
+      "tier": "core"
+    },
+    {
+      "id": "e3-02",
+      "lesson": 3,
+      "en": "how are you? - feminine",
+      "translit": "kiifik?",
+      "ar": "كيفِك؟",
+      "tier": "core"
+    },
+    {
+      "id": "e3-03",
+      "lesson": 3,
+      "en": "God keep you safe - masculine",
+      "translit": "Allah yisallmak",
+      "ar": "اللّه يسلمَك",
+      "tier": "core"
+    },
+    {
+      "id": "e3-04",
+      "lesson": 3,
+      "en": "God keep you safe - feminine",
+      "translit": "Allah yisallmik",
+      "ar": "اللّه يسلمِك",
+      "tier": "core"
+    },
+    {
+      "id": "e3-05",
+      "lesson": 3,
+      "en": "where to?",
+      "translit": "la-wayn?",
+      "ar": "لوين؟",
+      "tier": "core"
+    },
+    {
+      "id": "e3-06",
+      "lesson": 3,
+      "en": "for which?",
+      "translit": "la-'ay?",
+      "ar": "لأي؟",
+      "tier": "core"
+    },
+    {
+      "id": "e3-07",
+      "lesson": 2,
+      "en": "language centre",
+      "translit": "ma3had lughaat",
+      "ar": "معهد لغات",
+      "tier": "core"
+    },
+    {
+      "id": "e3-08",
+      "lesson": 2,
+      "en": "music centre",
+      "translit": "ma3had muusiiqaa",
+      "ar": "معهد موسيقى",
+      "tier": "core"
+    },
+    {
+      "id": "e3-09",
+      "lesson": 2,
+      "en": "oil company",
+      "translit": "sharikat naft",
+      "ar": "شركة نفط",
+      "tier": "core"
+    },
+    {
+      "id": "e3-10",
+      "lesson": 2,
+      "en": "telephone company",
+      "translit": "sharikat telephonaat",
+      "ar": "شركة تلفونات",
+      "tier": "core"
+    },
+    {
+      "id": "extra-01",
+      "lesson": 1,
+      "en": "sun and moon letters",
+      "translit": "il-'ahruf ish-shamsiyya wil-qamariyya",
+      "ar": "الأحرف الشمسيّة والقمريّة",
+      "tier": "extra"
+    },
+    {
+      "id": "extra-02",
+      "lesson": 1,
+      "en": "greeting and salutation",
+      "translit": "'ilqaa' it-tahiyya wis-salaam",
+      "ar": "إلقاء التحيّة والسّلام",
+      "tier": "extra"
+    },
+    {
+      "id": "extra-03",
+      "lesson": 1,
+      "en": "the Arabian Gulf",
+      "translit": "il-Khaliij il-3Arabii",
+      "ar": "الخليج العربي",
+      "tier": "extra"
+    },
+    {
+      "id": "extra-04",
+      "lesson": 1,
+      "en": "the Middle East",
+      "translit": "ish-Sharq il-Awsat",
+      "ar": "الشّرق الأوسط",
+      "tier": "extra"
+    },
+    {
+      "id": "extra-05",
+      "lesson": 1,
+      "en": "continents of the world",
+      "translit": "qaaraat il-3aalam",
+      "ar": "قارّات العالم",
+      "tier": "extra"
+    },
+    {
+      "id": "extra-06",
+      "lesson": 1,
+      "en": "fill in the blank",
+      "translit": "imla il-faraagh",
+      "ar": "إملأ الفراغ",
+      "tier": "extra"
+    },
+    {
+      "id": "extra-07",
+      "lesson": 1,
+      "en": "follow the example",
+      "translit": "itba3 il-mithaal",
+      "ar": "إتبع المثال",
+      "tier": "extra"
+    },
+    {
+      "id": "extra-08",
+      "lesson": 1,
+      "en": "complete the following",
+      "translit": "'akmil maa yalii",
+      "ar": "أكمل ما يلي",
+      "tier": "extra"
+    },
+    {
+      "id": "extra-09",
+      "lesson": 1,
+      "en": "what did you learn?",
+      "translit": "shuu t3allamt?",
+      "ar": "شو تعلّمت؟",
+      "tier": "extra"
+    },
+    {
+      "id": "extra-10",
+      "lesson": 1,
+      "en": "talking about",
+      "translit": "it-takallum 3an",
+      "ar": "التكلّم عن",
+      "tier": "extra"
+    },
+    {
+      "id": "extra-11",
+      "lesson": 1,
+      "en": "what is the question?",
+      "translit": "shus-su'aal?",
+      "ar": "شو السؤال؟",
+      "tier": "extra"
+    },
+    {
+      "id": "extra-12",
+      "lesson": 1,
+      "en": "what is the answer?",
+      "translit": "shul-jawaab?",
+      "ar": "شو الجواب؟",
+      "tier": "extra"
+    },
+    {
+      "id": "extra-13",
+      "lesson": 2,
+      "en": "the present tense",
+      "translit": "il-haadir / il-mudaari3",
+      "ar": "الحاضر / المضارع",
+      "tier": "extra"
+    },
+    {
+      "id": "extra-14",
+      "lesson": 2,
+      "en": "genitive",
+      "translit": "il-mudaaf ilayh",
+      "ar": "المضاف إليه",
+      "tier": "extra"
+    },
+    {
+      "id": "extra-15",
+      "lesson": 2,
+      "en": "imperative form",
+      "translit": "siighat il-'amr",
+      "ar": "صيغة الأمر",
+      "tier": "extra"
+    },
+    {
+      "id": "extra-16",
+      "lesson": 2,
+      "en": "match the following",
+      "translit": "qaabil maa yalii",
+      "ar": "قابل ما يلي",
+      "tier": "extra"
+    },
+    {
+      "id": "extra-17",
+      "lesson": 2,
+      "en": "verb conjugation",
+      "translit": "tasriif il-'af3aal",
+      "ar": "تصريف الأفعال",
+      "tier": "extra"
+    },
+    {
+      "id": "extra-18",
+      "lesson": 2,
+      "en": "form",
+      "translit": "siigha",
+      "ar": "صيغة",
+      "tier": "extra"
+    },
+    {
+      "id": "extra-19",
+      "lesson": 2,
+      "en": "by God",
+      "translit": "Wallah",
+      "ar": "واللّه",
+      "tier": "extra"
+    },
+    {
+      "id": "extra-20",
+      "lesson": 2,
+      "en": "by God - emphatic",
+      "translit": "Wallahi",
+      "ar": "واللهِ",
+      "tier": "extra"
+    },
+    {
+      "id": "extra-21",
+      "lesson": 3,
+      "en": "participle",
+      "translit": "ism il-faa3il",
+      "ar": "إسم الفاعل",
+      "tier": "extra"
+    },
+    {
+      "id": "extra-22",
+      "lesson": 3,
+      "en": "relative pronoun",
+      "translit": "ism il-mawsuul",
+      "ar": "إسم الموصول",
+      "tier": "extra"
+    },
+    {
+      "id": "extra-23",
+      "lesson": 3,
+      "en": "the use of",
+      "translit": "istikhdaam",
+      "ar": "إستخدام",
+      "tier": "extra"
+    },
+    {
+      "id": "extra-24",
+      "lesson": 3,
+      "en": "identity card",
+      "translit": "bitaaqa shakhsiyya",
+      "ar": "بطاقة شخصيّة",
+      "tier": "extra"
+    },
+    {
+      "id": "extra-25",
+      "lesson": 3,
+      "en": "possessive pronouns",
+      "translit": "damaa'ir il-mulkiyya",
+      "ar": "ضمائر الملكيّة",
+      "tier": "extra"
+    },
+    {
+      "id": "extra-26",
+      "lesson": 3,
+      "en": "place preposition",
+      "translit": "dharf il-makaan",
+      "ar": "ظرف المكان",
+      "tier": "extra"
+    },
+    {
+      "id": "extra-27",
+      "lesson": 3,
+      "en": "from",
+      "translit": "min 3ind",
+      "ar": "من عند",
+      "tier": "extra"
+    },
+    {
+      "id": "extra-28",
+      "lesson": 3,
+      "en": "means of transport",
+      "translit": "wasaa'il in-naql",
+      "ar": "وسائل النقل",
+      "tier": "extra"
+    },
+    {
+      "id": "extra-29",
+      "lesson": 3,
+      "en": "recognise / identify",
+      "translit": "it-ta3arruf",
+      "ar": "التّعرُّف على",
+      "tier": "extra"
+    },
+    {
+      "id": "extra-30",
+      "lesson": 3,
+      "en": "define",
+      "translit": "tahdiid",
+      "ar": "تحديد",
+      "tier": "extra"
+    },
+    {
+      "id": "extra-31",
+      "lesson": 3,
+      "en": "now - standard form",
+      "translit": "il-'aan",
+      "ar": "الآن",
+      "tier": "extra"
+    },
+    {
+      "id": "extra-32",
+      "lesson": 3,
+      "en": "imperative",
+      "translit": "il-'amr",
+      "ar": "الأمر",
+      "tier": "extra"
+    },
+    {
+      "id": "extra-33",
+      "lesson": 3,
+      "en": "referring to people",
+      "translit": "il-3aaqil",
+      "ar": "العاقل",
+      "tier": "extra"
+    },
+    {
+      "id": "extra-34",
+      "lesson": 3,
+      "en": "pronouns",
+      "translit": "damaa'ir",
+      "ar": "ضمائر",
+      "tier": "extra"
+    },
+    {
+      "id": "extra-35",
+      "lesson": 3,
+      "en": "distinction between near and far",
+      "translit": "it-tamyiiz bayn il-qariib wil-b3iid",
+      "ar": "التمييز بين القريب والبعيد",
+      "tier": "extra"
+    },
+    {
+      "id": "extra-36",
+      "lesson": 3,
+      "en": "continents",
+      "translit": "il-qaarraat",
+      "ar": "القارّات",
+      "tier": "extra"
+    },
+    {
+      "id": "extra-37",
+      "lesson": 3,
+      "en": "regions",
+      "translit": "il-manaatiq",
+      "ar": "المناطق",
+      "tier": "extra"
+    },
+    {
+      "id": "extra-38",
+      "lesson": 3,
+      "en": "referring to animals and things",
+      "translit": "ghayr il-3aaqil",
+      "ar": "غير العاقل",
+      "tier": "extra"
+    },
+    {
+      "id": "extra-39",
+      "lesson": 3,
+      "en": "action plan",
+      "translit": "khittat 3amal",
+      "ar": "خطّة عمل",
+      "tier": "extra"
+    },
+    {
+      "id": "extra-40",
+      "lesson": 3,
+      "en": "vocabulary",
+      "translit": "mufradaat",
+      "ar": "مفردات",
+      "tier": "extra"
+    },
+    {
+      "id": "extra-41",
+      "lesson": 3,
+      "en": "review",
+      "translit": "muraaja3a",
+      "ar": "مراجعة",
+      "tier": "extra"
+    },
+    {
+      "id": "extra-42",
+      "lesson": 3,
+      "en": "sample",
+      "translit": "namuuzaj",
+      "ar": "نموذج",
+      "tier": "extra"
+    },
+    {
+      "id": "extra-43",
+      "lesson": 3,
+      "en": "exercises",
+      "translit": "tamaariin",
+      "ar": "تمارين",
+      "tier": "extra"
+    },
+    {
+      "id": "extra-44",
+      "lesson": 3,
+      "en": "job / function",
+      "translit": "wadhiifa",
+      "ar": "وظيفة",
+      "tier": "extra"
+    }
+  ],
+  "imperatives": [
+    {
+      "id": "imp-1",
+      "en": "see / watch",
+      "masculine": {
+        "translit": "shuuf",
+        "ar": "شوف"
+      },
+      "feminine": {
+        "translit": "shuufii",
+        "ar": "شوفي"
+      }
+    },
+    {
+      "id": "imp-2",
+      "en": "count",
+      "masculine": {
+        "translit": "3idd",
+        "ar": "عِدّ"
+      },
+      "feminine": {
+        "translit": "3iddii",
+        "ar": "عِدّي"
+      }
+    },
+    {
+      "id": "imp-3",
+      "en": "do",
+      "masculine": {
+        "translit": "saawii",
+        "ar": "ساوي"
+      },
+      "feminine": {
+        "translit": "saawii",
+        "ar": "ساوي"
+      }
+    },
+    {
+      "id": "imp-4",
+      "en": "learn",
+      "masculine": {
+        "translit": "t3allam",
+        "ar": "تعلّم"
+      },
+      "feminine": {
+        "translit": "t3allamii",
+        "ar": "تعلّمي"
+      }
+    },
+    {
+      "id": "imp-5",
+      "en": "read",
+      "masculine": {
+        "translit": "iqraa",
+        "ar": "إقرا"
+      },
+      "feminine": {
+        "translit": "iqrii",
+        "ar": "إقري"
+      }
+    },
+    {
+      "id": "imp-6",
+      "en": "teach",
+      "masculine": {
+        "translit": "3allim",
+        "ar": "علّم"
+      },
+      "feminine": {
+        "translit": "3allmii",
+        "ar": "علّمي"
+      }
+    },
+    {
+      "id": "imp-7",
+      "en": "work",
+      "masculine": {
+        "translit": "ishtghil",
+        "ar": "إشتغل"
+      },
+      "feminine": {
+        "translit": "ishtighlii",
+        "ar": "إشتغلي"
+      }
+    },
+    {
+      "id": "imp-8",
+      "en": "write",
+      "masculine": {
+        "translit": "iktub",
+        "ar": "إكتب"
+      },
+      "feminine": {
+        "translit": "iktubii",
+        "ar": "إكتبي"
+      }
+    },
+    {
+      "id": "imp-9",
+      "en": "go",
+      "masculine": {
+        "translit": "ruuh",
+        "ar": "روح"
+      },
+      "feminine": {
+        "translit": "ruuhii",
+        "ar": "روحي"
+      }
+    },
+    {
+      "id": "imp-10",
+      "en": "speak / talk",
+      "masculine": {
+        "translit": "tkallam",
+        "ar": "تكلّم"
+      },
+      "feminine": {
+        "translit": "tkallamii",
+        "ar": "تكلّمي"
+      }
+    },
+    {
+      "id": "imp-11",
+      "en": "live",
+      "masculine": {
+        "translit": "iskun",
+        "ar": "إسكن"
+      },
+      "feminine": {
+        "translit": "iskunii",
+        "ar": "إسكني"
+      }
+    },
+    {
+      "id": "imp-12",
+      "en": "return",
+      "masculine": {
+        "translit": "irja3",
+        "ar": "إرجع"
+      },
+      "feminine": {
+        "translit": "irja3ii",
+        "ar": "إرجعي"
+      }
+    },
+    {
+      "id": "imp-13",
+      "en": "walk",
+      "masculine": {
+        "translit": "imshii",
+        "ar": "إمشي"
+      },
+      "feminine": {
+        "translit": "imshii",
+        "ar": "إمشي"
+      }
+    },
+    {
+      "id": "imp-14",
+      "en": "come",
+      "masculine": {
+        "translit": "ta3aal",
+        "ar": "تعال"
+      },
+      "feminine": {
+        "translit": "ta3aalii",
+        "ar": "تعالي"
+      }
+    }
+  ]
+}
